@@ -1,0 +1,111 @@
+<div class="row">
+      <div class="col-xl-6 mx-auto ">
+            <div class="card">
+                  <div class="card-body">
+                        <h6 class="card-title text-center">Sign up</h6>
+                        <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                              <div class="form-group">
+                                    <label>Email address</label>
+                                    <input type="email" 
+                                          class="form-control" 
+                                          placeholder="Enter email"
+                                          formControlName="email"
+                                          autocomplete=on
+                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['email'].pristine ) && 
+                                                      signUpForm.controls['email'].errors}">
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['email'].errors && 
+                                                (submited || !signUpForm.controls['email'].pristine) && 
+                                                signUpForm.controls['email'].errors.required"
+                                    >The email is required</small>
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['email'].errors && 
+                                          (submited || !signUpForm.controls['email'].pristine) && 
+                                          signUpForm.controls['email'].errors.email"
+                                    >This is not supported email</small>
+                              </div>
+                              <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" 
+                                          class="form-control" 
+                                          placeholder="Enter your username"
+                                          formControlName="username"
+                                          autocomplete=on
+                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['username'].pristine ) && 
+                                                      signUpForm.controls['username'].errors}">
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['username'].errors && 
+                                                (submited || !signUpForm.controls['username'].pristine) && 
+                                                signUpForm.controls['username'].errors.required"
+                                    >The username is required</small>
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['username'].errors && 
+                                                (submited || !signUpForm.controls['username'].pristine) && 
+                                                signUpForm.controls['username'].errors.minlength"
+                                    >The username need to have at least 4 characters</small>
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['username'].errors && 
+                                                (submited || !signUpForm.controls['username'].pristine) && 
+                                                signUpForm.controls['username'].errors.maxlength"
+                                    >The username need to have less than 20 characters</small>
+                              </div>
+                              <div class="form-group">
+                                    <label>Password 
+                                          <app-icon firstIcon="fa-eye" secondIcon="fa-eye-slash"
+                                                      changeColor=true changeIcon=true
+                                                      (click)="watchPassword()">
+                                          </app-icon>
+                                    </label>
+                                    <input type="{{passwordType}}" 
+                                          (keyup)="equalPassword()"
+                                          class="form-control mb-2" 
+                                          placeholder="Password"
+                                          formControlName="password"
+                                          autocomplete=off
+                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['password'].pristine ) && 
+                                                      signUpForm.controls['password'].errors}">
+                                    <input type="{{passwordType}}" 
+                                          (keyup)="equalPassword()"
+                                          class="form-control" 
+                                          placeholder="Repeat password"
+                                          formControlName="repeatPassword"
+                                          autocomplete=off
+                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['password'].pristine ) && 
+                                                      !passwordsAreEqual}">
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['password'].errors && 
+                                                (submited || !signUpForm.controls['password'].pristine) && 
+                                                signUpForm.controls['password'].errors.minlength"
+                                    >The password need to have at least 8 characters<br></small>
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['password'].errors && 
+                                                (submited || !signUpForm.controls['password'].pristine) && 
+                                                signUpForm.controls['password'].errors.maxlength"
+                                    ><br>The password need to have less than 50 characters<br></small>
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['password'].errors && 
+                                                (submited || !signUpForm.controls['password'].pristine) && 
+                                                signUpForm.controls['password'].errors.pattern"
+                                    >The password must have lowercase, uppercase and a special character<br></small>
+                                    <small class="text-danger"
+                                          *ngIf="(submited || 
+                                                !signUpForm.controls['password'].pristine ) && 
+                                                !passwordsAreEqual"
+                                    >Boths passwords must be equal</small>
+                              </div>
+                              <!-- <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid || !passwordsAreEqual">Submit</button> -->
+                              <button type="submit" class="btn btn-primary" >Submit</button>
+                        </form>
+                        <hr>
+                        <div class="row">
+                              <div class="col-md-6 mb-md-0 mb-2">
+                                    <app-facebook></app-facebook>
+                              </div>
+                              <div class="col-md-6">
+                                    <app-google></app-google>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
