@@ -32,8 +32,9 @@ export class GoogleComponent{
 
   signIn(){
     if(!this.loggedIn){
-      this._authS.signIn(GoogleLoginProvider.PROVIDER_ID).catch(Error);
-      this._authenticationS.setUserFromSocialMedia();
+      console.log("google");
+      //this._authS.signIn(GoogleLoginProvider.PROVIDER_ID).catch(Error);
+      this._authenticationS.setUserFromSocialMedia("Google");
     }
     else console.log("ya estas logueado");
   }

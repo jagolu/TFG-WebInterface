@@ -33,8 +33,9 @@ export class FacebookComponent{
 
   signIn(){    
     if(!this.loggedIn){
+      console.log("facebook");
       this._authS.signIn(FacebookLoginProvider.PROVIDER_ID).catch(Error);
-      this._authenticationS.setUserFromSocialMedia();
+      this._authenticationS.setUserFromSocialMedia("FACEBOOK");
     }
     else console.log("Ya estas logueado");
   }

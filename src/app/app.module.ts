@@ -21,7 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 // New modules import
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { provideConfig } from 'src/environments/sensitive_enviroment';
+import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule } from '@angular/common/http';
 
 

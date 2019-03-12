@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService, SocialUser } from 'angularx-social-login';
+import { AuthService, SocialUser, GoogleLoginProvider } from 'angularx-social-login';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -15,7 +15,7 @@ export class AuthenticationService {
   constructor(private _authS:AuthService, private _http:HttpClient) { }
 
   isLogged(){
-    console.log("asdf")
+    console.log("asdf");
   }
 
   signOut(){
@@ -26,33 +26,36 @@ export class AuthenticationService {
     });
   }
 
-  setUserFromSocialMedia(){
-    this._authS.authState.subscribe(user=>{
-      console.log(user);
-    })
+  setUserFromSocialMedia(type:string){
+    this._authS.signIn(GoogleLoginProvider.PROVIDER_ID).then(user=>{
+      let bodyRequest = {
+        "email": user.email,
+        "username": user.firstName,
+        "password": null
+      }
+
+      this.postRequest(bodyRequest)
+      .subscribe( (data)=>{
+        console.log(data);
+        console.log("caspa");
+        //TODO redirect to index
+      });
+
+    }).catch(Error);
   }
 
   setUserFromForm(user:any){
-    console.log(user.email);
-    console.log(user.username);
-    console.log(user.password);
-    // let bodyRequest = {
-    //   "email": user.email,
-    //   "username": user.username,
-    //   "password": user.password
-    // };
-
-
     let bodyRequest = {
-      "email": "javo123@gmail.com",
-      "username": "username",
-      "password": "asdfasdf1A"
+      "email": user.email,
+      "username": user.username,
+      "password": user.password
     };
     this.postRequest(bodyRequest)
       .subscribe( (data)=>{
         console.log(data);
         console.log("caspa");
-      } )
+        //TODO redirect to index
+      });
   }
 
   postRequest(body:any){
@@ -65,7 +68,4 @@ export class AuthenticationService {
     };
     return this._http.post(this.baseURL, body, httpOptions);
   }
-
-  //TODO send data to backend
-
 }
