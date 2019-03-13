@@ -9,6 +9,8 @@ import { GoogleComponent } from './components/logSign/google/google.component';
 import { FacebookComponent } from './components/logSign/facebook/facebook.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
+import { LogInComponent } from './components/logSign/log-in/log-in.component';
+import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
 
 // Directives
 
@@ -25,11 +27,6 @@ import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLogi
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { LogInComponent } from './components/logSign/log-in/log-in.component';
-
-
-
-
 
 
 
@@ -42,7 +39,8 @@ import { LogInComponent } from './components/logSign/log-in/log-in.component';
     FacebookComponent,
     IconComponent,
     HomeComponent,
-    LogInComponent
+    LogInComponent,
+    EmailVerificationComponent
   ],
   imports: [
     BrowserModule,
