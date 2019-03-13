@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" [routerLink]="['']" >
     <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
     Bootstrap
   </a>
@@ -41,8 +41,14 @@
         </div>
       </div>
       <div class="form-inline my-2 my-lg-0" *ngIf="true">
-        <button class="btn btn-outline-success mr-sm-2" type="button">Log In</button>
-        <button class="btn btn-outline-info mr-sm-2" type="button">Sign Up</button>
+        <button class="btn btn-outline-success mr-sm-2" 
+              [routerLink]="['logIn']" 
+              type="button"
+        >Log In</button>
+        <button class="btn btn-outline-info mr-sm-2" 
+              [routerLink]="['signUp']" 
+              type="button"
+        >Sign Up</button>
         <!-- TODO do it well -->
         <button class="btn btn-outline-danger mr-sm-2" (click)="signOut()" type="button">Log out</button>
       </div>

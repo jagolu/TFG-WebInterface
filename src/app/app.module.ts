@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 // Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { GoogleComponent } from './components/sign-up/google/google.component';
-import { FacebookComponent } from './components/sign-up/facebook/facebook.component';
+import { SignUpComponent } from './components/logSign/sign-up/sign-up.component';
+import { GoogleComponent } from './components/logSign/google/google.component';
+import { FacebookComponent } from './components/logSign/facebook/facebook.component';
 import { IconComponent } from './components/shared/icon/icon.component';
+import { HomeComponent } from './components/home/home.component';
 
 // Directives
 
@@ -23,6 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { LogInComponent } from './components/logSign/log-in/log-in.component';
+
 
 
 
@@ -36,14 +40,17 @@ import { HttpClientModule } from '@angular/common/http';
     SignUpComponent,
     GoogleComponent,
     FacebookComponent,
-    IconComponent
+    IconComponent,
+    HomeComponent,
+    LogInComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     SocialLoginModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [
     {
