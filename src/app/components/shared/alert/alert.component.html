@@ -1,0 +1,53 @@
+<button type="button" 
+        id="openButton" 
+        style="display:none" 
+        data-toggle="modal" 
+        data-target="#modalAlert">
+    Invisible button to launch the alert
+</button>
+  
+<!-- <div class="modal fade" 
+    id="modalAlert" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modalAlertTitle" 
+    aria-hidden="true"
+    (focusout)="(focusOut())">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        {{msg}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="modal fade" 
+    id="modalAlert" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modalAlertTitle" 
+    aria-hidden="true"
+    (focusout)="(focusOut())">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-10">
+              {{msg}}
+          </div>
+          <div class="col-1 align-self-end">
+            <app-icon firstIcon="fa-times-circle"
+                      firstColor=#C75050 style="font-size:160%"
+                      data-dismiss="modal">
+            </app-icon>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

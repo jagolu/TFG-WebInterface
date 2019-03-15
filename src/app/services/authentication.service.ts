@@ -34,12 +34,7 @@ export class AuthenticationService {
         "password": null
       }
 
-      this.postRequest(bodyRequest)
-      .subscribe( (data)=>{
-        console.log(data);
-        console.log("caspa");
-        //TODO redirect to index
-      });
+      return this.postRequest(bodyRequest);
 
     }).catch(Error);
   }
@@ -50,12 +45,7 @@ export class AuthenticationService {
       "username": user.username,
       "password": user.password
     };
-    this.postRequest(bodyRequest)
-      .subscribe( (data)=>{
-        console.log(data);
-        console.log("caspa");
-        //TODO redirect to index
-      });
+    return this.postRequest(bodyRequest);
   }
 
   postRequest(body:any){

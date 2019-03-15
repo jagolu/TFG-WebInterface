@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AlertComponent } from '../../shared/alert/alert.component';
+import { ChildActivationEnd } from '@angular/router';
 
 
 @Component({
@@ -12,21 +14,23 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class SignUpComponent{
 
+  @ViewChild(AlertComponent) child:AlertComponent;
+
   signUpForm: FormGroup;
   passwordType: string;
   submited: boolean;
   passwordsAreEqual: boolean;
+  emailAlreadyExists: boolean;
+  msg:string;
 
   constructor(private _authentication:AuthenticationService) {
     this.passwordType = "password"
     this.submited = false;
     this.passwordsAreEqual = false;
+    this.emailAlreadyExists = false;
+    this.msg = null;
 
     this.initializeForm();
-  }
-
-  watchPassword(){
-    this.passwordType = this.passwordType == "password" ? "text" : "password";
   }
 
   initializeForm(){
@@ -37,7 +41,6 @@ export class SignUpComponent{
           Validators.required,
           Validators.email
         ]
-        //TODO add validador asincrono para que no registre emails existentes
       ),
       'username': new FormControl(
         '',
@@ -46,7 +49,6 @@ export class SignUpComponent{
           Validators.minLength(4),
           Validators.maxLength(20)
         ]
-        //TODO add validador asincrono para que no registre nicksames existentes
       ),
       'password': new FormControl(
         '',
@@ -70,12 +72,31 @@ export class SignUpComponent{
   }
 
   signUp(){
-    let user = {
-      'email' : this.signUpForm.controls['email'].value,
+    //alert("se te ha")
+    this.openTab();
+    // let user = {
+    //   'email' : this.signUpForm.controls['email'].value,
+    //   'username': this.signUpForm.controls['username'].value,
+    //   'password': this.signUpForm.controls['password'].value
+    // }
+    // this._authentication.setUserFromForm(user).subscribe(
+    //   success=>{
+    //     console.log(success);
+    //   },
+    //   error=>{
+    //     this.emailAlreadyExists = true;
+    //     this.resetForm();
+    //   }
+    // );
+  }
+
+  resetForm(){
+    this.signUpForm.reset({
+      'email': this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
-      'password': this.signUpForm.controls['password'].value
-    }
-    this._authentication.setUserFromForm(user);
+      'password': '',
+      'repeatPassword': ''
+    })
   }
 
   equalPassword(){
@@ -84,18 +105,12 @@ export class SignUpComponent{
     this.passwordsAreEqual = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
-  /**
-   * Debug function
-   * Show the form data
-   */
-  //TODO ERASE FUNCTION
-  // see():Promise<any>{
-  //   let p= new Promise(
-  //     (resolve, reject)=>{
-  //       resolve(this.signUpForm);
-  //       reject("nova");
-  //     }
-  //   )
-  //   return p;
-  // }
+  watchPassword(){
+    this.passwordType = this.passwordType == "password" ? "text" : "password";
+  }
+
+  openTab(){
+    this.msg="El registro se ha iniciado";
+    this.child.openTab();
+  }
 }

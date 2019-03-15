@@ -11,6 +11,7 @@ import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
+import { AlertComponent } from './components/shared/alert/alert.component';
 
 // Directives
 
@@ -40,7 +41,8 @@ import { RouterModule } from '@angular/router';
     IconComponent,
     HomeComponent,
     LogInComponent,
-    EmailVerificationComponent
+    EmailVerificationComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

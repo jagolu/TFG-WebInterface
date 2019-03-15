@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="signUpFormId">
       <div class="col-xl-6 mx-auto ">
             <div class="card">
                   <div class="card-body">
@@ -11,8 +11,9 @@
                                           placeholder="Enter email"
                                           formControlName="email"
                                           autocomplete=on
-                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['email'].pristine ) && 
-                                                      signUpForm.controls['email'].errors}">
+                                          (keyup)="emailAlreadyExists=false"
+                                          [ngClass]="{'is-invalid': ((submited || !signUpForm.controls['email'].pristine ) && 
+                                                      signUpForm.controls['email'].errors) || emailAlreadyExists}">
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['email'].errors && 
                                                 (submited || !signUpForm.controls['email'].pristine) && 
@@ -23,6 +24,9 @@
                                           (submited || !signUpForm.controls['email'].pristine) && 
                                           signUpForm.controls['email'].errors.email"
                                     >This is not supported email</small>
+                                    <small class="text-danger"
+                                          *ngIf="emailAlreadyExists"
+                                    >The email already exists</small>
                               </div>
                               <div class="form-group">
                                     <label>Username</label>
@@ -52,8 +56,7 @@
                               <div class="form-group">
                                     <label>Password 
                                           <app-icon firstIcon="fa-eye" secondIcon="fa-eye-slash"
-                                                      changeColor=true changeIcon=true
-                                                      (click)="watchPassword()">
+                                                      secondColor=#407dbf (click)="watchPassword()">
                                           </app-icon>
                                     </label>
                                     <input type="{{passwordType}}" 
@@ -94,7 +97,7 @@
                                     >Boths passwords must be equal</small>
                               </div>
                               <!-- <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid || !passwordsAreEqual">Submit</button> -->
-                              <button type="submit" class="btn btn-primary" >Submit</button>
+                              <button type="submit" class="btn btn-primary" (click)="signUp()">Submit</button>
                         </form>
                         <hr>
                         <div class="row">
@@ -109,3 +112,11 @@
             </div>
       </div>
 </div>
+
+
+<app-alert
+      msg={{msg}}
+      superId="signUpFormId"
+      >
+</app-alert>
+

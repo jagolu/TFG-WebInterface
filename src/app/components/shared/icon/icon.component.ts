@@ -8,12 +8,11 @@ import { Component, Input, ElementRef, HostListener, OnInit } from '@angular/cor
 export class IconComponent  implements OnInit{
 
   @Input() base:string="far";
-  @Input() firstIcon:string;
-  @Input() secondIcon:string;
-  @Input() changeIcon:boolean=false;
-  @Input() changeColor:boolean=false;
+  @Input() firstIcon:string=null;
+  @Input() secondIcon:string=null;
   @Input() firstColor:string = "black";
-  @Input() secondColor:string="#407dbf";
+  @Input() secondColor:string=null;
+  
 
   private icon:any;
 
@@ -26,29 +25,24 @@ export class IconComponent  implements OnInit{
     node.className = this.base+" "+this.firstIcon;
     this.eR.nativeElement.appendChild(node);
     this.icon = this.eR.nativeElement.firstChild;
+    this.secondIcon = this.secondIcon==null ? this.firstIcon : this.secondIcon;
+    this.secondColor = this.secondColor==null ? this.firstColor : this.secondColor;
   }
 
   @HostListener('mouseenter') mouseEnterChangeColor(){
-    if(this.changeColor){
       this.icon.style.color = this.icon.style.color == this.firstColor ? this.secondColor : this.firstColor;
-    }
   }
 
   @HostListener('mouseleave') mouseLeaveChangeColor(){
-    if(this.changeColor){
       this.icon.style.color = this.icon.color == this.firstColor ? this.secondColor : this.firstColor;
-    }
   }
 
   @HostListener('click') mouseClickChangeColor(){
-    if(this.changeColor){
-      this.icon.style.color = this.icon.style.color == this.firstColor ? this.secondColor : this.firstColor;
-    }
-    if(this.changeIcon){
-      let oldNewClass = this.icon.classList.contains(this.firstIcon) ? 
-        {"new": this.secondIcon, "old": this.firstIcon} : {"new": this.firstIcon, "old": this.secondIcon}
-      this.icon.classList.remove(oldNewClass.old);
-      this.icon.classList.add(oldNewClass.new);
-    }
+    this.icon.style.color = this.icon.style.color == this.firstColor ? this.secondColor : this.firstColor;
+
+    let oldNewClass = this.icon.classList.contains(this.firstIcon) ? 
+      {"new": this.secondIcon, "old": this.firstIcon} : {"new": this.firstIcon, "old": this.secondIcon}
+    this.icon.classList.remove(oldNewClass.old);
+    this.icon.classList.add(oldNewClass.new);
   }
 }
