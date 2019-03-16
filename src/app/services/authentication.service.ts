@@ -10,7 +10,7 @@ export class AuthenticationService {
 
   private user: SocialUser;
   private loggedIn:boolean;
-  private baseURL : string = "https://localhost:44360/api/SignUp";
+  private baseURL : string = "https://localhost:44360/api/";
 
   constructor(private _authS:AuthService, private _http:HttpClient) { }
 
@@ -33,8 +33,8 @@ export class AuthenticationService {
         "username": user.firstName,
         "password": null
       }
-
-      return this.postRequest(bodyRequest);
+      //TODO ver que pasa aqui y ver que cuando se de el OK redirigir YA LOGUEADO al index
+      return this.postRequest(bodyRequest, "SignUp");
 
     }).catch(Error);
   }
@@ -45,10 +45,17 @@ export class AuthenticationService {
       "username": user.username,
       "password": user.password
     };
-    return this.postRequest(bodyRequest);
+    return this.postRequest(bodyRequest, "SignUp");
   }
 
-  postRequest(body:any){
+  checkEmailValidation(token:string){
+    let bodyRequest = {
+      "token": token
+    }
+    return this.postRequest(bodyRequest, "EmailVerification");
+  }
+
+  postRequest(body:any, path:string){
     const httpOptions = {
       headers: new HttpHeaders({
         "Access-Control-Allow-Origin": "*",
@@ -56,6 +63,6 @@ export class AuthenticationService {
         "Content-Type": "application/json"
       })
     };
-    return this._http.post(this.baseURL, body, httpOptions);
+    return this._http.post(this.baseURL+path, body, httpOptions);
   }
 }
