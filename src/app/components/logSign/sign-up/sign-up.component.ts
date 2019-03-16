@@ -1,7 +1,8 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AlertComponent } from '../../shared/alert/alert.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { AlertComponent } from '../../shared/alert/alert.component';
 })
 export class SignUpComponent{
 
-  @ViewChild(AlertComponent) child:AlertComponent;
+  @ViewChild(AlertComponent) alert:AlertComponent;
+  @ViewChild(LoadingComponent) loading:LoadingComponent;
 
   signUpForm: FormGroup;
   passwordType: string;
@@ -30,7 +32,7 @@ export class SignUpComponent{
     this.initializeForm();
   }
 
-  initializeForm(){
+  private initializeForm(){
     this.signUpForm = new FormGroup({
       'email': new FormControl(
         '',
@@ -68,87 +70,50 @@ export class SignUpComponent{
     })
   }
 
-  signUp(){
+  private signUp(){ //TODO quitar los console log
     let user = {
       'email' : this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
       'password': this.signUpForm.controls['password'].value
     }
+    this.loading.startLoading();
     this._authentication.setUserFromForm(user).subscribe(
       success=>{
-        console.log("success", success)
-        this.resetFullForm();
-        this.verificationSent();
+        console.log("success", success);
+        this.resetForm(true);
+        this.loading.stopLoading();
+        this.alert.verificationSent();
       },
       error=>{
         console.log("error", error);
-        if(error.status == 400 && error.error["error"]=="EmailAlreadyExistsError") this.emailAlreadyTaken();
-        if(error.status == 400 && (
-          error.error['email'] || error.error['password'] || error.error['username']
-        )) this.errorValidatingUser();
-        if(error.status == 500 )this.serverError();
-        this.resetPartialForm();
+        if(error.status == 400 &&  error.error["error"]=="EmailAlreadyExistsError"){
+          this.alert.emailAlreadyTaken();
+        }
+        if(error.status == 400 && (error.error['email'] || error.error['password'] || error.error['username'] )) this.alert.errorValidatingUser();
+        if(error.status == 500) this.alert.serverError();
+        if(error.status==0)  this.alert.lostConnection();
+        this.resetForm(false);
+        this.loading.stopLoading();
       }
     );
   }
 
-  resetPartialForm(){
+  private resetForm(full:boolean){
     this.signUpForm.reset({
-      'email': this.signUpForm.controls['email'].value,
-      'username': this.signUpForm.controls['username'].value,
+      'email': full ? "": this.signUpForm.controls['email'].value,
+      'username': full ? "": this.signUpForm.controls['username'].value,
       'password': '',
       'repeatPassword': ''
     })
   }
 
-  resetFullForm(){
-    this.signUpForm.reset({
-      'email': '',
-      'username': '',
-      'password': '',
-      'repeatPassword': ''
-    })
-  }
-
-  equalPassword(){
+  private equalPassword(){
     let password = this.signUpForm.controls['password'].value;
     let repeatPassword = this.signUpForm.controls['repeatPassword'].value;
     this.passwordsAreEqual = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
-  watchPassword(){
+  private watchPassword(){
     this.passwordType = this.passwordType == "password" ? "text" : "password";
-  }
-
-  verificationSent(){
-    var msg = [
-      "Su registro se ha casi completado, solo es necesario un paso más.",
-      "Verifique su correo mediante el enlace que se le ha enviado al mismo."
-    ];
-    this.child.openTab(msg);
-  }
-
-  emailAlreadyTaken(){
-    this.emailAlreadyExists = true;
-    var msg = [
-      "El email con el que intenta registrarse ya está registrado"
-    ];
-    this.child.openTab(msg);
-  }
-
-  errorValidatingUser(){
-    var msg = [
-      `Ha habido un error validando los datos, vuelva a intentarlo
-      más tarde.`
-    ];
-    this.child.openTab(msg);
-  }
-
-  serverError(){
-    var msg = [
-      `Ha habido interno del servidor, vuelva a intentarlo 
-      más tarde.`
-    ];
-    this.child.openTab(msg);
   }
 }
