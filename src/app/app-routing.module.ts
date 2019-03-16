@@ -5,7 +5,7 @@ import { HomeComponent } from 'src/app/components/home/home.component';
 import { SignUpComponent } from 'src/app/components/logSign/sign-up/sign-up.component';
 import { LogInComponent } from 'src/app/components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from 'src/app/components/logSign/email-verification/email-verification.component';
-import { AlertComponent } from 'src/app/components/shared/alert/alert.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 
 
 
@@ -15,7 +15,6 @@ const ROUTES: Routes = [
   { path: 'signUp', component: SignUpComponent },
   { path: 'logIn', component: LogInComponent},
   { path: 'emailVerification/:token', component: EmailVerificationComponent},
-  { path: 'prueba', component: AlertComponent},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 
