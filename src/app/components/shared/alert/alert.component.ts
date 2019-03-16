@@ -22,42 +22,35 @@ export class AlertComponent {
   }
 
   openAlert(type:AlertType){
-    this.message = null;
-    this.message = type == AlertType.LOSTCONNECTIONERROR ? AlertMessage.lostConnectionErrorMessage() : this.message;
-    this.message = type == AlertType.SERVERERROR ? AlertMessage.serverErrorMessage() : this.message;
-    this.message = type == AlertType.VALIDATINGUSERERROR ? AlertMessage.validatingUserErrorMessage() : this.message;
-    this.message = type == AlertType.EMAILTAKENERROR ? AlertMessage.emailTakenErrorMessage() : this.message;
-    this.message = type == AlertType.VERIFICATIONSENT ? AlertMessage.verificationSentMessage() : this.message;
+    if(type == AlertType.LOSTCONNECTIONERROR) this.message = this.text(AlertType.LOSTCONNECTIONERROR);
+    else if(type == AlertType.SERVERERROR) this.message = this.text(AlertType.SERVERERROR);
+    else if(type == AlertType.VALIDATINGUSERERROR) this.message = this.text(AlertType.VALIDATINGUSERERROR);
+    else if(type == AlertType.EMAILTAKENERROR) this.message = this.text(AlertType.EMAILTAKENERROR);
+    else if(type == AlertType.VERIFICATIONSENT) this.message = this.text(AlertType.VERIFICATIONSENT);
+    else this.message = null;
+
     if(this.message != null) this.openTab();
   }
 
-}
-
-class AlertMessage{
-  static lostConnectionErrorMessage(){
-    return [
-      "Se ha perdido la conexión con el servidor.",
-      "Por favor, revisa tu conexión a internet."
-    ];
-  }
-
-  static serverErrorMessage(){
-     return ["Ha habido interno del servidor, vuelva a intentarlo más tarde."]
-  }
-
-  static validatingUserErrorMessage(){
-    return [ "Ha habido un error validando los datos, vuelva a intentarlo más tarde." ];
-  }
-
-  static emailTakenErrorMessage(){
-    return [ "El email con el que intenta registrarse ya está registrado"];
-  }
-
-  static verificationSentMessage(){
-    return [
-      "Su registro se ha casi completado, solo es necesario un paso más.",
-      "Verifique su correo mediante el enlace que se le ha enviado al mismo."
-    ];
+  private text(type:AlertType){
+    if(type == AlertType.LOSTCONNECTIONERROR) {
+      return ["Se ha perdido la conexión con el servidor.",
+            "Por favor, revisa tu conexión a internet."];
+    }
+    else if(type == AlertType.SERVERERROR) {
+      return ["Ha habido interno del servidor, vuelva a intentarlo más tarde."]
+    }
+    else if(type == AlertType.VALIDATINGUSERERROR) {
+      return [ "Ha habido un error validando los datos, vuelva a intentarlo más tarde." ];
+    }
+    else if(type == AlertType.EMAILTAKENERROR) {
+      return [ "El email con el que intenta registrarse ya está registrado"];
+    }
+    else if(type == AlertType.VERIFICATIONSENT) {
+      return ["Su registro se ha casi completado, solo es necesario un paso más.",
+        "Verifique su correo mediante el enlace que se le ha enviado al mismo."];
+    }
+    return null;
   }
 }
 
