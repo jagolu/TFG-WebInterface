@@ -31,7 +31,7 @@ export class LoadingComponent{
 
   private resize(hide:boolean){
     (document.querySelector("#navbarId") as HTMLElement).style.display = hide? 
-        "none":"block";
+        "none":"flex";
     (document.querySelector("#"+this.superId) as HTMLElement).style.display = hide? 
         "none":"block";
     (document.querySelector(".main") as HTMLElement).style.height = hide ? 
