@@ -1,19 +1,17 @@
-import { Component, ElementRef, Input } from '@angular/core';
-
-
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html'
 })
 export class AlertComponent {
-  @Input() msg:string;
   @Input() superId:string;
+  private message:string[];
 
-  constructor(private eR:ElementRef) { 
-  }
+  constructor() { }
 
-  openTab(){
+  openTab(msg:any[]){
+    this.message = msg;
     (document.querySelector('#navbarId') as HTMLElement).style.filter = "blur(6px)";
     (document.querySelector('#'+this.superId) as HTMLElement).style.filter = "blur(6px)";
     (document.querySelector("#openButton") as HTMLElement).click();

@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AlertComponent } from '../../shared/alert/alert.component';
-import { ChildActivationEnd } from '@angular/router';
 
 
 @Component({
@@ -21,14 +20,12 @@ export class SignUpComponent{
   submited: boolean;
   passwordsAreEqual: boolean;
   emailAlreadyExists: boolean;
-  msg:string;
 
   constructor(private _authentication:AuthenticationService) {
     this.passwordType = "password"
     this.submited = false;
     this.passwordsAreEqual = false;
     this.emailAlreadyExists = false;
-    this.msg = null;
 
     this.initializeForm();
   }
@@ -72,28 +69,42 @@ export class SignUpComponent{
   }
 
   signUp(){
-    //alert("se te ha")
-    this.openTab();
-    // let user = {
-    //   'email' : this.signUpForm.controls['email'].value,
-    //   'username': this.signUpForm.controls['username'].value,
-    //   'password': this.signUpForm.controls['password'].value
-    // }
-    // this._authentication.setUserFromForm(user).subscribe(
-    //   success=>{
-    //     console.log(success);
-    //   },
-    //   error=>{
-    //     this.emailAlreadyExists = true;
-    //     this.resetForm();
-    //   }
-    // );
+    let user = {
+      'email' : this.signUpForm.controls['email'].value,
+      'username': this.signUpForm.controls['username'].value,
+      'password': this.signUpForm.controls['password'].value
+    }
+    this._authentication.setUserFromForm(user).subscribe(
+      success=>{
+        console.log("success", success)
+        this.resetFullForm();
+        this.verificationSent();
+      },
+      error=>{
+        console.log("error", error);
+        if(error.status == 400 && error.error["error"]=="EmailAlreadyExistsError") this.emailAlreadyTaken();
+        if(error.status == 400 && (
+          error.error['email'] || error.error['password'] || error.error['username']
+        )) this.errorValidatingUser();
+        if(error.status == 500 )this.serverError();
+        this.resetPartialForm();
+      }
+    );
   }
 
-  resetForm(){
+  resetPartialForm(){
     this.signUpForm.reset({
       'email': this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
+      'password': '',
+      'repeatPassword': ''
+    })
+  }
+
+  resetFullForm(){
+    this.signUpForm.reset({
+      'email': '',
+      'username': '',
       'password': '',
       'repeatPassword': ''
     })
@@ -109,8 +120,35 @@ export class SignUpComponent{
     this.passwordType = this.passwordType == "password" ? "text" : "password";
   }
 
-  openTab(){
-    this.msg="El registro se ha iniciado";
-    this.child.openTab();
+  verificationSent(){
+    var msg = [
+      "Su registro se ha casi completado, solo es necesario un paso más.",
+      "Verifique su correo mediante el enlace que se le ha enviado al mismo."
+    ];
+    this.child.openTab(msg);
+  }
+
+  emailAlreadyTaken(){
+    this.emailAlreadyExists = true;
+    var msg = [
+      "El email con el que intenta registrarse ya está registrado"
+    ];
+    this.child.openTab(msg);
+  }
+
+  errorValidatingUser(){
+    var msg = [
+      `Ha habido un error validando los datos, vuelva a intentarlo
+      más tarde.`
+    ];
+    this.child.openTab(msg);
+  }
+
+  serverError(){
+    var msg = [
+      `Ha habido interno del servidor, vuelva a intentarlo 
+      más tarde.`
+    ];
+    this.child.openTab(msg);
   }
 }

@@ -37,7 +37,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-10">
-              {{msg}}
+              <p *ngFor="let msg of message">{{msg}}</p>
           </div>
           <div class="col-1 align-self-end">
             <app-icon firstIcon="fa-times-circle"
