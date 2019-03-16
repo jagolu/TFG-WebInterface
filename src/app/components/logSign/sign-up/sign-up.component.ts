@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AlertComponent } from '../../shared/alert/alert.component';
-import { LoadingComponent } from '../../shared/loading/loading.component';
+import { AlertComponent } from 'src/app/components/shared/alert/alert.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 
 
 @Component({
