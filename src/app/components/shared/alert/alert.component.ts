@@ -21,42 +21,50 @@ export class AlertComponent {
     (document.querySelector('#'+this.superId) as HTMLElement).style.filter = "blur(0px)";
   }
 
-  lostConnection(){
-    this.message = [
-      `Se ha perdido la conexión con el servidor.`,
+  openAlert(type:AlertType){
+    this.message = null;
+    this.message = type == AlertType.LOSTCONNECTIONERROR ? AlertMessage.lostConnectionErrorMessage() : this.message;
+    this.message = type == AlertType.SERVERERROR ? AlertMessage.serverErrorMessage() : this.message;
+    this.message = type == AlertType.VALIDATINGUSERERROR ? AlertMessage.validatingUserErrorMessage() : this.message;
+    this.message = type == AlertType.EMAILTAKENERROR ? AlertMessage.emailTakenErrorMessage() : this.message;
+    this.message = type == AlertType.VERIFICATIONSENT ? AlertMessage.verificationSentMessage() : this.message;
+    if(this.message != null) this.openTab();
+  }
+
+}
+
+class AlertMessage{
+  static lostConnectionErrorMessage(){
+    return [
+      "Se ha perdido la conexión con el servidor.",
       "Por favor, revisa tu conexión a internet."
     ];
-    this.openTab();
   }
 
-  serverError(){
-    this.message = [
-      `Ha habido interno del servidor, vuelva a intentarlo 
-      más tarde.`
-    ];
-    this.openTab();
+  static serverErrorMessage(){
+     return ["Ha habido interno del servidor, vuelva a intentarlo más tarde."]
   }
 
-  errorValidatingUser(){
-    this.message = [
-      `Ha habido un error validando los datos, vuelva a intentarlo
-      más tarde.`
-    ];
-    this.openTab();
+  static validatingUserErrorMessage(){
+    return [ "Ha habido un error validando los datos, vuelva a intentarlo más tarde." ];
   }
 
-  emailAlreadyTaken(){
-    this.message = [
-      "El email con el que intenta registrarse ya está registrado"
-    ];
-    this.openTab();
+  static emailTakenErrorMessage(){
+    return [ "El email con el que intenta registrarse ya está registrado"];
   }
 
-  verificationSent(){
-    this.message = [
+  static verificationSentMessage(){
+    return [
       "Su registro se ha casi completado, solo es necesario un paso más.",
       "Verifique su correo mediante el enlace que se le ha enviado al mismo."
     ];
-    this.openTab();
   }
+}
+
+export enum AlertType{
+  LOSTCONNECTIONERROR = "LOSTCONNECTIONERROR",
+  SERVERERROR = "SERVERERROR",
+  VALIDATINGUSERERROR = "VALIDATINGUSERERROR",
+  EMAILTAKENERROR = "EMAILTAKENERROR",
+  VERIFICATIONSENT = "VERIFICATIONSENT",
 }
