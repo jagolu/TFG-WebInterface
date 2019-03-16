@@ -12,6 +12,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
+import { LoadingComponent } from './components/shared/loading/loading.component';
+
 
 // Directives
 
@@ -24,7 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // New modules import
 import { ReactiveFormsModule } from '@angular/forms';
-import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -42,7 +44,8 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     LogInComponent,
     EmailVerificationComponent,
-    AlertComponent
+    AlertComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
