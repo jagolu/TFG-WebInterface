@@ -5,8 +5,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SignUpComponent } from './components/logSign/sign-up/sign-up.component';
-import { GoogleComponent } from './components/logSign/google/google.component';
-import { FacebookComponent } from './components/logSign/facebook/facebook.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
@@ -30,6 +28,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 
 
 
@@ -38,14 +37,13 @@ import { RouterModule } from '@angular/router';
     AppComponent,
     NavbarComponent,
     SignUpComponent,
-    GoogleComponent,
-    FacebookComponent,
     IconComponent,
     HomeComponent,
     LogInComponent,
     EmailVerificationComponent,
     AlertComponent,
-    LoadingComponent
+    LoadingComponent,
+    SocialButtonComponent
   ],
   imports: [
     BrowserModule,

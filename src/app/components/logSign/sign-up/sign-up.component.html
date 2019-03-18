@@ -91,23 +91,28 @@
                                                 !passwordsAreEqual"
                                     >Boths passwords must be equal</small>
                               </div>
-                              <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid || !passwordsAreEqual">Submit</button>
-                              <!-- <button type="submit" class="btn btn-primary" >Submit</button> -->
+                              <!-- <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid || !passwordsAreEqual">Submit</button> -->
+                              <button type="submit" class="btn btn-primary" >Submit</button>
                         </form>
                         <hr>
                         <div class="row">
                               <div class="col-md-6 mb-md-0 mb-2">
-                                    <app-facebook></app-facebook>
+                                    <app-social-button
+                                          superId="signUpFormId"
+                                          type="Facebook">
+                                    </app-social-button>
                               </div>
                               <div class="col-md-6">
-                                    <app-google></app-google>
+                                    <app-social-button
+                                          superId="signUpFormId"
+                                          type="Google">
+                                    </app-social-button>
                               </div>
                         </div>
                   </div>
             </div>
       </div>
 </div>
-
 
 <app-alert superId="signUpFormId"> </app-alert>
 <app-loading superId="signUpFormId"></app-loading>
