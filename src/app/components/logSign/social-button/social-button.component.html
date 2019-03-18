@@ -1,0 +1,16 @@
+<!-- ---------------GOOGLE BUTTON ------------------ -->
+<div id="gSignInWrapper" *ngIf="!isFacebook">
+  <div id="googleButton" class="customGPlusSignIn" (click)="signIn()">
+    <span class="googleIcon"></span>
+    <span class="googleText" [textContent]="msg"></span>
+  </div>
+</div>
+<!-- ------------------------FACEBOOK BUTTON ----------------- -->
+<div id="gSignInWrapper" *ngIf="isFacebook">
+  <div id="facebookButton" class="customGPlusSignIn" (click)="signIn()">
+    <span class="facebookIcon"></span>
+    <span class="facebookText" [textContent]="msg"></span>
+  </div>
+</div>
+<app-alert superId="{{superId}}"></app-alert>
+<app-loading superId="{{superId}}"></app-loading>
