@@ -11,32 +11,25 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class LogInComponent {
 
-  signUpForm: FormGroup;
+  logInForm: FormGroup;
   passwordType: string;
-  submited: boolean;
-  passwordsAreEqual: boolean;
 
   constructor(private _authentication:AuthenticationService) { 
     this.passwordType = "password"
-    this.submited = false;
-    this.passwordsAreEqual = false;
 
     this.initializeForm();
   }
 
-  watchPassword(){
-    this.passwordType = this.passwordType == "password" ? "text" : "password";
-  }
 
-  initializeForm(){
-    this.signUpForm = new FormGroup({
+
+  private initializeForm(){
+    this.logInForm = new FormGroup({
       'email': new FormControl(
         '',
         [
           Validators.required,
           Validators.email
         ]
-        //TODO add validador asincrono para que no registre emails existentes
       ),
       'password': new FormControl(
         '',
@@ -50,11 +43,24 @@ export class LogInComponent {
     })
   }
 
+  private resetForm(full:boolean){
+    this.logInForm.reset({
+      'email': full ? "": this.logInForm.controls['email'].value,
+      'password': ''
+    });
+  }
+
+  private watchPassword(){
+    this.passwordType = this.passwordType == "password" ? "text" : "password";
+  }
+
   logIn(){
     let user = {
-      'email' : this.signUpForm.controls['email'].value,
-      'password': this.signUpForm.controls['password'].value
+      'email' : this.logInForm.controls['email'].value,
+      'password': this.logInForm.controls['password'].value
     }
-    this._authentication.setUserFromForm(user);
+    this._authentication.setUserFromForm(user).subscribe(
+
+    );
   }
 }
