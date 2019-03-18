@@ -11,6 +11,7 @@ import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
+import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 
 
 // Directives
@@ -28,7 +29,6 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 
 
 
