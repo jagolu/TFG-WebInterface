@@ -19,15 +19,11 @@ export class SignUpComponent{
 
   signUpForm: FormGroup;
   passwordType: string;
-  submited: boolean;
   passwordsAreEqual: boolean;
-  emailAlreadyExists: boolean;
 
   constructor(private _authentication:AuthenticationService) {
     this.passwordType = "password"
-    this.submited = false;
     this.passwordsAreEqual = false;
-    this.emailAlreadyExists = false;
 
     this.initializeForm();
   }

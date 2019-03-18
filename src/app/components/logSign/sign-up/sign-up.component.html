@@ -11,16 +11,16 @@
                                           placeholder="Enter email"
                                           formControlName="email"
                                           autocomplete=on
-                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['email'].pristine ) && 
+                                          [ngClass]="{'is-invalid': !signUpForm.controls['email'].pristine && 
                                                       signUpForm.controls['email'].errors}">
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['email'].errors && 
-                                                (submited || !signUpForm.controls['email'].pristine) && 
+                                                !signUpForm.controls['email'].pristine && 
                                                 signUpForm.controls['email'].errors.required"
                                     >The email is required</small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['email'].errors && 
-                                          (submited || !signUpForm.controls['email'].pristine) && 
+                                          !signUpForm.controls['email'].pristine && 
                                           signUpForm.controls['email'].errors.email"
                                     >This is not supported email</small>
                               </div>
@@ -31,21 +31,21 @@
                                           placeholder="Enter your username"
                                           formControlName="username"
                                           autocomplete=on
-                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['username'].pristine ) && 
+                                          [ngClass]="{'is-invalid': !signUpForm.controls['username'].pristine && 
                                                       signUpForm.controls['username'].errors}">
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['username'].errors && 
-                                                (submited || !signUpForm.controls['username'].pristine) && 
+                                                !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.required"
                                     >The username is required</small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['username'].errors && 
-                                                (submited || !signUpForm.controls['username'].pristine) && 
+                                                !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.minlength"
                                     >The username need to have at least 4 characters</small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['username'].errors && 
-                                                (submited || !signUpForm.controls['username'].pristine) && 
+                                                !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.maxlength"
                                     >The username need to have less than 20 characters</small>
                               </div>
@@ -61,7 +61,7 @@
                                           placeholder="Password"
                                           formControlName="password"
                                           autocomplete=off
-                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['password'].pristine ) && 
+                                          [ngClass]="{'is-invalid': !signUpForm.controls['password'].pristine && 
                                                       signUpForm.controls['password'].errors}">
                                     <input type="{{passwordType}}" 
                                           (keyup)="equalPassword()"
@@ -69,31 +69,30 @@
                                           placeholder="Repeat password"
                                           formControlName="repeatPassword"
                                           autocomplete=off
-                                          [ngClass]="{'is-invalid': (submited || !signUpForm.controls['password'].pristine ) && 
+                                          [ngClass]="{'is-invalid': !signUpForm.controls['password'].pristine && 
                                                       !passwordsAreEqual}">
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['password'].errors && 
-                                                (submited || !signUpForm.controls['password'].pristine) && 
+                                                !signUpForm.controls['password'].pristine && 
                                                 signUpForm.controls['password'].errors.minlength"
                                     >The password need to have at least 8 characters<br></small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['password'].errors && 
-                                                (submited || !signUpForm.controls['password'].pristine) && 
+                                                !signUpForm.controls['password'].pristine && 
                                                 signUpForm.controls['password'].errors.maxlength"
                                     ><br>The password need to have less than 50 characters<br></small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['password'].errors && 
-                                                (submited || !signUpForm.controls['password'].pristine) && 
+                                                !signUpForm.controls['password'].pristine && 
                                                 signUpForm.controls['password'].errors.pattern"
                                     >The password must have lowercase, uppercase and a special character<br></small>
                                     <small class="text-danger"
-                                          *ngIf="(submited || 
-                                                !signUpForm.controls['password'].pristine ) && 
+                                          *ngIf=" !signUpForm.controls['password'].pristine && 
                                                 !passwordsAreEqual"
                                     >Boths passwords must be equal</small>
                               </div>
-                              <!-- <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid || !passwordsAreEqual">Submit</button> -->
-                              <button type="submit" class="btn btn-primary" >Submit</button>
+                              <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid || !passwordsAreEqual">Submit</button>
+                              <!-- <button type="submit" class="btn btn-primary" >Submit</button> -->
                         </form>
                         <hr>
                         <div class="row">
