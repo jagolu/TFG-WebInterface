@@ -73,7 +73,7 @@ export class SignUpComponent{
       'password': this.signUpForm.controls['password'].value
     }
     this.loading.startLoading();
-    this._authentication.setUserFromForm(user).subscribe(
+    this._authentication.signUp(user).subscribe(
       success=>{
         console.log("success", success);
         this.resetForm(true);
