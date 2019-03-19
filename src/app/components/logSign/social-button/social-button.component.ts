@@ -12,8 +12,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SocialButtonComponent implements OnInit{
 
   @Input() superId:string;
-  @ViewChild(AlertComponent) alert:AlertComponent;
-  @ViewChild(LoadingComponent) loading:LoadingComponent;
 
   private googleMsg:string = "Log in with Google";
   private facebookMsg:string = "Log in with Facebook";
@@ -28,9 +26,8 @@ export class SocialButtonComponent implements OnInit{
 
   socialSignIn(type:SocialType){
     if(!this.loggedIn){
-      this.loading.startLoading();
-      let alertType:AlertType = AlertType.FACEBOOKERROR.toUpperCase() == type.toUpperCase() ?
-        AlertType.FACEBOOKERROR : AlertType.GOOGLEERROR;
+      // let alertType:AlertType = AlertType.FACEBOOKERROR.toUpperCase() == type.toUpperCase() ?
+      //   AlertType.FACEBOOKERROR : AlertType.GOOGLEERROR;
       let providerId = type == SocialType.FACEBOOK ?
         FacebookLoginProvider.PROVIDER_ID : GoogleLoginProvider.PROVIDER_ID;
         
@@ -41,7 +38,6 @@ export class SocialButtonComponent implements OnInit{
         //TODO launch alert
         console.log(Error);
       })
-      this.loading.stopLoading();
     }
     else console.log("ya estas logueado");
     //TODO MANEJAR LO QUE PASA CUANDO YA ESTA EL USUARIO LOGUEADO Y HACE CLIC EN EL BOTON
