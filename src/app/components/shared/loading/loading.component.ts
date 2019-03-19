@@ -16,7 +16,7 @@ export class LoadingComponent{
   }
 
   startLoading(){
-    this.saveH();
+    this.saveWindowSize();
     this.resize(true);
   }
 
@@ -24,9 +24,9 @@ export class LoadingComponent{
     this.resize(false)
   }
 
-  private saveH(){
+  private saveWindowSize(){
     this.mainH = (document.querySelector(".main") as HTMLElement).style.height;
-    this.col_height = (document.querySelector("#colId") as HTMLElement).style.height ;
+    this.col_height = this.eR.nativeElement.children[0].children[0].style.height;
   }
 
   private resize(hide:boolean){
@@ -36,9 +36,9 @@ export class LoadingComponent{
         "none":"block";
     (document.querySelector(".main") as HTMLElement).style.height = hide ? 
         window.innerHeight+"px" : this.mainH+"px";
-    (document.querySelector("#colId") as HTMLElement).style.height = hide ?
+    this.eR.nativeElement.children[0].children[0].style.height = hide ?
         window.innerHeight+"px" : this.col_height+"px";
-    (document.querySelector("#loadingIconId") as HTMLElement).style.marginTop = hide?
+    this.eR.nativeElement.children[0].children[0].children[0].style.marginTop = hide?
         "25%" : "0";
     this.eR.nativeElement.style.display = hide ? "block" : "none";
   }
