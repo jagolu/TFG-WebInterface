@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { AuthService, SocialUser, GoogleLoginProvider } from 'angularx-social-login';
+import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthenticationService {
 
-  private user: SocialUser;
+  private _baseURL : string = "https://localhost:44360/api/";
+  private _user: SocialUser;
+
+  private _accessToken: string;
   private loggedIn:boolean;
-  private baseURL : string = "https://localhost:44360/api/";
 
   constructor(private _authS:AuthService, private _http:HttpClient) { }
 
@@ -21,41 +24,39 @@ export class AuthenticationService {
   signOut(){
     if(this.loggedIn) this._authS.signOut();
     this._authS.authState.subscribe( (user)=>{
-      this.user = user;
+      this._user = user;
       this.loggedIn  = (user!=null);
     });
   }
 
-  setUserFromSocialMedia(type:string){
-    this._authS.signIn(GoogleLoginProvider.PROVIDER_ID).then(user=>{
+  logSocialMedia(providerId:any){
+    this._authS.signIn(providerId).then(user=>{
       let bodyRequest = {
         "email": user.email,
         "username": user.firstName,
         "password": null
+        
       }
+      console.log(bodyRequest)
       //TODO ver que pasa aqui y ver que cuando se de el OK redirigir YA LOGUEADO al index
-      return this.postRequest(bodyRequest, "SignUp");
-
+      // return this.postRequest({bodyRequest}, "SignUp");
     }).catch(Error);
   }
 
-  setUserFromForm(user:any){
-    let bodyRequest = {
+  checkEmailValidation(token:string){
+    return this.postRequest({"token": token}, "EmailVerification");
+  }
+
+  signUp(user:User){
+    return this.postRequest({
       "email": user.email,
       "username": user.username,
       "password": user.password
-    };
-    return this.postRequest(bodyRequest, "SignUp");
+    }, "SignUp");
   }
 
-  checkEmailValidation(token:string){
-    let bodyRequest = {
-      "token": token
-    }
-    return this.postRequest(bodyRequest, "EmailVerification");
-  }
-
-  postRequest(body:any, path:string){
+  /*----------------------------------PRIVATE FUNCTIONS-------------------------------------*/
+  private postRequest(body:any, path:string){
     const httpOptions = {
       headers: new HttpHeaders({
         "Access-Control-Allow-Origin": "*",
@@ -63,6 +64,17 @@ export class AuthenticationService {
         "Content-Type": "application/json"
       })
     };
-    return this._http.post(this.baseURL+path, body, httpOptions);
+    return this._http.post(this._baseURL+path, body, httpOptions);
   }
+}
+
+// export enum SocialType {
+//   GOOGLE = "GOOGLE",
+//   FACEBOOK = "FACEBOOK"
+// }
+
+interface User{
+  "email": string,
+  "username": string,
+  "password": string
 }
