@@ -2,17 +2,18 @@
         id="openButton" 
         style="display:none" 
         data-toggle="modal" 
-        data-target="#modalAlert">
-    Invisible button to launch the alert
+        data-target="#alertId"
+>Invisible button to launch the alert
 </button>
 
 <div class="modal fade" 
-    id="modalAlert" 
     tabindex="-1" 
     role="dialog" 
     aria-labelledby="modalAlertTitle" 
     aria-hidden="true"
-    (focusout)="(focusOut())">
+    id="alertId"
+    (focusin)="focusIn()"
+    (focusout)="focusOut()">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">
@@ -27,7 +28,6 @@
             </app-icon>
           </div>
         </div>
-        
       </div>
     </div>
   </div>

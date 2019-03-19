@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
@@ -8,12 +8,16 @@ export class AlertComponent {
   @Input() superId:string;
   private message:string[];
 
-  constructor() { }
+  constructor(private eR:ElementRef) { }
 
   private openTab(){
+    this.focusIn();
+    this.eR.nativeElement.children[0].click();
+  }
+
+  private focusIn(){
     (document.querySelector('#navbarId') as HTMLElement).style.filter = "blur(6px)";
     (document.querySelector('#'+this.superId) as HTMLElement).style.filter = "blur(6px)";
-    (document.querySelector("#openButton") as HTMLElement).click();
   }
 
   private focusOut(){
@@ -22,35 +26,27 @@ export class AlertComponent {
   }
 
   openAlert(type:AlertType){
-    if(type == AlertType.LOSTCONNECTIONERROR) this.message = this.text(AlertType.LOSTCONNECTIONERROR);
-    else if(type == AlertType.SERVERERROR) this.message = this.text(AlertType.SERVERERROR);
-    else if(type == AlertType.VALIDATINGUSERERROR) this.message = this.text(AlertType.VALIDATINGUSERERROR);
-    else if(type == AlertType.EMAILTAKENERROR) this.message = this.text(AlertType.EMAILTAKENERROR);
-    else if(type == AlertType.VERIFICATIONSENT) this.message = this.text(AlertType.VERIFICATIONSENT);
-    else this.message = null;
-
-    if(this.message != null) this.openTab();
-  }
-
-  private text(type:AlertType){
     if(type == AlertType.LOSTCONNECTIONERROR) {
-      return ["Se ha perdido la conexión con el servidor.",
+      this.message = ["Se ha perdido la conexión con el servidor.",
             "Por favor, revisa tu conexión a internet."];
     }
     else if(type == AlertType.SERVERERROR) {
-      return ["Ha habido interno del servidor, vuelva a intentarlo más tarde."]
+      this.message = ["Ha habido interno del servidor, vuelva a intentarlo más tarde."]
     }
     else if(type == AlertType.VALIDATINGUSERERROR) {
-      return [ "Ha habido un error validando los datos, vuelva a intentarlo más tarde." ];
+      this.message = [ "Ha habido un error validando los datos, vuelva a intentarlo más tarde." ];
     }
     else if(type == AlertType.EMAILTAKENERROR) {
-      return [ "El email con el que intenta registrarse ya está registrado"];
+      this.message = [ "El email con el que intenta registrarse ya está registrado"];
     }
     else if(type == AlertType.VERIFICATIONSENT) {
-      return ["Su registro se ha casi completado, solo es necesario un paso más.",
+      this.message = ["Su registro se ha casi completado, solo es necesario un paso más.",
         "Verifique su correo mediante el enlace que se le ha enviado al mismo."];
     }
-    return null;
+    else if(type == AlertType.GOOGLEERROR || type == AlertType.FACEBOOKERROR){
+      this.message = [`Ha habido un error con ${type}, vuelva a intentarlo más tarde.`];
+    }
+    this.openTab();
   }
 }
 
@@ -60,4 +56,6 @@ export enum AlertType{
   VALIDATINGUSERERROR = "VALIDATINGUSERERROR",
   EMAILTAKENERROR = "EMAILTAKENERROR",
   VERIFICATIONSENT = "VERIFICATIONSENT",
+  GOOGLEERROR = "Google",
+  FACEBOOKERROR = "Facebook"
 }
