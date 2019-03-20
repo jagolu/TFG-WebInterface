@@ -1,6 +1,4 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
-import { AlertComponent, AlertType } from '../../shared/alert/alert.component';
-import { LoadingComponent } from '../../shared/loading/loading.component';
 import { SocialUser, AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
