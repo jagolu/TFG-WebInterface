@@ -18,9 +18,7 @@ export class SignUpComponent{
   passwordType: string;
   passwordsAreEqual: boolean;
 
-  constructor(private _authentication:AuthenticationService, 
-              private loading:LoadingService,
-              private alert:AlertService) {
+  constructor(private _authentication:AuthenticationService) {
     this.passwordType = "password"
     this.passwordsAreEqual = false;
 
