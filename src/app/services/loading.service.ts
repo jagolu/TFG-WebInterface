@@ -26,7 +26,6 @@ export class LoadingService {
   }
 
   private resize(hide:boolean){
-    console.log("resizeing");
     this.navbar.style.display = hide ? "none" : "flex";
     this.outlet.style.display = hide ? "none" : "block";
     this.loading.style.display = hide ? "block" : "none";
