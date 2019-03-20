@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService, SocialUser } from 'angularx-social-login';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { AlertType, AlertService } from './alert.service';
+import { throwError } from 'rxjs';
+import { LoadingService } from './loading.service';
+
 
 
 @Injectable({
@@ -15,10 +20,11 @@ export class AuthenticationService {
   private _accessToken: string;
   private loggedIn:boolean;
 
-  constructor(private _authS:AuthService, private _http:HttpClient) { }
+  constructor(private _authS:AuthService, private _http:HttpClient,
+              private loading:LoadingService, private alert:AlertService) { }
 
   isLogged(){
-    console.log("asdf");
+    //TODO implement this
   }
 
   signOut(){
@@ -27,6 +33,7 @@ export class AuthenticationService {
       this._user = user;
       this.loggedIn  = (user!=null);
     });
+    //TODO send request to unsign
   }
 
   logSocialMedia(providerId:any){
@@ -47,16 +54,47 @@ export class AuthenticationService {
     return this.postRequest({"token": token}, "EmailVerification");
   }
 
-  signUp(user:User){
+  signUp(user:UserSign){
     return this.postRequest({
       "email": user.email,
       "username": user.username,
       "password": user.password
-    }, "SignUp");
+    }, "Authentication/SignUp").pipe(
+      map(_=>"asdfasdf"),
+      catchError( (e:HttpErrorResponse)=>{
+        console.log(e);
+        if(e.status == 400 &&  e.error["error"]=="EmailAlreadyExistsError"){
+          this.alert.openAlert(AlertType.EMAILTAKENERROR);
+        }
+        if(e.status == 400 && (e.error['email'] || e.error['password'] || e.error['username'] )) {
+          this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+        }
+        if(e.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
+        if(e.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+        this.loading.stopLoading();
+        return throwError("");
+      })
+    );
   }
+
+  logIn(user:UserLog){
+    return this.postRequest({
+      "email": user.email,
+      "password": user.password
+    }, "Authentication/LogIn").pipe(map(
+      ok=>{
+        
+      }, error=>{
+        
+      }
+    ));
+  }
+
+  //TODO change catchError to a private function handling error
 
   /*----------------------------------PRIVATE FUNCTIONS-------------------------------------*/
   private postRequest(body:any, path:string){
+    this.loading.startLoading();
     const httpOptions = {
       headers: new HttpHeaders({
         "Access-Control-Allow-Origin": "*",
@@ -68,13 +106,13 @@ export class AuthenticationService {
   }
 }
 
-// export enum SocialType {
-//   GOOGLE = "GOOGLE",
-//   FACEBOOK = "FACEBOOK"
-// }
-
-interface User{
+export interface UserSign{
   "email": string,
   "username": string,
+  "password": string
+}
+
+export interface UserLog{
+  "email": string,
   "password": string
 }
