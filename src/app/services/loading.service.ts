@@ -10,7 +10,6 @@ export class LoadingService {
   private outlet;
 
   constructor() { 
-    console.log("iniziado")
     this.loading = (document.querySelector("#loading") as HTMLElement);
     this.navbar = (document.querySelector("#navbarId") as HTMLElement);
     this.outlet = (document.querySelector(".main") as HTMLElement);
