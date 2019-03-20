@@ -1,8 +1,8 @@
 <button type="button" 
-        id="openButton" 
+        id="alertButton" 
         style="display:none" 
         data-toggle="modal" 
-        data-target="#alertId"
+        data-target="#alertMessage"
 >Invisible button to launch the alert
 </button>
 
@@ -11,7 +11,7 @@
     role="dialog" 
     aria-labelledby="modalAlertTitle" 
     aria-hidden="true"
-    id="alertId"
+    id="alertMessage"
     (focusin)="focusIn()"
     (focusout)="focusOut()">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -19,7 +19,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-10">
-              <p *ngFor="let msg of message">{{msg}}</p>
+            <p id="alertTextId" style="white-space: pre;"></p>
           </div>
           <div class="col-1 align-self-end">
             <app-icon firstIcon="fa-times-circle"
