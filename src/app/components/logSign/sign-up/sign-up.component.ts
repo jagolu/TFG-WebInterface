@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AlertComponent, AlertType } from 'src/app/components/shared/alert/alert.component';
-import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
+import { AuthenticationService, UserSign } from 'src/app/services/authentication.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 
 @Component({
@@ -14,14 +14,13 @@ import { LoadingComponent } from 'src/app/components/shared/loading/loading.comp
 })
 export class SignUpComponent{
 
-  @ViewChild(AlertComponent) alert:AlertComponent;
-  @ViewChild(LoadingComponent) loading:LoadingComponent;
-
   signUpForm: FormGroup;
   passwordType: string;
   passwordsAreEqual: boolean;
 
-  constructor(private _authentication:AuthenticationService) {
+  constructor(private _authentication:AuthenticationService, 
+              private loading:LoadingService,
+              private alert:AlertService) {
     this.passwordType = "password"
     this.passwordsAreEqual = false;
 
@@ -67,29 +66,16 @@ export class SignUpComponent{
   }
 
   private signUp(){ //TODO quitar los console log
-    let user = {
+    let user:UserSign = {
       'email' : this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
       'password': this.signUpForm.controls['password'].value
     }
-    this.loading.startLoading();
     this._authentication.signUp(user).subscribe(
-      success=>{
-        console.log("success", success);
-        this.resetForm(true);
-        this.loading.stopLoading();
-        this.alert.openAlert(AlertType.VERIFICATIONSENT);
-      },
-      error=>{
-        console.log("error", error);
-        if(error.status == 400 &&  error.error["error"]=="EmailAlreadyExistsError"){
-          this.alert.openAlert(AlertType.EMAILTAKENERROR);
-        }
-        if(error.status == 400 && (error.error['email'] || error.error['password'] || error.error['username'] )) this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-        if(error.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
-        if(error.status==0)  this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
-        this.resetForm(false);
-        this.loading.stopLoading();
+      ok=>{
+
+      },err=>{
+        //TODO resetForm
       }
     );
   }
