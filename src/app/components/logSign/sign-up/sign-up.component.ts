@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService, UserSign } from 'src/app/services/authentication.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { AlertService } from 'src/app/services/alert.service';
 
 
 @Component({
