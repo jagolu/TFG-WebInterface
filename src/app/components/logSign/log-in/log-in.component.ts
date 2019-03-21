@@ -57,12 +57,6 @@ export class LogInComponent {
       'email' : this.logInForm.controls['email'].value,
       'password': this.logInForm.controls['password'].value
     }
-    this._authentication.logIn(user).subscribe(
-      ok=>{
-
-      },err=>{
-        //TODO resetForm
-      }
-    );
+    this._authentication.logIn(user).subscribe();
   }
 }
