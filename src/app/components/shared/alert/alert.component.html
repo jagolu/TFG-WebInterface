@@ -1,27 +1,24 @@
 <button type="button" 
-        id="alertButton" 
+        id="openButton" 
         style="display:none" 
         data-toggle="modal" 
-        data-target="#alertMessage"
->Invisible button to launch the alert
+        data-target="#modalAlert">
+    Invisible button to launch the alert
 </button>
 
 <div class="modal fade" 
+    id="modalAlert" 
     tabindex="-1" 
     role="dialog" 
     aria-labelledby="modalAlertTitle" 
     aria-hidden="true"
-    id="alertMessage"
-    (focusin)="focusIn()"
-    (focusout)="focusOut()">
+    (focusout)="(focusOut())">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body">
         <div class="row">
           <div class="col-10">
-            <p id="alertTextId1"></p>
-            <p id="alertTextId2"></p>
-            <p id="alertTextId3"></p>
+              <p *ngFor="let msg of message">{{msg}}</p>
           </div>
           <div class="col-1 align-self-end">
             <app-icon firstIcon="fa-times-circle"
@@ -30,6 +27,7 @@
             </app-icon>
           </div>
         </div>
+        
       </div>
     </div>
   </div>

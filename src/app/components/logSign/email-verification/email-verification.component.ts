@@ -13,6 +13,7 @@ export class EmailVerificationComponent implements AfterViewInit{
   @ViewChild(LoadingComponent) loading:LoadingComponent;
 
   private token:string;
+  private msg:string = "asdf"
 
   constructor(private aR:ActivatedRoute, private _authS:AuthenticationService) { 
       this.token = this.aR.snapshot.paramMap.get('token');
@@ -23,12 +24,15 @@ export class EmailVerificationComponent implements AfterViewInit{
   }
 
   checkEmail(){
+    this.loading.startLoading();
     this._authS.checkEmailValidation(this.token).subscribe(
       success=>{
         console.log("success");
+        this.loading.stopLoading();
       },
       error=>{
         console.log("error");
+        this.loading.stopLoading();
       }
     )
   }

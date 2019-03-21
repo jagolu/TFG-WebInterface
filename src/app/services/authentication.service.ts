@@ -1,79 +1,61 @@
 import { Injectable } from '@angular/core';
-import { AuthService, SocialUser } from 'angularx-social-login';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { AlertType, AlertService } from './alert.service';
-import { throwError } from 'rxjs';
-import { LoadingService } from './loading.service';
-
+import { AuthService, SocialUser, GoogleLoginProvider } from 'angularx-social-login';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthenticationService {
 
-  private _baseURL : string = "https://localhost:44360/api/";
-  private _user: SocialUser;
-
+  private user: SocialUser;
   private loggedIn:boolean;
+  private baseURL : string = "https://localhost:44360/api/";
 
-  constructor(private _authS:AuthService, private _http:HttpClient,
-              private loading:LoadingService, private alert:AlertService) { }
+  constructor(private _authS:AuthService, private _http:HttpClient) { }
 
   isLogged(){
-    //TODO implement this
+    console.log("asdf");
   }
-
-
 
   signOut(){
     if(this.loggedIn) this._authS.signOut();
     this._authS.authState.subscribe( (user)=>{
-      this._user = user;
+      this.user = user;
       this.loggedIn  = (user!=null);
     });
-    //TODO send request to unsign
   }
 
-  logSocialMedia(providerId:any){
-    this._authS.signIn(providerId).then(user=>{
+  setUserFromSocialMedia(type:string){
+    this._authS.signIn(GoogleLoginProvider.PROVIDER_ID).then(user=>{
       let bodyRequest = {
         "email": user.email,
         "username": user.firstName,
         "password": null
-        
       }
-      console.log(bodyRequest)
       //TODO ver que pasa aqui y ver que cuando se de el OK redirigir YA LOGUEADO al index
-      // return this.postRequest({bodyRequest}, "SignUp");
+      return this.postRequest(bodyRequest, "SignUp");
+
     }).catch(Error);
   }
 
-  checkEmailValidation(token:string){
-    return this.postRequest({"token": token}, "EmailVerification");
-  }
-
-  signUp(user:UserSign){
-    return this.postRequest({
+  setUserFromForm(user:any){
+    let bodyRequest = {
       "email": user.email,
       "username": user.username,
       "password": user.password
-    }, "Authentication/SignUp");
+    };
+    return this.postRequest(bodyRequest, "SignUp");
   }
 
-  logIn(user:UserLog){
-    return this.postRequest({
-      "email": user.email,
-      "password": user.password
-    }, "Authentication/LogIn");
+  checkEmailValidation(token:string){
+    let bodyRequest = {
+      "token": token
+    }
+    return this.postRequest(bodyRequest, "EmailVerification");
   }
 
-  /*----------------------------------PRIVATE FUNCTIONS-------------------------------------*/
-
-  private postRequest(body:any, path:string){
-    this.loading.startLoading();
+  postRequest(body:any, path:string){
     const httpOptions = {
       headers: new HttpHeaders({
         "Access-Control-Allow-Origin": "*",
@@ -81,17 +63,6 @@ export class AuthenticationService {
         "Content-Type": "application/json"
       })
     };
-    return this._http.post(this._baseURL+path, body, httpOptions);
+    return this._http.post(this.baseURL+path, body, httpOptions);
   }
-}
-
-export interface UserSign{
-  "email": string,
-  "username": string,
-  "password": string
-}
-
-export interface UserLog{
-  "email": string,
-  "password": string
 }
