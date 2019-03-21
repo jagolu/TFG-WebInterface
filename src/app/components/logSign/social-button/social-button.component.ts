@@ -22,10 +22,8 @@ export class SocialButtonComponent implements OnInit{
     this.sign();
   }
 
-  socialSignIn(type:SocialType){
+  private socialSignIn(type:SocialType){
     if(!this.loggedIn){
-      // let alertType:AlertType = AlertType.FACEBOOKERROR.toUpperCase() == type.toUpperCase() ?
-      //   AlertType.FACEBOOKERROR : AlertType.GOOGLEERROR;
       let providerId = type == SocialType.FACEBOOK ?
         FacebookLoginProvider.PROVIDER_ID : GoogleLoginProvider.PROVIDER_ID;
         
@@ -37,8 +35,6 @@ export class SocialButtonComponent implements OnInit{
         console.log(Error);
       })
     }
-    else console.log("ya estas logueado");
-    //TODO MANEJAR LO QUE PASA CUANDO YA ESTA EL USUARIO LOGUEADO Y HACE CLIC EN EL BOTON
   }
 
   private sign(){
