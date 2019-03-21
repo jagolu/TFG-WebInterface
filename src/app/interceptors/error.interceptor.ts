@@ -15,35 +15,28 @@ import { LoadingService } from '../services/loading.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private alert:AlertService, private loading:LoadingService) { 
-        this.loading.startLoading();
-    }
-
-
+    constructor(private alert:AlertService, private loading:LoadingService) { }
 
     intercept(
         req: HttpRequest<any>, 
         next: HttpHandler
     ):Observable<HttpEvent<any>> {
 
-        return next.handle(req).pipe(
-            tap(
-                (ok)=>{
-                    if(ok instanceof HttpResponse) console.log("ok", ok);
-                },
-                (err:HttpErrorResponse)=>{
-                    if(err.status == 400 &&  err.error["error"]=="EmailAlreadyExistsError"){
-                        this.alert.openAlert(AlertType.EMAILTAKENERROR);
-                    }
-                    if(err.status == 400 && (err.error['email'] || err.error['password'] || err.error['username'] )) {
-                        this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-                    }
-                    if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
-                    if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+        return next.handle(req).pipe(tap(
+            (ok)=>{ if(ok instanceof HttpResponse) {
+                if(!ok.body.token){
+                        
+                }
+                else{
+                    this.setToken(ok.body.token);
                     this.loading.stopLoading();
                 }
-            )
-        )
+            }},
+            (err:HttpErrorResponse)=>{
+                this.handleError(err);
+                this.loading.stopLoading();
+            }
+        ));
     }
 
     
@@ -53,5 +46,22 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     private getToken():string{
         return localStorage.getItem("token");
+    }
+
+    private handleError(err:HttpErrorResponse){
+        if(err.status == 400 &&  err.error["error"] == "EmailAlreadyExistsError"){
+            this.alert.openAlert(AlertType.EMAILTAKENERROR);
+        }
+        if(err.status == 400 &&  err.error["error"] == "WrongEmailOrPassword"){
+            this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
+        }
+        if(err.status == 400 &&  err.error["error"] == "NotValidatedYet"){
+            this.alert.openAlert(AlertType.NOTVALIDATEDYET);
+        }
+        if(err.status == 400 && (err.error['email'] || err.error['password'] || err.error['username'] )) {
+            this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+        }
+        if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
+        if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
     }
 }
