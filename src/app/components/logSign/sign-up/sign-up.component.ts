@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService, UserSign } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AlertComponent, AlertType } from 'src/app/components/shared/alert/alert.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 
 
 @Component({
@@ -11,6 +13,9 @@ import { AuthenticationService, UserSign } from 'src/app/services/authentication
   ]
 })
 export class SignUpComponent{
+
+  @ViewChild(AlertComponent) alert:AlertComponent;
+  @ViewChild(LoadingComponent) loading:LoadingComponent;
 
   signUpForm: FormGroup;
   passwordType: string;
@@ -62,16 +67,29 @@ export class SignUpComponent{
   }
 
   private signUp(){ //TODO quitar los console log
-    let user:UserSign = {
+    let user = {
       'email' : this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
       'password': this.signUpForm.controls['password'].value
     }
-    this._authentication.signUp(user).subscribe(
-      ok=>{
-
-      },err=>{
-        //TODO resetForm
+    this.loading.startLoading();
+    this._authentication.setUserFromForm(user).subscribe(
+      success=>{
+        console.log("success", success);
+        this.resetForm(true);
+        this.loading.stopLoading();
+        this.alert.openAlert(AlertType.VERIFICATIONSENT);
+      },
+      error=>{
+        console.log("error", error);
+        if(error.status == 400 &&  error.error["error"]=="EmailAlreadyExistsError"){
+          this.alert.openAlert(AlertType.EMAILTAKENERROR);
+        }
+        if(error.status == 400 && (error.error['email'] || error.error['password'] || error.error['username'] )) this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+        if(error.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
+        if(error.status==0)  this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+        this.resetForm(false);
+        this.loading.stopLoading();
       }
     );
   }
