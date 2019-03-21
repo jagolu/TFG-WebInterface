@@ -54,18 +54,11 @@
                                                 logInForm.controls['password'].errors.pattern"
                                     >The password must have lowercase, uppercase and a special character<br></small>
                               </div>
-                              <button type="submit" class="btn btn-primary" [disabled]="!logInForm.valid">Submit</button>
-                              <!-- <button type="submit" class="btn btn-primary" >Submit</button> -->
+                              <!-- <button type="submit" class="btn btn-primary" [disabled]="!logInForm.valid">Submit</button> -->
+                              <button type="submit" class="btn btn-primary" >Submit</button>
                         </form>
                         <hr>
-                        <div class="row">
-                              <div class="col-md-6 mb-md-0 mb-2">
-                                    <app-facebook></app-facebook>
-                              </div>
-                              <div class="col-md-6">
-                                    <app-google></app-google>
-                              </div>
-                        </div>
+                        <app-social-button superId="signUpFormId"></app-social-button>
                   </div>
             </div>
       </div>
