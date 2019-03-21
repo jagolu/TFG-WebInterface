@@ -20,16 +20,21 @@ import { SocialButtonComponent } from './components/logSign/social-button/social
 import { AuthenticationService } from './services/authentication.service';
 
 
+// Interceptors
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+
+
 // Routing
 import { AppRoutingModule } from './app-routing.module';
+
 
 // New modules import
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 
 @NgModule({
@@ -57,6 +62,16 @@ import { RouterModule } from '@angular/router';
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
     },
     AuthenticationService
   ],
