@@ -17,7 +17,6 @@ export class AuthenticationService {
   private _baseURL : string = "https://localhost:44360/api/";
   private _user: SocialUser;
 
-  private _accessToken: string;
   private loggedIn:boolean;
 
   constructor(private _authS:AuthService, private _http:HttpClient,
@@ -26,6 +25,8 @@ export class AuthenticationService {
   isLogged(){
     //TODO implement this
   }
+
+
 
   signOut(){
     if(this.loggedIn) this._authS.signOut();
@@ -59,40 +60,18 @@ export class AuthenticationService {
       "email": user.email,
       "username": user.username,
       "password": user.password
-    }, "Authentication/SignUp").pipe(
-      map(_=>"asdfasdf"),
-      catchError( (e:HttpErrorResponse)=>{
-        console.log(e);
-        if(e.status == 400 &&  e.error["error"]=="EmailAlreadyExistsError"){
-          this.alert.openAlert(AlertType.EMAILTAKENERROR);
-        }
-        if(e.status == 400 && (e.error['email'] || e.error['password'] || e.error['username'] )) {
-          this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-        }
-        if(e.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
-        if(e.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
-        this.loading.stopLoading();
-        return throwError("");
-      })
-    );
+    }, "Authentication/SignUp");
   }
 
   logIn(user:UserLog){
     return this.postRequest({
       "email": user.email,
       "password": user.password
-    }, "Authentication/LogIn").pipe(map(
-      ok=>{
-        
-      }, error=>{
-        
-      }
-    ));
+    }, "Authentication/LogIn");
   }
 
-  //TODO change catchError to a private function handling error
-
   /*----------------------------------PRIVATE FUNCTIONS-------------------------------------*/
+
   private postRequest(body:any, path:string){
     this.loading.startLoading();
     const httpOptions = {
