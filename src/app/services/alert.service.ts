@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Alert } from 'selenium-webdriver';
 
 
 @Injectable({
@@ -51,6 +52,13 @@ export class AlertService {
     else if(type == AlertType.GOOGLEERROR || type == AlertType.FACEBOOKERROR){
       return [`Ha habido un error con ${type}, vuelva a intentarlo más tarde.`];
     }
+    else if(type == AlertType.WRONGEMAILORPASSWORD){
+      return ["El correo o contraseña introducidos no son correctos.",
+          "Vuelva a intentarlo"];
+    }
+    else if(type == AlertType.NOTVALIDATEDYET){
+      return ["El correo no se ha validado aun, revise su correo."];
+    }
 
   }
 }
@@ -62,5 +70,8 @@ export enum AlertType{
   EMAILTAKENERROR = "EMAILTAKENERROR",
   VERIFICATIONSENT = "VERIFICATIONSENT",
   GOOGLEERROR = "Google",
-  FACEBOOKERROR = "Facebook"
+  FACEBOOKERROR = "Facebook",
+  WRONGEMAILORPASSWORD = "WRONGEMAILORPASSWORD",
+  NOTVALIDATEDYET = "NOTVALIDATEDYET"
 }
+//TODO ADD NONEXISTINGTOKEN
