@@ -13,7 +13,6 @@ const ROUTES: Routes = [
   { path: 'signUp', component: SignUpComponent },
   { path: 'logIn', component: LogInComponent},
   { path: 'emailVerification/:token', component: EmailVerificationComponent},
-  { path: 'index', component: HomeComponent},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 
