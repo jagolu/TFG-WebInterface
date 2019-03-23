@@ -18,10 +18,11 @@ export class HeaderInterceptor implements HttpInterceptor {
     ):Observable<HttpEvent<any>> {
        
         let url = req.url.toString();
+        console.log("showurl--->", url)
         let updateReq = req.clone();
 
 
-        if(!url.includes("LogIn") && !url.includes("SignUp")){
+        if(!url.includes("LogIn") && !url.includes("SignUp") && !url.includes("Validate")){
             updateReq = req.clone({
                 headers: req.headers.set('Authorization', "Bearer "+this.getToken())
             })

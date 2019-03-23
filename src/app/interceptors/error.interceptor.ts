@@ -24,13 +24,16 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         return next.handle(req).pipe(tap(
             (ok)=>{ if(ok instanceof HttpResponse) {
-                if(!ok.body.token){
-                        
-                }
-                else{
-                    this.setToken(ok.body.token);
-                    this.loading.stopLoading();
-                }
+                console.log("url1",req.url)
+                if(req.url.includes("SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
+                this.loading.stopLoading();
+                
+                // if(!ok.body.token){
+
+                // }
+                // else{
+                //     this.setToken(ok.body.token);
+                // }
             }},
             (err:HttpErrorResponse)=>{
                 this.handleError(err);
