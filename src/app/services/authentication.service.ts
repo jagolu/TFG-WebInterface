@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthService, SocialUser } from 'angularx-social-login';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { AlertType, AlertService } from './alert.service';
-import { throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoadingService } from './loading.service';
-
+import { LogUser, SignUser } from 'src/app/models/models';
 
 
 @Injectable({
@@ -14,19 +11,18 @@ import { LoadingService } from './loading.service';
 
 export class AuthenticationService {
 
-  private _baseURL : string = "https://localhost:44360/api/";
+  private _baseURL : string = "https://localhost:5001/";
   private _user: SocialUser;
-
+  private _authPath : string = "Authorization/";
   private loggedIn:boolean;
 
+  
   constructor(private _authS:AuthService, private _http:HttpClient,
-              private loading:LoadingService, private alert:AlertService) { }
+              private loading:LoadingService) { }
 
   isLogged(){
     //TODO implement this
   }
-
-
 
   signOut(){
     if(this.loggedIn) this._authS.signOut();
@@ -52,46 +48,64 @@ export class AuthenticationService {
   }
 
   checkEmailValidation(token:string){
-    return this.postRequest({"token": token}, "EmailVerification");
+    return this.getRequest(this._authPath+"Validate",[
+      {
+        param: "emailToken",
+        value: token
+      }
+    ]);
   }
 
-  signUp(user:UserSign){
-    return this.postRequest({
-      "email": user.email,
-      "username": user.username,
-      "password": user.password
-    }, "Authentication/SignUp");
+  signUp(user:SignUser){
+    return this.postRequest(user, this._authPath+"SignUp");
   }
 
-  logIn(user:UserLog){
-    return this.postRequest({
-      "email": user.email,
-      "password": user.password
-    }, "Authentication/LogIn");
+  logIn(user:LogUser){
+    return this.postRequest(user, this._authPath+"LogIn");
   }
 
   /*----------------------------------PRIVATE FUNCTIONS-------------------------------------*/
 
   private postRequest(body:any, path:string){
     this.loading.startLoading();
-    const httpOptions = {
-      headers: new HttpHeaders({
+    return this._http.post(this._baseURL+path, body, {
+      headers: this.basicHeaders()
+    });
+  }
+
+  private getRequest(path:string, params?:paramValue[]){
+    this.loading.startLoading();
+    let options = params ? {
+      params: this.params(params),
+      headers:this.basicHeaders()
+    } : {headers:this.basicHeaders()};
+
+    return this._http.get(this._baseURL+path,options);
+  }
+
+  private params(params:paramValue[]):HttpParams{
+    let urlParams : HttpParams = new HttpParams();
+    params.forEach(param => {
+      urlParams = urlParams.append(param.param, param.value);
+    });
+    return urlParams;
+  }
+
+  private basicHeaders(){
+    return new HttpHeaders({
         "Access-Control-Allow-Origin": "*",
         "Accept": "application/json",
         "Content-Type": "application/json"
       })
-    };
-    return this._http.post(this._baseURL+path, body, httpOptions);
+    ;
   }
 }
 
-export interface UserSign{
-  "email": string,
-  "username": string,
-  "password": string
+interface paramValue{
+  param:string;
+  value:string;
 }
 
-export interface UserLog{
-  "email": string,
-  "password": string
-}
+
+
+
