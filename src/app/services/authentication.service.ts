@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoadingService } from './loading.service';
-import { LogUser, SignUser } from 'src/app/models/models';
+import { LogUser, SignUser, SocialLog } from 'src/app/models/models';
 
 
 @Injectable({
@@ -33,18 +33,8 @@ export class AuthenticationService {
     //TODO send request to unsign
   }
 
-  logSocialMedia(providerId:any){
-    this._authS.signIn(providerId).then(user=>{
-      let bodyRequest = {
-        "email": user.email,
-        "username": user.firstName,
-        "password": null
-        
-      }
-      console.log(bodyRequest)
-      //TODO ver que pasa aqui y ver que cuando se de el OK redirigir YA LOGUEADO al index
-      // return this.postRequest({bodyRequest}, "SignUp");
-    }).catch(Error);
+  logSocialMedia(user:SocialLog){
+    return this.postRequest(user, this._authPath+"SocialLog");
   }
 
   checkEmailValidation(token:string){
@@ -93,11 +83,10 @@ export class AuthenticationService {
 
   private basicHeaders(){
     return new HttpHeaders({
-        "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      })
-    ;
+      "Access-Control-Allow-Origin": "*",
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    });
   }
 }
 

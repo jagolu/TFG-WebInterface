@@ -1,6 +1,7 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SocialUser, AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+
 
 @Component({
   selector: 'app-social-button',
@@ -26,10 +27,19 @@ export class SocialButtonComponent implements OnInit{
     if(!this.loggedIn){
       let providerId = type == SocialType.FACEBOOK ?
         FacebookLoginProvider.PROVIDER_ID : GoogleLoginProvider.PROVIDER_ID;
-        
+
       this._authS.signIn(providerId).then(user=>{
-        //TODO login with user
-        // this._authenticationS.logSocialMedia(type);
+        
+        this._authenticationS.logSocialMedia({
+          "authToken": type==SocialType.FACEBOOK ? user.authToken : user.idToken,
+          "email": user.email,
+          "firstName": user.firstName,
+          "id": user.id,
+          "socialProvider": type 
+        }).subscribe(
+          ok=>console.log(ok),
+          err=>console.log(err)
+        )
       }).catch(Error=>{
         //TODO launch alert
         console.log(Error);
@@ -39,6 +49,7 @@ export class SocialButtonComponent implements OnInit{
 
   private sign(){
     this._authS.authState.subscribe( user=>{
+      console.log(user);
       this.user = user;
       this.loggedIn = (user!=null);
       this.googleMsg = (this.loggedIn && user.provider=="GOOGLE") ?
