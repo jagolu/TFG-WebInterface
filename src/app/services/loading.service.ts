@@ -1,25 +1,20 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoadingService implements OnInit{
+export class LoadingService{
 
   private loading;
   private navbar;
   private outlet;
 
-  constructor() { 
+  constructor() { }
+
+  startLoading(){
     this.loading = (document.querySelector("#loading") as HTMLElement);
     this.navbar = (document.querySelector("#navbarId") as HTMLElement);
     this.outlet = (document.querySelector(".main") as HTMLElement);
-  }
-
-  ngOnInit(){
-    this.loading.style.display = "none";
-  }
-
-  startLoading(){
     this.resize(true);
   }
 
