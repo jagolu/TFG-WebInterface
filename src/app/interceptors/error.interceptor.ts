@@ -11,47 +11,46 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private alert:AlertService, private loading:LoadingService) { }
+    constructor(private alert:AlertService, 
+                private loading:LoadingService,
+                private _authS:AuthenticationService) { }
 
     intercept(
         req: HttpRequest<any>, 
         next: HttpHandler
     ):Observable<HttpEvent<any>> {
-
+        console.log("adfasdf");
         return next.handle(req).pipe(tap(
-            (ok)=>{ if(ok instanceof HttpResponse) {
-                console.log("url1",req.url)
-                if(req.url.includes("SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
+            (ok)=>{ 
+                if(ok instanceof HttpResponse) {
+                this.showSuccessAlert(req.url);
                 this.loading.stopLoading();
-                
-                // if(!ok.body.token){
-
-                // }
-                // else{
-                //     this.setToken(ok.body.token);
-                // }
+                this.handleAuthentication(ok);
             }},
             (err:HttpErrorResponse)=>{
-                this.handleError(err);
+                this.showErrorAlert(err);
                 this.loading.stopLoading();
             }
         ));
     }
 
-    
-    private setToken(token:string){
-        localStorage.setItem("token", token);
+    private handleAuthentication(ok:any){
+        if(ok.body.token){
+            this.setToken(ok.body.token);
+            this._authS.setLogged();
+        }
     }
 
-    private getToken():string{
-        return localStorage.getItem("token");
+    private showSuccessAlert(url:string){
+        if(url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
     }
 
-    private handleError(err:HttpErrorResponse){
+    private showErrorAlert(err:HttpErrorResponse){
         if(err.status == 400 &&  err.error["error"] == "EmailAlreadyExistsError"){
             this.alert.openAlert(AlertType.EMAILTAKENERROR);
         }
@@ -66,5 +65,19 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
         if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
         if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+    }
+
+/*---------------------------- LOCAL STORAGE ----------------------------*/
+
+    private setToken(token:string){
+        localStorage.setItem("token", token);
+    }
+
+    private getToken():string{
+        return localStorage.getItem("token");
+    }
+
+    private removeToken(){
+        localStorage.removeItem("token");
     }
 }
