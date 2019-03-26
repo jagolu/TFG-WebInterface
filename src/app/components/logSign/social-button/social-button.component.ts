@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { SocialUser, AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { Component } from '@angular/core';
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AlertService, AlertType } from 'src/app/services/alert.service';
 
 
 
@@ -9,16 +10,11 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './social-button.component.html',
   styleUrls: ['./social-button.component.css']
 })
-export class SocialButtonComponent implements OnInit{
+export class SocialButtonComponent{
 
-  private user:SocialUser;
-  private loggedIn:boolean;
-
-  constructor(private _authS:AuthService, private _authenticationS:AuthenticationService) { }
-
-  ngOnInit(){
-    // this._authS.signOut().catch(Error);
-  }
+  constructor(private _authS:AuthService, 
+              private _authenticationS:AuthenticationService,
+              private _alert:AlertService) { }
 
   private socialSignIn(type:SocialType){
     let providerId = type == SocialType.FACEBOOK ?
@@ -33,10 +29,7 @@ export class SocialButtonComponent implements OnInit{
         "id": user.id,
         "socialProvider": type 
       }).subscribe()
-    }).catch(Error=>{
-      //TODO launch alert
-      console.log("catchError",Error);
-    });
+    }).catch(_=> this._alert.openAlert(AlertType.SOCIALERROR));
   }
 }
 
