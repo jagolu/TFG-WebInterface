@@ -18,7 +18,6 @@ export class HeaderInterceptor implements HttpInterceptor {
     ):Observable<HttpEvent<any>> {
        
         let url = req.url.toString();
-        console.log("showurl--->", url)
         let updateReq = req.clone();
 
 
