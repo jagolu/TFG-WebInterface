@@ -32,13 +32,19 @@
         <button class="btn btn-outline-success mr-sm-2" 
               [routerLink]="['logIn']" 
               type="button"
+              *ngIf="!authS.isAuthenticated()"
         >Log In</button>
         <button class="btn btn-outline-info mr-sm-2" 
               [routerLink]="['signUp']" 
               type="button"
+              *ngIf="!authS.isAuthenticated()"
         >Sign Up</button>
         <!-- TODO do it well -->
-        <button class="btn btn-outline-danger mr-sm-2" (click)="signOut()" type="button">Log out</button>
+        <button class="btn btn-outline-danger mr-sm-2" 
+                (click)="logOut()" 
+                type="button"
+                *ngIf="authS.isAuthenticated()"
+        >Log out</button>
       </div>
     </div>
   </div>

@@ -24,15 +24,17 @@ export class ErrorInterceptor implements HttpInterceptor {
         req: HttpRequest<any>, 
         next: HttpHandler
     ):Observable<HttpEvent<any>> {
-        console.log("adfasdf");
         return next.handle(req).pipe(tap(
             (ok)=>{ 
                 if(ok instanceof HttpResponse) {
-                this.showSuccessAlert(req.url);
-                this.loading.stopLoading();
-                this.handleAuthentication(ok);
-            }},
+                    console.log("asdfasdf");
+                    this.showSuccessAlert(req.url);
+                    this.loading.stopLoading();
+                    this.handleAuthentication(ok);
+                }
+            },
             (err:HttpErrorResponse)=>{
+                console.log("asdfasdf<fasdfasdfasdfasdfasd");
                 this.showErrorAlert(err);
                 this.loading.stopLoading();
             }
@@ -40,9 +42,13 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     private handleAuthentication(ok:any){
-        if(ok.body.token){
+        if(ok.body != null && ok.body.token!=null){
             this.setToken(ok.body.token);
             this._authS.setLogged();
+        }
+        if(ok.url.includes("Authorization/LogOut")) {
+            this._authS.setLoggedOut();
+            this.removeToken();
         }
     }
 

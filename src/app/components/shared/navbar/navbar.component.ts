@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'angularx-social-login';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 
@@ -10,13 +10,15 @@ import { AuthService } from 'angularx-social-login';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authS:AuthService) { }
+  constructor(private authS:AuthenticationService) { }
 
   ngOnInit() {
   }
 
-  signOut(){
-    this.authS.signOut();
+  logOut(){
+    this.authS.logOut().subscribe(
+      ok=>console.log("logOutOk", ok),
+      err=>console.log("logOutErr", err)
+    );
   }
-
 }
