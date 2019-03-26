@@ -70,6 +70,9 @@ export abstract class RestService {
   }
 }
 
+/**
+ * Interface to URL params
+ */
 interface paramValue{
   param:string;
   value:string;
