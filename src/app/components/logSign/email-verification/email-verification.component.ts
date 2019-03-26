@@ -20,13 +20,6 @@ export class EmailVerificationComponent implements AfterViewInit{
   }
 
   private checkEmail(){
-    this._authS.checkEmailValidation(this.token).subscribe(
-      ok=>{
-        console.log("success", ok);
-      },
-      err=>{
-        console.log("error", err);
-      }
-    )
+    this._authS.checkEmailValidation(this.token).subscribe();
   }
 }
