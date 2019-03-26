@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'angularx-social-login';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { LoadingService } from './loading.service';
 import { LogUser, SignUser, SocialLog } from 'src/app/models/models';
+import { RestService } from './rest.service';
+import { HttpClient} from '@angular/common/http';
+import { LoadingService } from './loading.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthenticationService {
-
-  private _baseURL : string = "https://localhost:5001/";
+export class AuthenticationService extends RestService {
 
   private _authPath : string = "Authorization/";
   private _logged:boolean;
 
-  
-  constructor(private _authS:AuthService, private _http:HttpClient,
-              private loading:LoadingService) { 
+  constructor(_http:HttpClient, _loading:LoadingService, private _authS:AuthService){
+    super(_http, _loading);
     this._logged = false;
+    //TODO Check if the user is already logged
   }
 
+  
   isAuthenticated():boolean{
     return this._logged;
   }
@@ -59,48 +59,4 @@ export class AuthenticationService {
   setLogged(){
     this._logged = true;
   }
-
-  /*----------------------------------PRIVATE FUNCTIONS-------------------------------------*/
-
-  private postRequest(body:any, path:string){
-    this.loading.startLoading();
-    return this._http.post(this._baseURL+path, body, {
-      headers: this.basicHeaders()
-    });
-  }
-
-  private getRequest(path:string, params?:paramValue[]){
-    this.loading.startLoading();
-    let options = params ? 
-      {
-        params: this.params(params),
-        headers:this.basicHeaders()
-      } : 
-      {
-        headers:this.basicHeaders()
-      };
-
-    return this._http.get(this._baseURL+path,options);
-  }
-
-  private params(params:paramValue[]):HttpParams{
-    let urlParams : HttpParams = new HttpParams();
-    params.forEach(param => {
-      urlParams = urlParams.append(param.param, param.value);
-    });
-    return urlParams;
-  }
-
-  private basicHeaders(){
-    return new HttpHeaders({
-      "Access-Control-Allow-Origin": "*",
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    });
-  }
-}
-
-interface paramValue{
-  param:string;
-  value:string;
 }
