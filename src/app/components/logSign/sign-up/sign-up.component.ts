@@ -61,17 +61,14 @@ export class SignUpComponent{
     })
   }
 
-  private signUp(){ //TODO quitar los console log
+  private signUp(){ 
     this._authentication.signUp({
       'email' : this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
       'password': this.signUpForm.controls['password'].value
     }).subscribe(
-      ok=>{
-        
-      },err=>{
-        //TODO resetForm
-      }
+      _=> this.resetForm(true),
+      _=> this.resetForm(false)
     );
   }
 
