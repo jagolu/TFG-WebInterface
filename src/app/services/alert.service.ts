@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Alert } from 'selenium-webdriver';
 
 
 @Injectable({
@@ -7,13 +6,9 @@ import { Alert } from 'selenium-webdriver';
 })
 export class AlertService {
 
-  private navbar;
-  private outlet;
   private txtMessage;
 
   constructor() { 
-    this.navbar = (document.querySelector("#navbar") as HTMLElement);
-    this.outlet = (document.querySelector(".main") as HTMLElement);
     this.txtMessage = [
       (document.querySelector("#alertTextId1") as HTMLElement),
       (document.querySelector("#alertTextId2") as HTMLElement),
@@ -49,8 +44,9 @@ export class AlertService {
       return ["Su registro se ha casi completado, solo es necesario un paso más.",
         "Verifique su correo mediante el enlace que se le ha enviado al mismo."];
     }
-    else if(type == AlertType.GOOGLEERROR || type == AlertType.FACEBOOKERROR){
-      return [`Ha habido un error con ${type}, vuelva a intentarlo más tarde.`];
+    else if(type == AlertType.SOCIALERROR){
+      return [`Ha habido un error con la red social con la que intentabas iniciar sesión`, 
+            `vuelva a intentarlo más tarde.`];
     }
     else if(type == AlertType.WRONGEMAILORPASSWORD){
       return ["El correo o contraseña introducidos no son correctos.",
@@ -59,7 +55,9 @@ export class AlertService {
     else if(type == AlertType.NOTVALIDATEDYET){
       return ["El correo no se ha validado aun, revise su correo."];
     }
-
+    else if(type == AlertType.INVALIDTOKEN){
+      return ["Tu sesión expiró, vuelve a registrarte."];
+    }
   }
 }
 
@@ -69,9 +67,8 @@ export enum AlertType{
   VALIDATINGUSERERROR = "VALIDATINGUSERERROR",
   EMAILTAKENERROR = "EMAILTAKENERROR",
   VERIFICATIONSENT = "VERIFICATIONSENT",
-  GOOGLEERROR = "Google",
-  FACEBOOKERROR = "Facebook",
+  SOCIALERROR = "SOCIALERROR",
   WRONGEMAILORPASSWORD = "WRONGEMAILORPASSWORD",
-  NOTVALIDATEDYET = "NOTVALIDATEDYET"
+  NOTVALIDATEDYET = "NOTVALIDATEDYET",
+  INVALIDTOKEN = "INVALIDTOKEN"
 }
-//TODO ADD NONEXISTINGTOKEN
