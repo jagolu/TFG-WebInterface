@@ -12,6 +12,7 @@ import { EmailVerificationComponent } from './components/logSign/email-verificat
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
+import { ViewUserComponent } from './components/user/view-user/view-user.component';
 
 
 // Directives
@@ -22,6 +23,7 @@ import { AuthenticationService } from './services/authentication.service';
 
 // Interceptors
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 
 // Routing
@@ -34,7 +36,6 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
     EmailVerificationComponent,
     AlertComponent,
     LoadingComponent,
-    SocialButtonComponent
+    SocialButtonComponent,
+    ViewUserComponent
   ],
   imports: [
     BrowserModule,
