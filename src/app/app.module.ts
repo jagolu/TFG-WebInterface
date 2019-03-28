@@ -41,6 +41,7 @@ import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
+import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { UserGroupsComponent } from './components/user/view-user/user-groups/use
     ViewUserComponent,
     OnlyDatePipe,
     UserGroupsComponent,
+    UserInfoFormComponent
   ],
   imports: [
     BrowserModule,
