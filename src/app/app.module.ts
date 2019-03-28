@@ -40,6 +40,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
 
 
 @NgModule({
@@ -54,8 +55,9 @@ import { RouterModule } from '@angular/router';
     AlertComponent,
     LoadingComponent,
     SocialButtonComponent,
-    ViewUserComponent
+    ViewUserComponent,
     OnlyDatePipe,
+    UserGroupsComponent,
   ],
   imports: [
     BrowserModule,
