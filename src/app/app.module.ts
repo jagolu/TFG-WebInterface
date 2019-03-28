@@ -17,6 +17,9 @@ import { ViewUserComponent } from './components/user/view-user/view-user.compone
 
 // Directives
 
+// Pipes
+import { OnlyDatePipe } from './pipes/only-date.pipe';
+
 // Services
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
@@ -52,6 +55,7 @@ import { RouterModule } from '@angular/router';
     LoadingComponent,
     SocialButtonComponent,
     ViewUserComponent
+    OnlyDatePipe,
   ],
   imports: [
     BrowserModule,
