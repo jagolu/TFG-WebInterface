@@ -19,6 +19,7 @@ import { ViewUserComponent } from './components/user/view-user/view-user.compone
 
 // Services
 import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 
 
 // Interceptors
@@ -75,7 +76,8 @@ import { RouterModule } from '@angular/router';
       useClass: ErrorInterceptor,
       multi: true
     },
-    AuthenticationService
+    AuthenticationService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
