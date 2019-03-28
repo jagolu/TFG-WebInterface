@@ -1,14 +1,47 @@
 <div class="card mt-5" >
-    <div class="row no-gutters">
-      <div class="col-md-4">
-        <!-- <img src="..." class="card-img" alt="..."> -->
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">Nombre</h5>
-          <p class="card-text">email.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  <div class="row no-gutters" *ngIf="_user">
+    <div class="col-md-4">
+      <!-- TODO poner la verdadera imagen del usuario si la tiene -->
+      <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="_user.img==null">
+      <img src="https://estaticos.elperiodico.com/resources/jpg/7/7/quien-rercibio-movil-imagen-del-famoso-negro-whatsapp-1477636045577.jpg"
+           class="card-img p-1" *ngIf="_user.img!=null">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title">{{_user.nickname}}</h4>
+        <p class="card-text">{{_user.email}}</p>
+        <small class="text-muted">{{_user.timeSignUp | onlyDatePipe}} </small>
+        <hr>
+
+        <div class="row" id="accordionExample">
+          <div class="col-6">
+            <span class="btn btn-outline-success w-100"
+                  id="headingGroup" 
+                  data-toggle="collapse" 
+                  data-target="#collapseGroup" 
+                  aria-expanded="true" 
+                  aria-controls="collapseGroup">Grupos</span>
+          </div>
+          <div class="col-6">
+              <span class="btn btn-outline-success w-100"
+                    id="headingInfo"
+                    data-toggle="collapse" 
+                    data-target="#collapseInfo" 
+                    aria-expanded="false" 
+                    aria-controls="collapseInfo">Info</span>
+          </div>
+          <app-user-groups 
+            id="collapseGroup"
+            labelled="headingGroup"
+            show=false
+          ></app-user-groups>
+          <app-user-info-form
+            id="collapseInfo"
+            labelled="headingInfo"
+            show=false
+          ></app-user-info-form>
         </div>
       </div>
     </div>
   </div>
+</div>
