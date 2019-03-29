@@ -11,35 +11,38 @@
         <h4 class="card-title">{{_user.nickname}}</h4>
         <p class="card-text">{{_user.email}}</p>
         <small class="text-muted">{{_user.timeSignUp | onlyDatePipe}} </small>
-        <hr>
+        <hr class="">
 
-        <div class="row" id="accordionExample">
+        <div class="row " id="UserInfo">
           <div class="col-6">
-            <span class="btn btn-outline-success w-100"
-                  id="headingGroup" 
+            <span class="btn btn-outline-secondary w-100"
+                  id="headingOne" 
                   data-toggle="collapse" 
-                  data-target="#collapseGroup" 
+                  data-target="#collapseOne" 
                   aria-expanded="true" 
-                  aria-controls="collapseGroup">Grupos</span>
+                  aria-controls="collapseOne"
+            >Grupos</span>
           </div>
           <div class="col-6">
-              <span class="btn btn-outline-success w-100"
-                    id="headingInfo"
-                    data-toggle="collapse" 
-                    data-target="#collapseInfo" 
-                    aria-expanded="false" 
-                    aria-controls="collapseInfo">Info</span>
+            <span class="btn btn-outline-secondary w-100"
+                  id="headingTwo"
+                  data-toggle="collapse" 
+                  data-target="#collapseTwo" 
+                  aria-expanded="false" 
+                  aria-controls="collapseTwo"
+            >Info</span>
           </div>
-          <app-user-groups 
-            id="collapseGroup"
-            labelled="headingGroup"
-            show=false
-          ></app-user-groups>
-          <app-user-info-form
-            id="collapseInfo"
-            labelled="headingInfo"
-            show=false
-          ></app-user-info-form>
+          <div class="col-12 pt-4">
+            <app-user-groups 
+                [id]="'collapseOne'"
+                [labelled]="'headingOne'">
+            </app-user-groups>
+            <app-user-info-form
+              [id]="'collapseTwo'"
+              [labelled]="'headingTwo'"
+              [nickname]="_user.nickname">
+            </app-user-info-form>
+          </div>
         </div>
       </div>
     </div>
