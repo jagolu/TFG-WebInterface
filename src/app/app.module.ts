@@ -13,16 +13,24 @@ import { AlertComponent } from './components/shared/alert/alert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 import { ViewUserComponent } from './components/user/view-user/view-user.component';
+import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
+import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
+import { PasswordAlertComponent } from './components/shared/password-alert/password-alert.component';
 
 
 // Directives
 
+
 // Pipes
 import { OnlyDatePipe } from './pipes/only-date.pipe';
+
 
 // Services
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
+import { AlertService } from './services/alert.service';
+import { LoadingService } from './services/loading.service';
+import { PasswordAlertService } from './services/password-alert.service';
 
 
 // Interceptors
@@ -40,8 +48,6 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
-import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 
 
 @NgModule({
@@ -59,7 +65,8 @@ import { UserInfoFormComponent } from './components/user/view-user/user-info-for
     ViewUserComponent,
     OnlyDatePipe,
     UserGroupsComponent,
-    UserInfoFormComponent
+    UserInfoFormComponent,
+    PasswordAlertComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +92,10 @@ import { UserInfoFormComponent } from './components/user/view-user/user-info-for
       multi: true
     },
     AuthenticationService,
-    UserService
+    UserService,
+    AlertService,
+    LoadingService,
+    PasswordAlertService
   ],
   bootstrap: [AppComponent]
 })
