@@ -100,8 +100,16 @@
         <div class="form-group mb-2 mx-sm-3">
             <input type="file" 
                     class="form-control-file"
-                    formControlName="userImage">
+                    formControlName="userImage"
+                    (change)="onFileSelected($event)">
         </div>
         <button class="btn btn-outline-dark mb-2" [disabled]="!imageForm.valid">Change profile image</button>
     </form>
+
+    <!-- Delete account -->
+    <hr>
+    <div class="btn btn-danger w-100" (click)="openAlert()">
+        Delete account
+    </div>
+    
 </div>

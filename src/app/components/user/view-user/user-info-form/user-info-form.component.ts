@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PasswordAlertService, PasswordAlertType } from 'src/app/services/password-alert.service';
+
 
 @Component({
   selector: 'app-user-info-form',
@@ -16,8 +18,9 @@ export class UserInfoFormComponent implements OnInit {
   private passwordForm:FormGroup;
   private imageForm:FormGroup;
   private equalPasswords : boolean;
+  private selectedFile = null;
 
-  constructor() { }
+  constructor(private _passwordAlertS:PasswordAlertService) { }
 
   ngOnInit() {
     this.initializeNicknameForm();
@@ -38,16 +41,8 @@ export class UserInfoFormComponent implements OnInit {
     console.log("Deberiamos cambiar la contraseña");
   }
 
-  private changeImg(){
-    //TODO
-    console.log(this.imageForm.controls['userImage'])
-    console.log("Deberiamos cambiar la imagen de usuario");
-  }
-
-  private equalPassword(){
-    let password = this.passwordForm.controls['newPassword'].value;
-    let repeatPassword = this.passwordForm.controls['repeatPassword'].value;
-    this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
+  private openAlert(){
+    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT);
   }
 
   private initializeNicknameForm(){
@@ -81,6 +76,12 @@ export class UserInfoFormComponent implements OnInit {
     this.imageForm = new FormGroup({
       "userImage": new FormControl('', Validators.required)
     });
+  }
+
+  private equalPassword(){
+    let password = this.passwordForm.controls['newPassword'].value;
+    let repeatPassword = this.passwordForm.controls['repeatPassword'].value;
+    this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
 }
