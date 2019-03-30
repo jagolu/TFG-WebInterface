@@ -9,12 +9,9 @@ export class UserGroupsComponent implements OnInit {
 
   @Input()id:string;
   @Input()labelled:string;
-  @Input()show:boolean;
   
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.id, this.labelled, this.show)
-  }
+  ngOnInit() { }
 
 }
