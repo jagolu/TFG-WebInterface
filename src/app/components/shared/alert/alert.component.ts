@@ -15,12 +15,12 @@ export class AlertComponent implements AfterViewInit{
     this.outlet = (document.querySelector(".main") as HTMLElement);
   }
 
-  private focusIn(){
+  protected focusIn(){
     this.navbar.style.filter = "blur(6px)";
     this.outlet.style.filter = "blur(6px)";
   }
 
-  private focusOut(){
+  protected focusOut(){
     this.navbar.style.filter = "blur(0px)";
     this.outlet.style.filter = "blur(0px)";
   }
