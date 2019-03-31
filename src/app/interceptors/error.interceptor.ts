@@ -13,6 +13,7 @@ import { tap } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { SessionStorage } from '../models/SessionStorage';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -46,13 +47,18 @@ export class ErrorInterceptor implements HttpInterceptor {
 /*----------------------------AUTHNETICATION------------------------------- */
 
     private handleAuthentication(ok:any){
-        if(ok.body != null && ok.body.token!=null){
-            this.setToken(ok.body.token);
-            this._authS.setLogged();
+        if(ok.body != null && ok.body.api_token!=null){
+            this._authS.setSession({
+                "api_token": ok.body.api_token,
+                "email": ok.body.email,
+                "nickname": ok.body.nickname,
+                "role": ok.body.role,
+                "image_url": ok.body.image_url,
+                "expires_at": new Date()
+            });
         }
         if(ok.url.includes("Authorization/LogOut")) {
-            this._authS.setLoggedOut();
-            this.removeToken();
+            this._authS.removeSession();
         }
     }
 
@@ -84,19 +90,5 @@ export class ErrorInterceptor implements HttpInterceptor {
     private errRedirect(url:string){
         if(url.includes("Authorization/Validate")) this._router.navigate(['']);
         if(url.includes("Authorization/Refresh")) this._router.navigate(['logIn']);
-    }
-
-/*---------------------------- LOCAL STORAGE ----------------------------*/
-
-    private setToken(token:string){
-        localStorage.setItem("token", token);
-    }
-
-    private getToken():string{
-        return localStorage.getItem("token");
-    }
-
-    private removeToken(){
-        localStorage.removeItem("token");
     }
 }

@@ -6,11 +6,12 @@ import {
     HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
 
-    constructor() { }
+    constructor(private _authS:AuthenticationService) { }
     
     intercept(
         req: HttpRequest<any>, 
@@ -21,21 +22,25 @@ export class HeaderInterceptor implements HttpInterceptor {
         let updateReq = req.clone();
 
 
-        if(!url.includes("LogIn") && !url.includes("SignUp") && !url.includes("Validate")){
+        if(!this.requireToken(url)){
             updateReq = req.clone({
-                headers: req.headers.set('Authorization', "Bearer "+this.getToken())
+                headers: req.headers.set('Authorization', "Bearer "+this._authS.getAPIToken())
             })
         }
 
         return next.handle(updateReq);
     }
 
-    
-    private setToken(token:string){
-        localStorage.setItem("token", token);
-    }
-
-    private getToken():string{
-        return localStorage.getItem("token");
+    requireToken(url:string):Boolean{
+        let neededAuthUrl = [
+            "LogIn", 
+            "SignUp",
+            "Validate",
+            "SocialLog"
+        ];
+        
+        return neededAuthUrl.some(subPath=>
+            url.includes(subPath)
+        );
     }
 }

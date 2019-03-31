@@ -16,9 +16,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(){
-    this.authS.logOut().subscribe(
-      ok=>console.log("logOutOk", ok),
-      err=>console.log("logOutErr", err)
-    );
+    this.authS.logOut().subscribe();
   }
 }
