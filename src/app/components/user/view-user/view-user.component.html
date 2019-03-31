@@ -2,7 +2,7 @@
   <div class="row no-gutters" *ngIf="_user">
     <div class="col-md-4">
       <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="_user.img==null">
-      <img [src]="'data:image/jpg;base64,'+_user.img" class="card-img p-1" *ngIf="_user.img!=null">
+      <img [src]="_user.img | base64Image" class="card-img p-1" *ngIf="_user.img!=null">
     </div>
     <div class="col-md-8">
       <div class="card-body">

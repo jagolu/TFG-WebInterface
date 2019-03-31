@@ -48,6 +48,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { RouterModule } from '@angular/router';
     OnlyDatePipe,
     UserGroupsComponent,
     UserInfoFormComponent,
-    PasswordAlertComponent
+    PasswordAlertComponent,
+    Base64ImagePipe
   ],
   imports: [
     BrowserModule,
