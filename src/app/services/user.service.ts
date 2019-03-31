@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from './loading.service';
-import { ChangeUserInfo } from '../models/models';
+import { ChangeUserInfo, DeleteUser } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,9 @@ export class UserService extends RestService{
 
   changeUserInfo(info:ChangeUserInfo){
     return this.postRequest(info,this._userPath+"ChangeUserInfo");
+  }
+
+  deleteUser(user:DeleteUser){
+    return this.postRequest(user, this._userPath+"DeleteAccount");
   }
 }

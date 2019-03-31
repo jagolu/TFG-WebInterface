@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertComponent } from '../alert/alert.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-password-alert',
@@ -10,8 +11,9 @@ import { AlertComponent } from '../alert/alert.component';
 export class PasswordAlertComponent extends AlertComponent implements OnInit {
 
   private deleteForm:FormGroup;
+  @Input() deleteTarget?:string;
 
-  constructor() { 
+  constructor(private _userS:UserService) { 
     super()
   }
 
@@ -20,13 +22,18 @@ export class PasswordAlertComponent extends AlertComponent implements OnInit {
   }
 
   private deleteAccount(){
-    console.log("delete account");
+    this._userS.deleteUser({
+      "email": this.deleteTarget,
+      "password": this.deleteForm.controls["password"].value
+    }).subscribe(
+      ok=>console.log("dseletet", ok),
+      err=>console.log("asdfasdf",err)
+    );
   }
 
   private deleteGroup(){
-    console.log("deletegroup");
+    console.log("deletegroup")
   }
-
 
   private initializeForm(){
     this.deleteForm = new FormGroup({
