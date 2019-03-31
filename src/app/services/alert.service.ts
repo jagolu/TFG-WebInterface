@@ -58,6 +58,10 @@ export class AlertService {
     else if(type == AlertType.INVALIDTOKEN){
       return ["Tu sesión expiró, vuelve a registrarte."];
     }
+    else if(type == AlertType.CANTDELETEACCOUNT){
+      return ["No se pudo eliminar tu cuenta de usuario.",
+              "Vuelva a intentarlo más tarde."]
+    }
   }
 }
 
@@ -70,5 +74,6 @@ export enum AlertType{
   SOCIALERROR = "SOCIALERROR",
   WRONGEMAILORPASSWORD = "WRONGEMAILORPASSWORD",
   NOTVALIDATEDYET = "NOTVALIDATEDYET",
-  INVALIDTOKEN = "INVALIDTOKEN"
+  INVALIDTOKEN = "INVALIDTOKEN",
+  CANTDELETEACCOUNT = "CANTDELETEACCOUNT"
 }
