@@ -70,6 +70,9 @@ export class ErrorInterceptor implements HttpInterceptor {
             if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
             if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
             if(err.error["error"] == "InvalidToken") this.alert.openAlert(AlertType.INVALIDTOKEN);
+            if(err.error["error"] == "InvalidChangePassword") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+            if(err.error["error"] == "InvalidChangeNickname") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+            if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
             if(err.error['email'] || err.error['password'] || err.error['username']) this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
         }
         if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
@@ -80,6 +83,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     private successRedirect(url:string){
         if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
+        if(url.includes("Authorization/LogOut")) this._router.navigate(['']);
     }
 
     private errRedirect(url:string){
