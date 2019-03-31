@@ -50,11 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if(ok.body != null && ok.body.api_token!=null){
             this._authS.setSession({
                 "api_token": ok.body.api_token,
-                "email": ok.body.email,
-                "nickname": ok.body.nickname,
-                "role": ok.body.role,
-                "image_url": ok.body.image_url,
-                "expires_at": new Date()
+                "role": ok.body.role
             });
         }
         if(ok.url.includes("Authorization/LogOut")) {
