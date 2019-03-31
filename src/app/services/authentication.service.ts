@@ -59,6 +59,15 @@ export class AuthenticationService extends RestService {
     return this.postRequest(user, this._authPath+"LogIn");
   }
 
+  refreshToken(){
+    this.postRequest({
+      "token": this._sessionS.getAPIToken()
+    }, this._authPath+"Refresh").subscribe(
+      ok=>console.log(ok),
+      err=>console.log(err)
+    );
+  }
+
   private getUTCNow():number{
     return Date.UTC(
       new Date().getUTCFullYear(),

@@ -18,7 +18,7 @@ export abstract class RestService {
    * @return Observable
    */
   protected postRequest(body:any, path:string){
-    this.__loading.startLoading();
+    if(!path.includes("Refresh") )this.__loading.startLoading();
     return this.__http.post(this.__baseURL+path, body, {
       headers: this.basicHeaders()
     });
