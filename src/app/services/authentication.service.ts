@@ -39,16 +39,16 @@ export class AuthenticationService extends RestService {
   }
 
   logSocialMedia(user:SocialLog){
-    return this.postRequest(user, this._authPath+"SocialLog");
+    this.postRequest(user, this._authPath+"SocialLog").subscribe();
   }
 
   checkEmailValidation(token:string){
-    return this.getRequest(this._authPath+"Validate",[
+    this.getRequest(this._authPath+"Validate",[
       {
         param: "emailToken",
         value: token
       }
-    ]);
+    ]).subscribe();
   }
 
   signUp(user:SignUser){

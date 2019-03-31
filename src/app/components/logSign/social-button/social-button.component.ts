@@ -29,7 +29,7 @@ export class SocialButtonComponent{
         "id": user.id,
         "socialProvider": type,
         "urlImage":user.photoUrl
-      }).subscribe()
+      });
     }).catch(_=> this._alert.openAlert(AlertType.SOCIALERROR));
   }
 }
