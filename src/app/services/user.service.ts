@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from './loading.service';
+import { ChangeUserInfo } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,9 @@ export class UserService extends RestService{
 
   getUserOptions(){
     return this.getRequest(this._userPath+"UserInfo");
+  }
+
+  changeUserInfo(info:ChangeUserInfo){
+    return this.postRequest(info,this._userPath+"ChangeUserInfo");
   }
 }
