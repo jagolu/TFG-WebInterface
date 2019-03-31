@@ -33,7 +33,9 @@ export class AuthenticationService extends RestService {
   }
 
   logOut(){
-    return this.getRequest(this._authPath+"LogOut");
+    this.getRequest(this._authPath+"LogOut").subscribe();
+    this._authS.signOut().catch(Error);
+    this._sessionS.removeSession();
   }
 
   logSocialMedia(user:SocialLog){
