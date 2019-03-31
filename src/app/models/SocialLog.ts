@@ -6,4 +6,5 @@ export interface SocialLog{
     firstName:string;
     id:string;
     socialProvider:SocialType;
+    urlImage:string;
 }

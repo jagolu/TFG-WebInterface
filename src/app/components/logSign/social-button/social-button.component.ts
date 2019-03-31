@@ -27,7 +27,8 @@ export class SocialButtonComponent{
         "email": user.email,
         "firstName": user.firstName,
         "id": user.id,
-        "socialProvider": type 
+        "socialProvider": type,
+        "urlImage":user.photoUrl
       }).subscribe()
     }).catch(_=> this._alert.openAlert(AlertType.SOCIALERROR));
   }
