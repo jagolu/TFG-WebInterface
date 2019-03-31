@@ -101,9 +101,10 @@
             <input type="file" 
                     class="form-control-file"
                     formControlName="userImage"
-                    (change)="onFileSelected($event)">
+                    (change)="loadFile($event)">
         </div>
-        <button class="btn btn-outline-dark mb-2" [disabled]="!imageForm.valid">Change profile image</button>
+        <button class="btn btn-outline-dark mb-2" 
+                [disabled]="!imageForm.valid">Change profile image</button>
     </form>
 
     <!-- Delete account -->

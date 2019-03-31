@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PasswordAlertService, PasswordAlertType } from 'src/app/services/password-alert.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -18,33 +19,73 @@ export class UserInfoFormComponent implements OnInit {
   private passwordForm:FormGroup;
   private imageForm:FormGroup;
   private equalPasswords : boolean;
-  private selectedFile = null;
+  private selectedFile;
 
-  constructor(private _passwordAlertS:PasswordAlertService) { }
+  constructor(private _passwordAlertS:PasswordAlertService,
+              private _userS:UserService) { }
 
   ngOnInit() {
     this.initializeNicknameForm();
     this.initializePasswordForm();
     this.initializeImageForm();
     this.equalPasswords = false;
+    this.selectedFile = false;
   }
 
   private changeNickname(){
-    //TODO
-    console.log("Deberiamos cambiar el nickname");
+    this._userS.changeUserInfo({
+      'nickname': this.nicknameForm.controls['nickname'].value,
+      "oldPassword": null,
+      "newPassword":null,
+      "repeatNewPassword":null,
+      "image": null
+    }).subscribe(
+      ok=>{
+        window.location.reload();
+        console.log(ok)
+      },
+      err=> console.log(err)
+    )
   }
 
   private changePassword(){
-    //TODO
-    console.log(this.passwordForm);
-    console.log(this.equalPasswords)
-    console.log("Deberiamos cambiar la contraseña");
+    this._userS.changeUserInfo({
+      'nickname': null,
+      "oldPassword": this.passwordForm.controls['oldPassword'].value,
+      "newPassword":this.passwordForm.controls['newPassword'].value,
+      "repeatNewPassword":this.passwordForm.controls['repeatPassword'].value,
+      "image": null
+    }).subscribe(
+      ok=>{
+        window.location.reload();
+        console.log(ok)
+      },
+      err=> console.log(err)
+    )
   }
 
-  private openAlert(){
-    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT);
-  }
+  private changeImg(){
+    let fr = new FileReader();
 
+    fr.onload = () =>{
+      this._userS.changeUserInfo({
+        "nickname": null,
+        "oldPassword": null,
+        "newPassword":null,
+        "repeatNewPassword":null,
+        "image": fr.result.toString()
+      }).subscribe(
+        ok=> {
+          window.location.reload();
+          console.log("ok, reload it",ok)
+        },
+        err=>console.log("fail", err)
+      );
+
+    }
+    fr.readAsDataURL(this.selectedFile);
+  }
+  
   private initializeNicknameForm(){
     this.nicknameForm = new FormGroup({
       'nickname': new FormControl(
@@ -84,4 +125,12 @@ export class UserInfoFormComponent implements OnInit {
     this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
+  private openAlert(){
+    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT);
+  }
+
+  private loadFile(event){
+    this.selectedFile = event.target.files[0];
+    
+  }
 }
