@@ -12,16 +12,15 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
-import { AuthenticationService } from '../services/authentication.service';
-import { SessionStorage } from '../models/SessionStorage';
+import { SessionService } from '../services/session.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
     constructor(private alert:AlertService, 
                 private loading:LoadingService,
-                private _authS:AuthenticationService,
-                private _router:Router) { }
+                private _router:Router,
+                private _sessionS:SessionService) { }
 
     intercept(
         req: HttpRequest<any>, 
@@ -48,13 +47,13 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     private handleAuthentication(ok:any){
         if(ok.body != null && ok.body.api_token!=null){
-            this._authS.setSession({
+            this._sessionS.setSession({
                 "api_token": ok.body.api_token,
                 "role": ok.body.role
             });
         }
         if(ok.url.includes("Authorization/LogOut")) {
-            this._authS.removeSession();
+            this._sessionS.removeSession();
         }
     }
 

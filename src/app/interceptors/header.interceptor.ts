@@ -6,12 +6,12 @@ import {
     HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { SessionService } from '../services/session.service';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
 
-    constructor(private _authS:AuthenticationService) { }
+    constructor(private _session:SessionService) { }
     
     intercept(
         req: HttpRequest<any>, 
@@ -24,7 +24,7 @@ export class HeaderInterceptor implements HttpInterceptor {
 
         if(!this.requireToken(url)){
             updateReq = req.clone({
-                headers: req.headers.set('Authorization', "Bearer "+this._authS.getAPIToken())
+                headers: req.headers.set('Authorization', "Bearer "+this._session.getAPIToken())
             })
         }
 

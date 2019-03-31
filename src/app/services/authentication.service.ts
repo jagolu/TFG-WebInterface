@@ -4,7 +4,7 @@ import { LogUser, SignUser, SocialLog } from 'src/app/models/models';
 import { RestService } from './rest.service';
 import { HttpClient} from '@angular/common/http';
 import { LoadingService } from './loading.service';
-import { SessionStorage } from '../models/SessionStorage';
+import { SessionService } from './session.service';
 
 
 @Injectable({
@@ -15,26 +15,21 @@ export class AuthenticationService extends RestService {
 
   private _authPath : string = "Authorization/";
 
-  constructor(_http:HttpClient, _loading:LoadingService, private _authS:AuthService){
+  constructor(_http:HttpClient, _loading:LoadingService, 
+              private _authS:AuthService, private _sessionS:SessionService){
     super(_http, _loading);
   }
 
   IsAuthenticated():Boolean{
     try{
-      let session = JSON.parse(sessionStorage.getItem("session"));
-      if(session.expires_at <= this.getUTCNow()) {this.removeSession();
+      if(this._sessionS.getExpiresAt() <= this.getUTCNow()) {
+        this._sessionS.removeSession();
         return false;
       }
       return true;
     }catch(Exception){
       return false;
     }
-    // let session = JSON.parse(sessionStorage.getItem("session"));
-    // if(session.expires_at <= this.getUTCNow()) {
-    //   this.removeSession();
-    //   return false;
-    // }
-    // return true;
   }
 
   logOut(){
@@ -62,29 +57,6 @@ export class AuthenticationService extends RestService {
     return this.postRequest(user, this._authPath+"LogIn");
   }
 
-  /* ----------------session functions------------------- */
-  setSession(user: SessionStorage){
-    sessionStorage.setItem("session", JSON.stringify({
-      "api_token":user.api_token,
-      "email":user.email,
-      "nickname":user.nickname,
-      //"role":user.role,
-      "image_url":user.image_url,
-      "expires_at": this.getUTCFromNow20Min()
-    }));
-  }
-
-  removeSession(){
-    sessionStorage.removeItem("session");
-  }
-
-  getAPIToken(){
-    let session = JSON.parse(sessionStorage.getItem("session"));
-    return session.api_token;
-  }
-
-
-/*---------------UTC TIME FUNCTIONS------------------- */
   private getUTCNow():number{
     return Date.UTC(
       new Date().getUTCFullYear(),
@@ -92,16 +64,6 @@ export class AuthenticationService extends RestService {
       new Date().getUTCDate(),
       new Date().getUTCHours(),
       new Date().getUTCMinutes()
-    );
-  }
-
-  private getUTCFromNow20Min():number{
-    return Date.UTC(
-      new Date().getUTCFullYear(),
-      new Date().getUTCMonth(),
-      new Date().getUTCDate(),
-      new Date().getUTCHours(),
-      new Date().getUTCMinutes()+20
     );
   }
 }

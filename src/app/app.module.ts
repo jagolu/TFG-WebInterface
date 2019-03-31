@@ -31,6 +31,8 @@ import { UserService } from './services/user.service';
 import { AlertService } from './services/alert.service';
 import { LoadingService } from './services/loading.service';
 import { PasswordAlertService } from './services/password-alert.service';
+import { SessionService } from './services/session.service';
+
 
 
 // Interceptors
@@ -97,7 +99,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     UserService,
     AlertService,
     LoadingService,
-    PasswordAlertService
+    PasswordAlertService,
+    SessionService
   ],
   bootstrap: [AppComponent]
 })
