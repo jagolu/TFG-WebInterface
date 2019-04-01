@@ -39,13 +39,7 @@ export class UserInfoFormComponent implements OnInit {
       "newPassword":null,
       "repeatNewPassword":null,
       "image": null
-    }).subscribe(
-      ok=>{
-        window.location.reload();
-        console.log(ok)
-      },
-      err=> console.log(err)
-    )
+    }).subscribe();
   }
 
   private changePassword(){
@@ -55,13 +49,7 @@ export class UserInfoFormComponent implements OnInit {
       "newPassword":this.passwordForm.controls['newPassword'].value,
       "repeatNewPassword":this.passwordForm.controls['repeatPassword'].value,
       "image": null
-    }).subscribe(
-      ok=>{
-        window.location.reload();
-        console.log(ok)
-      },
-      err=> console.log(err)
-    )
+    }).subscribe();
   }
 
   private changeImg(){
@@ -74,13 +62,7 @@ export class UserInfoFormComponent implements OnInit {
         "newPassword":null,
         "repeatNewPassword":null,
         "image": fr.result.toString()
-      }).subscribe(
-        ok=> {
-          window.location.reload();
-          console.log("ok, reload it",ok)
-        },
-        err=>console.log("fail", err)
-      );
+      }).subscribe();
 
     }
     fr.readAsDataURL(this.selectedFile);
