@@ -18,11 +18,11 @@
                         [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && 
                                                     nicknameForm.controls['nickname'].errors}">
         </div>
-        <!-- <button class="btn btn-outline-dark mb-2" 
+        <button class="btn btn-outline-dark mb-2" 
                 type="submit" 
                 [disabled]="!nicknameForm.valid || nicknameForm.controls['nickname'].pristine"
-        >Change username</button> -->
-        <button class="btn btn-outline-dark mb-2" type="submit">Change username</button>
+        >Change username</button>
+        <!-- <button class="btn btn-outline-dark mb-2" type="submit">Change username</button> -->
     </form>
     
     <small class="text-danger"
@@ -66,11 +66,11 @@
                     formControlName="repeatPassword"
                     autocomplete="off">
         </div>
-        <!-- <button class="btn btn-outline-dark mb-2" 
+        <button class="btn btn-outline-dark mb-2" 
                 type="submit" 
                 [disabled]="!passwordForm.valid"
-        >Change password</button> -->
-        <button class="btn btn-outline-dark mb-2" type="submit" >Change password</button>
+        >Change password</button>
+        <!-- <button class="btn btn-outline-dark mb-2" type="submit" >Change password</button> -->
     </form>
     <small class="text-danger"
             *ngIf="passwordForm.controls['newPassword'].errors && 
