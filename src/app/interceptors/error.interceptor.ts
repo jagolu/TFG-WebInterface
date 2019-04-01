@@ -79,11 +79,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
-
+    
     private successRedirect(url:string){
         if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
-        if(url.includes("Authorization/LogOut")) this._router.navigate(['']);
+        if(url.includes("ChangeUserInfo")) window.location.reload();
     }
+
 
     private errRedirect(url:string){
         if(url.includes("Authorization/Validate")) this._router.navigate(['']);
