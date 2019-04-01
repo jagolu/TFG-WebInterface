@@ -5,6 +5,7 @@ import { RestService } from './rest.service';
 import { HttpClient} from '@angular/common/http';
 import { LoadingService } from './loading.service';
 import { SessionService } from './session.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,10 +15,18 @@ import { SessionService } from './session.service';
 export class AuthenticationService extends RestService {
 
   private _authPath : string = "Authorization/";
+  private init:boolean = false;
 
-  constructor(_http:HttpClient, _loading:LoadingService, 
-              private _authS:AuthService, private _sessionS:SessionService){
+  constructor(_http:HttpClient, 
+              _loading:LoadingService, 
+              private _authS:AuthService, 
+              private _sessionS:SessionService,
+              private _router:Router){
     super(_http, _loading);
+    this.init = true;
+    if(this.IsAuthenticated() && !this.init){
+      this.refreshToken().subscribe();
+    }
   }
 
   IsAuthenticated():Boolean{
@@ -60,12 +69,9 @@ export class AuthenticationService extends RestService {
   }
 
   refreshToken(){
-    this.postRequest({
+    return this.postRequest({
       "token": this._sessionS.getAPIToken()
-    }, this._authPath+"Refresh").subscribe(
-      ok=>console.log(ok),
-      err=>console.log(err)
-    );
+    }, this._authPath+"Refresh");
   }
 
   private getUTCNow():number{

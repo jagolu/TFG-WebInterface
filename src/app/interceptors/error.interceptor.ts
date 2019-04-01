@@ -13,6 +13,7 @@ import { tap } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
 import { SessionService } from '../services/session.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -20,15 +21,16 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor(private alert:AlertService, 
                 private loading:LoadingService,
                 private _router:Router,
-                private _sessionS:SessionService) { }
+                private _sessionS:SessionService,
+                private _authS:AuthenticationService) { }
 
     intercept(
         req: HttpRequest<any>, 
         next: HttpHandler
     ):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(tap(
-            (ok)=>{ 
-                if(ok instanceof HttpResponse) {
+            (ok)=>{
+                if(ok instanceof HttpResponse && !req.url.includes("Refresh")) {
                     this.showSuccessAlert(req.url);
                     this.loading.stopLoading();
                     this.handleAuthentication(ok);
@@ -36,24 +38,41 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
             },
             (err:HttpErrorResponse)=>{
-                this.errRedirect(req.url);
-                this.showErrorAlert(err);
-                this.loading.stopLoading();
+                if(!req.url.includes("Refresh")){
+                    this.loading.stopLoading();
+                    this.errRedirect(req.url);
+                    this.showErrorAlert(err);
+                    this.handleAuthentication(err);
+                }
             }
         ));
     }
 
 /*----------------------------AUTHNETICATION------------------------------- */
 
-    private handleAuthentication(ok:any){
-        if(ok.body != null && ok.body.api_token!=null){
+    private handleAuthentication(request:any){
+        if(request.body != null && request.body.api_token!=null){
             this._sessionS.setSession({
-                "api_token": ok.body.api_token,
-                "role": ok.body.role
+                "api_token": request.body.api_token,
+                "role": request.body.role
             });
         }
-        if(ok.url.includes("Authorization/LogOut")) {
+        if(request.url.includes("Authorization/Refresh") && request.status == 401){
             this._sessionS.removeSession();
+        }
+        if(request.status == 401){
+            this._authS.refreshToken().subscribe(
+                (ok:any)=> {
+                    this._sessionS.setSession({
+                        "api_token": ok.api_token,
+                        "role": ok.role
+                    })
+                },
+                _=>{
+                    this._sessionS.removeSession();
+                    this._router.navigate(['']);
+                }
+            );
         }
     }
 

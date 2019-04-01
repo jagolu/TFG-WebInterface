@@ -13,11 +13,9 @@ export class ViewUserComponent{
   constructor(private _userS:UserService) { 
     this._user = null;
     this._userS.getUserOptions().subscribe(
-      (ok)=>{
-        console.log(ok);
-        this._user = ok;
-      },
-      err=>console.log("asdf")
+      (user)=>{
+        this._user = user;
+      }
     );
   }
 
