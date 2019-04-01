@@ -32,6 +32,8 @@ import { AlertService } from './services/alert.service';
 import { LoadingService } from './services/loading.service';
 import { PasswordAlertService } from './services/password-alert.service';
 import { SessionService } from './services/session.service';
+import { AuthGuardService } from './services/canActivate/AuthGuard.service';
+
 
 
 
@@ -100,7 +102,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     AlertService,
     LoadingService,
     PasswordAlertService,
-    SessionService
+    SessionService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
