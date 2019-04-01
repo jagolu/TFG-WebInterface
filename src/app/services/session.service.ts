@@ -11,15 +11,23 @@ export class SessionService {
   constructor() { }
 
   getAPIToken(){
-    return this.getSession().api_token;
+    try{
+      return this.getSession().api_token;
+    }catch(Exception){
+      return "";
+    }
   }
 
   getExpiresAt(){
-    return this.getSession().expires_at;
+    try{
+      return this.getSession().expires_at;
+    }catch(Exception){
+      return 0;
+    }
   }
 
   setSession(user: SessionStorage){
-    sessionStorage.setItem("session", JSON.stringify({
+    sessionStorage.setItem(this.sessionStorageKey, JSON.stringify({
       "api_token":user.api_token,
       "role":user.role,
       "expires_at": this.getUTCFromNow20Min()
@@ -27,7 +35,7 @@ export class SessionService {
   }
 
   removeSession(){
-    sessionStorage.removeItem("session");
+    sessionStorage.removeItem(this.sessionStorageKey);
   }
 
   /*---------------Private functions------------------- */
