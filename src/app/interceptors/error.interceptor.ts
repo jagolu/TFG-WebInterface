@@ -32,7 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         this.loading.stopLoading();
                         this.showErrorAlert(err);
                         this.errRedirect(req.url);
-                        return Observable.throw(err);
+                        return EMPTY;
                     }
                 }
             })
