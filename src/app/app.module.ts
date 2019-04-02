@@ -40,6 +40,7 @@ import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 // Interceptors
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
+import { SuccessInterceptor } from './interceptors/success.interceptor';
 
 
 // Routing
@@ -95,6 +96,11 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SuccessInterceptor,
       multi: true
     },
     AuthenticationService,

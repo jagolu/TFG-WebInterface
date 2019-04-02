@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-    HttpEvent, 
-    HttpInterceptor, 
-    HttpHandler, 
-    HttpRequest, 
-    HttpResponse, 
-    HttpErrorResponse
+import { HttpEvent, HttpInterceptor, HttpHandler, 
+        HttpRequest, HttpResponse, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject, observable, EMPTY } from 'rxjs';
+import { tap, switchMap, catchError, filter, take, finalize } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
 import { SessionService } from '../services/session.service';
@@ -18,69 +13,27 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private alert:AlertService, 
-                private loading:LoadingService,
-                private _router:Router,
-                private _sessionS:SessionService,
+
+
+    constructor(private alert:AlertService, private loading:LoadingService,
+                private _router:Router, private _sessionS:SessionService,
                 private _authS:AuthenticationService) { }
 
-    intercept(
-        req: HttpRequest<any>, 
-        next: HttpHandler
-    ):Observable<HttpEvent<any>> {
-        return next.handle(req).pipe(tap(
-            (ok)=>{
-                if(ok instanceof HttpResponse && !req.url.includes("Refresh")) {
-                    this.showSuccessAlert(req.url);
-                    this.loading.stopLoading();
-                    this.handleAuthentication(ok);
-                    this.successRedirect(ok.url);
+    intercept( req: HttpRequest<any>, next: HttpHandler ):Observable<HttpEvent<any>> {
+        return next.handle(req).pipe(
+            catchError(err=>{
+                if(err instanceof HttpErrorResponse){
+                        this.loading.stopLoading();
+                        this.showErrorAlert(err);
+                        this.errRedirect(req.url);
+                        return Observable.throw(err);
                 }
-            },
-            (err:HttpErrorResponse)=>{
-                if(!req.url.includes("Refresh")){
-                    this.loading.stopLoading();
-                    this.errRedirect(req.url);
-                    this.showErrorAlert(err);
-                    this.handleAuthentication(err);
-                }
-            }
-        ));
+            })
+        );
     }
 
-/*----------------------------AUTHNETICATION------------------------------- */
-
-    private handleAuthentication(request:any){
-        if(request.body != null && request.body.api_token!=null){
-            this._sessionS.setSession({
-                "api_token": request.body.api_token,
-                "role": request.body.role
-            });
-        }
-        if(request.url.includes("Authorization/Refresh") && request.status == 401){
-            this._sessionS.removeSession();
-        }
-        if(request.status == 401){
-            this._authS.refreshToken().subscribe(
-                (ok:any)=> {
-                    this._sessionS.setSession({
-                        "api_token": ok.api_token,
-                        "role": ok.role
-                    })
-                },
-                _=>{
-                    this._sessionS.removeSession();
-                    this._router.navigate(['']);
-                }
-            );
-        }
-    }
 
 /*-----------------------------------------ALERTS----------------------------------- */
-
-    private showSuccessAlert(url:string){
-        if(url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
-    }
 
     private showErrorAlert(err:HttpErrorResponse){
         if(err.status == 400 && err.error){
@@ -99,12 +52,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
 /*------------------------------------ REDIRECT------------------------------ */
     
-    private successRedirect(url:string){
-        if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
-        if(url.includes("ChangeUserInfo")) window.location.reload();
-    }
-
-
     private errRedirect(url:string){
         if(url.includes("Authorization/Validate")) this._router.navigate(['']);
         if(url.includes("Authorization/Refresh")) this._router.navigate(['logIn']);
