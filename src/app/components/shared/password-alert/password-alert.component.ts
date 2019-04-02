@@ -26,13 +26,22 @@ export class PasswordAlertComponent extends AlertComponent implements OnInit {
       "email": this.deleteTarget,
       "password": this.deleteForm.controls["password"].value
     }).subscribe(
-      ok=>console.log("dseletet", ok),
-      err=>console.log("asdfasdf",err)
+      _=>{
+        this.hideAlert();
+      },
+      _=>{
+        this.hideAlert();
+      }
     );
   }
 
   private deleteGroup(){
-    console.log("deletegroup")
+    console.log("deletegroup");
+    this.hideAlert();
+  }
+
+  private hideAlert(){
+    (document.querySelector("#hidePasswordAlertButton") as HTMLElement).click();
   }
 
   private initializeForm(){
