@@ -6,6 +6,7 @@ import { HttpClient} from '@angular/common/http';
 import { LoadingService } from './loading.service';
 import { SessionService } from './session.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -68,7 +69,7 @@ export class AuthenticationService extends RestService {
     return this.postRequest(user, this._authPath+"LogIn");
   }
 
-  refreshToken(){
+  refreshToken():Observable<any>{
     return this.postRequest({
       "token": this._sessionS.getAPIToken()
     }, this._authPath+"Refresh");

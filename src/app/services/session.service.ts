@@ -34,6 +34,13 @@ export class SessionService {
     }));
   }
 
+  renewToken(token:string, role:string){
+    this.setSession({
+      "api_token": token,
+      "role": role
+    })
+  }
+
   removeSession(){
     sessionStorage.removeItem(this.sessionStorageKey);
   }

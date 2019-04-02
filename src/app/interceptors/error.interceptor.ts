@@ -13,7 +13,9 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
+    private refreshingToken = false;
 
+    private tokenSubject = new Subject();
 
     constructor(private alert:AlertService, private loading:LoadingService,
                 private _router:Router, private _sessionS:SessionService,
@@ -23,10 +25,15 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError(err=>{
                 if(err instanceof HttpErrorResponse){
+                    if(err.status == 401){
+                        return this.handleUnathorized(err, req, next);
+                    } 
+                    else{
                         this.loading.stopLoading();
                         this.showErrorAlert(err);
                         this.errRedirect(req.url);
                         return Observable.throw(err);
+                    }
                 }
             })
         );
@@ -55,5 +62,56 @@ export class ErrorInterceptor implements HttpInterceptor {
     private errRedirect(url:string){
         if(url.includes("Authorization/Validate")) this._router.navigate(['']);
         if(url.includes("Authorization/Refresh")) this._router.navigate(['logIn']);
+    }
+
+/**********************REFRESHTOKEN********************************/
+    
+    private handleUnathorized(res, req:HttpRequest<any>, next:HttpHandler):Observable<any>{
+        
+        if(!this.refreshingToken){
+            
+            this.refreshingToken = true;
+
+            this.tokenSubject.next();
+
+            return this._authS.refreshToken().pipe(
+                switchMap((newToken:any)=>{
+                    if(newToken){
+                        this.tokenSubject.next(newToken.api_token);
+                        this._sessionS.renewToken(newToken.api_token, newToken.role);
+                        return next.handle(this.addToken(req, newToken.api_token));
+                    }
+                    
+                    this._authS.logOut();
+
+                    return next.handle(res);
+                })
+                ,
+                catchError(_=>{
+                    this._authS.logOut();
+                    return EMPTY;
+                }),
+                finalize(()=>{
+                    this.refreshingToken = false;
+                    return EMPTY;
+                })
+            );
+        }
+        else{
+            return this.tokenSubject
+                .pipe(
+                    filter((newToken:string)=>newToken!=null),
+                    take(1),
+                    switchMap((newToken:string)=>{
+                        return next.handle(this.addToken(req, newToken));
+                    })
+                );
+        }
+    }
+
+    addToken(req:HttpRequest<any>, token:string){
+        return req.clone({
+            headers: req.headers.set('Authorization', "Bearer "+token)
+        });
     }
 }
