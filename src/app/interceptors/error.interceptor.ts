@@ -13,10 +13,6 @@ import { AuthenticationService } from '../services/authentication.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    private refreshingToken = false;
-
-    private tokenSubject = new Subject();
-
     constructor(private alert:AlertService, private loading:LoadingService,
                 private _router:Router, private _sessionS:SessionService,
                 private _authS:AuthenticationService) { }
@@ -31,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     else{
                         this.loading.stopLoading();
                         this.showErrorAlert(err);
-                        this.errRedirect(req.url);
+                        this.errRedirect(err);
                         return EMPTY;
                     }
                 }
@@ -55,58 +51,46 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
         if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
         if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+        if(err.status == 401) this.alert.openAlert(AlertType.SESSIONEXPIRED);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
     
-    private errRedirect(url:string){
-        if(url.includes("Authorization/Validate")) this._router.navigate(['']);
-        if(url.includes("Authorization/Refresh")) this._router.navigate(['logIn']);
+    private errRedirect(err:HttpErrorResponse){
+        if(err.status == 401){
+            this._authS.logOut();
+            this._router.navigate(['../logIn']);
+        }
+        if(err.url.includes("Authorization/Validate")) this._router.navigate(['']);
     }
 
 /**********************REFRESHTOKEN********************************/
     
     private handleUnathorized(res, req:HttpRequest<any>, next:HttpHandler):Observable<any>{
-        
-        if(!this.refreshingToken){
-            
-            this.refreshingToken = true;
 
-            this.tokenSubject.next();
+        return this._authS.refreshToken().pipe(
+            switchMap(newToken=>{
+                if(newToken){
+                    this._sessionS.renewToken(newToken.api_token, newToken.role);
+                    return next.handle(this.addToken(req, newToken.api_token));
+                }
 
-            return this._authS.refreshToken().pipe(
-                switchMap((newToken:any)=>{
-                    if(newToken){
-                        this.tokenSubject.next(newToken.api_token);
-                        this._sessionS.renewToken(newToken.api_token, newToken.role);
-                        return next.handle(this.addToken(req, newToken.api_token));
-                    }
-                    
-                    this._authS.logOut();
-
-                    return next.handle(res);
-                })
-                ,
-                catchError(_=>{
-                    this._authS.logOut();
-                    return EMPTY;
-                }),
-                finalize(()=>{
-                    this.refreshingToken = false;
-                    return EMPTY;
-                })
-            );
-        }
-        else{
-            return this.tokenSubject
-                .pipe(
-                    filter((newToken:string)=>newToken!=null),
-                    take(1),
-                    switchMap((newToken:string)=>{
-                        return next.handle(this.addToken(req, newToken));
-                    })
-                );
-        }
+                this.loading.stopLoading();
+                this.showErrorAlert(res);
+                this.errRedirect(res);
+                return EMPTY;
+            })
+            ,
+            catchError(_=>{
+                this.loading.stopLoading();
+                this.showErrorAlert(res);
+                this.errRedirect(res);
+                return EMPTY;
+            }),
+            finalize(()=>{
+                return EMPTY;
+            })
+        );
     }
 
     addToken(req:HttpRequest<any>, token:string){
