@@ -5,14 +5,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SignUpComponent } from './components/logSign/sign-up/sign-up.component';
-import { GoogleComponent } from './components/logSign/google/google.component';
-import { FacebookComponent } from './components/logSign/facebook/facebook.component';
 import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
+import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 
 
 // Directives
@@ -21,16 +20,21 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
 import { AuthenticationService } from './services/authentication.service';
 
 
+// Interceptors
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+
+
 // Routing
 import { AppRoutingModule } from './app-routing.module';
+
 
 // New modules import
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 
 @NgModule({
@@ -38,14 +42,13 @@ import { RouterModule } from '@angular/router';
     AppComponent,
     NavbarComponent,
     SignUpComponent,
-    GoogleComponent,
-    FacebookComponent,
     IconComponent,
     HomeComponent,
     LogInComponent,
     EmailVerificationComponent,
     AlertComponent,
-    LoadingComponent
+    LoadingComponent,
+    SocialButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,16 @@ import { RouterModule } from '@angular/router';
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
     },
     AuthenticationService
   ],

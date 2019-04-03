@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-6 mb-md-0 mb-2">
+    <div id="googleButton" class="customGPlusSignIn" (click)="socialSignIn('GOOGLE')">
+      <span class="googleIcon"></span>
+      <span class="googleText" [textContent]="googleMsg"></span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div id="facebookButton" class="customGPlusSignIn" (click)="socialSignIn('FACEBOOK')" >
+      <span class="facebookIcon"></span>
+      <span class="facebookText" [textContent]="facebookMsg"></span>
+    </div>
+  </div>
+</div>

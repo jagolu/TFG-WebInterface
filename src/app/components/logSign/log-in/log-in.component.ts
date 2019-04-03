@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService, UserLog } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-log-in',
@@ -19,8 +19,6 @@ export class LogInComponent {
 
     this.initializeForm();
   }
-
-
 
   private initializeForm(){
     this.logInForm = new FormGroup({
@@ -55,12 +53,10 @@ export class LogInComponent {
   }
 
   logIn(){
-    let user = {
+    let user:UserLog = {
       'email' : this.logInForm.controls['email'].value,
       'password': this.logInForm.controls['password'].value
     }
-    this._authentication.setUserFromForm(user).subscribe(
-
-    );
+    this._authentication.logIn(user).subscribe();
   }
 }
