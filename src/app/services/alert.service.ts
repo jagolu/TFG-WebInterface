@@ -57,7 +57,15 @@ export class AlertService {
     }
     else if(type == AlertType.CANTDELETEACCOUNT){
       return ["No se pudo eliminar tu cuenta de usuario.",
-              "Vuelva a intentarlo más tarde."]
+              "Vuelva a intentarlo más tarde."];
+    }
+    else if(type == AlertType.DELETEDACCOUNT){
+      return ["Sentimos que te vayas.",
+              "Ojalá vuelvas pronto."];
+    }
+    else if(type == AlertType.SESSIONEXPIRED){
+      return ["Tu sesión ha expirado.",
+              "Vuelva a registrarte"];
     }
   }
 }
@@ -71,5 +79,7 @@ export enum AlertType{
   SOCIALERROR = "SOCIALERROR",
   WRONGEMAILORPASSWORD = "WRONGEMAILORPASSWORD",
   NOTVALIDATEDYET = "NOTVALIDATEDYET",
-  CANTDELETEACCOUNT = "CANTDELETEACCOUNT"
+  CANTDELETEACCOUNT = "CANTDELETEACCOUNT",
+  DELETEDACCOUNT = "DELETEDACCOUNT",
+  SESSIONEXPIRED = "SESSIONEXPIRED"
 }
