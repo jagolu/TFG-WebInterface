@@ -41,12 +41,10 @@ export class PasswordAlertService {
       .forEach(buttonId => {
         (document.querySelector("#"+buttonId) as HTMLElement).style.display="none";
         (document.querySelector("#"+buttonId+"NOTPASSWORD") as HTMLElement).style.display="none";
-        // if(this.hasPassword) (document.querySelector("#"+buttonId+"NOPASSWORD") as HTMLElement).style.display="none";
       }
     );
     (document.querySelector("#"+type.toString()) as HTMLElement).style.display="block";
     (document.querySelector("#"+type.toString()+"NOTPASSWORD") as HTMLElement).style.display="block";
-    // if(this.hasPassword) (document.querySelector("#"+type.toString()+"NOPASSWORD") as HTMLElement).style.display="block";
   }
 }
 

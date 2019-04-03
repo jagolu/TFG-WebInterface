@@ -23,16 +23,11 @@ export class PasswordAlertComponent extends BasicAlertComponent implements OnIni
   }
 
   private deleteAccount(){
-    // console.log("hi", this.deleteForm.controls["password"].value)
+    this.hideClicking();
     this._userS.deleteUser({
       "email": this.deleteTarget,
       "password": this.deleteForm.controls["password"].value
-    }).subscribe(
-      _=>{
-      },
-      _=>{
-      }
-    );
+    }).subscribe();
   }
 
   private deleteGroup(){
