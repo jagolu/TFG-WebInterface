@@ -5,10 +5,11 @@
     
     
     <!-- Nickname user form -->
-    <hr>
+    <hr *ngIf="hasPassword">
     <form class="form-inline"
             [formGroup]="nicknameForm" 
-            (ngSubmit)="changeNickname()">
+            (ngSubmit)="changeNickname()"
+            *ngIf="hasPassword">
         <div class="form-group mb-2 mx-sm-3">
                 <label class="pr-2">Nickname</label>
                 <input type="text"
@@ -42,8 +43,8 @@
     >The username need to have less than 20 characters</small>
 
     <!-- Password user form  -->
-    <hr>
-    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+    <hr *ngIf="hasPassword">
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" *ngIf="hasPassword">
         <div class="form-group">
             <label>Old Password</label>
             <input type="password"
@@ -94,9 +95,11 @@
 
 
     <!-- Profile img form -->
-    <hr>
+    <hr *ngIf="hasPassword">
     <form class="form-inline"
-            [formGroup]="imageForm" (ngSubmit)="changeImg()">
+            [formGroup]="imageForm" 
+            (ngSubmit)="changeImg()" 
+            *ngIf="hasPassword">
         <div class="form-group mb-2 mx-sm-3">
             <input type="file" 
                     class="form-control-file"

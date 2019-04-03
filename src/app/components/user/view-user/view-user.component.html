@@ -24,9 +24,9 @@
           <div class="col-6">
             <span class="btn btn-outline-secondary w-100"
                   id="headingTwo"
-                  data-toggle="collapse" 
-                  data-target="#collapseTwo" 
-                  aria-expanded="false" 
+                  data-toggle="collapse"
+                  data-target="#collapseTwo"
+                  aria-expanded="false"
                   aria-controls="collapseTwo"
             >Info</span>
           </div>
@@ -36,9 +36,10 @@
                 [labelled]="'headingOne'">
             </app-user-groups>
             <app-user-info-form
-              [id]="'collapseTwo'"
-              [labelled]="'headingTwo'"
-              [nickname]="_user.nickname">
+                [id]="'collapseTwo'"
+                [labelled]="'headingTwo'"
+                [nickname]="_user.nickname"
+                [hasPassword]="_user.password">
             </app-user-info-form>
           </div>
         </div>

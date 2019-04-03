@@ -14,6 +14,7 @@ export class UserInfoFormComponent implements OnInit {
   @Input()id:string;
   @Input()labelled:string;
   @Input()nickname:string;
+  @Input()hasPassword:boolean;
 
   private nicknameForm:FormGroup;
   private passwordForm:FormGroup;
