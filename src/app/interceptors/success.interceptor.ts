@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, 
         HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';

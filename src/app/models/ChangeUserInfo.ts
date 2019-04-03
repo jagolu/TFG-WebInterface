@@ -1,5 +1,3 @@
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-
 export interface ChangeUserInfo{
     nickname?:string;
     oldPassword?:string;

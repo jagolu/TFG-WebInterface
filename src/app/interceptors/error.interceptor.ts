@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, 
-        HttpRequest, HttpResponse, HttpErrorResponse
+        HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, Subject, observable, EMPTY } from 'rxjs';
-import { tap, switchMap, catchError, filter, take, finalize } from 'rxjs/operators';
+import { Observable, Subject, EMPTY } from 'rxjs';
+import { switchMap, catchError, filter, take, finalize } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
 import { SessionService } from '../services/session.service';
