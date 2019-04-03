@@ -1,22 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AlertComponent } from '../alert/alert.component';
 import { UserService } from 'src/app/services/user.service';
+import { BasicAlertComponent } from 'src/app/components/shared/alerts/basic-alert.component';
 
 @Component({
   selector: 'app-password-alert',
   templateUrl: './password-alert.component.html',
   styles: []
 })
-export class PasswordAlertComponent extends AlertComponent implements OnInit {
+export class PasswordAlertComponent extends BasicAlertComponent implements OnInit {
 
   private deleteForm:FormGroup;
   private hasPassword:boolean;
-  private init:boolean = true;
   @Input() deleteTarget?:string;
 
   constructor(private _userS:UserService) { 
-    super()
+    super();
   }
 
   ngOnInit() {
@@ -24,28 +23,25 @@ export class PasswordAlertComponent extends AlertComponent implements OnInit {
   }
 
   private deleteAccount(){
+    // console.log("hi", this.deleteForm.controls["password"].value)
     this._userS.deleteUser({
       "email": this.deleteTarget,
       "password": this.deleteForm.controls["password"].value
     }).subscribe(
       _=>{
-        this.hideAlert(true);
       },
       _=>{
-        this.hideAlert(true);
       }
     );
   }
 
   private deleteGroup(){
     console.log("deletegroup");
-    this.hideAlert(true);
+    this.hideClicking();
   }
 
-  private hideAlert(clicking:boolean){
-    super.focusOut();
-    if(clicking) (document.querySelector("#hidePasswordAlertButton") as HTMLElement).click();
-    this.init = true;
+  private hideClicking(){
+    (document.querySelector("#hidePasswordAlertButton") as HTMLElement).click();
   }
 
   private initializeForm(){
@@ -64,6 +60,6 @@ export class PasswordAlertComponent extends AlertComponent implements OnInit {
 
   private setPassword(pass:boolean){
     this.hasPassword = pass;
-    this.init = false;
+    super.setInitFalse();
   }
 }

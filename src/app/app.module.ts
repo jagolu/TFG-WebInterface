@@ -9,13 +9,13 @@ import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
-import { AlertComponent } from './components/shared/alert/alert.component';
+import { InfoAlertComponent } from './components/shared/alerts/infoAlert/infoAlert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 import { ViewUserComponent } from './components/user/view-user/view-user.component';
 import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
-import { PasswordAlertComponent } from './components/shared/password-alert/password-alert.component';
+import { PasswordAlertComponent } from './components/shared/alerts/password-alert/password-alert.component';
 
 
 // Directives
@@ -65,7 +65,7 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     HomeComponent,
     LogInComponent,
     EmailVerificationComponent,
-    AlertComponent,
+    InfoAlertComponent,
     LoadingComponent,
     SocialButtonComponent,
     ViewUserComponent,
