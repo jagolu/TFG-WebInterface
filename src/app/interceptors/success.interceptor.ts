@@ -7,12 +7,14 @@ import { tap } from 'rxjs/operators';
 import { AlertService, AlertType } from '../services/alert.service';
 import { LoadingService } from '../services/loading.service';
 import { SessionService } from '../services/session.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class SuccessInterceptor implements HttpInterceptor {
 
     constructor(private alert:AlertService, private loading:LoadingService,
-                private _router:Router, private _sessionS:SessionService) { }
+                private _router:Router, private _sessionS:SessionService,
+                private _authS:AuthenticationService) { }
 
     intercept( req: HttpRequest<any>, next: HttpHandler ):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(tap(
@@ -35,6 +37,9 @@ export class SuccessInterceptor implements HttpInterceptor {
                 "api_token": request.body.api_token,
                 "role": request.body.role
             });
+        }
+        if((request.url.includes("DeleteAccount"))){
+            this._authS.logOut();
         }
     }
 

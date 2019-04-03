@@ -7,6 +7,8 @@ import { SignUpComponent } from 'src/app/components/logSign/sign-up/sign-up.comp
 import { LogInComponent } from 'src/app/components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from 'src/app/components/logSign/email-verification/email-verification.component';
 import { ViewUserComponent } from './components/user/view-user/view-user.component';
+
+//AuthGuardService
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 
 
