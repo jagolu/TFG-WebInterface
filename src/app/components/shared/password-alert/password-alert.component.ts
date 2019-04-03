@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 export class PasswordAlertComponent extends AlertComponent implements OnInit {
 
   private deleteForm:FormGroup;
+  private hasPassword:boolean;
+  private init:boolean = true;
   @Input() deleteTarget?:string;
 
   constructor(private _userS:UserService) { 
@@ -27,21 +29,23 @@ export class PasswordAlertComponent extends AlertComponent implements OnInit {
       "password": this.deleteForm.controls["password"].value
     }).subscribe(
       _=>{
-        this.hideAlert();
+        this.hideAlert(true);
       },
       _=>{
-        this.hideAlert();
+        this.hideAlert(true);
       }
     );
   }
 
   private deleteGroup(){
     console.log("deletegroup");
-    this.hideAlert();
+    this.hideAlert(true);
   }
 
-  private hideAlert(){
-    (document.querySelector("#hidePasswordAlertButton") as HTMLElement).click();
+  private hideAlert(clicking:boolean){
+    super.focusOut();
+    if(clicking) (document.querySelector("#hidePasswordAlertButton") as HTMLElement).click();
+    this.init = true;
   }
 
   private initializeForm(){
@@ -56,5 +60,10 @@ export class PasswordAlertComponent extends AlertComponent implements OnInit {
         ]
       )
     });
+  }
+
+  private setPassword(pass:boolean){
+    this.hasPassword = pass;
+    this.init = false;
   }
 }

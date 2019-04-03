@@ -7,6 +7,7 @@ export class PasswordAlertService {
 
   private txtMessage;
   private idButtons;
+  private hasPassword;
 
   constructor() { 
     this.txtMessage = (document.querySelector("#alertTextId") as HTMLElement);
@@ -16,12 +17,14 @@ export class PasswordAlertService {
     ]
   }
 
-  openAlert(type:PasswordAlertType){
+  openAlert(type:PasswordAlertType, hasPassword:boolean){
+    this.hasPassword = hasPassword;
     let txt = this.getText(type);
     this.txtMessage.textContent = txt;
 
     this.showButton(type);
-    (document.querySelector("#passwordAlertButton") as HTMLElement).click();
+    if(hasPassword) (document.querySelector("#passwordAlertButtonWithPassword") as HTMLElement).click();
+    else (document.querySelector("#passwordAlertButtonWithoutPassword") as HTMLElement).click();
   }
 
   private getText(type:PasswordAlertType){
@@ -37,9 +40,13 @@ export class PasswordAlertService {
       )
       .forEach(buttonId => {
         (document.querySelector("#"+buttonId) as HTMLElement).style.display="none";
+        (document.querySelector("#"+buttonId+"NOTPASSWORD") as HTMLElement).style.display="none";
+        // if(this.hasPassword) (document.querySelector("#"+buttonId+"NOPASSWORD") as HTMLElement).style.display="none";
       }
     );
     (document.querySelector("#"+type.toString()) as HTMLElement).style.display="block";
+    (document.querySelector("#"+type.toString()+"NOTPASSWORD") as HTMLElement).style.display="block";
+    // if(this.hasPassword) (document.querySelector("#"+type.toString()+"NOPASSWORD") as HTMLElement).style.display="block";
   }
 }
 

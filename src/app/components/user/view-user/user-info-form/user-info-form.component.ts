@@ -109,11 +109,10 @@ export class UserInfoFormComponent implements OnInit {
   }
 
   private openAlert(){
-    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT);
+    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT, this.hasPassword);
   }
 
   private loadFile(event){
     this.selectedFile = event.target.files[0];
-    
   }
 }
