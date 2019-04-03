@@ -1,6 +1,5 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingComponent } from '../../shared/loading/loading.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -9,8 +8,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styles: []
 })
 export class EmailVerificationComponent implements AfterViewInit{
-
-  @ViewChild(LoadingComponent) loading:LoadingComponent;
 
   private token:string;
 
@@ -22,14 +19,7 @@ export class EmailVerificationComponent implements AfterViewInit{
     this.checkEmail();
   }
 
-  checkEmail(){
-    this._authS.checkEmailValidation(this.token).subscribe(
-      success=>{
-        console.log("success");
-      },
-      error=>{
-        console.log("error");
-      }
-    )
+  private checkEmail(){
+    this._authS.checkEmailValidation(this.token);
   }
 }

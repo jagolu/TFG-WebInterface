@@ -6,14 +6,19 @@ import { HomeComponent } from 'src/app/components/home/home.component';
 import { SignUpComponent } from 'src/app/components/logSign/sign-up/sign-up.component';
 import { LogInComponent } from 'src/app/components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from 'src/app/components/logSign/email-verification/email-verification.component';
+import { ViewUserComponent } from './components/user/view-user/view-user.component';
+
+//AuthGuardService
+import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 
 
 const ROUTES: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'signUp', component: SignUpComponent },
-  { path: 'logIn', component: LogInComponent},
-  { path: 'emailVerification/:token', component: EmailVerificationComponent},
-  { path: 'index', component: HomeComponent},
+  { path: 'signUp', component: SignUpComponent, canActivate: [AuthGuardService]},
+  { path: 'logIn', component: LogInComponent, canActivate: [AuthGuardService]},
+  { path: 'emailVerification/:token', component: EmailVerificationComponent, canActivate: [AuthGuardService]},
+  { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService]},
+  { path: 'prueba', component: ViewUserComponent},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService, UserLog } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-log-in',
@@ -41,6 +41,16 @@ export class LogInComponent {
     })
   }
 
+  logIn(){
+    this._authentication.logIn({
+      'email' : this.logInForm.controls['email'].value,
+      'password': this.logInForm.controls['password'].value
+    }).subscribe(
+      _=>{},
+      _=> this.resetForm(false)
+    );
+  }
+
   private resetForm(full:boolean){
     this.logInForm.reset({
       'email': full ? "": this.logInForm.controls['email'].value,
@@ -50,13 +60,5 @@ export class LogInComponent {
 
   private watchPassword(){
     this.passwordType = this.passwordType == "password" ? "text" : "password";
-  }
-
-  logIn(){
-    let user:UserLog = {
-      'email' : this.logInForm.controls['email'].value,
-      'password': this.logInForm.controls['password'].value
-    }
-    this._authentication.logIn(user).subscribe();
   }
 }

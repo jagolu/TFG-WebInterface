@@ -9,19 +9,38 @@ import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
-import { AlertComponent } from './components/shared/alert/alert.component';
+import { InfoAlertComponent } from './components/shared/alerts/infoAlert/infoAlert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
+import { ViewUserComponent } from './components/user/view-user/view-user.component';
+import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
+import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
+import { PasswordAlertComponent } from './components/shared/alerts/password-alert/password-alert.component';
 
 
 // Directives
 
+
+// Pipes
+import { OnlyDatePipe } from './pipes/only-date.pipe';
+
+
 // Services
 import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
+import { AlertService } from './services/alert.service';
+import { LoadingService } from './services/loading.service';
+import { PasswordAlertService } from './services/password-alert.service';
+import { SessionService } from './services/session.service';
+import { AuthGuardService } from './services/canActivate/AuthGuard.service';
+
+
 
 
 // Interceptors
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { HeaderInterceptor } from './interceptors/header.interceptor';
+import { SuccessInterceptor } from './interceptors/success.interceptor';
 
 
 // Routing
@@ -34,7 +53,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { HeaderInterceptor } from './interceptors/header.interceptor';
+import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
 
 @NgModule({
@@ -46,9 +65,15 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
     HomeComponent,
     LogInComponent,
     EmailVerificationComponent,
-    AlertComponent,
+    InfoAlertComponent,
     LoadingComponent,
-    SocialButtonComponent
+    SocialButtonComponent,
+    ViewUserComponent,
+    OnlyDatePipe,
+    UserGroupsComponent,
+    UserInfoFormComponent,
+    PasswordAlertComponent,
+    Base64ImagePipe
   ],
   imports: [
     BrowserModule,
@@ -73,7 +98,18 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
       useClass: ErrorInterceptor,
       multi: true
     },
-    AuthenticationService
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SuccessInterceptor,
+      multi: true
+    },
+    AuthenticationService,
+    UserService,
+    AlertService,
+    LoadingService,
+    PasswordAlertService,
+    SessionService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

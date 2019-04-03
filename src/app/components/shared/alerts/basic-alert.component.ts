@@ -1,12 +1,10 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { AfterViewInit } from '@angular/core';
 
-@Component({
-  selector: 'app-alert',
-  templateUrl: './alert.component.html'
-})
-export class AlertComponent implements AfterViewInit{
+
+export class BasicAlertComponent implements AfterViewInit{
   private navbar;
   private outlet;
+  private init = true;
 
   constructor() { }
 
@@ -15,13 +13,20 @@ export class AlertComponent implements AfterViewInit{
     this.outlet = (document.querySelector(".main") as HTMLElement);
   }
 
-  private focusIn(){
+  protected focusIn(){
     this.navbar.style.filter = "blur(6px)";
     this.outlet.style.filter = "blur(6px)";
+    this.init = false;
   }
 
-  private focusOut(){
+  protected focusOut(){
     this.navbar.style.filter = "blur(0px)";
     this.outlet.style.filter = "blur(0px)";
+    this.init = true;
   }
+
+  protected setInitFalse(){
+    this.init = false;
+  }
+
 }

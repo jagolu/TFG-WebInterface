@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService, UserSign } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -61,18 +61,14 @@ export class SignUpComponent{
     })
   }
 
-  private signUp(){ //TODO quitar los console log
-    let user:UserSign = {
+  private signUp(){ 
+    this._authentication.signUp({
       'email' : this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
       'password': this.signUpForm.controls['password'].value
-    }
-    this._authentication.signUp(user).subscribe(
-      ok=>{
-
-      },err=>{
-        //TODO resetForm
-      }
+    }).subscribe(
+      _=> this.resetForm(true),
+      _=> this.resetForm(false)
     );
   }
 
