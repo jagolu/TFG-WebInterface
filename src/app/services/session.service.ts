@@ -35,6 +35,7 @@ export class SessionService {
   }
 
   renewToken(token:string, role:string){
+    this.removeSession();
     this.setSession({
       "api_token": token,
       "role": role
