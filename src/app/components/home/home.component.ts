@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent{
 
-  private news: littleNew[] = [];
+  public news: littleNew[] = [];
 
   constructor() { 
     this.news.push({title:"title1", body:"body1", time:"14/01/19 14:32", owner:"SYS"});

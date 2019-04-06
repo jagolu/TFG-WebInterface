@@ -61,7 +61,7 @@ export class SignUpComponent{
     })
   }
 
-  private signUp(){ 
+  public signUp(){ 
     this._authentication.signUp({
       'email' : this.signUpForm.controls['email'].value,
       'username': this.signUpForm.controls['username'].value,
@@ -81,13 +81,13 @@ export class SignUpComponent{
     })
   }
 
-  private equalPassword(){
+  public equalPassword(){
     let password = this.signUpForm.controls['password'].value;
     let repeatPassword = this.signUpForm.controls['repeatPassword'].value;
     this.passwordsAreEqual = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
-  private watchPassword(){
+  public watchPassword(){
     this.passwordType = this.passwordType == "password" ? "text" : "password";
   }
 }

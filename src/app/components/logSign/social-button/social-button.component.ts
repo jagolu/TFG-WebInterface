@@ -16,7 +16,8 @@ export class SocialButtonComponent{
               private _authenticationS:AuthenticationService,
               private _alert:AlertService) { }
 
-  private socialSignIn(type:SocialType){
+  public socialSignIn(typeS:string){
+    let type = typeS == "FACEBOOK" ? SocialType.FACEBOOK : SocialType.GOOGLE
     let providerId = type == SocialType.FACEBOOK ?
       FacebookLoginProvider.PROVIDER_ID : GoogleLoginProvider.PROVIDER_ID;
 

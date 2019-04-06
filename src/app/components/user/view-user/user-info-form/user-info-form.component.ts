@@ -16,10 +16,10 @@ export class UserInfoFormComponent implements OnInit {
   @Input()nickname:string;
   @Input()hasPassword:boolean;
 
-  private nicknameForm:FormGroup;
-  private passwordForm:FormGroup;
-  private imageForm:FormGroup;
-  private equalPasswords : boolean;
+  public nicknameForm:FormGroup;
+  public passwordForm:FormGroup;
+  public imageForm:FormGroup;
+  public equalPasswords : boolean;
   private selectedFile;
 
   constructor(private _passwordAlertS:PasswordAlertService,
@@ -102,13 +102,13 @@ export class UserInfoFormComponent implements OnInit {
     });
   }
 
-  private equalPassword(){
+  public equalPassword(){
     let password = this.passwordForm.controls['newPassword'].value;
     let repeatPassword = this.passwordForm.controls['repeatPassword'].value;
     this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
-  private openAlert(){
+  public openAlert(){
     this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT, this.hasPassword);
   }
 

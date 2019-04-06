@@ -41,7 +41,7 @@ export class LogInComponent {
     })
   }
 
-  logIn(){
+  public logIn(){
     this._authentication.logIn({
       'email' : this.logInForm.controls['email'].value,
       'password': this.logInForm.controls['password'].value
@@ -58,7 +58,7 @@ export class LogInComponent {
     });
   }
 
-  private watchPassword(){
+  public watchPassword(){
     this.passwordType = this.passwordType == "password" ? "text" : "password";
   }
 }

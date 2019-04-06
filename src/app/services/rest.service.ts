@@ -7,7 +7,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export abstract class RestService {
   
-  private __baseURL : string = "https://localhost:5001/";
+  private __baseURL : string = "https://virtualbet.azurewebsites.net";
+  // private __baseURL : string = "https://localhost:5001/";
 
   constructor(private __http:HttpClient, private __loading:LoadingService) { }
   

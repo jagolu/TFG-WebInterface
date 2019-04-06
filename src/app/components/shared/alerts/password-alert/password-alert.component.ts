@@ -11,7 +11,7 @@ import { BasicAlertComponent } from 'src/app/components/shared/alerts/basic-aler
 export class PasswordAlertComponent extends BasicAlertComponent implements OnInit {
 
   private deleteForm:FormGroup;
-  private hasPassword:boolean;
+  public hasPassword:boolean;
   @Input() deleteTarget?:string;
 
   constructor(private _userS:UserService) { 
@@ -53,7 +53,7 @@ export class PasswordAlertComponent extends BasicAlertComponent implements OnIni
     });
   }
 
-  private setPassword(pass:boolean){
+  public setPassword(pass:boolean){
     this.hasPassword = pass;
     super.setInitFalse();
   }

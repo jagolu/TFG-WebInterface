@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ViewUserComponent{
 
-  private _user;
+  public _user;
 
   constructor(private _userS:UserService) { 
     this._user = null;
