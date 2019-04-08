@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PasswordAlertService, PasswordAlertType } from 'src/app/services/password-alert.service';
-import { UserService } from 'src/app/services/user.service';
+import { PasswordAlertService, PasswordAlertType } from 'src/app/services/visualServices/password-alert.service';
+import { UserService } from 'src/app/services/restServices/user.service';
 
 
 @Component({

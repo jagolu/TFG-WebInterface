@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AlertService, AlertType } from 'src/app/services/alert.service';
+import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
+import { AlertService, AlertType } from 'src/app/services/visualServices/alert.service';
 
 
 

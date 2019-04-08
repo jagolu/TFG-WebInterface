@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, 
         HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, Subject, EMPTY } from 'rxjs';
-import { switchMap, catchError, filter, take, finalize } from 'rxjs/operators';
-import { AlertService, AlertType } from '../services/alert.service';
-import { LoadingService } from '../services/loading.service';
-import { SessionService } from '../services/session.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { Observable, EMPTY } from 'rxjs';
+import { switchMap, catchError, finalize } from 'rxjs/operators';
+import { AlertService, AlertType } from '../services/visualServices/alert.service';
+import { LoadingService } from '../services/visualServices/loading.service';
+import { SessionService } from '../services/userServices/session.service';
+import { AuthenticationService } from '../services/restServices/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

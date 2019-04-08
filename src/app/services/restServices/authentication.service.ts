@@ -3,8 +3,8 @@ import { AuthService } from 'angularx-social-login';
 import { LogUser, SignUser, SocialLog } from 'src/app/models/models';
 import { RestService } from './rest.service';
 import { HttpClient} from '@angular/common/http';
-import { LoadingService } from './loading.service';
-import { SessionService } from './session.service';
+import { LoadingService } from 'src/app/services/visualServices/loading.service';
+import { SessionService } from 'src/app/services/userServices/session.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 

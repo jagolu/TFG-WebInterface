@@ -26,12 +26,12 @@ import { OnlyDatePipe } from './pipes/only-date.pipe';
 
 
 // Services
-import { AuthenticationService } from './services/authentication.service';
-import { UserService } from './services/user.service';
-import { AlertService } from './services/alert.service';
-import { LoadingService } from './services/loading.service';
-import { PasswordAlertService } from './services/password-alert.service';
-import { SessionService } from './services/session.service';
+import { AuthenticationService } from './services/restServices/authentication.service';
+import { UserService } from './services/restServices/user.service';
+import { AlertService } from './services/visualServices/alert.service';
+import { LoadingService } from './services/visualServices/loading.service';
+import { PasswordAlertService } from './services/visualServices/password-alert.service';
+import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 
 

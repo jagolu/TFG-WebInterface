@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/restServices/user.service';
 import { BasicAlertComponent } from 'src/app/components/shared/alerts/basic-alert.component';
 
 @Component({

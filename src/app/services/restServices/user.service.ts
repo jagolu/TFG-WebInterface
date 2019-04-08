@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { HttpClient } from '@angular/common/http';
-import { LoadingService } from './loading.service';
-import { ChangeUserInfo, DeleteUser } from '../models/models';
+import { LoadingService } from 'src/app/services/visualServices/loading.service';
+import { ChangeUserInfo, DeleteUser } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'

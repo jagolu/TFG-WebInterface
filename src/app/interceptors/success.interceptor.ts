@@ -4,10 +4,10 @@ import { HttpEvent, HttpInterceptor, HttpHandler,
         HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AlertService, AlertType } from '../services/alert.service';
-import { LoadingService } from '../services/loading.service';
-import { SessionService } from '../services/session.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { AlertService, AlertType } from 'src/app/services/visualServices/alert.service';
+import { LoadingService } from 'src/app/services/visualServices/loading.service';
+import { SessionService } from '../services/userServices/session.service';
+import { AuthenticationService } from '../services/restServices/authentication.service';
 
 @Injectable()
 export class SuccessInterceptor implements HttpInterceptor {

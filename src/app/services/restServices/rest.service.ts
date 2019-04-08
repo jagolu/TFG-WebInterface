@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingService } from './loading.service';
+import { LoadingService } from 'src/app/services/visualServices/loading.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { URL } from 'src/environments/secret';
 
