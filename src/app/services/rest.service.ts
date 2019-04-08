@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { LoadingService } from './loading.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { URL } from 'src/environments/secret';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class RestService {
   
-  private __baseURL : string = "https://virtualbet.azurewebsites.net/";
-  // private __baseURL : string = "https://localhost:5001/";
+  private __baseURL : string = URL.baseURL;
 
   constructor(private __http:HttpClient, private __loading:LoadingService) { }
   
