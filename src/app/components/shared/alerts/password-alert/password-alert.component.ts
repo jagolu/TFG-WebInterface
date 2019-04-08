@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/restServices/user.service';
-import { BasicAlertComponent } from 'src/app/components/shared/alerts/basic-alert.component';
+import { BasicAlert } from 'src/app/components/shared/alerts/basic-alert';
 
 @Component({
   selector: 'app-password-alert',
   templateUrl: './password-alert.component.html',
   styles: []
 })
-export class PasswordAlertComponent extends BasicAlertComponent implements OnInit {
+export class PasswordAlertComponent extends BasicAlert implements OnInit {
 
   private deleteForm:FormGroup;
   public hasPassword:boolean;

@@ -1,7 +1,7 @@
 import { AfterViewInit } from '@angular/core';
 
 
-export class BasicAlertComponent implements AfterViewInit{
+export class BasicAlert implements AfterViewInit{
   private navbar;
   private outlet;
   public init = true;
