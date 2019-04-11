@@ -34,8 +34,7 @@ import { LoadingService } from './services/visualServices/loading.service';
 import { PasswordAlertService } from './services/visualServices/password-alert.service';
 import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
-
-
+import { GroupService } from './services/restServices/group.service';
 
 
 // Interceptors
@@ -111,7 +110,7 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     LoadingService,
     PasswordAlertService,
     SessionService,
-    AuthGuardService
+    GroupService,
   ],
   bootstrap: [AppComponent]
 })
