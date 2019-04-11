@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
+import { CreateGroupAlertService } from 'src/app/services/visualServices/create-group-alert.service';
 
 
 
@@ -10,9 +11,14 @@ import { AuthenticationService } from 'src/app/services/restServices/authenticat
 })
 export class NavbarComponent {
 
-  constructor(public authS:AuthenticationService) { }
+  constructor(private authS:AuthenticationService, 
+              private createGroupS:CreateGroupAlertService) { }
 
   logOut(){
     this.authS.logOut();
+  }
+
+  isAuthenticated(){
+    return this.authS.IsAuthenticated();
   }
 }
