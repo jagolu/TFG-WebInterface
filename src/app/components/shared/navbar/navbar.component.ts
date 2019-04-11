@@ -21,4 +21,8 @@ export class NavbarComponent {
   isAuthenticated(){
     return this.authS.IsAuthenticated();
   }
+
+  openCreateGroupAlert(){
+    this.createGroupS.openAlert();
+  }
 }

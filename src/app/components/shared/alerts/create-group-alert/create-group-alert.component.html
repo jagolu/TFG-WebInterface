@@ -1,3 +1,84 @@
-<p>
-  create-group-alert works!
-</p>
+<button type="button" 
+        id="createGroupAlert" 
+        style="display:block" 
+        data-toggle="modal"  
+        data-target="#createGroupAlertMessage"
+>Invisible button to launch the alert withPasword
+</button>
+
+
+<div class="modal fade" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modalAlertTitle" 
+    aria-hidden="true"
+    id="createGroupAlertMessage"
+    (focusin)="focusIn()"
+    (focusout)="focusOut()">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <h4 class="card-title">Create group</h4>
+        
+        <form [formGroup]="createGroupForm">
+          <div class="form-group">
+            <label>Group name</label>
+            <input type="text" 
+                  class="form-control"
+                  placeholder="Your group name"
+                  class="form-control"
+                  formControlName="name"
+                  autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <select class="form-control"
+                    formControlName="groupType">
+                <option selected disabled value=""> -- Choose the group type -- </option>
+                <option value="virtual">Virtual</option>
+                <option value="official">Official</option>
+              </select>
+          </div>
+
+          <div class="form-group" *ngIf="isPublic">
+            <label>Public group
+              
+                <app-icon firstIcon="fa-eye" (click)="setPublic(false)"></app-icon>
+            </label>
+          </div>
+          <div class="form-group" *ngIf="!isPublic">
+            <label>Private group
+              
+                <app-icon firstIcon="fa-eye-slash" (click)="setPublic(true)"></app-icon>
+            </label>
+            <input type="password" 
+                  class="form-control"
+                  placeholder="Your password"
+                  class="form-control"
+                  formControlName="password"
+                  autocomplete="off">
+          </div>
+          
+
+        
+          <button class="btn btn-danger w-100" x
+                  (click)="createGroup()"
+                  type="submit"
+                  id="createGroup"
+                  [disabled]="!createGroupForm.valid"
+          >Create group</button>
+
+
+        </form>
+        
+        <button type="button" 
+                id="hideCreateGroupAlert" 
+                style="display: none" 
+                data-dismiss="modal"  
+        >Invisible button to hide the alert</button>
+
+      </div>
+    </div>
+  </div>
+</div>
