@@ -36,7 +36,8 @@ export class HeaderInterceptor implements HttpInterceptor {
             "LogIn", 
             "SignUp",
             "Validate",
-            "SocialLog"
+            "SocialLog",
+            "CheckGroupName"
         ];
         
         return neededAuthUrl.some(subPath=>
