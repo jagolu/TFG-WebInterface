@@ -10,23 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
 
   public createGroupForm:FormGroup;
-  public isPublic:boolean;
 
   constructor() { 
     super();
   }
 
   ngOnInit() {
-    this.isPublic = true;
     this.initializeForm();
   }
 
   createGroup(){
-    console.log(
-      "name-->", this.createGroupForm.controls["name"].value,
-      "password--->", this.createGroupForm.controls["password"].value,
-      "type-->", this.createGroupForm.controls["groupType"].value
-    )
   }
 
   private initializeForm(){
@@ -58,9 +51,6 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
     });
   }
 
-  public setPublic(value:boolean){
-    this.isPublic = value;
-    this.initializeForm();
   }
 
 }
