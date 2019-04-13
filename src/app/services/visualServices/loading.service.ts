@@ -8,18 +8,25 @@ export class LoadingService{
   private loading;
   private navbar;
   private outlet;
+  private isLoading:boolean;
 
-  constructor() { }
+  constructor() { 
+    this.isLoading = false;
+  }
 
   startLoading(){
+    if(this.isLoading) return;
     this.loading = (document.querySelector("#loading") as HTMLElement);
     this.navbar = (document.querySelector("#navbarId") as HTMLElement);
     this.outlet = (document.querySelector(".main") as HTMLElement);
     this.resize(true);
+    this.isLoading = true;
   }
 
   stopLoading(){
+    if(!this.isLoading) return;
     this.resize(false);
+    this.isLoading = false;
   }
 
   private resize(hide:boolean){
