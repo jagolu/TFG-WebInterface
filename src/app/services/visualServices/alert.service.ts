@@ -67,6 +67,10 @@ export class AlertService {
       return ["Tu sesión ha expirado.",
               "Vuelva a registrarte"];
     }
+    else if(type == AlertType.LIMITATIONCREATEGROUP){
+      return ["No puedes crear más grupos de este tipo.",
+              "Si deseas crear más grupos dirigete a la tienda."]
+    }
   }
 }
 
@@ -81,5 +85,6 @@ export enum AlertType{
   NOTVALIDATEDYET = "NOTVALIDATEDYET",
   CANTDELETEACCOUNT = "CANTDELETEACCOUNT",
   DELETEDACCOUNT = "DELETEDACCOUNT",
-  SESSIONEXPIRED = "SESSIONEXPIRED"
+  SESSIONEXPIRED = "SESSIONEXPIRED",
+  LIMITATIONCREATEGROUP = "LIMITATIONCREATEGROUP"
 }
