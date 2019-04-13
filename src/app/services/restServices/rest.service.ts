@@ -18,8 +18,8 @@ export abstract class RestService {
    * @param path Subpath of the request
    * @return Observable
    */
-  protected postRequest(body:any, path:string){
-    if(!path.includes("Refresh") )this.__loading.startLoading();
+  protected postRequest(body:any, path:string, notStartLoad?:boolean){
+    if(!notStartLoad) this.__loading.startLoading();
     return this.__http.post(this.__baseURL+path, body, {
       headers: this.basicHeaders()
     });
@@ -31,8 +31,8 @@ export abstract class RestService {
    * @param params Url params of the request
    * @return Observable
    */
-  protected getRequest(path:string, params?:paramValue[]){
-    this.__loading.startLoading();
+  protected getRequest(path:string ,params?:paramValue[], notStartLoad?:boolean){
+    if(!notStartLoad) this.__loading.startLoading();
     let options = params ? 
       {
         params: this.params(params),
