@@ -25,7 +25,7 @@ export class HeaderInterceptor implements HttpInterceptor {
         if(!this.requireToken(url)){
             updateReq = req.clone({
                 headers: req.headers.set('Authorization', "Bearer "+this._session.getAPIToken())
-            })
+            });
         }
 
         return next.handle(updateReq);

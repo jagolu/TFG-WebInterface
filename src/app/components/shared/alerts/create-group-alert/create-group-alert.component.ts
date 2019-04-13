@@ -1,6 +1,8 @@
+import { GroupService } from './../../../../services/restServices/group.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BasicAlert } from './../basic-alert';
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-group-alert',
@@ -11,7 +13,7 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
 
   public createGroupForm:FormGroup;
 
-  constructor() { 
+  constructor(private groupS:GroupService) { 
     super();
   }
 
@@ -20,6 +22,11 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
   }
 
   createGroup(){
+    this.hideClicking();
+    this.groupS.createGroup({
+      "name": this.createGroupForm.controls["name"].value,
+      "type": this.createGroupForm.controls["groupType"].value
+    }).subscribe();
   }
 
   private initializeForm(){
@@ -30,17 +37,8 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(20)
-          //TODO validator para nombres de grupo y de usuario
-        ]
-      ),
-      'password': new FormControl(
-        '',
-        [
-          this.isPublic ? Validators.nullValidator : Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(30),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-        ]//TODO add asyncronous validator to check if the group name is taken
+        ],
+        [this.validateNameNotTaken.bind(this)]
       ),
       'groupType': new FormControl(
         '',
@@ -51,6 +49,13 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
     });
   }
 
+  private hideClicking(){
+    (document.querySelector("#hideCreateGroupAlert") as HTMLElement).click();
   }
 
+  private validateNameNotTaken(control: FormControl) {
+    return this.groupS.checkGroupName(control.value).pipe(map(res => {
+      return res ? null : { groupNameTaken: true };
+    }));
+  }
 }
