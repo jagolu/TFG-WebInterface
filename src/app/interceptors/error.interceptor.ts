@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError(err=>{
                 if(err instanceof HttpErrorResponse){
-                    if(err.status == 401){
+                    if(err.status == 401 && !err.url.includes("Refresh")){
                         return this.handleUnathorized(err, req, next);
                     } 
                     else{
