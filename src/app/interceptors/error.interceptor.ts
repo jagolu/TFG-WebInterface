@@ -72,7 +72,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         return this._authS.refreshToken().pipe(
             switchMap(newToken=>{
                 if(newToken){
-                    this._sessionS.renewToken(newToken.api_token, newToken.role);
+                    this._sessionS.renewToken({
+                        "api_token": newToken.api_token,
+                        "role" : newToken.role,
+                        "groups" : newToken.groups
+                    });
                     return next.handle(this.addToken(req, newToken.api_token));
                 }
 
