@@ -30,7 +30,8 @@ export class SessionService {
     sessionStorage.setItem(this.sessionStorageKey, JSON.stringify({
       "api_token":user.api_token,
       "role":user.role,
-      "expires_at": this.getUTCFromNow20Min()
+      "expires_at": this.getUTCFromNow20Min(),
+      "groups": user.groups
     }));
   }
 

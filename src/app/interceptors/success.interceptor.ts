@@ -35,7 +35,8 @@ export class SuccessInterceptor implements HttpInterceptor {
         if(request.body != null && request.body.api_token!=null){
             this._sessionS.setSession({
                 "api_token": request.body.api_token,
-                "role": request.body.role
+                "role": request.body.role,
+                "groups": request.body.groups
             });
         }
         if((request.url.includes("DeleteAccount"))){
