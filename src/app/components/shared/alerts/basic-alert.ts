@@ -20,8 +20,8 @@ export class BasicAlert implements AfterViewInit{
   }
 
   public focusOut(){
-    this.navbar.style.filter = "blur(0px)";
-    this.outlet.style.filter = "blur(0px)";
+    this.navbar.style.filter = "none";
+    this.outlet.style.filter = "none";
     this.init = true;
   }
 
