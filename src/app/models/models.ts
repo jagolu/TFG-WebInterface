@@ -4,3 +4,5 @@ export { SocialLog } from './SocialLog';
 export { ChangeUserInfo } from './ChangeUserInfo';
 export { DeleteUser } from './DeleteUser';
 export { CreateGroup } from './CreateGroup';
+export { SessionStorage } from './SessionStorage';
+export { groups } from './UserInfoGroups';
