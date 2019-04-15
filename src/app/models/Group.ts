@@ -1,4 +1,4 @@
-export interface groups{
+export interface Group{
     name:string;
     type:boolean;
 }

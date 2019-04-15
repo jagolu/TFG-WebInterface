@@ -1,7 +1,7 @@
-import { groups } from './UserInfoGroups';
+import { Group } from './Group';
 
 export interface SessionStorage{
     api_token:string;
     role:string;
-    groups:groups[]
+    groups:Group[]
 }
