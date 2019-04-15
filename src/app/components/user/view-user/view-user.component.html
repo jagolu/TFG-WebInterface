@@ -8,7 +8,7 @@
       <div class="card-body">
         <h4 class="card-title">{{_user.nickname}}</h4>
         <p class="card-text">{{_user.email}}</p>
-        <small class="text-muted">{{_user.timeSignUp | onlyDatePipe}} </small>
+        <small class="text-muted">Since {{_user.timeSignUp | onlyDatePipe}} </small>
         <hr class="">
 
         <div class="row " id="UserInfo">
@@ -19,7 +19,7 @@
                   data-target="#collapseOne" 
                   aria-expanded="true" 
                   aria-controls="collapseOne"
-            >Grupos</span>
+            >Groups</span>
           </div>
           <div class="col-6">
             <span class="btn btn-outline-secondary w-100"
