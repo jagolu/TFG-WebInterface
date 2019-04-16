@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { CreateGroupAlertService } from 'src/app/services/visualServices/create-group-alert.service';
+import { SessionService } from 'src/app/services/userServices/session.service';
+import { Group } from 'src/app/models/Group';
 
 
 

@@ -6,3 +6,4 @@ export { DeleteUser } from './DeleteUser';
 export { CreateGroup } from './CreateGroup';
 export { SessionStorage } from './SessionStorage';
 export { Group } from './Group';
+export { Session } from './Session';
