@@ -19,6 +19,7 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+    this.resetForm();
   }
 
   createGroup(){
@@ -26,7 +27,8 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
     this.groupS.createGroup({
       "name": this.createGroupForm.controls["name"].value,
       "type": this.createGroupForm.controls["groupType"].value
-    }).subscribe();
+    });
+    this.resetForm();
   }
 
   private initializeForm(){
@@ -57,5 +59,12 @@ export class CreateGroupAlertComponent extends BasicAlert implements OnInit {
     return this.groupS.checkGroupName(control.value).pipe(map(res => {
       return res ? null : { groupNameTaken: true };
     }));
+  }
+
+  private resetForm(){
+    this.createGroupForm.reset({
+      'name': "",
+      'groupType': ""
+    })
   }
 }
