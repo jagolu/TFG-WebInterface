@@ -22,6 +22,11 @@ export class PasswordAlertComponent extends BasicAlert implements OnInit {
     this.initializeForm();
   }
 
+  public setPassword(pass:boolean){
+    this.hasPassword = pass;
+    super.setInitFalse();
+  }
+
   private deleteAccount(){
     this.hideClicking();
     this._userS.deleteUser({
@@ -51,10 +56,5 @@ export class PasswordAlertComponent extends BasicAlert implements OnInit {
         ]
       )
     });
-  }
-
-  public setPassword(pass:boolean){
-    this.hasPassword = pass;
-    super.setInitFalse();
   }
 }

@@ -19,7 +19,7 @@ export class SuccessInterceptor implements HttpInterceptor {
     intercept( req: HttpRequest<any>, next: HttpHandler ):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(tap(
             (ok)=>{
-                if(ok instanceof HttpResponse && !req.url.includes("Refresh")) {
+                if(ok instanceof HttpResponse) {
                     this.showSuccessAlert(req.url);
                     this.loading.stopLoading();
                     this.handleAuthentication(ok);
