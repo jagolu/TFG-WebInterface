@@ -71,6 +71,12 @@ export class AlertService {
       return ["No puedes crear más grupos de este tipo.",
               "Si deseas crear más grupos dirigete a la tienda."]
     }
+    else if(type == AlertType.INCORRECTOLDPASSWORD){
+      return ["La contraseña es incorrecta"];
+    }
+    else if(type == AlertType.PASSWORDCHANGED){
+      return ["Tu contraseña ha cambiado"];
+    }
   }
 }
 
@@ -86,5 +92,7 @@ export enum AlertType{
   CANTDELETEACCOUNT = "CANTDELETEACCOUNT",
   DELETEDACCOUNT = "DELETEDACCOUNT",
   SESSIONEXPIRED = "SESSIONEXPIRED",
-  LIMITATIONCREATEGROUP = "LIMITATIONCREATEGROUP"
+  LIMITATIONCREATEGROUP = "LIMITATIONCREATEGROUP",
+  INCORRECTOLDPASSWORD = "INCORRECTOLDPASSWORD",
+  PASSWORDCHANGED = "PASSWORDCHANGED" 
 }

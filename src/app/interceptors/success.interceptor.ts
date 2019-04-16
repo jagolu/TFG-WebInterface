@@ -20,7 +20,7 @@ export class SuccessInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(tap(
             (ok)=>{
                 if(ok instanceof HttpResponse) {
-                    this.showSuccessAlert(req.url);
+                    this.showSuccessAlert(ok);
                     this.loading.stopLoading();
                     this.handleAuthentication(ok);
                     this.successRedirect(ok.url);
@@ -46,9 +46,12 @@ export class SuccessInterceptor implements HttpInterceptor {
 
 /*-----------------------------------------ALERTS----------------------------------- */
 
-    private showSuccessAlert(url:string){
-        if(url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
-        if(url.includes("User/DeleteAccount")) this.alert.openAlert(AlertType.DELETEDACCOUNT);
+    private showSuccessAlert(ok){
+        if(ok.body && ok.body.success){
+            if(ok.body.success = "PassChanged") this.alert.openAlert(AlertType.PASSWORDCHANGED);
+        }
+        else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
+        else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlert(AlertType.DELETEDACCOUNT);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */

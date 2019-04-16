@@ -44,15 +44,14 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
             else if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
             else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
-            else if(err.error["error"] == "InvalidChangePassword") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-            else if(err.error["error"] == "InvalidChangeNickname") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
             else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
             else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlert(AlertType.LIMITATIONCREATEGROUP);
+            else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlert(AlertType.INCORRECTOLDPASSWORD);
             else this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
         }
-        if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
-        if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
-        if(err.status == 401) this.alert.openAlert(AlertType.SESSIONEXPIRED);
+        else if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
+        else if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+        else if(err.status == 401) this.alert.openAlert(AlertType.SESSIONEXPIRED);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
