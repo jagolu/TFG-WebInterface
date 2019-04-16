@@ -41,13 +41,13 @@ export class ErrorInterceptor implements HttpInterceptor {
     private showErrorAlert(err:HttpErrorResponse){
         if(err.status == 400 && err.error){
             if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlert(AlertType.EMAILTAKENERROR);
-            if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
-            if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
-            if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
-            if(err.error["error"] == "InvalidChangePassword") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-            if(err.error["error"] == "InvalidChangeNickname") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-            if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
-            if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlert(AlertType.LIMITATIONCREATEGROUP);
+            else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
+            else if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
+            else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
+            else if(err.error["error"] == "InvalidChangePassword") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+            else if(err.error["error"] == "InvalidChangeNickname") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+            else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
+            else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlert(AlertType.LIMITATIONCREATEGROUP);
             else this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
         }
         if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);

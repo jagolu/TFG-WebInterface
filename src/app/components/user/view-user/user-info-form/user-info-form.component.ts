@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PasswordAlertService, PasswordAlertType } from 'src/app/services/visualServices/password-alert.service';
 import { UserService } from 'src/app/services/restServices/user.service';
+import { UserInfoService } from 'src/app/services/userServices/user-info.service';
+import { UserInfo } from 'src/app/models/models';
 
 
 @Component({
@@ -13,19 +15,21 @@ export class UserInfoFormComponent implements OnInit {
 
   @Input()id:string;
   @Input()labelled:string;
-  @Input()nickname:string;
-  @Input()hasPassword:boolean;
 
   public nicknameForm:FormGroup;
   public passwordForm:FormGroup;
   public imageForm:FormGroup;
   public equalPasswords : boolean;
+  public info:UserInfo;
+
   private selectedFile;
 
   constructor(private _passwordAlertS:PasswordAlertService,
-              private _userS:UserService) { }
+              private _userS:UserService,
+              private  userInfoS:UserInfoService) { }
 
   ngOnInit() {
+    this.userInfoS.info.subscribe(info=> this.info = info);
     this.initializeNicknameForm();
     this.initializePasswordForm();
     this.initializeImageForm();
@@ -40,7 +44,10 @@ export class UserInfoFormComponent implements OnInit {
       "newPassword":null,
       "repeatNewPassword":null,
       "image": null
-    }).subscribe();
+    }).subscribe(
+      _=>this.reload(),
+      _=>this.resetForm()
+    );
   }
 
   private changePassword(){
@@ -50,8 +57,12 @@ export class UserInfoFormComponent implements OnInit {
       "newPassword":this.passwordForm.controls['newPassword'].value,
       "repeatNewPassword":this.passwordForm.controls['repeatPassword'].value,
       "image": null
-    }).subscribe();
+    }).subscribe(
+      _=>this.reload()
+    );
+    this.resetForm();
   }
+  
 
   private changeImg(){
     let fr = new FileReader();
@@ -63,22 +74,26 @@ export class UserInfoFormComponent implements OnInit {
         "newPassword":null,
         "repeatNewPassword":null,
         "image": fr.result.toString()
-      }).subscribe();
-
+      }).subscribe(
+        _=> this.reload()
+      );
+      this.resetForm();
     }
     fr.readAsDataURL(this.selectedFile);
   }
-  
-  private initializeNicknameForm(){
-    this.nicknameForm = new FormGroup({
-      'nickname': new FormControl(
-        this.nickname,[
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(20)
-        ]
-      )
-    })
+
+  public equalPassword(){
+    let password = this.passwordForm.controls['newPassword'].value;
+    let repeatPassword = this.passwordForm.controls['repeatPassword'].value;
+    this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
+  }
+
+  public openAlert(){
+    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT, this.info.hasPassword);
+  }
+
+  private loadFile(event){
+    this.selectedFile = event.target.files[0];
   }
 
   private initializePasswordForm(){
@@ -101,18 +116,45 @@ export class UserInfoFormComponent implements OnInit {
       "userImage": new FormControl('', Validators.required)
     });
   }
-
-  public equalPassword(){
-    let password = this.passwordForm.controls['newPassword'].value;
-    let repeatPassword = this.passwordForm.controls['repeatPassword'].value;
-    this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
+  
+  private initializeNicknameForm(){
+    this.nicknameForm = new FormGroup({
+      'nickname': new FormControl(
+        this.info.nickname,
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20)
+        ]
+      )
+    })
   }
-
-  public openAlert(){
-    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT, this.hasPassword);
+  
+  private reload() { 
+    this._userS.getUserOptions().subscribe(
+      (user:any)=>{
+        this.userInfoS.updateInfo({
+          "email": user.email,
+          "nickname": user.nickname,
+          "image": user.img,
+          "joinTime": user.timeSignUp,
+          "hasPassword": user.password
+        })
+      }
+    );
   }
-
-  private loadFile(event){
-    this.selectedFile = event.target.files[0];
+  
+  private resetForm(){
+    this.nicknameForm.reset({
+      "nickname": this.info.nickname
+    });
+    this.passwordForm.reset({
+      "oldPassword": "",
+      "newPassword": "",
+      "repeatPassword": ""
+    });
+    this.imageForm.reset({
+      "userImage": ""
+    });
   }
 }

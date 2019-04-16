@@ -1,145 +1,145 @@
 <div    [id]="id" 
-        class="collapse" 
-        [attr.aria-labelledby]="labelled"
-        data-parent="#UserInfo">
+    class="collapse" 
+    [attr.aria-labelledby]="labelled"
+    data-parent="#UserInfo">
     
     
     <!-- Nickname user form -->
-        <hr class="b-4" *ngIf="hasPassword">
-        <form
-                [formGroup]="nicknameForm" 
-                (ngSubmit)="changeNickname()"
-                *ngIf="hasPassword">
-                <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Nickname</label>
-                        <div class="col-sm-10">
-                                <input type="text"
-                                        class="form-control text-center"
-                                        placeholder="Your username"
-                                        formControlName="nickname"
-                                        [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && nicknameForm.controls['nickname'].errors}">
-                        </div>
-                </div>
-                
-                <div class="row justify-content-center mt-3">
-                        <div class="col-12">
-                                <button class="btn btn-outline-dark mb-2 w-100" 
-                                        type="submit" 
-                                        [disabled]="!nicknameForm.valid || nicknameForm.controls['nickname'].pristine"
-                                >Change username</button>
-                        </div> 
-                </div>
-        </form>
-    
-        <small class="text-danger"
-                *ngIf="nicknameForm.controls['nickname'].errors && 
-                !nicknameForm.controls['nickname'].pristine && 
-                nicknameForm.controls['nickname'].errors.required"
-        >The username is required</small>
-        <small class="text-danger"
-                *ngIf="nicknameForm.controls['nickname'].errors && 
-                !nicknameForm.controls['nickname'].pristine && 
-                nicknameForm.controls['nickname'].errors.minlength"
-        >The username need to have at least 4 characters</small>
-        <small class="text-danger"
-                *ngIf="nicknameForm.controls['nickname'].errors && 
-                !nicknameForm.controls['nickname'].pristine && 
-                nicknameForm.controls['nickname'].errors.maxlength"
-        >The username need to have less than 20 characters</small>
-
-        <!-- Password user form  -->
-       <hr class="b-4" *ngIf="hasPassword">
-        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" *ngIf="hasPassword">
-                <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Old Password</label>
-                        <div class="col-sm-10">
-                                <input type="password"
-                                        class="form-control mb-2"
-                                        placeholder="Old password"
-                                        formControlName="oldPassword"
-                                        autocomplete="off">
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">New Password</label>
-                        <div class="col-sm-10">
-                                <input type="password"
-                                        (keyup)="equalPassword()"
-                                        class="form-control mb-2"
-                                        placeholder="New password"
-                                        formControlName="newPassword"
-                                        autocomplete="off">
-                                <small class="text-danger"
-                                        *ngIf="passwordForm.controls['newPassword'].errors && 
-                                        !passwordForm.controls['newPassword'].pristine && 
-                                        passwordForm.controls['newPassword'].errors.minlength"
-                                >The password need to have at least 8 characters<br></small>
-                                <small class="text-danger"
-                                        *ngIf="passwordForm.controls['newPassword'].errors && 
-                                        !passwordForm.controls['newPassword'].pristine && 
-                                        passwordForm.controls['newPassword'].errors.maxlength"
-                                ><br>The password need to have less than 50 characters<br></small>
-                                <small class="text-danger"
-                                        *ngIf="passwordForm.controls['newPassword'].errors && 
-                                        !passwordForm.controls['newPassword'].pristine && 
-                                        passwordForm.controls['newPassword'].errors.pattern"
-                                >The password must have lowercase, uppercase and a special character<br></small>
-                                <small class="text-danger"
-                                        *ngIf=" !passwordForm.controls['newPassword'].pristine && 
-                                        !equalPasswords"
-                                >Boths passwords must be equal<br></small>
-                        </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Repeat new password</label>
-                        <div class="col-sm-10">
-                                <input type="password"
-                                        (keyup)="equalPassword()"
-                                        class="form-control mb-2"
-                                        placeholder="Repeat the new password"
-                                        formControlName="repeatPassword"
-                                        autocomplete="off">
-                        </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                        <div class="col-12">
-                                <button class="btn btn-outline-dark mb-2 w-100" 
-                                        type="submit" 
-                                        [disabled]="!passwordForm.valid"
-                                >Change password</button>
-                        </div> 
-                </div>
-        </form>
-
-
-
-        <!-- Profile img form -->
-        <hr class="b-4" *ngIf="hasPassword">
-        <form class="custom-file"
-                [formGroup]="imageForm" 
-                (ngSubmit)="changeImg()" 
-                *ngIf="hasPassword">
-
-                <input type="file" 
-                        class="custom-file"
-                        formControlName="userImage"
-                        (change)="loadFile($event)"
-                        value="Select a file"
-                        id="newUserFileInput">
-
-                <label class="custom-file-label" for="newUserFileInput">Choose a new profile picture...</label>
-                <div class="row justify-content-center mt-3">
-                        <div class="col-12">
-                                        <button class="btn btn-outline-dark mb-2 w-100" 
-                                        [disabled]="!imageForm.valid">Change profile image</button>
-                        </div> 
-                </div>
-        </form>
-
-        <!-- Delete account -->
-        <hr class="b-4">
-        <div class="btn btn-outline-danger w-100" (click)="openAlert()">
-                Delete account
+    <hr class="b-4" *ngIf="info.hasPassword">
+    <form
+        [formGroup]="nicknameForm" 
+        (ngSubmit)="changeNickname()"
+        *ngIf="info.hasPassword">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Nickname</label>
+            <div class="col-sm-10">
+                <input type="text"
+                    class="form-control text-center"
+                    placeholder="Your username"
+                    formControlName="nickname"
+                    [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && nicknameForm.controls['nickname'].errors}">
+            </div>
         </div>
+        
+        <div class="row justify-content-center mt-3">
+            <div class="col-12">
+                <button class="btn btn-outline-dark mb-2 w-100" 
+                    type="submit" 
+                    [disabled]="!nicknameForm.valid || nicknameForm.controls['nickname'].pristine"
+                >Change username</button>
+            </div> 
+        </div>
+    </form>
+    
+    <small class="text-danger"
+        *ngIf="nicknameForm.controls['nickname'].errors && 
+        !nicknameForm.controls['nickname'].pristine && 
+        nicknameForm.controls['nickname'].errors.required"
+    >The username is required</small>
+    <small class="text-danger"
+        *ngIf="nicknameForm.controls['nickname'].errors && 
+        !nicknameForm.controls['nickname'].pristine && 
+        nicknameForm.controls['nickname'].errors.minlength"
+    >The username need to have at least 4 characters</small>
+    <small class="text-danger"
+        *ngIf="nicknameForm.controls['nickname'].errors && 
+        !nicknameForm.controls['nickname'].pristine && 
+        nicknameForm.controls['nickname'].errors.maxlength"
+    >The username need to have less than 20 characters</small>
+
+    <!-- Password user form  -->
+       <hr class="b-4" *ngIf="info.hasPassword">
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" *ngIf="info.hasPassword">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Old Password</label>
+            <div class="col-sm-10">
+                <input type="password"
+                    class="form-control mb-2"
+                    placeholder="Old password"
+                    formControlName="oldPassword"
+                    autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">New Password</label>
+            <div class="col-sm-10">
+                <input type="password"
+                    (keyup)="equalPassword()"
+                    class="form-control mb-2"
+                    placeholder="New password"
+                    formControlName="newPassword"
+                    autocomplete="off">
+                <small class="text-danger"
+                    *ngIf="passwordForm.controls['newPassword'].errors && 
+                    !passwordForm.controls['newPassword'].pristine && 
+                    passwordForm.controls['newPassword'].errors.minlength"
+                >The password need to have at least 8 characters<br></small>
+                <small class="text-danger"
+                    *ngIf="passwordForm.controls['newPassword'].errors && 
+                    !passwordForm.controls['newPassword'].pristine && 
+                    passwordForm.controls['newPassword'].errors.maxlength"
+                ><br>The password need to have less than 50 characters<br></small>
+                <small class="text-danger"
+                    *ngIf="passwordForm.controls['newPassword'].errors && 
+                    !passwordForm.controls['newPassword'].pristine && 
+                    passwordForm.controls['newPassword'].errors.pattern"
+                >The password must have lowercase, uppercase and a special character<br></small>
+                <small class="text-danger"
+                    *ngIf=" !passwordForm.controls['newPassword'].pristine && 
+                    !equalPasswords"
+                >Boths passwords must be equal<br></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Repeat new password</label>
+            <div class="col-sm-10">
+                <input type="password"
+                    (keyup)="equalPassword()"
+                    class="form-control mb-2"
+                    placeholder="Repeat the new password"
+                    formControlName="repeatPassword"
+                    autocomplete="off">
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-12">
+                <button class="btn btn-outline-dark mb-2 w-100" 
+                    type="submit" 
+                    [disabled]="!passwordForm.valid"
+                >Change password</button>
+            </div> 
+        </div>
+    </form>
+
+
+
+    <!-- Profile img form -->
+    <hr class="b-4" *ngIf="info.hasPassword">
+    <form class="custom-file"
+        [formGroup]="imageForm" 
+        (ngSubmit)="changeImg()" 
+        *ngIf="info.hasPassword">
+
+        <input type="file" 
+            class="custom-file"
+            formControlName="userImage"
+            (change)="loadFile($event)"
+            value="Select a file"
+            id="newUserFileInput">
+
+        <label class="custom-file-label" for="newUserFileInput">Choose a new profile picture...</label>
+        <div class="row justify-content-center mt-3">
+            <div class="col-12">
+                    <button class="btn btn-outline-dark mb-2 w-100" 
+                    [disabled]="!imageForm.valid">Change profile image</button>
+            </div> 
+        </div>
+    </form>
+
+    <!-- Delete account -->
+    <hr class="b-4">
+    <div class="btn btn-outline-danger w-100" (click)="openAlert()">
+        Delete account
+    </div>
     
 </div>

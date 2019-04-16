@@ -56,6 +56,5 @@ export class SuccessInterceptor implements HttpInterceptor {
     private successRedirect(url:string){
         if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
         if(url.includes("User/DeleteAccount")) this._router.navigate(['']);
-        if(url.includes("ChangeUserInfo")) window.location.reload();
     }
 }

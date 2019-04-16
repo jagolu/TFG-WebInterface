@@ -1,14 +1,14 @@
 <div class="card mt-5" >
   <div class="row no-gutters" *ngIf="_user">
     <div class="col-md-4">
-      <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="_user.img==null">
-      <img [src]="_user.img | base64Image" class="card-img p-1" *ngIf="_user.img!=null">
+      <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="_user.image==null">
+      <img [src]="_user.image | base64Image" class="card-img p-1" *ngIf="_user.image!=null">
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h4 class="card-title">{{_user.nickname}}</h4>
         <p class="card-text">{{_user.email}}</p>
-        <small class="text-muted">Since {{_user.timeSignUp | onlyDatePipe}} </small>
+        <small class="text-muted">Since {{_user.joinTime | onlyDatePipe}} </small>
         <hr class="">
 
         <div class="row " id="UserInfo">
@@ -37,9 +37,7 @@
             </app-user-groups>
             <app-user-info-form
                 [id]="'collapseTwo'"
-                [labelled]="'headingTwo'"
-                [nickname]="_user.nickname"
-                [hasPassword]="_user.password">
+                [labelled]="'headingTwo'">
             </app-user-info-form>
           </div>
         </div>
