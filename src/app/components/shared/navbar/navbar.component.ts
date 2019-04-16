@@ -11,10 +11,24 @@ import { Group } from 'src/app/models/Group';
   templateUrl: './navbar.component.html',
   styles: []
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
+
+  public groups:Group[];
 
   constructor(private authS:AuthenticationService, 
-              private createGroupS:CreateGroupAlertService) { }
+              private createGroupS:CreateGroupAlertService,
+              private sessionS:SessionService) { }
+
+  ngOnInit(){
+    this.sessionS.User.subscribe(u => {
+      try{
+        this.groups = u.groups;
+      }catch(Exception){
+        this.groups = [];
+      }
+      
+    });
+  }
 
   logOut(){
     this.authS.logOut();

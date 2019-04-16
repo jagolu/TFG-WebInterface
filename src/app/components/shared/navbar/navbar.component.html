@@ -24,8 +24,7 @@
           Grupo X
         </a>
         <div class="dropdown-menu" aria-labelledby="groupMenu">
-          <a class="dropdown-item" href="#">Menu 1</a>
-          <a class="dropdown-item" href="#">Menu 2</a>
+          <a class="dropdown-item" href="#" *ngFor="let group of groups">{{group.name}}</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="openCreateGroupAlert()">Create group</a>
         </div>
