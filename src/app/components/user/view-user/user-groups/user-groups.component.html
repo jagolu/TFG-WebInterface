@@ -1,6 +1,14 @@
-<h1 style="color:red" 
-    [id]="id" 
-    class="collapse" 
+<div [id]="id" 
+    class="collapse show" 
     [attr.aria-labelledby]="labelled"
-    data-parent="#UserInfo"
->Grupos del usuario normal</h1>
+    data-parent="#UserInfo">
+
+    <div *ngFor="let group of groups" 
+        class="card text-white bg-info mb-3 w-100" 
+        [ngClass]="{'bg-info': group.type, 'bg-warning': !group.type}">
+        <div class="card-header" style="cursor:pointer"> 
+            <h4>{{group.name}}</h4>
+        </div>
+    </div>
+
+</div>
