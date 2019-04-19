@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 
 @Component({
   selector: 'app-group',
@@ -7,6 +9,9 @@ import { Component } from '@angular/core';
 })
 export class GroupComponent {
 
-  constructor() { }
+  public groupName:string;
 
+  constructor(private aR:ActivatedRoute) { 
+    this.groupName = this.aR.snapshot.paramMap.get('group');
+  }
 }

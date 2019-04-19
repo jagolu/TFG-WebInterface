@@ -4,10 +4,22 @@
     data-parent="#UserInfo">
 
     <div *ngFor="let group of groups" 
-        class="card text-white bg-info mb-3 w-100" 
-        [ngClass]="{'bg-info': group.type, 'bg-warning': !group.type}">
-        <div class="card-header" style="cursor:pointer"> 
-            <h4>{{group.name}}</h4>
+        class="card mb-3 w-100">
+        <div class="card-header" 
+            style="cursor:pointer"
+            [routerLink]="['/group', group.name]"> 
+            <h4 class="text-center">{{group.name}}
+                <app-icon base="fas"
+                            firstIcon="fa-futbol"
+                            firstColor="#006400"
+                            *ngIf="group.type == false">
+                </app-icon>
+                <app-icon base="fas"
+                            firstIcon="fa-file-invoice"
+                            firstColor="#00008B"
+                            *ngIf="group.type == true">
+                </app-icon>
+            </h4>
         </div>
     </div>
 
