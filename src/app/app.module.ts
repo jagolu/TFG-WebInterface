@@ -17,6 +17,7 @@ import { UserGroupsComponent } from './components/user/view-user/user-groups/use
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 import { PasswordAlertComponent } from './components/shared/alerts/password-alert/password-alert.component';
 import { CreateGroupAlertComponent } from './components/shared/alerts/create-group-alert/create-group-alert.component';
+import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 
 
 // Directives
@@ -76,6 +77,7 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     PasswordAlertComponent,
     Base64ImagePipe,
     CreateGroupAlertComponent
+    GroupUsersComponent,
   ],
   imports: [
     BrowserModule,

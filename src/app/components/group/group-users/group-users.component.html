@@ -1,0 +1,12 @@
+<ul class="list-group">
+  <li class="list-group-item text-center" 
+      *ngFor="let member of members"
+      >{{member}}
+      <app-icon base="fas"
+                firstIcon="fa-crown"
+                *ngIf="member==1"></app-icon>
+      <app-icon base="fas"
+                firstIcon="fa-hat-wizard"
+                *ngIf="member==2"></app-icon>
+  </li>
+</ul>
