@@ -30,4 +30,8 @@ export class GroupService extends RestService{
   checkGroupName(name:string){
     return this.getRequest(this._groupPath+"CheckGroupName?name="+name,null, true);
   }
+
+  getPageGroup(name:string){
+    return this.getRequest(this._groupPath+"GroupPage?groupName="+name, null);
+  }
 }
