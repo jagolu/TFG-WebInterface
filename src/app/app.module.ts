@@ -17,6 +17,7 @@ import { UserGroupsComponent } from './components/user/view-user/user-groups/use
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 import { PasswordAlertComponent } from './components/shared/alerts/password-alert/password-alert.component';
 import { CreateGroupAlertComponent } from './components/shared/alerts/create-group-alert/create-group-alert.component';
+import { GroupComponent } from './components/group/group.component';
 import { GroupBetComponent } from './components/group/group-bet/group-bet.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 
@@ -58,7 +59,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +77,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     UserInfoFormComponent,
     PasswordAlertComponent,
     Base64ImagePipe,
-    CreateGroupAlertComponent
+    CreateGroupAlertComponent,
+    GroupComponent,
     GroupUsersComponent,
     GroupBetComponent
   ],
