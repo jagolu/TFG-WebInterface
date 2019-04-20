@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { GroupUser } from 'src/app/models/models';
 
 @Component({
   selector: 'app-group-users',
@@ -6,10 +7,8 @@ import { Component } from '@angular/core';
   styles: []
 })
 export class GroupUsersComponent{
-  
-  public members = [
-    1,2,3,4,5,6,7,8,9,10
-  ]
+
+  @Input() members:GroupUser[];
 
   constructor() { }
 }

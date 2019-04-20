@@ -8,3 +8,4 @@ export { SessionStorage } from './SessionStorage';
 export { Group } from './Group';
 export { Session } from './Session';
 export { UserInfo } from './UserInfo';
+export { GroupUser } from './GroupUser';
