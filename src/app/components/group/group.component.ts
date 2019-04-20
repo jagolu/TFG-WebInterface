@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { GroupService } from 'src/app/services/restServices/group.service';
+import { GroupUser } from 'src/app/models/models';
 
 @Component({
   selector: 'app-group',
@@ -12,8 +12,9 @@ export class GroupComponent {
 
   public groupName:string;
   public groupType:boolean;
-  public members:any[];
+  public members:GroupUser[];
   public bets:any[];
+  public role:string;
 
 
   constructor(private aR:ActivatedRoute, private groupS:GroupService) { 
@@ -24,6 +25,7 @@ export class GroupComponent {
         this.groupType = ok.groupType;
         this.bets = ok.bets;
         this.members = ok.members;
+        this.role = ok.role;
       },
       err=>console.log(err)
     );
