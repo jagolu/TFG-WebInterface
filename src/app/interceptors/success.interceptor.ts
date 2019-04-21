@@ -4,10 +4,10 @@ import { HttpEvent, HttpInterceptor, HttpHandler,
         HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AlertService, AlertType } from '../services/alert.service';
-import { LoadingService } from '../services/loading.service';
-import { SessionService } from '../services/session.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { AlertService, AlertType } from 'src/app/services/visualServices/alert.service';
+import { LoadingService } from 'src/app/services/visualServices/loading.service';
+import { SessionService } from '../services/userServices/session.service';
+import { AuthenticationService } from '../services/restServices/authentication.service';
 
 @Injectable()
 export class SuccessInterceptor implements HttpInterceptor {
@@ -19,8 +19,8 @@ export class SuccessInterceptor implements HttpInterceptor {
     intercept( req: HttpRequest<any>, next: HttpHandler ):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(tap(
             (ok)=>{
-                if(ok instanceof HttpResponse && !req.url.includes("Refresh")) {
-                    this.showSuccessAlert(req.url);
+                if(ok instanceof HttpResponse) {
+                    this.showSuccessAlert(ok);
                     this.loading.stopLoading();
                     this.handleAuthentication(ok);
                     this.successRedirect(ok.url);
@@ -35,7 +35,8 @@ export class SuccessInterceptor implements HttpInterceptor {
         if(request.body != null && request.body.api_token!=null){
             this._sessionS.setSession({
                 "api_token": request.body.api_token,
-                "role": request.body.role
+                "role": request.body.role,
+                "groups": request.body.groups
             });
         }
         if((request.url.includes("DeleteAccount"))){
@@ -45,9 +46,12 @@ export class SuccessInterceptor implements HttpInterceptor {
 
 /*-----------------------------------------ALERTS----------------------------------- */
 
-    private showSuccessAlert(url:string){
-        if(url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
-        if(url.includes("User/DeleteAccount")) this.alert.openAlert(AlertType.DELETEDACCOUNT);
+    private showSuccessAlert(ok){
+        if(ok.body && ok.body.success){
+            if(ok.body.success = "PassChanged") this.alert.openAlert(AlertType.PASSWORDCHANGED);
+        }
+        else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
+        else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlert(AlertType.DELETEDACCOUNT);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
@@ -55,6 +59,5 @@ export class SuccessInterceptor implements HttpInterceptor {
     private successRedirect(url:string){
         if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
         if(url.includes("User/DeleteAccount")) this._router.navigate(['']);
-        if(url.includes("ChangeUserInfo")) window.location.reload();
     }
 }

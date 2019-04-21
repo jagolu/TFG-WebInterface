@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+
 // Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -16,6 +17,10 @@ import { ViewUserComponent } from './components/user/view-user/view-user.compone
 import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 import { PasswordAlertComponent } from './components/shared/alerts/password-alert/password-alert.component';
+import { CreateGroupAlertComponent } from './components/shared/alerts/create-group-alert/create-group-alert.component';
+import { GroupComponent } from './components/group/group.component';
+import { GroupBetComponent } from './components/group/group-bet/group-bet.component';
+import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 
 
 // Directives
@@ -26,15 +31,15 @@ import { OnlyDatePipe } from './pipes/only-date.pipe';
 
 
 // Services
-import { AuthenticationService } from './services/authentication.service';
-import { UserService } from './services/user.service';
-import { AlertService } from './services/alert.service';
-import { LoadingService } from './services/loading.service';
-import { PasswordAlertService } from './services/password-alert.service';
-import { SessionService } from './services/session.service';
+import { AuthenticationService } from './services/restServices/authentication.service';
+import { UserService } from './services/restServices/user.service';
+import { AlertService } from './services/visualServices/alert.service';
+import { LoadingService } from './services/visualServices/loading.service';
+import { PasswordAlertService } from './services/visualServices/password-alert.service';
+import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
-
-
+import { GroupService } from './services/restServices/group.service';
+import { CreateGroupAlertService } from './services/visualServices/create-group-alert.service';
 
 
 // Interceptors
@@ -55,7 +60,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +77,11 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     UserGroupsComponent,
     UserInfoFormComponent,
     PasswordAlertComponent,
-    Base64ImagePipe
+    Base64ImagePipe,
+    CreateGroupAlertComponent,
+    GroupComponent,
+    GroupUsersComponent,
+    GroupBetComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +117,9 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     LoadingService,
     PasswordAlertService,
     SessionService,
-    AuthGuardService
+    AuthGuardService,
+    GroupService,
+    CreateGroupAlertService
   ],
   bootstrap: [AppComponent]
 })

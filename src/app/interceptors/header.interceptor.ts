@@ -6,7 +6,7 @@ import {
     HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SessionService } from '../services/session.service';
+import { SessionService } from '../services/userServices/session.service';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
@@ -25,7 +25,7 @@ export class HeaderInterceptor implements HttpInterceptor {
         if(!this.requireToken(url)){
             updateReq = req.clone({
                 headers: req.headers.set('Authorization', "Bearer "+this._session.getAPIToken())
-            })
+            });
         }
 
         return next.handle(updateReq);
@@ -36,7 +36,8 @@ export class HeaderInterceptor implements HttpInterceptor {
             "LogIn", 
             "SignUp",
             "Validate",
-            "SocialLog"
+            "SocialLog",
+            "CheckGroupName"
         ];
         
         return neededAuthUrl.some(subPath=>

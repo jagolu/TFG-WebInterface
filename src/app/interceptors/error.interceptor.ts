@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { HttpEvent, HttpInterceptor, HttpHandler, 
         HttpRequest, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, Subject, EMPTY } from 'rxjs';
-import { switchMap, catchError, filter, take, finalize } from 'rxjs/operators';
-import { AlertService, AlertType } from '../services/alert.service';
-import { LoadingService } from '../services/loading.service';
-import { SessionService } from '../services/session.service';
-import { AuthenticationService } from '../services/authentication.service';
+import { Observable, EMPTY } from 'rxjs';
+import { switchMap, catchError, finalize } from 'rxjs/operators';
+import { AlertService, AlertType } from '../services/visualServices/alert.service';
+import { LoadingService } from '../services/visualServices/loading.service';
+import { SessionService } from '../services/userServices/session.service';
+import { AuthenticationService } from '../services/restServices/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError(err=>{
                 if(err instanceof HttpErrorResponse){
-                    if(err.status == 401){
+                    if(err.status == 401 && !err.url.includes("Refresh")){
                         return this.handleUnathorized(err, req, next);
                     } 
                     else{
@@ -41,17 +41,17 @@ export class ErrorInterceptor implements HttpInterceptor {
     private showErrorAlert(err:HttpErrorResponse){
         if(err.status == 400 && err.error){
             if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlert(AlertType.EMAILTAKENERROR);
-            if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
-            if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
-            if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
-            if(err.error["error"] == "InvalidChangePassword") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-            if(err.error["error"] == "InvalidChangeNickname") this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
-            if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
-            if(err.error['email'] || err.error['password'] || err.error['username']) this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+            else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
+            else if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
+            else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
+            else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
+            else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlert(AlertType.LIMITATIONCREATEGROUP);
+            else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlert(AlertType.INCORRECTOLDPASSWORD);
+            else this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
         }
-        if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
-        if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
-        if(err.status == 401) this.alert.openAlert(AlertType.SESSIONEXPIRED);
+        else if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
+        else if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
+        else if(err.status == 401) this.alert.openAlert(AlertType.SESSIONEXPIRED);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
@@ -71,7 +71,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         return this._authS.refreshToken().pipe(
             switchMap(newToken=>{
                 if(newToken){
-                    this._sessionS.renewToken(newToken.api_token, newToken.role);
+                    this._sessionS.renewToken({
+                        "api_token": newToken.api_token,
+                        "role" : newToken.role,
+                        "groups" : newToken.groups
+                    });
                     return next.handle(this.addToken(req, newToken.api_token));
                 }
 

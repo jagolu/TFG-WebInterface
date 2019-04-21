@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
-import { BasicAlertComponent } from 'src/app/components/shared/alerts/basic-alert.component';
+import { UserService } from 'src/app/services/restServices/user.service';
+import { BasicAlert } from 'src/app/components/shared/alerts/basic-alert';
 
 @Component({
   selector: 'app-password-alert',
   templateUrl: './password-alert.component.html',
   styles: []
 })
-export class PasswordAlertComponent extends BasicAlertComponent implements OnInit {
+export class PasswordAlertComponent extends BasicAlert implements OnInit {
 
   private deleteForm:FormGroup;
   public hasPassword:boolean;
@@ -20,6 +20,11 @@ export class PasswordAlertComponent extends BasicAlertComponent implements OnIni
 
   ngOnInit() {
     this.initializeForm();
+  }
+
+  public setPassword(pass:boolean){
+    this.hasPassword = pass;
+    super.setInitFalse();
   }
 
   private deleteAccount(){
@@ -51,10 +56,5 @@ export class PasswordAlertComponent extends BasicAlertComponent implements OnIni
         ]
       )
     });
-  }
-
-  public setPassword(pass:boolean){
-    this.hasPassword = pass;
-    super.setInitFalse();
   }
 }

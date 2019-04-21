@@ -1,0 +1,21 @@
+<button class="btn btn-danger w-100 mb-1" 
+        type="button" 
+        data-toggle="collapse" 
+        data-target="#groupUserList" 
+        aria-expanded="true" 
+        aria-controls="groupUserList"
+>Members</button>
+<div class="collapse" id="groupUserList" [ngClass]="{'show': width>1200}">
+  <ul class="list-group">
+      <li class="list-group-item text-center"
+          *ngFor="let member of members"
+      >{{member.userName}}
+        <app-icon base="fas"
+                  firstIcon="fa-crown"
+                  *ngIf="member.role=='GROUP_MAKER'"></app-icon>
+        <app-icon base="fas"
+                  firstIcon="fa-hat-wizard"
+                  *ngIf="member.role=='GROUP_ADMIN'"></app-icon>
+      </li>
+    </ul>
+</div>
