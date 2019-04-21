@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { GroupUser } from 'src/app/models/models';
 
 @Component({
@@ -6,9 +6,20 @@ import { GroupUser } from 'src/app/models/models';
   templateUrl: './group-users.component.html',
   styles: []
 })
-export class GroupUsersComponent{
+export class GroupUsersComponent implements OnInit{
 
   @Input() members:GroupUser[];
 
+  public width:number;
+
   constructor() { }
+
+  ngOnInit(){
+    this.width = window.innerWidth;
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event) {
+    this.width = window.innerWidth;
+  }
+
 }

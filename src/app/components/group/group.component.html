@@ -1,10 +1,10 @@
 <h1 class="display-4">{{groupName}}</h1>
 <div class="row w-100">
-    <div class="col-10">
+    <div class="col-xl-10  col-sm-12 mb-4">
         <button class="btn btn-outline-info w-100 mb-3" *ngIf="role=='GROUP_MAKER'">Crear apuesta</button>
         <app-group-bet></app-group-bet>
     </div>
-    <div class="col-2">
+    <div class="col-xl-2 col-sm-12">
         <app-group-users [members]="members"></app-group-users>
     </div>
 </div>
