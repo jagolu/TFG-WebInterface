@@ -12,76 +12,78 @@
       <li class="nav-item">
         <a class="nav-link disabled" 
           [routerLink]="['index']" 
-        >Apuestas <span class="sr-only">(current)</span></a>
+        >Apuestas </a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" 
           [routerLink]="['index']" 
-        >Partidos <span class="sr-only">(current)</span></a>
+        >Partidos </a>
       </li>
-      <li class="nav-item dropdown" *ngIf="isAuthenticated()">
-        <a class="nav-link text-center" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Grupo X
+      <li class="nav-item dropdown" *ngIf="isAuthenticated()" style="cursor:pointer">
+        <a class="nav-link" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{actualGroup}}
         </a>
         <div class="dropdown-menu" aria-labelledby="groupMenu">
-          <a class="dropdown-item text-center" 
-              [routerLink]="['group', group.name]"  
+          <a class="dropdown-item" 
+              [routerLink]="['group', group.name]" 
               *ngFor="let group of groups"
-          >{{group.name}}       
-            <app-icon base="fas"
-                      firstIcon="fa-futbol"
-                      firstColor="#006400"
-                      *ngIf="group.type == false">
-            </app-icon>
-            <app-icon base="fas"
-                      firstIcon="fa-file-invoice"
-                      firstColor="#00008B"
-                      *ngIf="group.type == true">
-            </app-icon>
+              disabled
+          >{{group.name}} 
+              <app-icon base="fas"
+                        firstIcon="fa-futbol"
+                        firstColor="#006400"
+                        *ngIf="group.type == false">
+              </app-icon>
+              <app-icon base="fas"
+                        firstIcon="fa-file-invoice"
+                        firstColor="#00008B"
+                        *ngIf="group.type == true">
+              </app-icon>    
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item text-center" (click)="openCreateGroupAlert()">Create group</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" 
-          [routerLink]="['index']" 
-        >Foro <span class="sr-only">(current)</span></a>
+        <a  class="nav-link disabled" 
+            [routerLink]="['index']" 
+        >Foro </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" 
-          [routerLink]="['index']" 
-        >Tienda <span class="sr-only">(current)</span></a>
+        <a  class="nav-link disabled" 
+            [routerLink]="['index']" 
+        >Tienda </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" 
-          [routerLink]="['index']" 
-        >Help <span class="sr-only">(current)</span></a>
+        <a  class="nav-link disabled" 
+            [routerLink]="['index']" 
+        >Help </a>
       </li>
     </ul>
     <!-- Authentication Buttons -->
       <!-- LogIn & SignUp Buttons -->
     <button class="btn btn-outline-success mr-2" 
-          [routerLink]="['logIn']" 
-          type="button"
-          *ngIf="!isAuthenticated()"
-          [ngClass]="{'w-45': width<992}"
+            [routerLink]="['logIn']" 
+            type="button"
+            *ngIf="!isAuthenticated()"
+            [ngClass]="{'w-45': width<992}"
     >Log In</button>
     <button class="btn btn-outline-info mr-2" 
-          [routerLink]="['signUp']" 
-          type="button"
-          *ngIf="!isAuthenticated()"
-          [ngClass]="{'w-45': width<992}"
+            [routerLink]="['signUp']" 
+            type="button"
+            *ngIf="!isAuthenticated()"
+            [ngClass]="{'w-45': width<992}"
     >Sign Up</button>
         <!-- UserButtons -->
     <ul class="navbar-nav" *ngIf="isAuthenticated()">
       <li class="nav-item dropdown">
-        <div class="btn btn-outline-secondary w-100" 
+        <div  class="btn btn-outline-secondary w-100" 
               id="groupsDropdown" 
               role="button" 
               data-toggle="dropdown" 
               aria-haspopup="true" 
-              aria-expanded="false">
+              aria-expanded="false"
+              style="cursor:pointer">
           User
         </div>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="groupsDropdown">

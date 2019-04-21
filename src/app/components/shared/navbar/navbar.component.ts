@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/services/restServices/authenticat
 import { CreateGroupAlertService } from 'src/app/services/visualServices/create-group-alert.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { Group } from 'src/app/models/Group';
+import { RouterStateSnapshot, Router, NavigationEnd } from '@angular/router';
 
 
 @Component({
@@ -14,11 +15,19 @@ import { Group } from 'src/app/models/Group';
 export class NavbarComponent implements OnInit{
 
   public width:number;
+  public actualGroup:string = "Groups";
   public groups:Group[];
 
-  constructor(private authS:AuthenticationService, 
-              private createGroupS:CreateGroupAlertService,
-              private sessionS:SessionService) { }
+  constructor(private authS:AuthenticationService, private createGroupS:CreateGroupAlertService,
+              private sessionS:SessionService, private router:Router) { 
+
+    this.router.events.subscribe( (activeRoute:any)=>{
+      if(activeRoute instanceof NavigationEnd && activeRoute.urlAfterRedirects.includes("/group/")){
+        this.actualGroup = activeRoute.urlAfterRedirects.substring(7);
+      }
+      else if(activeRoute instanceof NavigationEnd && !activeRoute.urlAfterRedirects.includes("/group/")) this.actualGroup = "Groups"
+    })
+  }
 
   ngOnInit(){
     this.sessionS.User.subscribe(u => {
@@ -26,6 +35,7 @@ export class NavbarComponent implements OnInit{
       catch(Exception){ this.groups = []; }
     });
     this.width = window.innerWidth;
+    
   }
 
   logOut(){
@@ -44,8 +54,7 @@ export class NavbarComponent implements OnInit{
     this.width = window.innerWidth;
   }
 
-  public getSignButtonsSize(){
-    if(this.width>=992) return 'default';
-    return '55%';
+  disableActualGroup(groupName:string){
+    return groupName.includes(this.actualGroup);
   }
 }
