@@ -28,13 +28,13 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/libs/bootstrap/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/libs/fontawesome/css/all.min.css"
             ],
             "scripts": [
-              "src/assets/libs/jquery-3.3.1.min.js",
-              "src/assets/libs/bootstrap/bootstrap.bundle.min.js",
-              "src/assets/libs/bootstrap/bootstrap.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/popper.js/dist/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {

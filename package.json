@@ -23,7 +23,10 @@
     "@types/gapi.auth2": "0.0.50",
     "ajv": "^6.9.1",
     "angularx-social-login": "^1.2.6",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.7",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
