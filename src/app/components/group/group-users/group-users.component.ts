@@ -9,7 +9,6 @@ import { GroupUser } from 'src/app/models/models';
 export class GroupUsersComponent implements OnInit{
 
   @Input() members:GroupUser[];
-
   public width:number;
 
   constructor() { }

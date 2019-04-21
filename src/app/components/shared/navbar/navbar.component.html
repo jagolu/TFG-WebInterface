@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarId">
   <a class="navbar-brand" [routerLink]="['']" >
-    <img src="/assets/imgs/VirtualBet.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img src="/assets/imgs/VirtualBet.png" width="30" height="30" class="d-inline-block align-top">
     VirtualBet
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,7 @@
         >Partidos <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown" *ngIf="isAuthenticated()">
-        <a class="nav-link " href="#" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link text-center" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Grupo X
         </a>
         <div class="dropdown-menu" aria-labelledby="groupMenu">
@@ -40,7 +40,7 @@
             </app-icon>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="openCreateGroupAlert()">Create group</a>
+          <a class="dropdown-item text-center" (click)="openCreateGroupAlert()">Create group</a>
         </div>
       </li>
       <li class="nav-item">
@@ -65,16 +65,18 @@
           [routerLink]="['logIn']" 
           type="button"
           *ngIf="!isAuthenticated()"
+          [ngClass]="{'w-45': width<992}"
     >Log In</button>
     <button class="btn btn-outline-info mr-2" 
           [routerLink]="['signUp']" 
           type="button"
           *ngIf="!isAuthenticated()"
+          [ngClass]="{'w-45': width<992}"
     >Sign Up</button>
         <!-- UserButtons -->
     <ul class="navbar-nav" *ngIf="isAuthenticated()">
       <li class="nav-item dropdown">
-        <div class="btn btn-outline-secondary" 
+        <div class="btn btn-outline-secondary w-100" 
               id="groupsDropdown" 
               role="button" 
               data-toggle="dropdown" 
@@ -83,7 +85,7 @@
           User
         </div>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="groupsDropdown">
-          <a class="dropdown-item " 
+          <a class="dropdown-item text-center" 
             [routerLink]="['myUserInfo']" 
           >Options</a>
           <div class="dropdown-divider"></div>
