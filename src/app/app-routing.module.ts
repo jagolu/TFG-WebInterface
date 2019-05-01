@@ -13,6 +13,7 @@ import { EmailVerificationComponent } from 'src/app/components/logSign/email-ver
 import { ViewUserComponent } from './components/user/view-user/view-user.component';
 import { GroupComponent } from './components/group/group.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 
 
@@ -24,6 +25,7 @@ const ROUTES: Routes = [
   { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService]},
   { path: 'group/:group', component: GroupComponent, canActivate: [AuthGuardService]},
   { path: 'searchGroup', component: SearchGroupComponent, canActivate: [AuthGuardService]},
+  { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService]},
   { path: 'prueba', component: ViewUserComponent},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];

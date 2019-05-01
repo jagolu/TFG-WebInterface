@@ -22,7 +22,7 @@ import { GroupComponent } from './components/group/group.component';
 import { GroupBetComponent } from './components/group/group-bet/group-bet.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
-
+import { ShopComponent } from './components/shop/shop.component';
 
 
 // Directives
@@ -85,7 +85,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     GroupComponent,
     GroupUsersComponent,
     GroupBetComponent,
-    SearchGroupComponent
+    SearchGroupComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,
