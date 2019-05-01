@@ -9,3 +9,4 @@ export { Group } from './GroupManage/Group';
 export { Session } from './Identity/Session';
 export { UserInfo } from './UserInfo/UserInfo';
 export { GroupUser } from './GroupManage/GroupUser';
+export { GroupInfo } from './GroupManage/GroupInfo';

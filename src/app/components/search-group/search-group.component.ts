@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Group } from 'src/app/models/models';
+import { GroupInfo } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 
 
@@ -10,7 +10,7 @@ import { GroupService } from 'src/app/services/restServices/group.service';
 })
 export class SearchGroupComponent{
 
-  public groups:Group[];
+  public groups:GroupInfo[];
 
   constructor(private groupS:GroupService) { }
 
