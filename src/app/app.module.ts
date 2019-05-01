@@ -21,6 +21,8 @@ import { CreateGroupAlertComponent } from './components/shared/alerts/create-gro
 import { GroupComponent } from './components/group/group.component';
 import { GroupBetComponent } from './components/group/group-bet/group-bet.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
+import { SearchGroupComponent } from './components/search-group/search-group.component';
+
 
 
 // Directives
@@ -60,6 +62,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +84,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     CreateGroupAlertComponent,
     GroupComponent,
     GroupUsersComponent,
-    GroupBetComponent
+    GroupBetComponent,
+    SearchGroupComponent
   ],
   imports: [
     BrowserModule,

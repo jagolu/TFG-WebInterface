@@ -1,0 +1,32 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">
+          <input  class="form-control form-control-sm" 
+                  type="search" 
+                  placeholder="Search group" 
+                  #groupname 
+                  (keyup)="search(groupname.value)">
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let group of groups">
+      <td>{{ group.name }}</td>
+      <td>    
+        <app-icon   base="fas"
+                    firstIcon="fa-futbol"
+                    firstColor="#006400"
+                    *ngIf="group.type == false">
+        </app-icon>
+        <app-icon   base="fas"
+                    firstIcon="fa-file-invoice"
+                    firstColor="#00008B"
+                    *ngIf="group.type == true">
+        </app-icon></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

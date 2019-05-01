@@ -36,6 +36,6 @@ export class GroupService extends RestService{
   }
 
   getGroups(name:string){
-    return this.getRequest(this._groupPath+"SearchGroup?name="+name, null);
+    return this.getRequest(this._groupPath+"SearchGroup?name="+name, null, true);
   }
 }
