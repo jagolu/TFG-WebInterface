@@ -1,4 +1,4 @@
-import { Group } from './Group';
+import { Group } from '../GroupManage/Group';
 
 export interface Session{
     role:string;

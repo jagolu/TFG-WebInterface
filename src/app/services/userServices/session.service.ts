@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SessionStorage } from 'src/app/models/SessionStorage';
+import { SessionStorage } from 'src/app/models/Identity/SessionStorage';
 import { BehaviorSubject } from 'rxjs';
 import { Session, Group } from 'src/app/models/models';
 
