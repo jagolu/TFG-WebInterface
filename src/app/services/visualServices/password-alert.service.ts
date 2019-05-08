@@ -7,7 +7,6 @@ export class PasswordAlertService {
 
   private txtMessage;
   private idButtons;
-  private hasPassword;
 
   constructor() { 
     this.txtMessage = (document.querySelector("#alertTextId") as HTMLElement);
@@ -18,7 +17,6 @@ export class PasswordAlertService {
   }
 
   openAlert(type:PasswordAlertType, hasPassword:boolean){
-    this.hasPassword = hasPassword;
     let txt = this.getText(type);
     this.txtMessage.textContent = txt;
 
