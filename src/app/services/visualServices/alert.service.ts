@@ -18,10 +18,11 @@ export class AlertService {
 
   openAlert(type:AlertType){
     let txt = this.getText(type);
-    for(let line of this.txtMessage) line.display = "none"; 
+    console.log(this.txtMessage);
+    for(let line of this.txtMessage) line.style.display = "none"; 
     for(let i=0;i<txt.length;i++){
       this.txtMessage[i].textContent = txt[i];
-      this.txtMessage[i].display = "block";
+      this.txtMessage[i].style.display = "block";
     }
     (document.querySelector("#alertButton") as HTMLElement).click();
   }
