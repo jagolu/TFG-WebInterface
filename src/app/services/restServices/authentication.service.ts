@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 export class AuthenticationService extends RestService {
 
   private _authPath : string = "Authorization/";
-  private init:boolean = false;
 
   constructor(_http:HttpClient, 
               _loading:LoadingService, 
@@ -24,10 +23,6 @@ export class AuthenticationService extends RestService {
               private _sessionS:SessionService,
               private _router:Router){
     super(_http, _loading);
-    this.init = true;
-    if(this.IsAuthenticated() && !this.init){
-      this.refreshToken().subscribe();
-    }
   }
 
   IsAuthenticated():Boolean{
