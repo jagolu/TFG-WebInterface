@@ -11,3 +11,4 @@ export { UserInfo } from './UserInfo/UserInfo';
 export { GroupUser } from './GroupManage/GroupUser';
 export { GroupInfo } from './GroupManage/GroupInfo';
 export { ShopOffer, OfferType } from './Shop/ShopOffer';
+export { BuyType } from './Shop/BuyType';

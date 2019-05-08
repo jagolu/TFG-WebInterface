@@ -1,8 +1,11 @@
+import { BuyType } from '../models';
+
 export interface ShopOffer{
     name:string;
     price:Number;
     description:string;
-    type:OfferType
+    type:OfferType;
+    buyType: BuyType;
 }
 
 export enum OfferType{
