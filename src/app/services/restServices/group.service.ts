@@ -9,16 +9,61 @@ import { SessionService } from '../userServices/session.service';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service to do the group requests
+ * 
+ * @class
+ * @extends RestService
+ */
 export class GroupService extends RestService{
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * The path to the group requests
+   * 
+   * @access private
+   * @var {string} _groupPath
+   */
   private _groupPath : string = "Group/";
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * @constructor
+   * @param {HttpClient} http For RestService constructor 
+   * @param {LoadingService} loading For RestService constructor 
+   * @param {SessionService} sessionS To get the user groups
+   */
   constructor(http: HttpClient, loading: LoadingService, 
               private sessionS:SessionService) { 
     super(http, loading);
   }
 
-  createGroup(group:CreateGroup){
+  
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Function to create a new group to the user
+   * 
+   * @access public
+   * @param {CreateGroup} group The new group to create 
+   * @return {Observable} The result of the request
+   */
+  public createGroup(group:CreateGroup){
     return this.postRequest(group, this._groupPath+"CreateGroup").subscribe(
       ok=> this.sessionS.addGroup({
         "name": group.name,
@@ -27,15 +72,36 @@ export class GroupService extends RestService{
     );
   }
 
-  checkGroupName(name:string){
+  /**
+   * AJAX call to check the name of a group
+   * 
+   * @access public
+   * @param {string} name The name of the group
+   * @return {Observable} The result of the request
+   */
+  public checkGroupName(name:string){
     return this.getRequest(this._groupPath+"CheckGroupName?name="+name,null, true);
   }
 
-  getPageGroup(name:string){
+  /**
+   * Get the info of the group needed to fill the group page
+   * 
+   * @access public
+   * @param {string} name The group name
+   * @return {Observable} The result of the request
+   */
+  public getPageGroup(name:string){
     return this.getRequest(this._groupPath+"GroupPage?groupName="+name, null);
   }
 
-  getGroups(name:string){
+  /**
+   * AJAX call to search groups by group name
+   * 
+   * @access public
+   * @param {string} name The name of the group
+   * @return {Observable} The result of the request
+   */
+  public getGroups(name:string){
     return this.getRequest(this._groupPath+"SearchGroup?name="+name, null, true);
   }
 }

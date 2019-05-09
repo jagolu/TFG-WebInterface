@@ -6,17 +6,57 @@ import { URL } from 'src/environments/secret';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Class to define the basic request
+ * 
+ * @class 
+ * @abstract
+ */
 export abstract class RestService {
+
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
   
+  /**
+   * The base url of the API Request
+   * 
+   * @access private
+   * @var {string} __baseURL
+   */
   private __baseURL : string = URL.baseURL;
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * @constructor
+   * @param {HttpClient} __http 
+   * @param {LoadingService} __loading 
+   */
   constructor(private __http:HttpClient, private __loading:LoadingService) { }
+  
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R O T E C T E D   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────────
+  //
   
   /**
    * Do a http Post Request
-   * @param body Body of the request
-   * @param path Subpath of the request
-   * @return Observable
+   * 
+   * @access protected
+   * @param {Object} body Body of the request
+   * @param {string} path Subpath of the request
+   * @param {boolean} [notStartLoad] A filter to start the loading animation or not
+   * @return {Observable} The result of the request
    */
   protected postRequest(body:any, path:string, notStartLoad?:boolean){
     if(!notStartLoad) this.__loading.startLoading();
@@ -27,9 +67,12 @@ export abstract class RestService {
 
   /**
    * Do a Http Get Request
-   * @param path Path of the request
-   * @param params Url params of the request
-   * @return Observable
+   * 
+   * @access protected
+   * @param {string} path Path of the request
+   * @param {ParamValue[]} params Url params of the request
+   * @param {boolean} [notStartLoad] A filter to start the loading animation or not
+   * @return {Observable} The result of the request
    */
   protected getRequest(path:string ,params?:paramValue[], notStartLoad?:boolean){
     if(!notStartLoad) this.__loading.startLoading();
@@ -45,10 +88,19 @@ export abstract class RestService {
     return this.__http.get(this.__baseURL+path,options);
   }
 
+  
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+  
   /**
    * Parse params to HttpParams
-   * @param params Params to parse
-   * @return HttpParams 
+   * 
+   * @access private
+   * @param {paramValue[]} params Params to parse
+   * @return {HttpParams} The parsed params
    */
   private params(params:paramValue[]):HttpParams{
     let urlParams : HttpParams = new HttpParams();
@@ -60,7 +112,9 @@ export abstract class RestService {
 
   /**
    * Get Basic Headers
-   * @return Basic headers
+   * 
+   * @access private
+   * @return {HttpHeaders} The basic params for a basic request
    */
   private basicHeaders(){
     return new HttpHeaders({
@@ -71,10 +125,30 @@ export abstract class RestService {
   }
 }
 
+
+//
+// ──────────────────────────────────────────────────────────────────────
+//   :::::: I N T E R F A C E S : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────────────────
+//
+
 /**
- * Interface to URL params
+ * The URL params
+ * 
+ * @interface
  */
 interface paramValue{
+  /**
+   * The name of the param
+   * 
+   * @var {string} param 
+   */
   param:string;
+
+  /**
+   * The value of the param
+   * 
+   * @var {string} value
+   */
   value:string;
 }
