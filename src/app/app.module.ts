@@ -42,6 +42,7 @@ import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { CreateGroupAlertService } from './services/visualServices/create-group-alert.service';
+import { ShopService } from './services/restServices/shop.service';
 
 
 // Interceptors
@@ -124,7 +125,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     SessionService,
     AuthGuardService,
     GroupService,
-    CreateGroupAlertService
+    CreateGroupAlertService,
+    ShopService
   ],
   bootstrap: [AppComponent]
 })

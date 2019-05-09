@@ -63,4 +63,14 @@ export class ShopService extends RestService{
     return this.getRequest(this._shopPath+"AddGroupCapacity?"+
           "groupName="+groupName+"&morePlaces="+morePlaces, null, true);
   }
+
+  /**
+   * Function to get all the offers which exists
+   * 
+   * @access public
+   * @return {Observable} The result of the request
+   */
+  public getAllOffers(){
+    return this.getRequest(this._shopPath+"GetAllOffers");
+  }
 }

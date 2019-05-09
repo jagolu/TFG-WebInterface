@@ -12,7 +12,7 @@
               [attr.aria-controls]="'#collapseShopItem'+i">
             <div class="row">
               <div class="col-xl-11 col-sm-8">
-                <h3>{{offer.name}}</h3>
+                <h3>{{offer.title}}</h3>
               </div>
               <div class="col-xl-1 col-sm-2 text-right">
                 <small class="font-italic">{{offer.price}}€</small>
@@ -36,13 +36,13 @@
                     </div>
                     <div class="col-12">
                       <button class="btn btn-info w-100" type="button"
-                              (click)="buyWithGroup('selectgroup'+i, offer.buyType)">Buy!</button>
+                              (click)="buyWithGroup('selectgroup'+i, offer.productId)">Buy!</button>
                     </div>
                   </div>
                   <div *ngIf="offer.type != 'Group'">
                     <div class="col-12">
                       <button class="btn btn-info w-100" type="button"
-                              (click)="buy(offer.buyType)">Buy!</button>
+                              (click)="buy(offer.productId)">Buy!</button>
                     </div>
                   </div>
                 </div>

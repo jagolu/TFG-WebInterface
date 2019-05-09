@@ -1,52 +1,90 @@
 import { Component, OnInit } from '@angular/core';
-import { OfferType, ShopOffer, Group, BuyType } from 'src/app/models/models';
+import { Group } from 'src/app/models/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Offers } from 'src/app/models/Shop/AllOffers';
 import { SessionService } from 'src/app/services/userServices/session.service';
+import { ShopOffer } from 'src/app/models/models';
+import { ShopService } from 'src/app/services/restServices/shop.service';
+
 
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styles: []
 })
+/**
+ * Class to manage the ShopComponent view
+ * 
+ * @class
+ */
 export class ShopComponent implements OnInit{
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+  
   /**
-   * @var offers All the offers to show
+   * All the offers to show
+   * 
+   * @access public
+   * @var {ShopOffer[]} offers 
    */
   public offers:ShopOffer[];
 
   /**
-   * @var filters All the filters to filt the offers
+   * All the filters to filt the offers
+   * 
+   * @access public
+   * @var {string[]} filters
    */
-  public filters: OfferType[];
+  public filters: string[];
 
   /** 
-   * @var groups User groups
+   * The groups of the user
+   * 
+   * @access public
+   * @var {Group[]} groups
    */
   public groups:Group[];
 
   /**
-   * @var show To filt the type of offers to show in the view
+   * To filt the type of offers to show in the view
+   * 
+   * @access public
+   * @var {string} show 
    */
   public show: string;
 
 
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
   /**
    * @constructor
-   * @param aR  To check the offer-type param
-   * @param router To redirect the user if the param isn't correct 
-   * @param sessionS To get the user groups
+   * @param {ActivatedRoute} aR  To check the offer-type param
+   * @param {Router} router To redirect the user if the param isn't correct 
+   * @param {SessionService} sessionS To get the user groups
+   * @param {ShopService} shopS To interact with the shop requests
    */
-  constructor(private aR:ActivatedRoute, private router:Router, private sessionS:SessionService) { 
-    this.offers = Offers.getAllOffers();
-    this.intializeFilters();
-    this.intializeShow();
+  constructor(private aR:ActivatedRoute, private router:Router, private sessionS:SessionService, private shopS:ShopService) { 
+    this.shopS.getAllOffers().subscribe(
+      (ok:any)=>{
+        this.offers = ok.offers;
+        this.intializeFilters();
+        this.intializeShow();
+      }
+    );
   }
 
   /**
-   * @function ngOnInit
-   * Get the user groups in an observable
+   * Get the groups of the user as observable and save them
+   * in groups var
+   * 
+   * @OnInit
    */
   ngOnInit(){
     this.sessionS.User.subscribe(u => {
@@ -56,7 +94,13 @@ export class ShopComponent implements OnInit{
   }
 
 
-  buyWithGroup(selectId:string, buy:BuyType){
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+  
+  buyWithGroup(selectId:string, buy:string){
     let index = (document.querySelector("#"+selectId) as HTMLSelectElement).selectedIndex;
     let groupName = this.groups[index];
     console.log(groupName, "   ", buy); //TODO BUY
@@ -67,11 +111,18 @@ export class ShopComponent implements OnInit{
   }
   
 
-  /** 
-   * @function initializeShow
-   * Initialize what kind of offer will appear.
-   * If the url param doesn't fit with the offer types
-   * it redirects to home page
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Initialize what offers will be shown depending on the
+   * uri. If the uri isn't correct it will return the user to
+   * the index page.
+   * 
+   * @access private
    */
   private intializeShow(){
     this.show = this.aR.snapshot.paramMap.get('type');
@@ -79,16 +130,19 @@ export class ShopComponent implements OnInit{
     if(!can) this.router.navigate(['']);
   }
 
-
   /**
-   * @function intializeFilters
-   * Initializes the filters array
+   * Initialze the filter depending on the types which the 
+   * offers have. Adding the type "All".
+   * 
+   * @access private
    */
   private intializeFilters(){
-    this.filters = [
-      OfferType.ALL,
-      OfferType.USER,
-      OfferType.GROUP
-    ]
+    this.filters = [];
+    this.offers.forEach(offer => {
+      if(!this.filters.includes(offer.type)){
+        this.filters.push(offer.type);
+      }
+    });
+    this.filters.push("All");
   }
 }
