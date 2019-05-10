@@ -3,7 +3,7 @@
   <div class="col-xl-10  col-sm-12 mb-4">
     <div class="accordion" id="shopOfferts">
       <div *ngFor="let offer of offers; let i = index">
-        <div class="card" style="cursor: default" *ngIf="offer.type==show || show=='All'">
+        <div class="card" style="cursor: default" *ngIf="(offer.type==show || show=='All') && ((showGroups && offer.type == 'Group') || offer.type != 'Group' )">
           <div class="card-header" 
               id="headingShopItem{{i}}" 
               data-toggle="collapse" 

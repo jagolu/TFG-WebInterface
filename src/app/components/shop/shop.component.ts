@@ -56,6 +56,15 @@ export class ShopComponent implements OnInit{
    */
   public show: string;
 
+  /**
+   * Filt to show group offers if the user has any group.
+   * For now, everybody can buy things for everygroup in which
+   * the user is in.
+   * 
+   * @access public
+   * @var {boolean} showGroups
+   */
+  public showGroups:boolean;
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -88,7 +97,10 @@ export class ShopComponent implements OnInit{
    */
   ngOnInit(){
     this.sessionS.User.subscribe(u => {
-      try{ this.groups = u.groups; }
+      try{ 
+        this.groups = u.groups; 
+        this.showGroups = this.groups.length > 0;
+      }
       catch(Exception){ this.groups = []; }
     });    
   }
