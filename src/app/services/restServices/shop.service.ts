@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
+import { BuyInfo } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -52,16 +53,14 @@ export class ShopService extends RestService{
   //
   
   /**
-   * Function to add buy more capacity to an existing group
+   * Function to do a buy
    * 
    * @access public
-   * @param {string} groupName The name of the group 
-   * @param {int} morePlaces How much places add to the actual capacity of the group
+   * @param {BuyInfo} item The info of the item to buy
    * @return {Observable} The result of the request 
    */
-  public addGroupCapacity(groupName:string, morePlaces:number){
-    return this.getRequest(this._shopPath+"AddGroupCapacity?"+
-          "groupName="+groupName+"&morePlaces="+morePlaces, null, true);
+  public doABuy(item:BuyInfo){
+    return this.postRequest(item, this._shopPath+"Buy");
   }
 
   /**

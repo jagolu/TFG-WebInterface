@@ -47,6 +47,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
             else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlert(AlertType.LIMITATIONCREATEGROUP);
             else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlert(AlertType.INCORRECTOLDPASSWORD);
+            else if(err.error["error"] == "ErrorBuy") this.alert.openAlert(AlertType.ERRORBUY);
             else this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
         }
         else if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);

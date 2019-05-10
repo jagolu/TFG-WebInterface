@@ -57,7 +57,6 @@ export class AlertService {
    */
   public openAlert(type:AlertType){
     let txt = this.getText(type);
-    console.log(this.txtMessage);
     for(let line of this.txtMessage) line.style.display = "none"; 
     for(let i=0;i<txt.length;i++){
       this.txtMessage[i].textContent = txt[i];
@@ -130,6 +129,12 @@ export class AlertService {
     }
     else if(type == AlertType.PASSWORDCHANGED){
       return ["Tu contraseña ha cambiado"];
+    }
+    else if(type == AlertType.SUCCESFULLBUY){
+      return ["Tu compra se ha realizado con exito."];
+    }
+    else if(type == AlertType.ERRORBUY){
+      return ["Hubo un error en tu compra. IMPLEMNTAR QUE PASA AQUI."];
     }
   }
 }
@@ -218,5 +223,15 @@ export enum AlertType{
    * @summary Success message, when the user changes the password and it 
    * ended fine
    */
-  PASSWORDCHANGED = "PASSWORDCHANGED" 
+  PASSWORDCHANGED = "PASSWORDCHANGED",
+
+  /**
+   * @summary Success message, when a buy was fine.
+   */
+  SUCCESFULLBUY = "SUCCESFULLBUY",
+
+  /**
+   * @summary Error message, when something was wrong in a buy
+   */
+  ERRORBUY = "ERRORBUY"
 }

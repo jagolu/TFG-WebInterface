@@ -100,14 +100,21 @@ export class ShopComponent implements OnInit{
   // ──────────────────────────────────────────────────────────────────────────────────
   //
   
-  buyWithGroup(selectId:string, buy:string){
-    let index = (document.querySelector("#"+selectId) as HTMLSelectElement).selectedIndex;
-    let groupName = this.groups[index];
-    console.log(groupName, "   ", buy); //TODO BUY
-  }
-
-  buy(buyType){
-    console.log(buyType);
+  /**
+   * Function to buy a buy-item associated 
+   * 
+   * @access public
+   * @param {string} selectId The id of the select tag to get from 
+   * there the group associated to the buy item
+   * @param {string} buy The buy item
+   */
+  public buy(buy:string, selectId?:string){
+    let groupName = selectId ? this.getGroupFromTag(selectId) : null;
+    
+    this.shopS.doABuy({
+      "productId" : buy,
+      "group" : groupName
+    }).subscribe();
   }
   
 
@@ -144,5 +151,18 @@ export class ShopComponent implements OnInit{
       }
     });
     this.filters.push("All");
+  }
+
+  /**
+   * Function to get the group name selected on the <select> tag
+   * asociated to the tagId
+   * 
+   * @access private
+   * @param {tagId} tagId The id of the <select> tag
+   * @return {string} The name of the group.
+   */
+  private getGroupFromTag(tagId?:string){
+    let index = (document.querySelector("#"+tagId) as HTMLSelectElement).selectedIndex;
+    return this.groups[index].name;
   }
 }
