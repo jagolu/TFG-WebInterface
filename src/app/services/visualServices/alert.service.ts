@@ -147,6 +147,11 @@ export class AlertService {
         msg = ["Hubo un error en tu compra. IMPLEMNTAR QUE PASA AQUI."];
         break;
       }
+      case AlertType.ENABLEDGROUPPASSWORD:{
+        msg = ["Ya puedes poner una contraseña al grupo.", 
+                "Dirigete tu o el administrador del grupo a la sección de información del grupo para escribir la nueva contraseña."];
+        break;
+      }
       default:{
         msg = [ "" ];
         break;
@@ -250,5 +255,11 @@ export enum AlertType{
   /**
    * @summary Error message, when something was wrong in a buy
    */
-  ERRORBUY = "ERRORBUY"
+  ERRORBUY = "ERRORBUY",
+
+  /**
+   * @summary Success message, when someone buy a password to a
+   * group and the buy was fine.
+   */
+  ENABLEDGROUPPASSWORD = "ENABLEDGROUPPASSWORD"
 }

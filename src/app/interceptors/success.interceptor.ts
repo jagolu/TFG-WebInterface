@@ -50,6 +50,7 @@ export class SuccessInterceptor implements HttpInterceptor {
         if(ok.body && ok.body.success){
             if(ok.body.success = "PassChanged") this.alert.openAlert(AlertType.PASSWORDCHANGED);
             if(ok.body.success = "SuccesfullBuy") this.alert.openAlert(AlertType.SUCCESFULLBUY);
+            if(ok.body.success = "EnabledGroupPassword") this.alert.openAlert(AlertType.ENABLEDGROUPPASSWORD);
         }
         else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
         else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlert(AlertType.DELETEDACCOUNT);
