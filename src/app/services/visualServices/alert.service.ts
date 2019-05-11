@@ -80,62 +80,79 @@ export class AlertService {
    * @return {string} The text message for the alertType 
    */
   private getText(type:AlertType){
-    if(type == AlertType.LOSTCONNECTIONERROR) {
-      return ["Se ha perdido la conexión con el servidor.",
-            "Por favor, revisa tu conexión a internet."]
+    let msg;
+
+    switch(type){
+      case AlertType.LOSTCONNECTIONERROR:{
+        msg = ["Se ha perdido la conexión con el servidor.", "Por favor, revisa tu conexión a internet."];
+        break;
+      }
+      case AlertType.SERVERERROR:{
+        msg = ["Ha habido interno del servidor, vuelva a intentarlo más tarde."];
+        break;
+      }
+      case AlertType.VALIDATINGUSERERROR:{
+        msg = ["Ha habido un error validando los datos, vuelva a intentarlo más tarde."];
+        break;
+      }
+      case AlertType.EMAILTAKENERROR:{
+        msg = ["El email con el que intenta registrarse ya está registrado"];
+        break;
+      }
+      case AlertType.VERIFICATIONSENT:{
+        msg = ["Su registro se ha casi completado, solo es necesario un paso más.", "Verifique su correo mediante el enlace que se le ha enviado al mismo."];
+        break;
+      }
+      case AlertType.SOCIALERROR:{
+        msg = ["Ha habido un error con la red social con la que intentabas iniciar sesión",  "Vuelva a intentarlo más tarde."];
+        break;
+      }
+      case AlertType.WRONGEMAILORPASSWORD:{
+        msg = ["El correo o contraseña introducidos no son correctos.", "Vuelva a intentarlo"];
+        break;
+      }
+      case AlertType.NOTVALIDATEDYET:{
+        msg = ["El correo no se ha validado aun, revise su correo."];
+        break;
+      }
+      case AlertType.CANTDELETEACCOUNT:{
+        msg = ["No se pudo eliminar tu cuenta de usuario.", "Vuelva a intentarlo más tarde."];
+        break;
+      }
+      case AlertType.DELETEDACCOUNT:{
+        msg = ["Sentimos que te vayas.", "Ojalá vuelvas pronto."];
+        break;
+      }
+      case AlertType.SESSIONEXPIRED:{
+        msg = ["Tu sesión ha expirado.", "Vuelva a registrarte"];
+        break;
+      }
+      case AlertType.LIMITATIONCREATEGROUP:{
+        msg = ["No puedes crear más grupos de este tipo.", "Si deseas crear más grupos dirigete a la tienda."];
+        break;
+      }
+      case AlertType.INCORRECTOLDPASSWORD:{
+        msg = ["La contraseña es incorrecta"];
+        break;
+      }
+      case AlertType.PASSWORDCHANGED:{
+        msg = ["Tu contraseña ha cambiado"];
+        break;
+      }
+      case AlertType.SUCCESFULLBUY:{
+        msg = ["Tu compra se ha realizado con exito."];
+        break;
+      }
+      case AlertType.ERRORBUY:{
+        msg = ["Hubo un error en tu compra. IMPLEMNTAR QUE PASA AQUI."];
+        break;
+      }
+      default:{
+        msg = [ "" ];
+        break;
+      }
     }
-    else if(type == AlertType.SERVERERROR) {
-      return ["Ha habido interno del servidor, vuelva a intentarlo más tarde."];
-    }
-    else if(type == AlertType.VALIDATINGUSERERROR) {
-      return ["Ha habido un error validando los datos, vuelva a intentarlo más tarde."];
-    }
-    else if(type == AlertType.EMAILTAKENERROR) {
-      return ["El email con el que intenta registrarse ya está registrado"];
-    }
-    else if(type == AlertType.VERIFICATIONSENT) {
-      return ["Su registro se ha casi completado, solo es necesario un paso más.",
-        "Verifique su correo mediante el enlace que se le ha enviado al mismo."];
-    }
-    else if(type == AlertType.SOCIALERROR){
-      return [`Ha habido un error con la red social con la que intentabas iniciar sesión`, 
-            `vuelva a intentarlo más tarde.`];
-    }
-    else if(type == AlertType.WRONGEMAILORPASSWORD){
-      return ["El correo o contraseña introducidos no son correctos.",
-          "Vuelva a intentarlo"];
-    }
-    else if(type == AlertType.NOTVALIDATEDYET){
-      return ["El correo no se ha validado aun, revise su correo."];
-    }
-    else if(type == AlertType.CANTDELETEACCOUNT){
-      return ["No se pudo eliminar tu cuenta de usuario.",
-              "Vuelva a intentarlo más tarde."];
-    }
-    else if(type == AlertType.DELETEDACCOUNT){
-      return ["Sentimos que te vayas.",
-              "Ojalá vuelvas pronto."];
-    }
-    else if(type == AlertType.SESSIONEXPIRED){
-      return ["Tu sesión ha expirado.",
-              "Vuelva a registrarte"];
-    }
-    else if(type == AlertType.LIMITATIONCREATEGROUP){
-      return ["No puedes crear más grupos de este tipo.",
-              "Si deseas crear más grupos dirigete a la tienda."]
-    }
-    else if(type == AlertType.INCORRECTOLDPASSWORD){
-      return ["La contraseña es incorrecta"];
-    }
-    else if(type == AlertType.PASSWORDCHANGED){
-      return ["Tu contraseña ha cambiado"];
-    }
-    else if(type == AlertType.SUCCESFULLBUY){
-      return ["Tu compra se ha realizado con exito."];
-    }
-    else if(type == AlertType.ERRORBUY){
-      return ["Hubo un error en tu compra. IMPLEMNTAR QUE PASA AQUI."];
-    }
+    return msg;
   }
 }
 
