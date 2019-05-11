@@ -104,4 +104,14 @@ export class GroupService extends RestService{
   public getGroups(name:string){
     return this.getRequest(this._groupPath+"SearchGroup?name="+name, null, true);
   }
+
+  /**
+   * Get request to get all the group in the app
+   * 
+   * @access public
+   * @return {Observable} The result of the request
+   */
+  public getAllGroups(){
+    return this.getRequest(this._groupPath+"GetAllGroups", null, true);
+  }
 }

@@ -1,7 +1,7 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th >Search a group</th>
+      <th class="text-center">Search a group</th>
       <th ></th>
       <th >
           <input  class="form-control form-control-sm" 
@@ -13,29 +13,25 @@
     </tr>
   </thead>
 </table>
-<table class="table">
-  <thead>
+<table class="table table-hover">
+  <tbody>
     <tr *ngFor="let group of groups">
-        <td>{{ group.name }}</td>
-        <td>    
-          <app-icon   base="fas"
-                      firstIcon="fa-futbol"
-                      firstColor="#006400"
-                      *ngIf="group.type == false">
+        <td class="text-center">{{ group.name }}</td>
+        <td class="text-center">    
+          <app-icon   base="fas" firstIcon="fa-futbol"
+                      firstColor="#006400" *ngIf="group.type == false">
           </app-icon>
-          <app-icon   base="fas"
-                      firstIcon="fa-file-invoice"
-                      firstColor="#00008B"
-                      *ngIf="group.type == true">
+          <app-icon   base="fas" firstIcon="fa-file-invoice"
+                      firstColor="#00008B" *ngIf="group.type == true">
           </app-icon>
           &nbsp;
-          <app-icon   base="fas"
-                      firstIcon="fa-key"
-                      firstColor="#FECA4E"
-                      *ngIf="group.password == false">
+          <app-icon   base="fas" firstIcon="fa-key"
+                      firstColor="#FECA4E" *ngIf="group.password == true">
           </app-icon>
         </td>
-        <td>{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
+        <td class="text-center">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
+        <td><button class="btn btn-outline-primary w-100" *ngIf="joinGroups">Join!</button></td>
+        <td><button class="btn btn-outline-primary w-100" *ngIf="!joinGroups">See</button></td>
     </tr>
-  </thead>
+  </tbody>
 </table>
