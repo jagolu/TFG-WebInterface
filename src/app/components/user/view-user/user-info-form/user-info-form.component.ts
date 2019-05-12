@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PasswordAlertService, PasswordAlertType } from 'src/app/services/visualServices/password-alert.service';
 import { UserService } from 'src/app/services/restServices/user.service';
 import { UserInfoService } from 'src/app/services/userServices/user-info.service';
 import { UserInfo } from 'src/app/models/models';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class UserInfoFormComponent implements OnInit {
 
   private selectedFile;
 
-  constructor(private _passwordAlertS:PasswordAlertService,
+  constructor(private _alertS:AlertService,
               private _userS:UserService,
               private  userInfoS:UserInfoService) { }
 
@@ -89,7 +89,7 @@ export class UserInfoFormComponent implements OnInit {
   }
 
   public openAlert(){
-    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT, this.info.hasPassword);
+    this._alertS.deleteAccount(this.info.hasPassword, this.info.email);
   }
 
   private loadFile(event){

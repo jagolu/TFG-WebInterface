@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { AlertMode, AlertInfoType } from 'src/app/models/models';
 
 
 @Injectable({
   providedIn: 'root'
 })
 /**
- * Basic class to the alert services
+ * Service to manage the alerts
  * 
  * @class
  */
@@ -18,29 +20,82 @@ export class AlertService {
   //
   
   /**
-   * The lines text of the message to show
+   * The behaviour of the alert mode
    * 
    * @access private
-   * @var {HTMLElement[]} txtMessage
+   * @var {BehaviorSubject<UserInfo>} alertMode
    */
-  private txtMessage;
+  private alertMode = new BehaviorSubject<AlertMode>(null);
+
+  /**
+   * The alert mode at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} mode
+   */
+  public mode = this.alertMode.asObservable();
+
+  /**
+   * The behaviour of the info-alert type
+   * 
+   * @access private
+   * @var {BehaviorSubject<UserInfo>} infoAlertType
+   */
+  private infoAlertType = new BehaviorSubject<AlertInfoType>(null);
+  
+  /**
+   * The info-alert type at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} alertType
+   */
+  public alertType = this.infoAlertType.asObservable();
+
+  /**
+   * The behaviour of the filt for alerts which needs or not
+   * a form
+   * 
+   * @access private
+   * @var {BehaviorSubject<UserInfo>} formNeeded
+   */
+  private formNeeded = new BehaviorSubject<Boolean>(false);
+
+  /**
+   * The filt at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} needForm
+   */
+  public needForm = this.formNeeded.asObservable();
+
+  /**
+   * The behaviour of the target for alerts which needs
+   * extra information like an email or group names
+   * 
+   * @access private
+   * @var {BehaviorSubject<UserInfo>} alertTarget
+   */
+  private alertTarget = new BehaviorSubject<string>(null);
+
+  /**
+   * The extra info at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} target
+   */
+  public target = this.alertTarget.asObservable();
+  
 
   //
   // ──────────────────────────────────────────────────────────────────────────
   //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────
   //
-  
+
   /**
    * @constructor
    */
-  constructor() { 
-    this.txtMessage = [
-      (document.querySelector("#alertTextId1") as HTMLElement),
-      (document.querySelector("#alertTextId2") as HTMLElement),
-      (document.querySelector("#alertTextId3") as HTMLElement)
-    ];
-  }
+  constructor() { }
 
 
   //
@@ -48,218 +103,92 @@ export class AlertService {
   //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────────────
   //
-
+  
   /**
-   * Open the Alert with the message associated to the specific AlerType
+   * Open the alert showing an info-alert
    * 
    * @access public
-   * @param {AlertType} type The type of the alert 
+   * @param {AlertInfoType} AlertType The type of 
+   * the info alert to show the correct message
    */
-  public openAlert(type:AlertType){
-    let txt = this.getText(type);
-    for(let line of this.txtMessage) line.style.display = "none"; 
-    for(let i=0;i<txt.length;i++){
-      this.txtMessage[i].textContent = txt[i];
-      this.txtMessage[i].style.display = "block";
-    }
-    (document.querySelector("#alertButton") as HTMLElement).click();
+  public openAlertInfo(AlertType:AlertInfoType){
+    this.changeAlertMode(AlertMode.ALERTINFO);
+    this.infoAlertType.next(AlertType);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the form to create
+   * a new group
+   * 
+   * @access public
+   */
+  public openCreateGroup(){
+    this.changeAlertMode(AlertMode.CREATEGROUP);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the delete account 
+   * alert with or without the form
+   * 
+   * @access public
+   * @param {boolean} needPass Filt to show the
+   * form or not. 
+   * @param {string} email The email of the account
+   * to delete
+   */
+  public deleteAccount(needPass:boolean, email:string){
+    this.changeAlertMode(AlertMode.DELETEACCOUNT);
+    this.formNeeded.next(needPass);
+    this.setTarget(email);
+    this.openAlert();
+  }
+  
+  /**
+   * Close the alert clicking a hide button
+   * 
+   * @access public
+   */
+  public hideAlert(){
+    (document.querySelector("#hideAlert") as HTMLElement).click();
   }
 
 
   //
-  // ────────────────────────────────────────────────────────────────────────────────────
+  // ──────────────────────────────────────────────────────────────────────────  ──────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
   // ────────────────────────────────────────────────────────────────────────────────────
   //
   
   /**
-   * Get the message for an specific AlertType
+   * Change the alert mode of the var alertMode
    * 
    * @access private
-   * @param {AlertType} type The alert type
-   * @return {string} The text message for the alertType 
+   * @param {AlertMode} newMode The new alert mode 
    */
-  private getText(type:AlertType){
-    let msg;
-
-    switch(type){
-      case AlertType.LOSTCONNECTIONERROR:{
-        msg = ["Se ha perdido la conexión con el servidor.", "Por favor, revisa tu conexión a internet."];
-        break;
-      }
-      case AlertType.SERVERERROR:{
-        msg = ["Ha habido interno del servidor, vuelva a intentarlo más tarde."];
-        break;
-      }
-      case AlertType.VALIDATINGUSERERROR:{
-        msg = ["Ha habido un error validando los datos, vuelva a intentarlo más tarde."];
-        break;
-      }
-      case AlertType.EMAILTAKENERROR:{
-        msg = ["El email con el que intenta registrarse ya está registrado"];
-        break;
-      }
-      case AlertType.VERIFICATIONSENT:{
-        msg = ["Su registro se ha casi completado, solo es necesario un paso más.", "Verifique su correo mediante el enlace que se le ha enviado al mismo."];
-        break;
-      }
-      case AlertType.SOCIALERROR:{
-        msg = ["Ha habido un error con la red social con la que intentabas iniciar sesión",  "Vuelva a intentarlo más tarde."];
-        break;
-      }
-      case AlertType.WRONGEMAILORPASSWORD:{
-        msg = ["El correo o contraseña introducidos no son correctos.", "Vuelva a intentarlo"];
-        break;
-      }
-      case AlertType.NOTVALIDATEDYET:{
-        msg = ["El correo no se ha validado aun, revise su correo."];
-        break;
-      }
-      case AlertType.CANTDELETEACCOUNT:{
-        msg = ["No se pudo eliminar tu cuenta de usuario.", "Vuelva a intentarlo más tarde."];
-        break;
-      }
-      case AlertType.DELETEDACCOUNT:{
-        msg = ["Sentimos que te vayas.", "Ojalá vuelvas pronto."];
-        break;
-      }
-      case AlertType.SESSIONEXPIRED:{
-        msg = ["Tu sesión ha expirado.", "Vuelva a registrarte"];
-        break;
-      }
-      case AlertType.LIMITATIONCREATEGROUP:{
-        msg = ["No puedes crear más grupos de este tipo.", "Si deseas crear más grupos dirigete a la tienda."];
-        break;
-      }
-      case AlertType.INCORRECTOLDPASSWORD:{
-        msg = ["La contraseña es incorrecta"];
-        break;
-      }
-      case AlertType.PASSWORDCHANGED:{
-        msg = ["Tu contraseña ha cambiado"];
-        break;
-      }
-      case AlertType.SUCCESFULLBUY:{
-        msg = ["Tu compra se ha realizado con exito."];
-        break;
-      }
-      case AlertType.ERRORBUY:{
-        msg = ["Hubo un error en tu compra. IMPLEMNTAR QUE PASA AQUI."];
-        break;
-      }
-      case AlertType.ENABLEDGROUPPASSWORD:{
-        msg = ["Ya puedes poner una contraseña al grupo.", 
-                "Dirigete tu o el administrador del grupo a la sección de información del grupo para escribir la nueva contraseña."];
-        break;
-      }
-      default:{
-        msg = [ "" ];
-        break;
-      }
-    }
-    return msg;
+  private changeAlertMode(newMode:AlertMode){
+    this.alertMode.next(newMode);
   }
-}
-
-
-//
-// ────────────────────────────────────────────────────────────
-//   :::::: E N U M S : :  :   :    :     :        :          :
-// ────────────────────────────────────────────────────────────
-//
-
-/**
- * The alert codes
- * 
- * @enum
- */
-export enum AlertType{
-  /**
-   * @summary Request state 0 (Lost Connection)
-   */
-  LOSTCONNECTIONERROR = "LOSTCONNECTIONERROR",
 
   /**
-   * @summary Request state 500 (Internal Server Error)
+   * Open the alert clicking a hide button
+   * 
+   * @access private
    */
-  SERVERERROR = "SERVERERROR",
+  private openAlert(){
+    (document.querySelector("#openAlert") as HTMLElement).click();
+  }
 
   /**
-   * @summary Error validating the signUp or logIn form
+   * Set the target for the extra info on the
+   * alertTarget var
+   * 
+   * @access public
+   * @param {string} target The info to set
+   * in the var 
    */
-  VALIDATINGUSERERROR = "VALIDATINGUSERERROR",
-
-  /**
-   * @summary Error by trying to take an existing email
-   */
-  EMAILTAKENERROR = "EMAILTAKENERROR",
-
-  /**
-   * @summary Success message, received when the sign was ok
-   */
-  VERIFICATIONSENT = "VERIFICATIONSENT",
-
-  /**
-   * @summary Error with Facebook or Google
-   */
-  SOCIALERROR = "SOCIALERROR",
-
-  /**
-   * @summary The email or the password are incorrect
-   */
-  WRONGEMAILORPASSWORD = "WRONGEMAILORPASSWORD",
-
-  /**
-   * @summary Error when the user tries to log when an account that
-   * isn't validated yet
-   */
-  NOTVALIDATEDYET = "NOTVALIDATEDYET",
-
-  /**
-   * @summary Error when the system tries to delete an user account
-   */
-  CANTDELETEACCOUNT = "CANTDELETEACCOUNT",
-
-  /**
-   * @summary Success message, the user account was deletec succesfully
-   */
-  DELETEDACCOUNT = "DELETEDACCOUNT",
-
-  /**
-   * @summary Error when the user token has expired
-   */
-  SESSIONEXPIRED = "SESSIONEXPIRED",
-
-  /**
-   * @summary Error when the user tries to create a new group and
-   * he can't create more groups of these type
-   */
-  LIMITATIONCREATEGROUP = "LIMITATIONCREATEGROUP",
-
-  /**
-   * @summary Error in the field of "repeat password"
-   */
-  INCORRECTOLDPASSWORD = "INCORRECTOLDPASSWORD",
-
-  /**
-   * @summary Success message, when the user changes the password and it 
-   * ended fine
-   */
-  PASSWORDCHANGED = "PASSWORDCHANGED",
-
-  /**
-   * @summary Success message, when a buy was fine.
-   */
-  SUCCESFULLBUY = "SUCCESFULLBUY",
-
-  /**
-   * @summary Error message, when something was wrong in a buy
-   */
-  ERRORBUY = "ERRORBUY",
-
-  /**
-   * @summary Success message, when someone buy a password to a
-   * group and the buy was fine.
-   */
-  ENABLEDGROUPPASSWORD = "ENABLEDGROUPPASSWORD"
+  private setTarget(target:string){
+    this.alertTarget.next(target);
+  }
 }

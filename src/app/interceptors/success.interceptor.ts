@@ -4,10 +4,11 @@ import { HttpEvent, HttpInterceptor, HttpHandler,
         HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AlertService, AlertType } from 'src/app/services/visualServices/alert.service';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { LoadingService } from 'src/app/services/visualServices/loading.service';
 import { SessionService } from '../services/userServices/session.service';
 import { AuthenticationService } from '../services/restServices/authentication.service';
+import { AlertInfoType } from '../models/models';
 
 @Injectable()
 export class SuccessInterceptor implements HttpInterceptor {
@@ -48,12 +49,12 @@ export class SuccessInterceptor implements HttpInterceptor {
 
     private showSuccessAlert(ok){
         if(ok.body && ok.body.success){
-            if(ok.body.success = "PassChanged") this.alert.openAlert(AlertType.PASSWORDCHANGED);
-            if(ok.body.success = "SuccesfullBuy") this.alert.openAlert(AlertType.SUCCESFULLBUY);
-            if(ok.body.success = "EnabledGroupPassword") this.alert.openAlert(AlertType.ENABLEDGROUPPASSWORD);
+            if(ok.body.success = "PassChanged") this.alert.openAlertInfo(AlertInfoType.PASSWORDCHANGED);
+            if(ok.body.success = "SuccesfullBuy") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLBUY);
+            if(ok.body.success = "EnabledGroupPassword") this.alert.openAlertInfo(AlertInfoType.ENABLEDGROUPPASSWORD);
         }
-        else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlert(AlertType.VERIFICATIONSENT);
-        else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlert(AlertType.DELETEDACCOUNT);
+        else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlertInfo(AlertInfoType.VERIFICATIONSENT);
+        else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlertInfo(AlertInfoType.DELETEDACCOUNT);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */

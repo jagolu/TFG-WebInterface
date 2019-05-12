@@ -1,0 +1,25 @@
+<p>Vas a eliminar tu cuenta de usuario. ¿Estás seguro?</p>
+
+<form [formGroup]="deleteAccountForm" *ngIf="hasPassword">
+  <div class="form-group">
+      <input type="password" 
+            class="form-control"
+            placeholder="Your password"
+            class="form-control"
+            formControlName="password"
+            autocomplete="off">
+  </div>
+  
+
+  <button class="btn btn-danger w-100" 
+          (click)="deleteAccount()"
+          type="submit"
+          [disabled]="!deleteAccountForm.valid"
+  >Delete account</button>
+</form>
+
+<div *ngIf="!hasPassword">
+  <button class="btn btn-danger w-100" 
+          (click)="deleteAccount()"
+  >Delete account</button>
+</div>

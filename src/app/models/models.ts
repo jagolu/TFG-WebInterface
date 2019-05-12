@@ -12,3 +12,5 @@ export { GroupUser } from './GroupManage/GroupUser';
 export { GroupInfo } from './GroupManage/GroupInfo';
 export { ShopOffer } from './Shop/ShopOffer';
 export { BuyInfo } from './Shop/BuyInfo';
+export { AlertMode } from './Alerts/AlertMode';
+export { AlertInfoType } from './Alerts/AlertInfoType';

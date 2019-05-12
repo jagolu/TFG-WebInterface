@@ -10,19 +10,21 @@ import { IconComponent } from './components/shared/icon/icon.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
-import { InfoAlertComponent } from './components/shared/alerts/infoAlert/infoAlert.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
 import { ViewUserComponent } from './components/user/view-user/view-user.component';
 import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
-import { PasswordAlertComponent } from './components/shared/alerts/password-alert/password-alert.component';
-import { CreateGroupAlertComponent } from './components/shared/alerts/create-group-alert/create-group-alert.component';
+import { CreateGroupAlertComponent } from './components/shared/alert/create-group-alert/create-group-alert.component';
 import { GroupComponent } from './components/group/group.component';
 import { GroupBetComponent } from './components/group/group-bet/group-bet.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
 import { ShopComponent } from './components/shop/shop.component';
+import { AlertComponent } from './components/shared/alert/alert.component';
+import { DeleteAccountAlertComponent } from './components/shared/alert/delete-account-alert/delete-account-alert.component';
+import { InfoAlertComponent } from './components/shared/alert/info-alert/info-alert.component';
+
 
 
 // Directives
@@ -37,11 +39,9 @@ import { AuthenticationService } from './services/restServices/authentication.se
 import { UserService } from './services/restServices/user.service';
 import { AlertService } from './services/visualServices/alert.service';
 import { LoadingService } from './services/visualServices/loading.service';
-import { PasswordAlertService } from './services/visualServices/password-alert.service';
 import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
-import { CreateGroupAlertService } from './services/visualServices/create-group-alert.service';
 import { ShopService } from './services/restServices/shop.service';
 
 
@@ -73,21 +73,22 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     HomeComponent,
     LogInComponent,
     EmailVerificationComponent,
-    InfoAlertComponent,
     LoadingComponent,
     SocialButtonComponent,
     ViewUserComponent,
     OnlyDatePipe,
     UserGroupsComponent,
     UserInfoFormComponent,
-    PasswordAlertComponent,
     Base64ImagePipe,
     CreateGroupAlertComponent,
     GroupComponent,
     GroupUsersComponent,
     GroupBetComponent,
     SearchGroupComponent,
-    ShopComponent
+    ShopComponent,
+    AlertComponent,
+    DeleteAccountAlertComponent,
+    InfoAlertComponent
   ],
   imports: [
     BrowserModule,
@@ -121,11 +122,9 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     UserService,
     AlertService,
     LoadingService,
-    PasswordAlertService,
     SessionService,
     AuthGuardService,
     GroupService,
-    CreateGroupAlertService,
     ShopService
   ],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
-import { AlertService, AlertType } from 'src/app/services/visualServices/alert.service';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { AlertInfoType } from 'src/app/models/models';
 
 
 
@@ -31,7 +32,7 @@ export class SocialButtonComponent{
         "socialProvider": type,
         "urlImage":user.photoUrl
       });
-    }).catch(_=> this._alert.openAlert(AlertType.SOCIALERROR));
+    }).catch(_=> this._alert.openAlertInfo(AlertInfoType.SOCIALERROR));
   }
 }
 

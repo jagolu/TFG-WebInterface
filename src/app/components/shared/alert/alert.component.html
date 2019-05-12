@@ -1,0 +1,40 @@
+<div class="modal fade" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="true"
+    id="alertMessage"
+    (focusin)="focusIn()"
+    (focusout)="focusOut()">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+
+            
+            <app-info-alert *ngIf="mode == 'ALERTINFO'"></app-info-alert>
+            <app-create-group-alert *ngIf="mode == 'CREATEGROUP'"></app-create-group-alert>
+            <app-delete-account-alert *ngIf="mode == 'DELETEACCOUNT'"></app-delete-account-alert>
+
+
+          </div>
+        </div>
+        
+        <button type="button" 
+                id="hideAlert" 
+                style="display: none" 
+                data-dismiss="modal"  
+        >Invisible button to hide the alert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button type="button" 
+        id="openAlert" 
+        style="display:block" 
+        data-toggle="modal" 
+        data-target="#alertMessage"
+>Invisible button to launch the alert
+</button>
