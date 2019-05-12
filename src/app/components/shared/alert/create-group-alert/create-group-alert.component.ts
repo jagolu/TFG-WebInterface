@@ -61,10 +61,12 @@ export class CreateGroupAlertComponent{
    */
   public createGroup(){
     this._alertS.hideAlert();
-    this.groupS.createGroup({
-      "name": this.createGroupForm.controls["name"].value,
-      "type": this.createGroupForm.controls["groupType"].value
-    });
+    
+    //Bootstrap modal close on form submit. So, I have to
+    //show 2 modals, so first hide that and in 0.35 seconds
+    //send the petition and show the modal of the response
+    setTimeout(this.create.bind(this), 350);
+    
     //When the alert do the fade out, the user can see the reset of
     // the form, waiting 0.75 seconds the user doesn't see that
     setTimeout(this.resetForm.bind(this), 750);
@@ -125,5 +127,17 @@ export class CreateGroupAlertComponent{
       'name': "",
       'groupType': ""
     })
+  }
+  
+  /**
+   * Do the request to create the group
+   * 
+   * @access private
+   */
+  private create(){
+    this.groupS.createGroup({
+      "name": this.createGroupForm.controls["name"].value,
+      "type": this.createGroupForm.controls["groupType"].value
+    });
   }
 }
