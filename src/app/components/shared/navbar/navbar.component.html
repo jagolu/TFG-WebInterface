@@ -29,16 +29,8 @@
               *ngFor="let group of groups"
               disabled
           >{{group.name}} 
-              <app-icon base="fas"
-                        firstIcon="fa-futbol"
-                        firstColor="#006400"
-                        *ngIf="group.type == false">
-              </app-icon>
-              <app-icon base="fas"
-                        firstIcon="fa-file-invoice"
-                        firstColor="#00008B"
-                        *ngIf="group.type == true">
-              </app-icon>    
+              <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+              <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>    
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item text-center" (click)="openCreateGroupAlert()">Create group</a>

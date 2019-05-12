@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { AlertMode } from 'src/app/models/models';
+import { AlertMode, IconModel, Icons } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
@@ -53,6 +53,14 @@ export class AlertComponent  implements AfterViewInit {
    * @var {string} title
    */
   public title:string;
+
+  /**
+   * Var to get the cross icon
+   * 
+   * @access public
+   * @var {IconModel} icon_cross
+   */
+  public icon_cross:IconModel = Icons.CROSS;
 
 
   //

@@ -18,16 +18,10 @@
     <tr *ngFor="let group of groups">
         <td class="text-center">{{ group.name }}</td>
         <td class="text-center">    
-          <app-icon   base="fas" firstIcon="fa-futbol"
-                      firstColor="#006400" *ngIf="group.type == false">
-          </app-icon>
-          <app-icon   base="fas" firstIcon="fa-file-invoice"
-                      firstColor="#00008B" *ngIf="group.type == true">
-          </app-icon>
+          <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+          <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>
           &nbsp;
-          <app-icon   base="fas" firstIcon="fa-key"
-                      firstColor="#FECA4E" *ngIf="group.password == true">
-          </app-icon>
+          <app-icon [Icon]="icon_key" *ngIf="group.password == true"></app-icon>
         </td>
         <td class="text-center">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
         <td><button class="btn btn-outline-primary w-100" *ngIf="joinGroups">Join!</button></td>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
+import { Icons } from 'src/app/models/models';
 
 @Component({
   selector: 'app-log-in',
@@ -13,6 +14,7 @@ export class LogInComponent {
 
   logInForm: FormGroup;
   passwordType: string;
+  public eye_icon = Icons.EYE_OPEN_CLOSE;
 
   constructor(private _authentication:AuthenticationService) { 
     this.passwordType = "password"

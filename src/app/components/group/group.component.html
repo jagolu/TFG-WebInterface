@@ -1,12 +1,8 @@
 <h1 class="display-4">{{groupName}}  
-    <app-icon base="fas"
-                firstIcon="fa-futbol"
-                firstColor="#006400"
+    <app-icon   [Icon]="icon_ball"
                 *ngIf="groupType == false">
     </app-icon>
-    <app-icon base="fas"
-                firstIcon="fa-file-invoice"
-                firstColor="#00008B"
+    <app-icon   [Icon]="icon_paper"
                 *ngIf="groupType == true">
     </app-icon>
 </h1>

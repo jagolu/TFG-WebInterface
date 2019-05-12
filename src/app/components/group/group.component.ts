@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupService } from 'src/app/services/restServices/group.service';
-import { GroupUser } from 'src/app/models/models';
+import { GroupUser, IconModel, Icons } from 'src/app/models/models';
 
 @Component({
   selector: 'app-group',
@@ -15,6 +15,9 @@ export class GroupComponent {
   public members:GroupUser[];
   public bets:any[];
   public role:string;
+
+  public icon_ball:IconModel = Icons.BALL;
+  public icon_paper:IconModel = Icons.PAPER;
 
 
   constructor(private aR:ActivatedRoute, private groupS:GroupService) { 

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SessionService } from 'src/app/services/userServices/session.service';
-import { Group } from 'src/app/models/models';
+import { Group, IconModel, Icons } from 'src/app/models/models';
 
 
 @Component({
@@ -14,6 +14,9 @@ export class UserGroupsComponent{
   @Input()labelled:string;
 
   public groups:Group[];
+
+  public icon_ball:IconModel = Icons.BALL;
+  public icon_paper:IconModel = Icons.PAPER;
   
   constructor(private sessionS:SessionService) { 
     this.sessionS.User.subscribe(u=>{

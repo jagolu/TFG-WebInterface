@@ -10,11 +10,9 @@
       <li class="list-group-item text-center"
           *ngFor="let member of members"
       >{{member.userName}}
-        <app-icon base="fas"
-                  firstIcon="fa-crown"
+        <app-icon [Icon]="icon_crown"
                   *ngIf="member.role=='GROUP_MAKER'"></app-icon>
-        <app-icon base="fas"
-                  firstIcon="fa-hat-wizard"
+        <app-icon [Icon]="icon_wizard"
                   *ngIf="member.role=='GROUP_ADMIN'"></app-icon>
       </li>
     </ul>

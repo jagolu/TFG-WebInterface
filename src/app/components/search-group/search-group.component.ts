@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GroupInfo } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
@@ -37,6 +37,30 @@ export class SearchGroupComponent{
    * @var {Boolean} joinGroups
    */
   public joinGroups:Boolean;
+
+  /**
+   * Var to get the ball icon
+   * 
+   * @access public
+   * @var {IconModel} icon_ball
+   */
+  public icon_ball:IconModel = Icons.BALL;
+
+  /**
+   * Var to get the paper icon
+   * 
+   * @access public
+   * @var {IconModel} icon_paper
+   */
+  public icon_paper:IconModel = Icons.PAPER;
+
+  /**
+   * Var to get the key icon
+   * 
+   * @access public
+   * @var {IconModel} icon_key
+   */
+  public icon_key:IconModel = Icons.KEY;
 
 
   //

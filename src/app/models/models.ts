@@ -14,3 +14,5 @@ export { ShopOffer } from './Shop/ShopOffer';
 export { BuyInfo } from './Shop/BuyInfo';
 export { AlertMode } from './Alerts/AlertMode';
 export { AlertInfoType } from './Alerts/AlertInfoType';
+export { Icons } from './Icons/Icon';
+export { IconModel } from './Icons/IconModel';
