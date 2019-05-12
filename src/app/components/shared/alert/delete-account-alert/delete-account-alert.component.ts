@@ -65,6 +65,9 @@ export class DeleteAccountAlertComponent{
     this._alertS.target.subscribe(
       target => this.email = target
     );
+    this._alertS.reset.subscribe(
+      reset=>{ if(reset) this.resetForm() }
+    );
   }
 
 

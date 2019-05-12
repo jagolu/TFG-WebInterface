@@ -101,6 +101,23 @@ export class AlertService {
    */
   public title = this.alertTitle.asObservable();
   
+  /**
+   * The behaviour of the trigger to reset the form of the alerts
+   * 
+   * @access private
+   * @var {BehaviorSubject<boolean>} resetForm
+   */
+  private resetForm = new BehaviorSubject<boolean>(false);
+
+  /**
+   * The filt to reset the form of the alerts
+   * at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} reset
+   */
+  public reset = this.resetForm.asObservable();
+  
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -171,6 +188,21 @@ export class AlertService {
    */
   public hideAlert(){
     (document.querySelector("#hideAlert") as HTMLElement).click();
+  }
+
+  /**
+   * Acts like a trigger to reset the form of the alerts
+   * 
+   * @access public
+   */
+  public resetForms(){
+    //First set true the rest form. The components which are
+    //subscribed will catch the 'true' and will reset the form.
+    this.resetForm.next(true);
+
+    //When all the form will be reseted (aprox 0.5 seconds) change
+    // the value to false for not being reseting all the time
+    setTimeout(()=>this.resetForm.next(false), 500);
   }
 
 
