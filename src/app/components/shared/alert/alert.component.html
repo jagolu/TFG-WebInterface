@@ -7,15 +7,22 @@
     (focusout)="focusOut()">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+        <app-icon firstIcon="fa-times-circle"
+                firstColor=#C75050 style="font-size:160%"
+                data-dismiss="modal">
+        </app-icon>
+      </div>
+
       <div class="modal-body">
         <div class="row">
           <div class="col-12">
-
             
             <app-info-alert *ngIf="mode == 'ALERTINFO'"></app-info-alert>
             <app-create-group-alert *ngIf="mode == 'CREATEGROUP'"></app-create-group-alert>
             <app-delete-account-alert *ngIf="mode == 'DELETEACCOUNT'"></app-delete-account-alert>
-
 
           </div>
         </div>

@@ -46,6 +46,14 @@ export class AlertComponent  implements AfterViewInit {
    */
   public mode:AlertMode;
 
+  /**
+   * The title of the alert
+   * 
+   * @access public
+   * @var {string} title
+   */
+  public title:string;
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -60,6 +68,9 @@ export class AlertComponent  implements AfterViewInit {
   constructor(private AlertS:AlertService) { 
     AlertS.mode.subscribe(
       mod => this.mode = mod
+    );
+    AlertS.title.subscribe(
+      alertTitle => this.title = alertTitle
     );
   }
 

@@ -23,7 +23,7 @@ export class AlertService {
    * The behaviour of the alert mode
    * 
    * @access private
-   * @var {BehaviorSubject<UserInfo>} alertMode
+   * @var {BehaviorSubject<AlertMode>} alertMode
    */
   private alertMode = new BehaviorSubject<AlertMode>(null);
 
@@ -39,7 +39,7 @@ export class AlertService {
    * The behaviour of the info-alert type
    * 
    * @access private
-   * @var {BehaviorSubject<UserInfo>} infoAlertType
+   * @var {BehaviorSubject<AlertInfoType>} infoAlertType
    */
   private infoAlertType = new BehaviorSubject<AlertInfoType>(null);
   
@@ -56,7 +56,7 @@ export class AlertService {
    * a form
    * 
    * @access private
-   * @var {BehaviorSubject<UserInfo>} formNeeded
+   * @var {BehaviorSubject<Boolean>} formNeeded
    */
   private formNeeded = new BehaviorSubject<Boolean>(false);
 
@@ -73,7 +73,7 @@ export class AlertService {
    * extra information like an email or group names
    * 
    * @access private
-   * @var {BehaviorSubject<UserInfo>} alertTarget
+   * @var {BehaviorSubject<string>} alertTarget
    */
   private alertTarget = new BehaviorSubject<string>(null);
 
@@ -84,6 +84,22 @@ export class AlertService {
    * @var {Observable} target
    */
   public target = this.alertTarget.asObservable();
+
+  /**
+   * The behaviour of the title of the alert
+   * 
+   * @access private
+   * @var {BehaviorSubject<string>} alertTitle
+   */
+  private alertTitle = new BehaviorSubject<string>("");
+
+  /**
+   * The alert title at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} title
+   */
+  public title = this.alertTitle.asObservable();
   
 
   //
@@ -112,6 +128,7 @@ export class AlertService {
    * the info alert to show the correct message
    */
   public openAlertInfo(AlertType:AlertInfoType){
+    this.setTitle("Attention!");
     this.changeAlertMode(AlertMode.ALERTINFO);
     this.infoAlertType.next(AlertType);
     this.openAlert();
@@ -124,6 +141,7 @@ export class AlertService {
    * @access public
    */
   public openCreateGroup(){
+    this.setTitle("Create group");
     this.changeAlertMode(AlertMode.CREATEGROUP);
     this.openAlert();
   }
@@ -139,6 +157,7 @@ export class AlertService {
    * to delete
    */
   public deleteAccount(needPass:boolean, email:string){
+    this.setTitle("Vas a eliminar tu cuenta de usuario. ¿Estás seguro?");
     this.changeAlertMode(AlertMode.DELETEACCOUNT);
     this.formNeeded.next(needPass);
     this.setTarget(email);
@@ -156,7 +175,7 @@ export class AlertService {
 
 
   //
-  // ──────────────────────────────────────────────────────────────────────────  ──────────
+  // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
   // ────────────────────────────────────────────────────────────────────────────────────
   //
@@ -190,5 +209,14 @@ export class AlertService {
    */
   private setTarget(target:string){
     this.alertTarget.next(target);
+  }
+
+  /**
+   * Sets the title of the alert
+   * 
+   * @param {string} title The title of the alert 
+   */
+  private setTitle(title:string){
+    this.alertTitle.next(title);
   }
 }
