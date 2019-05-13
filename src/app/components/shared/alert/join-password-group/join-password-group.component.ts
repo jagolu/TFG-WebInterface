@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons } from 'src/app/models/models';
-import { GroupService } from 'src/app/services/restServices/group.service';
-import { Router } from '@angular/router';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
-
+import { GroupService } from 'src/app/services/restServices/group.service';
 
 @Component({
-  selector: 'app-search-group',
-  templateUrl: './search-group.component.html',
+  selector: 'app-join-password-group',
+  templateUrl: './join-password-group.component.html',
   styles: []
 })
 /**
- * Class to search groups by their name
+ * Class to fill the alert with the join form
  * 
  * @class
  */
-export class SearchGroupComponent{
+export class JoinPasswordGroupComponent{
 
   //
   // ──────────────────────────────────────────────────────────────────────
@@ -24,44 +22,28 @@ export class SearchGroupComponent{
   //
   
   /**
-   * The groups which will show in the view and their info
+   * The form to join the group if it's needed
    * 
    * @access public
-   * @var {GroupInfo[]} groups
+   * @var {FormGroup} joinGroupForm
    */
-  public groups:GroupInfo[];
+  public joinGroupForm:FormGroup;
 
   /**
-   * To diferenciate the url from joinNewGroup and look groups (admin function)
+   * The filt to know if it's needed to show the password form
    * 
    * @access public
-   * @var {Boolean} joinGroups
+   * @var {Boolean} hasPassword
    */
-  public joinGroups:Boolean;
+  public hasPassword:Boolean;
 
   /**
-   * Var to get the ball icon
+   * The name of the group to join in
    * 
-   * @access public
-   * @var {IconModel} icon_ball
+   * @access private
+   * @var {string} groupName
    */
-  public icon_ball:IconModel = Icons.BALL;
-
-  /**
-   * Var to get the paper icon
-   * 
-   * @access public
-   * @var {IconModel} icon_paper
-   */
-  public icon_paper:IconModel = Icons.PAPER;
-
-  /**
-   * Var to get the key icon
-   * 
-   * @access public
-   * @var {IconModel} icon_key
-   */
-  public icon_key:IconModel = Icons.KEY;
+  private groupName:string;
 
 
   //
@@ -72,13 +54,20 @@ export class SearchGroupComponent{
   
   /**
    * @constructor
-   * @param {GroupService} groupS The service to get the groups
-   * @param {Router} route Service to know the actual url
-   * @param {AlertService} alertS The service to manage the alerts
+   * @param {AlertService} _alertS To get the alert info
+   * @param {UserService} _userS To do the user requests
    */
-  constructor(private groupS:GroupService, private route:Router, private alertS:AlertService) { 
-    this.getAllGroups();
-    this.joinGroups = route.url.includes("joinNewGroup");
+  constructor(private _alertS:AlertService, private _groupS:GroupService) { 
+    this.initializeForm();
+    this._alertS.needForm.subscribe(
+      needPassword=> this.hasPassword = needPassword
+    );
+    this._alertS.target.subscribe(
+      target => this.groupName = target
+    );
+    this._alertS.reset.subscribe(
+      reset=>{ if(reset) this.resetForm(); }
+    );
   }
 
 
@@ -89,32 +78,22 @@ export class SearchGroupComponent{
   //
   
   /**
-   * Function to search the groups by their name. If the name
-   * is null or 0-length it will find all the groups.
+   * Do the request to join in the group and close
+   * the alert
    * 
    * @access public
-   * @param {string} name The name of the groups to find 
-   * @
    */
-  public search(name:string){
-    if(name.length == 0 || name == null){
-      this.getAllGroups();
-    }
-    else{
-      this.getGroupsByName(name);
-    }
-  }
+  public joinGroup(){
+    this._alertS.hideAlert();
+    
+    //Bootstrap modal close on form submit. So, I have to
+    //show 2 modals, so first hide that and in 0.35 seconds
+    //send the petition and show the modal of the response
+    setTimeout(this.join.bind(this), 350);
 
-  /**
-   * Launch the alert to join in a group
-   * 
-   * @access public
-   * @param {string} name The name of the group 
-   * @param {boolean} needPass A filt to show or not
-   * the form 
-   */
-  public joinGroup(name:string, needPass:boolean){
-    this.alertS.joinGroup(needPass, name);
+    //When the alert do the fade out, the user can see the reset of
+    // the form, waiting 0.75 seconds the user doesn't see that
+    setTimeout(this.resetForm.bind(this), 750);
   }
 
 
@@ -125,27 +104,39 @@ export class SearchGroupComponent{
   //
   
   /**
-   * Function to get all the groups in the app and
-   * save them in the groups var
+   * Initializes the form to join the group
    * 
    * @access private
    */
-  private getAllGroups(){
-    this.groupS.getAllGroups().subscribe(
-      (ok:any) =>  this.groups = ok
-    );
+  private initializeForm(){
+    this.joinGroupForm = new FormGroup({
+      'password': new FormControl(
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(30),
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        ]
+      )
+    });
   }
 
   /**
-   * Get the groups which include the words in
-   * its name
+   * Reset the join-group form to emtpy
    * 
    * @access private
-   * @param {string} name The name of the groups to find 
    */
-  private getGroupsByName(name:string){
-    this.groupS.getGroups(name).subscribe(
-      (ok:any)=> this.groups = ok
-    );
+  private resetForm(){
+    this.joinGroupForm.reset({
+      "password" : ""
+    })
   }
+  
+  /**
+   * Do the request to remove the user account
+   * 
+   * @access private
+   */
+  private join(){
 }

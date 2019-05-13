@@ -24,6 +24,7 @@ import { ShopComponent } from './components/shop/shop.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { DeleteAccountAlertComponent } from './components/shared/alert/delete-account-alert/delete-account-alert.component';
 import { InfoAlertComponent } from './components/shared/alert/info-alert/info-alert.component';
+import { JoinPasswordGroupComponent } from './components/shared/alert/join-password-group/join-password-group.component';
 
 
 
@@ -88,7 +89,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     ShopComponent,
     AlertComponent,
     DeleteAccountAlertComponent,
-    InfoAlertComponent
+    InfoAlertComponent,
+    JoinPasswordGroupComponent
   ],
   imports: [
     BrowserModule,

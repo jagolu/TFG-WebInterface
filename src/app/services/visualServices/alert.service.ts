@@ -180,6 +180,22 @@ export class AlertService {
     this.setTarget(email);
     this.openAlert();
   }
+
+  /**
+   * Open the alert showing the join group alert
+   * with or without the form
+   * 
+   * @access public
+   * @param {boolean} needPass Filt to show the form or not 
+   * @param {string} groupName The name of the group to join in
+   */
+  public joinGroup(needPass:boolean, groupName:string){
+    this.setTitle("You are going to join at the group "+groupName);
+    this.changeAlertMode(AlertMode.JOINGROUP);
+    this.formNeeded.next(needPass);
+    this.setTarget(groupName);
+    this.openAlert();
+  }
   
   /**
    * Close the alert clicking a hide button
