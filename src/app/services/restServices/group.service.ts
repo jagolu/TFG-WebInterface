@@ -123,9 +123,6 @@ export class GroupService extends RestService{
    * make the request 
    */
   public joinGroup(joinGroupInfo:JoinGroup){
-    return this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe(
-      ok=> console.log("ok",ok)
-      ,bad=> console.log("bad", bad)
-    );
+    return this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe();
   }
 }
