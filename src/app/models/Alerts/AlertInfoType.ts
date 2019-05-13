@@ -91,5 +91,16 @@ export enum AlertInfoType{
      * @summary Success message, when someone buy a password to a
      * group and the buy was fine.
      */
-    ENABLEDGROUPPASSWORD = "ENABLEDGROUPPASSWORD"
+    ENABLEDGROUPPASSWORD = "ENABLEDGROUPPASSWORD",
+
+    /**
+     * @summary Error message, when someone tries to join in a group
+     * with an incorrect password
+     */
+    INCORRECTPASSWORDJOININGGROUP = "INCORRECTPASSWORDJOININGGROUP",
+
+    /**
+     * @summary Success message, when someone join in a group succesfully
+     */
+    SUCCESFULLJOINGROUP = "SUCCESFULLJOINGROUP"
   }

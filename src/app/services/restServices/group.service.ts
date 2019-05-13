@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup } from 'src/app/models/models';
+import { CreateGroup, JoinGroup } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 
 
@@ -113,5 +113,19 @@ export class GroupService extends RestService{
    */
   public getAllGroups(){
     return this.getRequest(this._groupPath+"GetAllGroups", null, true);
+  }
+  
+  /**
+   * Post request to join a user in a group
+   * 
+   * @access public
+   * @param {JoinGroup} joinGroupInfo The info to 
+   * make the request 
+   */
+  public joinGroup(joinGroupInfo:JoinGroup){
+    return this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe(
+      ok=> console.log("ok",ok)
+      ,bad=> console.log("bad", bad)
+    );
   }
 }

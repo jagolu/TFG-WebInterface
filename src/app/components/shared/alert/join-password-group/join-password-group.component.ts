@@ -139,4 +139,9 @@ export class JoinPasswordGroupComponent{
    * @access private
    */
   private join(){
+    this._groupS.joinGroup({
+      "groupName": this.groupName,
+      "password": this.joinGroupForm.controls["password"].value
+    });
+  }
 }

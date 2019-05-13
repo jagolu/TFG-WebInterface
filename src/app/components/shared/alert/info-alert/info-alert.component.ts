@@ -212,6 +212,21 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.INCORRECTPASSWORDJOININGGROUP:{
+        msg = [
+          "La contraseña que has introducido para unirte al grupo es incorrecta.",
+          "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.SUCCESFULLJOINGROUP:{
+        msg = [
+          "Enhorabuena, ya formas parte del grupo",
+          "Disfruta y sé respetuoso",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

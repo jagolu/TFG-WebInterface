@@ -16,3 +16,4 @@ export { AlertMode } from './Alerts/AlertMode';
 export { AlertInfoType } from './Alerts/AlertInfoType';
 export { Icons } from './Icons/Icon';
 export { IconModel } from './Icons/IconModel';
+export { JoinGroup } from './GroupManage/JoinGroup';
