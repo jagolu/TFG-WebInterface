@@ -84,7 +84,7 @@ export class SessionService {
    * @return {string} The api session token or an 0-lenght string
    * if the token doesn't exists
    */
-  public getAPIToken(){
+  public getAPIToken():string{
     try{
       return this.getSession().api_token;
     }catch(Exception){
@@ -100,11 +100,24 @@ export class SessionService {
    * @return {int} The time in miliseconds when the
    * token expires at or 0 if there is any exception
    */
-  public getExpiresAt(){
+  public getExpiresAt():number{
     try{
       return this.getSession().expires_at;
     }catch(Exception){
       return 0;
+    }
+  }
+
+  /**
+   * Gets the role of the session
+   * 
+   * @access public
+   */
+  public getRole():string{
+    try{
+      return this.getSession().role;
+    }catch(Exception){
+      return "";
     }
   }
 
@@ -114,7 +127,7 @@ export class SessionService {
    * @access public
    * @param {SessionStorage} user The info to store
    */
-  public setSession(user: SessionStorage){
+  public setSession(user: SessionStorage):void{
     sessionStorage.setItem(
       this.sessionStorageKey, JSON.stringify({
         "api_token":user.api_token,
@@ -136,7 +149,7 @@ export class SessionService {
    * @access public
    * @param {SessionStorage} user The session info 
    */
-  public renewToken(user: SessionStorage){
+  public renewToken(user: SessionStorage):void{
     this.removeSession();
     this.setSession(user);
     this.updateUser({
@@ -161,13 +174,27 @@ export class SessionService {
    * @access public
    * @param {Group} group The group to add 
    */
-  public addGroup(group:Group){
+  public addGroup(group:Group):void{
     let nowGroups:Group[] = this.getSession().groups;
     nowGroups.push(group);
     this.renewToken({
       "api_token": this.getAPIToken(),
       "role": this.getSession().role,
       "groups": nowGroups
+    });
+  }
+
+  /**
+   * Function to fully update the groups of the user
+   * 
+   * @access public
+   * @param {Group[]} groups ALL the groups of the user 
+   */
+  public updateGroups(groups:Group[]):void{
+    let role = this.getRole();
+    this.updateUser({
+      "role": role,
+      "groups": groups
     });
   }
 
@@ -180,7 +207,7 @@ export class SessionService {
    * 
    * @access public
    */
-  public removeSession(){
+  public removeSession():void{
     sessionStorage.removeItem(this.sessionStorageKey);
     this.updateUser(null);
   }
@@ -198,7 +225,7 @@ export class SessionService {
    * @access private
    * @return {Object} The session info
    */
-  private getSession(){
+  private getSession():any{
     return JSON.parse(sessionStorage.getItem(this.sessionStorageKey));
   }
 
