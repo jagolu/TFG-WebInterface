@@ -16,16 +16,16 @@
 <table class="table table-hover">
   <tbody>
     <tr *ngFor="let group of groups">
-        <td class="text-center">{{ group.name }}</td>
-        <td class="text-center">    
-          <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
-          <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>
-          &nbsp;
-          <app-icon [Icon]="icon_key" *ngIf="group.password == true"></app-icon>
-        </td>
-        <td class="text-center">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
-        <td><button class="btn btn-outline-primary w-100" *ngIf="joinGroups" (click)="joinGroup(group.name, group.password)">Join!</button></td>
-        <td><button class="btn btn-outline-primary w-100" *ngIf="!joinGroups">See</button></td>
+          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.name }}</td>
+          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">    
+            <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+            <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>
+            &nbsp;
+            <app-icon [Icon]="icon_key" *ngIf="group.password == true"></app-icon>
+          </td>
+          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="joinGroups" (click)="joinGroup(group.name, group.password)">Join!</button></td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="!joinGroups">See</button></td>
     </tr>
   </tbody>
 </table>

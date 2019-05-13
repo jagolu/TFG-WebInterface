@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons, Group } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 
 @Component({
@@ -63,6 +64,13 @@ export class SearchGroupComponent{
    */
   public icon_key:IconModel = Icons.KEY;
 
+  /**
+   * The groups which the user is joined at
+   * 
+   * @var {Group[]} userGroups
+   */
+  private userGroups:Group[];
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -75,10 +83,19 @@ export class SearchGroupComponent{
    * @param {GroupService} groupS The service to get the groups
    * @param {Router} route Service to know the actual url
    * @param {AlertService} alertS The service to manage the alerts
+   * @param {SessionService} session_s The service to get the groups
+   * at which the user is already joined
    */
-  constructor(private groupS:GroupService, private route:Router, private alertS:AlertService) { 
+  constructor(private groupS:GroupService, private route:Router, 
+              private alertS:AlertService, private session_s:SessionService) { 
     this.getAllGroups();
-    this.joinGroups = route.url.includes("joinNewGroup");
+    this.joinGroups = this.route.url.includes("joinNewGroup");
+    this.session_s.User.subscribe(
+      u => {
+        if(u != null) this.userGroups = u.groups
+        else this.userGroups = []
+      }
+    );
   }
 
 
@@ -113,8 +130,25 @@ export class SearchGroupComponent{
    * @param {boolean} needPass A filt to show or not
    * the form 
    */
-  public joinGroup(name:string, needPass:boolean){
+  public joinGroup(name:string, needPass:boolean):void{
     this.alertS.joinGroup(needPass, name);
+  }
+
+  /**
+   * Check if the user is already joined in the
+   * group
+   * 
+   * @access public
+   * @param {string} groupName The name of the group
+   * @return {boolean} True if the user is already joined
+   * in the group, false otherwise
+   */
+  public isJoinedInGroup(groupName:string):boolean{
+    let isIn = false;
+    this.userGroups.forEach(group=>{
+      if(group.name == groupName) isIn = true;
+    });
+    return isIn;
   }
 
 
