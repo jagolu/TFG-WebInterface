@@ -117,6 +117,5 @@ export class AlertComponent  implements AfterViewInit {
   public focusOut(){
     this.navbar.style.filter = "none";
     this.outlet.style.filter = "none";
-    this.AlertS.resetForms();
   }
 }

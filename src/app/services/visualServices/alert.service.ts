@@ -202,7 +202,7 @@ export class AlertService {
 
     //When all the form will be reseted (aprox 0.5 seconds) change
     // the value to false for not being reseting all the time
-    setTimeout(()=>this.resetForm.next(false), 500);
+    setTimeout(()=>{ this.resetForm.next(false); }, 500);
   }
 
 
@@ -228,6 +228,7 @@ export class AlertService {
    * @access private
    */
   private openAlert(){
+    this.resetForms();
     (document.querySelector("#openAlert") as HTMLElement).click();
   }
 
