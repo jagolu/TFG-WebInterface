@@ -22,7 +22,7 @@ export class DeleteAccountAlertComponent{
   //
   
   /**
-   * The form to delete the account if its needed
+   * The form to delete the account if it's needed
    * 
    * @access public
    * @var {FormGroup} deleteAccountForm
@@ -66,7 +66,7 @@ export class DeleteAccountAlertComponent{
       target => this.email = target
     );
     this._alertS.reset.subscribe(
-      reset=>{ if(reset) this.resetForm() }
+      reset=>{ if(reset) this.resetForm(); }
     );
   }
 
@@ -78,7 +78,8 @@ export class DeleteAccountAlertComponent{
   //
   
   /**
-   * Do the request to remove the user account
+   * Do the request to remove the user account and 
+   * close the alert
    * 
    * @access public
    */
@@ -129,8 +130,7 @@ export class DeleteAccountAlertComponent{
    */
   private resetForm(){
     this.deleteAccountForm.reset({
-      'name': "",
-      'groupType': ""
+      'password': ""
     })
   }
   
