@@ -140,7 +140,7 @@ export class CreateGroupAlertComponent{
   private create(){
     this.groupS.createGroup({
       "name": this.createGroupForm.controls["name"].value,
-      "type": this.createGroupForm.controls["groupType"].value
+      "type": this.createGroupForm.controls["groupType"].value == "true"
     });
   }
 }
