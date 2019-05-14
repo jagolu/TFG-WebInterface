@@ -46,10 +46,12 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "NotValidatedYet") this.alert.openAlertInfo(AlertInfoType.NOTVALIDATEDYET);
             else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlertInfo(AlertInfoType.SOCIALERROR);
             else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlertInfo(AlertInfoType.CANTDELETEACCOUNT);
+            else if(err.error["error"] == "LimitationSpecificCreateGroup") this.alert.openAlertInfo(AlertInfoType.LIMITATIONSPECIFICCREATEGROUP);
             else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlertInfo(AlertInfoType.LIMITATIONCREATEGROUP);
             else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlertInfo(AlertInfoType.INCORRECTOLDPASSWORD);
             else if(err.error["error"] == "ErrorBuy") this.alert.openAlertInfo(AlertInfoType.ERRORBUY);
             else if(err.error["error"] == "IncorrectPasswordJoiningGroup") this.alert.openAlertInfo(AlertInfoType.INCORRECTPASSWORDJOININGGROUP);
+            else if(err.error["error"] == "MaxGroupJoinsReached") this.alert.openAlertInfo(AlertInfoType.MAXGROUPJOINREACHED);
             else this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         }
         else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);

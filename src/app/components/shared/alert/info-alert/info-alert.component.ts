@@ -167,9 +167,17 @@ export class InfoAlertComponent {
         ];
         break;
       }
-      case AlertInfoType.LIMITATIONCREATEGROUP:{
+      case AlertInfoType.LIMITATIONSPECIFICCREATEGROUP:{
         msg = [
           "No puedes crear más grupos de este tipo.", 
+          "Si deseas crear más grupos de este tipo dirigete a la tienda.", 
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.LIMITATIONCREATEGROUP:{
+        msg = [
+          "No puedes crear más grupos de ningún tipo.", 
           "Si deseas crear más grupos dirigete a la tienda.", 
           ""
         ];
@@ -223,6 +231,14 @@ export class InfoAlertComponent {
         msg = [
           "Enhorabuena, ya formas parte del grupo",
           "Disfruta y sé respetuoso",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.MAXGROUPJOINREACHED:{
+        msg = [
+          "No puedes unirte al grupo. Has alcanzado el máximo número de grupos a los que puedes añadirte.",
+          "Salte de alguno de ellos o compra más espacios de grupo a los que unirte.",
           ""
         ];
         break;

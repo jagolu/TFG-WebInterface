@@ -64,6 +64,12 @@ export enum AlertInfoType{
      * @summary Error when the user tries to create a new group and
      * he can't create more groups of these type
      */
+    LIMITATIONSPECIFICCREATEGROUP = "LIMITATIONSPECIFICCREATEGROUP",
+
+    /**
+     * @summary Error message when the user tries to create a new group
+     * but he can't create any more group of any type. Should buy
+     */
     LIMITATIONCREATEGROUP = "LIMITATIONCREATEGROUP",
   
     /**
@@ -102,5 +108,11 @@ export enum AlertInfoType{
     /**
      * @summary Success message, when someone join in a group succesfully
      */
-    SUCCESFULLJOINGROUP = "SUCCESFULLJOINGROUP"
+    SUCCESFULLJOINGROUP = "SUCCESFULLJOINGROUP",
+
+    /**
+     * @summary Error message, when someone tries to join in a group but
+     * he is joined in his maximun number of groups
+     */
+    MAXGROUPJOINREACHED = "MAXGROUPJOINREACHED"
   }
