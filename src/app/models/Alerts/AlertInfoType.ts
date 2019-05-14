@@ -114,5 +114,10 @@ export enum AlertInfoType{
      * @summary Error message, when someone tries to join in a group but
      * he is joined in his maximun number of groups
      */
-    MAXGROUPJOINREACHED = "MAXGROUPJOINREACHED"
+    MAXGROUPJOINREACHED = "MAXGROUPJOINREACHED",
+
+    /**
+     * @summary Success message, when someone creates a new group succesfully
+     */
+    SUCCESFULLCREATEDGROUP = "SUCCESFULLCREATEDGROUP"
   }

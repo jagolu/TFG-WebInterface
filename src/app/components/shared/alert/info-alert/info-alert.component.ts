@@ -235,6 +235,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESFULLCREATEDGROUP:{
+        msg = [
+          "Enhorabuena, has create tu propio grupo.",
+          "Disfrutalo!",
+          ""
+        ];
+        break;
+      }
       case AlertInfoType.MAXGROUPJOINREACHED:{
         msg = [
           "No puedes unirte al grupo. Has alcanzado el máximo número de grupos a los que puedes añadirte.",
