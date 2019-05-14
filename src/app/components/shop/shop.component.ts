@@ -33,7 +33,7 @@ export class ShopComponent implements OnInit{
   public offers:ShopOffer[];
 
   /**
-   * All the filters to filt the offers
+   * All the filters to filter the offers
    * 
    * @access public
    * @var {string[]} filters
@@ -49,7 +49,7 @@ export class ShopComponent implements OnInit{
   public groups:Group[];
 
   /**
-   * To filt the type of offers to show in the view
+   * To filter the type of offers to show in the view
    * 
    * @access public
    * @var {string} show 
@@ -57,7 +57,7 @@ export class ShopComponent implements OnInit{
   public show: string;
 
   /**
-   * Filt to show group offers if the user has any group.
+   * Filter to show group offers if the user has any group.
    * For now, everybody can buy things for everygroup in which
    * the user is in.
    * 
@@ -145,7 +145,7 @@ export class ShopComponent implements OnInit{
    */
   private intializeShow(){
     this.show = this.aR.snapshot.paramMap.get('type');
-    let can = this.filters.some(filt => filt == this.show);
+    let can = this.filters.some(filter => filter == this.show);
     if(!can) this.router.navigate(['']);
   }
 

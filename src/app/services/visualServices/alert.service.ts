@@ -52,7 +52,7 @@ export class AlertService {
   public alertType = this.infoAlertType.asObservable();
 
   /**
-   * The behaviour of the filt for alerts which needs or not
+   * The behaviour of the filter for alerts which needs or not
    * a form
    * 
    * @access private
@@ -61,7 +61,7 @@ export class AlertService {
   private formNeeded = new BehaviorSubject<Boolean>(false);
 
   /**
-   * The filt at which the other components will subscribe at
+   * The filter at which the other components will subscribe at
    * 
    * @access public
    * @var {Observable} needForm
@@ -110,7 +110,7 @@ export class AlertService {
   private resetForm = new BehaviorSubject<boolean>(false);
 
   /**
-   * The filt to reset the form of the alerts
+   * The filter to reset the form of the alerts
    * at which the other components will subscribe at
    * 
    * @access public
@@ -168,7 +168,7 @@ export class AlertService {
    * alert with or without the form
    * 
    * @access public
-   * @param {boolean} needPass Filt to show the
+   * @param {boolean} needPass Filter to show the
    * form or not. 
    * @param {string} email The email of the account
    * to delete
@@ -186,7 +186,7 @@ export class AlertService {
    * with or without the form
    * 
    * @access public
-   * @param {boolean} needPass Filt to show the form or not 
+   * @param {boolean} needPass Filter to show the form or not 
    * @param {string} groupName The name of the group to join in
    */
   public joinGroup(needPass:boolean, groupName:string){

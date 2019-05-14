@@ -30,7 +30,7 @@ export class DeleteAccountAlertComponent{
   public deleteAccountForm:FormGroup;
 
   /**
-   * The filt to know if it's needed to show the password form
+   * The filter to know if it's needed to show the password form
    * 
    * @access public
    * @var {Boolean} hasPassword

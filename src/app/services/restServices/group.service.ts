@@ -65,7 +65,7 @@ export class GroupService extends RestService{
    */
   public createGroup(group:CreateGroup){
     return this.postRequest(group, this._groupPath+"CreateGroup").subscribe(
-      ok=> this.sessionS.addGroup({
+      _=> this.sessionS.addGroup({
         "name": group.name,
         "type": group.type
       })
