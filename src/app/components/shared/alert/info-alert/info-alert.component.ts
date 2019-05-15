@@ -237,7 +237,7 @@ export class InfoAlertComponent {
       }
       case AlertInfoType.SUCCESFULLCREATEDGROUP:{
         msg = [
-          "Enhorabuena, has create tu propio grupo.",
+          "Enhorabuena, has creado tu propio grupo.",
           "Disfrutalo!",
           ""
         ];
