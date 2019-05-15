@@ -24,9 +24,10 @@ export abstract class RestService {
    * The base url of the API Request
    * 
    * @access private
+   * @readonly
    * @var {string} __baseURL
    */
-  private __baseURL : string = URL.baseURL;
+  private readonly __baseURL : string = URL.baseURL;
 
 
   //

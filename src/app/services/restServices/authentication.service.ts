@@ -31,9 +31,10 @@ export class AuthenticationService extends RestService {
    * The base path to authorization requests
    * 
    * @access private
+   * @readonly
    * @var {string} _authPath 
    */
-  private _authPath : string = "Authorization/";
+  private readonly _authPath : string = "Authorization/";
 
 
   //

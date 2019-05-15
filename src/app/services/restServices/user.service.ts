@@ -25,9 +25,10 @@ export class UserService extends RestService{
    * The path to the user requests
    * 
    * @access private
+   * @readonly
    * @var {string} _userPath
    */
-  private _userPath : string = "User/";
+  private readonly _userPath : string = "User/";
 
 
   //

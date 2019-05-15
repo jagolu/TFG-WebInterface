@@ -22,7 +22,7 @@ export class LoadingService{
    * @access private
    * @var {HTMLElement} loading
    */
-  private loading;
+  private loading:HTMLElement;
 
   /**
    * Var to save the HTML associated to the navbar tag
@@ -30,7 +30,7 @@ export class LoadingService{
    * @access private
    * @var {HTMLElement} navbar
    */
-  private navbar;
+  private navbar:HTMLElement;
 
   /**
    * Var to save the the HTML associatedto the router-outlet tag
@@ -38,7 +38,7 @@ export class LoadingService{
    * @access private
    * @var {HTMLElement} outlet
    */
-  private outlet;
+  private outlet:HTMLElement;
 
   /**
    * Var to save if loading animation is visible or not

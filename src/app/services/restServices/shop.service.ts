@@ -25,9 +25,10 @@ export class ShopService extends RestService{
    * The path to the shop requests
    * 
    * @access private
+   * @readonly
    * @var {string} _shopPath
    */
-  private _shopPath : string = "Shop/";
+  private readonly _shopPath : string = "Shop/";
 
 
   //

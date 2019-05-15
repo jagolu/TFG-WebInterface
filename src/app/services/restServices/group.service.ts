@@ -27,9 +27,10 @@ export class GroupService extends RestService{
    * The path to the group requests
    * 
    * @access private
+   * @readonly
    * @var {string} _groupPath
    */
-  private _groupPath : string = "Group/";
+  private readonly _groupPath : string = "Group/";
 
 
   //

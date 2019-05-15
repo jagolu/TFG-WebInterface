@@ -198,10 +198,6 @@ export class SessionService {
     });
   }
 
-  // removeGroup(group:Group){
-    // TODO Implementar la funcion de borrar un grupo cuando tengamos la funcionalidad de añadir miembros y tal
-  // }
-
   /**
    * Removes the session info stored at sessionStorage
    * 
