@@ -21,7 +21,7 @@ export class ViewUserComponent implements OnInit{
           "image": user.img,
           "joinTime": user.timeSignUp,
           "hasPassword": user.password
-        })
+        });
       }
     );
   }

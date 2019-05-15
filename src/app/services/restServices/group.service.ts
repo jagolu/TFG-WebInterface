@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup } from 'src/app/models/models';
+import { CreateGroup, JoinGroup, Group } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 
 
@@ -65,10 +65,7 @@ export class GroupService extends RestService{
    */
   public createGroup(group:CreateGroup){
     return this.postRequest(group, this._groupPath+"CreateGroup").subscribe(
-      _=> this.sessionS.addGroup({
-        "name": group.name,
-        "type": group.type
-      })
+      _=> this.reloadGroups()
     );
   }
 
@@ -123,6 +120,28 @@ export class GroupService extends RestService{
    * make the request 
    */
   public joinGroup(joinGroupInfo:JoinGroup){
-    return this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe();
+    this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe(
+      _=> this.reloadGroups()
+    );
+  }
+
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Function to update the groups of the user with all the groups which the user is
+   * 
+   * @access private
+   */
+  private reloadGroups(){
+    this.getRequest(this._groupPath+"ReloadUserGroups", null, true).subscribe(
+      (groups:Group[])=>{
+        this.sessionS.updateGroups(groups);
+      }
+    );
   }
 }

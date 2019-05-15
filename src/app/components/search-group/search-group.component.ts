@@ -127,7 +127,7 @@ export class SearchGroupComponent{
    * 
    * @access public
    * @param {string} name The name of the group 
-   * @param {boolean} needPass A filt to show or not
+   * @param {boolean} needPass A filter to show or not
    * the form 
    */
   public joinGroup(name:string, needPass:boolean):void{
