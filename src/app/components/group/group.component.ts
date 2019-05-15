@@ -19,9 +19,24 @@ export class GroupComponent {
   public icon_ball:IconModel = Icons.BALL;
   public icon_paper:IconModel = Icons.PAPER;
 
+  private actualGroupUrl:string;
+
 
   constructor(private aR:ActivatedRoute, private groupS:GroupService) { 
-    this.groupName = this.aR.snapshot.paramMap.get('group');
+    this.actualGroupUrl = null;
+
+    this.aR.params.subscribe(
+      param=>{
+        if(param.group != this.actualGroupUrl){
+          this.actualGroupUrl = param.group;
+          this.groupName = this.aR.snapshot.paramMap.get('group');
+          this.getGroupInfo();
+        }
+      }
+    );
+  }
+
+  private getGroupInfo() {
     this.groupS.getPageGroup(this.groupName).subscribe(
       (ok:any)=> {
         this.groupName = ok.groupName;
