@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { GroupUser, IconModel, Icons } from 'src/app/models/models';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
   selector: 'app-group',
@@ -22,7 +23,7 @@ export class GroupComponent {
   private actualGroupUrl:string;
 
 
-  constructor(private aR:ActivatedRoute, private groupS:GroupService) { 
+  constructor(private aR:ActivatedRoute, private groupS:GroupService, private alertS:AlertService) { 
     this.actualGroupUrl = null;
 
     this.aR.params.subscribe(
@@ -35,6 +36,12 @@ export class GroupComponent {
       }
     );
   }
+
+  public createBet(){
+    if(!this.groupType) this.alertS.createVirtualBet();
+    else this.alertS.createOfficialBet();
+  }
+
 
   private getGroupInfo() {
     this.groupS.getPageGroup(this.groupName).subscribe(
