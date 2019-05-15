@@ -110,4 +110,18 @@ export class Icons{
         "firstColor": "black",
         "secondColor": "#407dbf"
     };
+
+    /**
+     * Classic user icon
+     * Black color
+     * 
+     * @static
+     */
+    static USER: IconModel = {
+        "base": "fas",
+        "firstIcon": "fa-user-alt",
+        "secondIcon": null,
+        "firstColor": "black",
+        "secondColor": null
+    };
 }
