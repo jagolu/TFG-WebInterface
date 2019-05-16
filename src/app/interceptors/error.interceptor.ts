@@ -67,6 +67,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this._router.navigate(['../logIn']);
         }
         if(err.url.includes("Authorization/Validate")) this._router.navigate(['']);
+        if(err.status == 400 && err.error["error"] == "") this._router.navigate(['']);
     }
 
 /**********************REFRESHTOKEN********************************/
