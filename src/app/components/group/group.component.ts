@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { GroupUser, IconModel, Icons } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
@@ -23,7 +23,8 @@ export class GroupComponent {
   private actualGroupUrl:string;
 
 
-  constructor(private aR:ActivatedRoute, private groupS:GroupService, private alertS:AlertService) { 
+  constructor(private aR:ActivatedRoute, private groupS:GroupService, 
+              private alertS:AlertService, private router:Router) { 
     this.actualGroupUrl = null;
 
     this.aR.params.subscribe(
@@ -45,14 +46,13 @@ export class GroupComponent {
 
   private getGroupInfo() {
     this.groupS.getPageGroup(this.groupName).subscribe(
-      (ok:any)=> {
-        this.groupName = ok.groupName;
-        this.groupType = ok.groupType;
-        this.bets = ok.bets;
-        this.members = ok.members;
-        this.role = ok.role;
-      },
-      err=>console.log(err)
+      (group:any)=> {
+        this.groupName = group.groupName;
+        this.groupType = group.groupType;
+        this.bets = group.bets;
+        this.members = group.members;
+        this.role = group.role;
+      }
     );
   }
 }

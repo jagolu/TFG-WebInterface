@@ -8,13 +8,34 @@
 >Members</button>
 <div class="collapse show" id="groupUserList">
   <ul class="list-group">
-      <li class="list-group-item text-center"
-          *ngFor="let member of members"
-      >{{member.userName}}
-        <app-icon [Icon]="icon_crown"
-                  *ngIf="member.role=='GROUP_MAKER'"></app-icon>
-        <app-icon [Icon]="icon_wizard"
-                  *ngIf="member.role=='GROUP_ADMIN'"></app-icon>
+      <div *ngFor="let member of members; let i = index">
+        <li class="list-group-item text-center">{{member.userName}}
+          <app-icon [Icon]="icon_crown" *ngIf="member.role=='GROUP_MAKER'"></app-icon>
+          <app-icon [Icon]="icon_wizard" *ngIf="member.role=='GROUP_ADMIN'"></app-icon>
+          
+          <app-icon [Icon]="icon_cog" *ngIf="user_role=='GROUP_MAKER'" class="float-right"
+                    data-toggle="collapse" [attr.href]="'#collapseGroupUsers'+i" 
+                    role="button" aria-expanded="false" [attr.aria-controls]="'collapseGroupUsers'+i"></app-icon>
+        </li>
+        
+        <div class="collapse" [id]="'collapseGroupUsers'+i" *ngIf="user_role=='GROUP_MAKER'">
+          <div class="card card-body">
+            <div class="row justify-content-center">
+              <div class="col-6">
+                <button class="btn btn-info w-100 mb-2" (click)="makeAdmin(member)">Hacer admin</button>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6">
+                  <button class="btn btn-danger w-100" (click)="kick(member)">Echar</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <li class="list-group-item text-center">
+        Tu 
+        <app-icon [Icon]="icon_user"></app-icon>
       </li>
     </ul>
 </div>
