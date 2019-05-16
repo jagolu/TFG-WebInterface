@@ -124,4 +124,18 @@ export class Icons{
         "firstColor": "black",
         "secondColor": null
     };
+
+    /**
+     * Classic cog icon
+     * Black color
+     * 
+     * @static
+     */
+    static COG: IconModel = {
+        "base": "fas",
+        "firstIcon": "fa-cog",
+        "secondIcon": null,
+        "firstColor": "black",
+        "secondColor": null
+    };
 }
