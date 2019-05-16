@@ -17,10 +17,10 @@ export class Icons{
         "base": "fas",
         "firstIcon": "fa-hat-wizard",
         "secondIcon": null,
-        "firstColor": "black",
+        "firstColor": "#3D91ED",
         "secondColor": null
     };
-    
+
     /**
      * Crown icon.
      * When an user is the maker of the group
@@ -31,7 +31,7 @@ export class Icons{
         "base": "fas",
         "firstIcon": "fa-crown",
         "secondIcon": null,
-        "firstColor": "black",
+        "firstColor": "#E7A81E",
         "secondColor": null
     };
 
