@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/restServices/user.service';
 import { UserInfoService } from 'src/app/services/userServices/user-info.service';
 import { UserInfo } from 'src/app/models/models';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 @Component({
   selector: 'app-view-user',
@@ -12,21 +13,30 @@ export class ViewUserComponent implements OnInit{
 
   public _user:UserInfo;
 
-  constructor(private _userS:UserService, private userInfoS:UserInfoService) { 
-    this._userS.getUserOptions().subscribe(
-      (user:any)=>{
-        this.userInfoS.updateInfo({
-          "email": user.email,
-          "nickname": user.nickname,
-          "image": user.img,
-          "joinTime": user.timeSignUp,
-          "hasPassword": user.password
-        });
-      }
-    );
+  public email:string;
+  public username:string;
+  public joinTime:string;
+
+  constructor(private _userS:UserService, private userInfoS:UserInfoService, 
+              private sessionS:SessionService) { 
+    this._userS.getUserOptions().subscribe((user:any)=>{
+      this.email = user.email;
+      this.joinTime = user.timeSignUp;
+
+      this.userInfoS.updateInfo({
+        "email": user.email,
+        "image": user.img,
+        "hasPassword": user.password
+      });
+    });
   }
 
   ngOnInit(){
+    this.sessionS.User.subscribe(u=>{
+      try{this.username = u.username}
+      catch(Exception){this.username = ""}
+    });
+
     this.userInfoS.info.subscribe(info =>{
       this._user = info
     });

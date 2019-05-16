@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit{
   public width:number;
   public actualGroup:string = "Groups";
   public groups:Group[];
+  public username:string;
 
   public icon_ball:IconModel = Icons.BALL;
   public icon_paper:IconModel = Icons.PAPER;
@@ -34,8 +35,14 @@ export class NavbarComponent implements OnInit{
 
   ngOnInit(){
     this.sessionS.User.subscribe(u => {
-      try{ this.groups = u.groups; }
-      catch(Exception){ this.groups = []; }
+      try{ 
+        this.groups = u.groups; 
+        this.username = u.username;
+      }
+      catch(Exception){ 
+        this.groups = []; 
+        this.username = "";
+      }
     });
     this.width = window.innerWidth;
     

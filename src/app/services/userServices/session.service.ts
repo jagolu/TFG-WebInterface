@@ -64,6 +64,7 @@ export class SessionService {
       let u = this.getSession();
       this.updateUser({
         "role": u.role,
+        "username": u.username,
         "groups": u.groups
       });
     }catch(Exception){
@@ -114,18 +115,7 @@ export class SessionService {
     }
   }
 
-  /**
-   * Gets the role of the session
-   * 
-   * @access public
-   */
-  public getRole():string{
-    try{
-      return this.getSession().role;
-    }catch(Exception){
-      return "";
-    }
-  }
+
 
   //
   // ─────────────────────────────────────────────────── SESSIONSTORAGE GETTERS ─────
@@ -147,6 +137,7 @@ export class SessionService {
       this.sessionStorageKey, JSON.stringify({
         "api_token":user.api_token,
         "role":user.role,
+        "username": user.username,
         "expires_at": this.getUTCFromNow20Min(),
         "groups": user.groups
       })
@@ -154,6 +145,7 @@ export class SessionService {
 
     this.updateUser({
       "role": user.role,
+      "username": user.username,
       "groups": user.groups
     });
   }
@@ -169,6 +161,7 @@ export class SessionService {
     this.setSession(user);
     this.updateUser({
       "role": user.role,
+      "username": user.username,
       "groups": user.groups
     });
   }
@@ -202,8 +195,25 @@ export class SessionService {
     this.renewToken({
       "api_token": this.getAPIToken(),
       "role": this.getRole(),
+      "username": this.getUsername(),
       "expires_at": this.getExpiresAt(),
       "groups": groups
+    });
+  }
+
+  /**
+   * Function to update de username of the user
+   * 
+   * @access public
+   * @param {string} username The new username of the user
+   */
+  public updateUsername(username:string):void{
+    this.renewToken({
+      "api_token": this.getAPIToken(),
+      "role": this.getRole(),
+      "username": username,
+      "expires_at": this.getExpiresAt(),
+      "groups": this.getGroups(),
     });
   }
 
@@ -252,5 +262,47 @@ export class SessionService {
    */
   private updateUser(user:Session):void{
     this.user.next(user);
+  }
+  
+  /**
+   * Gets the role of the session
+   * 
+   * @access private
+   * @return {string} The role of the user
+   */
+  private getRole():string{
+    try{
+      return this.getSession().role;
+    }catch(Exception){
+      return "";
+    }
+  }
+
+  /**
+   * Get the username of the session
+   * 
+   * @access private
+   * @return {string} The username of the user
+   */
+  private getUsername():string{
+    try{
+      return this.getSession().username;
+    }catch(Exception){
+      return "";
+    }
+  }
+
+  /**
+   * Get the groups of the user
+   * 
+   * @access private
+   * @return {Group[]} The groups of the user
+   */
+  private getGroups():Group[]{
+    try{
+      return this.getSession().groups;
+    }catch(Exception){
+      return [];
+    }
   }
 }
