@@ -9,6 +9,7 @@ import { GroupUser, IconModel, Icons } from 'src/app/models/models';
 export class GroupUsersComponent implements OnInit{
 
   @Input() members:GroupUser[];
+  @Input() showHeader:boolean=false;
   public width:number;
   public icon_crown:IconModel = Icons.CROWN;
   public icon_wizard:IconModel = Icons.WIZARD;

@@ -4,8 +4,9 @@
         data-target="#groupUserList" 
         aria-expanded="true" 
         aria-controls="groupUserList"
+        *ngIf="showHeader"
 >Members</button>
-<div class="collapse" id="groupUserList" [ngClass]="{'show': width>1200}">
+<div class="collapse show" id="groupUserList">
   <ul class="list-group">
       <li class="list-group-item text-center"
           *ngFor="let member of members"
