@@ -79,6 +79,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if(newToken){
                     this._sessionS.renewToken({
                         "api_token": newToken.api_token,
+                        "username": newToken.username,
                         "role" : newToken.role,
                         "groups" : newToken.groups
                     });
