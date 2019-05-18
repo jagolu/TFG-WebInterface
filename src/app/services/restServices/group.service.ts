@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup, Group } from 'src/app/models/models';
+import { CreateGroup, JoinGroup, GroupUserJoinedAt } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 
 
@@ -140,7 +140,7 @@ export class GroupService extends RestService{
    */
   private reloadGroups(){
     this.getRequest(this._groupPath+"ReloadUserGroups", null, true).subscribe(
-      (groups:Group[])=>{
+      (groups:GroupUserJoinedAt[])=>{
         this.sessionS.updateGroups(groups);
       }
     );

@@ -1,9 +1,9 @@
-import { Group } from '../GroupManage/Group';
+import { GroupUserJoinedAt } from '../GroupManage/GroupUserJoinedAt';
 
 export interface SessionStorage{
     api_token:string;
     role:string;
     username:string;
     expires_at?:number;
-    groups:Group[]
+    groups:GroupUserJoinedAt[]
 }

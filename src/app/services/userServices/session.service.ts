@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SessionStorage } from 'src/app/models/Identity/SessionStorage';
 import { BehaviorSubject } from 'rxjs';
-import { Session, Group } from 'src/app/models/models';
+import { Session, GroupUserJoinedAt } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -189,9 +189,9 @@ export class SessionService {
    * Function to fully update the groups of the user
    * 
    * @access public
-   * @param {Group[]} groups ALL the groups of the user 
+   * @param {GroupUserJoinedAt[]} groups ALL the groups of the user 
    */
-  public updateGroups(groups:Group[]):void{
+  public updateGroups(groups:GroupUserJoinedAt[]):void{
     this.renewToken({
       "api_token": this.getAPIToken(),
       "role": this.getRole(),
@@ -296,9 +296,9 @@ export class SessionService {
    * Get the groups of the user
    * 
    * @access private
-   * @return {Group[]} The groups of the user
+   * @return {GroupUserJoinedAt[]} The groups of the user
    */
-  private getGroups():Group[]{
+  private getGroups():GroupUserJoinedAt[]{
     try{
       return this.getSession().groups;
     }catch(Exception){

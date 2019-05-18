@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Group } from 'src/app/models/models';
+import { GroupUserJoinedAt } from 'src/app/models/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { ShopOffer } from 'src/app/models/models';
@@ -46,7 +46,7 @@ export class ShopComponent implements OnInit{
    * @access public
    * @var {Group[]} groups
    */
-  public groups:Group[];
+  public groups:GroupUserJoinedAt[];
 
   /**
    * To filter the type of offers to show in the view

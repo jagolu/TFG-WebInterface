@@ -5,7 +5,7 @@ export { ChangeUserInfo } from './UserInfo/ChangeUserInfo';
 export { DeleteUser } from './UserInfo/DeleteUser';
 export { CreateGroup } from './GroupManage/CreateGroup';
 export { SessionStorage } from './Identity/SessionStorage';
-export { Group } from './GroupManage/Group';
+export { GroupUserJoinedAt } from './GroupManage/GroupUserJoinedAt';
 export { Session } from './Identity/Session';
 export { UserInfo } from './UserInfo/UserInfo';
 export { GroupUser } from './GroupManage/GroupUser';

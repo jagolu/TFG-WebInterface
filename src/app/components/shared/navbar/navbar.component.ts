@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
-import { Group, IconModel, Icons } from 'src/app/models/models';
+import { GroupUserJoinedAt, IconModel, Icons } from 'src/app/models/models';
 import { Router, NavigationEnd } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit{
 
   public width:number;
   public actualGroup:string = "Groups";
-  public groups:Group[];
+  public groups:GroupUserJoinedAt[];
   public username:string;
 
   public icon_ball:IconModel = Icons.BALL;

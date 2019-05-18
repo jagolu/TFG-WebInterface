@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons, Group } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons, GroupUserJoinedAt } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
@@ -69,7 +69,7 @@ export class SearchGroupComponent{
    * 
    * @var {Group[]} userGroups
    */
-  private userGroups:Group[];
+  private userGroups:GroupUserJoinedAt[];
 
 
   //
