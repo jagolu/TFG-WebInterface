@@ -138,4 +138,18 @@ export class Icons{
         "firstColor": "black",
         "secondColor": null
     };
+
+    /**
+     * Icon of an "i"
+     * Black color
+     * 
+     * @static
+     */
+    static INFO: IconModel = {
+        "base": "fas",
+        "firstIcon": "fa-info-circle",
+        "secondIcon": null,
+        "firstColor": "#228BD7",
+        "secondColor": null
+    };
 }

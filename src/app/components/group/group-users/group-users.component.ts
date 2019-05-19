@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { GroupUser, IconModel, Icons } from 'src/app/models/models';
-import { SessionService } from 'src/app/services/userServices/session.service';
-import { ActivatedRoute } from '@angular/router';
+import { GroupService } from 'src/app/services/restServices/group.service';
+import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 
 @Component({
   selector: 'app-group-users',
@@ -10,33 +10,29 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GroupUsersComponent implements OnInit{
 
-  @Input() members:GroupUser[];
-  @Input() groupName:string;
-  @Input() showHeader:boolean=false;
-
   public width:number;
   public user_role:string;
   public icon_crown:IconModel = Icons.CROWN;
   public icon_wizard:IconModel = Icons.WIZARD;
   public icon_cog:IconModel = Icons.COG;
   public icon_user:IconModel = Icons.USER;
+  public icon_info:IconModel = Icons.INFO;
 
-  private actualGroupUrl:string;
+  private groupName:string;
+  public members:GroupUser[] = [];
 
-  constructor(private aR:ActivatedRoute, private _sessionS:SessionService) { 
-    this.actualGroupUrl = null;
-  }
+  constructor(private groupS:GroupService, private groupPage:GroupInfoService) { }
 
   ngOnInit(){
     this.width = window.innerWidth;
-    this.aR.params.subscribe(
-      param=>{
-        if(param.group != this.actualGroupUrl){
-          this.actualGroupUrl = param.group;
-          this.getUserRole();
-        }
+    this.groupPage.info.subscribe(page=>{
+      try{
+        this.user_role = page.role;
+        this.groupName = page.name;
+        this.members = page.members;
       }
-    )
+      catch(Error){}
+    });
   }
 
   @HostListener('window:resize', ['$event']) onResize(event) {
@@ -49,21 +45,5 @@ export class GroupUsersComponent implements OnInit{
 
   public kick(user:GroupUser){
     console.log("kick to ->"+user.userName);
-  }
-
-
-  private getUserRole(){
-    this._sessionS.User.subscribe(u=>{
-      u.groups.forEach(group => {
-        if(group.name == this.groupName){
-          this.user_role = group.role;
-        }
-      });
-    });
-    // this._sessionS.getGroups().forEach(group => {
-    //   if(group.name == this.groupName){
-    //     this.user_role = group.role;
-    //   }
-    // });
   }
 }

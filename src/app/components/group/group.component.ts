@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GroupService } from 'src/app/services/restServices/group.service';
-import { GroupUser, IconModel, Icons } from 'src/app/models/models';
+import { IconModel, Icons } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 
 @Component({
   selector: 'app-group',
@@ -11,48 +11,36 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
 })
 export class GroupComponent {
 
-  public groupName:string;
+  public groupName:string = null;
   public groupType:boolean;
-  public members:GroupUser[];
-  public bets:any[];
   public role:string;
 
   public icon_ball:IconModel = Icons.BALL;
   public icon_paper:IconModel = Icons.PAPER;
 
-  private actualGroupUrl:string;
 
-
-  constructor(private aR:ActivatedRoute, private groupS:GroupService, 
-              private alertS:AlertService, private router:Router) { 
-    this.actualGroupUrl = null;
+  constructor(private aR:ActivatedRoute, private alertS:AlertService, private groupPageS:GroupInfoService) { 
 
     this.aR.params.subscribe(
       param=>{
-        if(param.group != this.actualGroupUrl){
-          this.actualGroupUrl = param.group;
-          this.groupName = this.aR.snapshot.paramMap.get('group');
-          this.getGroupInfo();
+        if(param.group != this.groupName){
+          this.groupPageS.getGroup(param.group);
         }
       }
     );
+
+    this.groupPageS.info.subscribe(page=>{
+      try{
+        this.role = page.role;
+        this.groupName = page.name;
+        this.groupType = page.type;
+      }
+      catch(Error){}
+    });
   }
 
   public createBet(){
     if(!this.groupType) this.alertS.createVirtualBet();
     else this.alertS.createOfficialBet();
-  }
-
-
-  private getGroupInfo() {
-    this.groupS.getPageGroup(this.groupName).subscribe(
-      (group:any)=> {
-        this.groupName = group.groupName;
-        this.groupType = group.groupType;
-        this.bets = group.bets;
-        this.members = group.members;
-        this.role = group.role;
-      }
-    );
   }
 }
