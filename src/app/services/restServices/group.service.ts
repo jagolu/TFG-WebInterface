@@ -132,10 +132,7 @@ export class GroupService extends RestService{
    * @access public
    */
   public makeAdmin(order:MakeAdmin){
-    this.postRequest(order, this._groupPath+"MakeAdmin", true).subscribe(
-      ok=> console.log(ok),
-      err=> console.log(err)
-    );
+    return this.postRequest(order, this._groupPath+"MakeAdmin", true);
   }
 
 

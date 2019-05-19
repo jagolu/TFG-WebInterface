@@ -44,7 +44,9 @@ export class GroupUsersComponent implements OnInit{
       "publicid" : publicUserId,
       "groupName": this.groupName,
       "makeAdmin": true
-    });
+    }).subscribe(
+      _=> this.groupPage.getGroup(this.groupName)
+    );
   }
 
   public kick(user:GroupUser){
