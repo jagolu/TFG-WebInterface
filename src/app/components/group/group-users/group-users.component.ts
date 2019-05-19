@@ -39,8 +39,12 @@ export class GroupUsersComponent implements OnInit{
     this.width = window.innerWidth;
   }
 
-  public makeAdmin(user:GroupUser){
-    console.log("making admin to ->"+user.userName);
+  public makeAdmin(publicUserId:string){
+    this.groupS.makeAdmin({
+      "publicid" : publicUserId,
+      "groupName": this.groupName,
+      "makeAdmin": true
+    });
   }
 
   public kick(user:GroupUser){

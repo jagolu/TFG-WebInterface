@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup, GroupUserJoinedAt } from 'src/app/models/models';
+import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeAdmin } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 
 
@@ -123,6 +123,18 @@ export class GroupService extends RestService{
   public joinGroup(joinGroupInfo:JoinGroup){
     this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe(
       _=> this.reloadGroups()
+    );
+  }
+
+  /**
+   * Give to another user in a group the role of group admin
+   * 
+   * @access public
+   */
+  public makeAdmin(order:MakeAdmin){
+    this.postRequest(order, this._groupPath+"MakeAdmin", true).subscribe(
+      ok=> console.log(ok),
+      err=> console.log(err)
     );
   }
 

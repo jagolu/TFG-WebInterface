@@ -17,5 +17,6 @@ export { AlertInfoType } from './Alerts/AlertInfoType';
 export { Icons } from './Icons/Icon';
 export { IconModel } from './Icons/IconModel';
 export { JoinGroup } from './GroupManage/JoinGroup';
+export { MakeAdmin } from './GroupManage/MakeAdmin';
 export { GroupBet } from './GroupManage/GroupBet';
 export { GroupPage } from './GroupManage/GroupPage';
