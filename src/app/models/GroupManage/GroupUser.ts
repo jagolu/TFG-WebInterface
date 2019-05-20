@@ -4,4 +4,5 @@ export interface GroupUser{
     role : string;
     dateJoin : string;
     dateRole : string;
+    img: string;
 }
