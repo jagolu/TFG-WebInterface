@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { GroupUser, IconModel, Icons } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 @Component({
   selector: 'app-group-users',
@@ -19,8 +20,10 @@ export class GroupUsersComponent implements OnInit{
   public icon_info:IconModel = Icons.INFO;
   private groupName:string;
   public members:GroupUser[] = [];
+  public username:string;
 
-  constructor(private groupS:GroupService, private groupPage:GroupInfoService) { }
+  constructor(private groupS:GroupService, private groupPage:GroupInfoService,
+              private sessionS:SessionService) { }
 
   ngOnInit(){
     this.width = window.innerWidth;
@@ -32,6 +35,9 @@ export class GroupUsersComponent implements OnInit{
       }
       catch(Error){}
     });
+    this.sessionS.User.subscribe(u=>{
+      this.username = u.username
+    })
   }
 
   @HostListener('window:resize', ['$event']) onResize(event) {
