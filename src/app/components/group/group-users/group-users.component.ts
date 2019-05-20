@@ -17,7 +17,6 @@ export class GroupUsersComponent implements OnInit{
   public icon_cog:IconModel = Icons.COG;
   public icon_user:IconModel = Icons.USER;
   public icon_info:IconModel = Icons.INFO;
-
   private groupName:string;
   public members:GroupUser[] = [];
 
@@ -39,11 +38,11 @@ export class GroupUsersComponent implements OnInit{
     this.width = window.innerWidth;
   }
 
-  public makeAdmin(publicUserId:string){
+  public manageAdmin(publicUserId:string, make:boolean){
     this.groupS.makeAdmin({
       "publicid" : publicUserId,
       "groupName": this.groupName,
-      "makeAdmin": true
+      "makeAdmin": make
     }).subscribe(
       _=> this.groupPage.getGroup(this.groupName)
     );
