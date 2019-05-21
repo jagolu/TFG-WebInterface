@@ -36,7 +36,8 @@ export class GroupUsersComponent implements OnInit{
       catch(Error){}
     });
     this.sessionS.User.subscribe(u=>{
-      this.username = u.username
+      try{this.username = u.username}
+      catch(Error){}
     })
   }
 

@@ -32,7 +32,10 @@ export class UserInfoFormComponent implements OnInit {
 
   ngOnInit() {
     this.userInfoS.info.subscribe(info=> this.info = info);
-    this.sessionS.User.subscribe(u=> this.username = u.username);
+    this.sessionS.User.subscribe(u=>{
+      try{this.username = u.username}
+      catch(Error){}
+    });
     this.initializeNicknameForm();
     this.initializePasswordForm();
     this.initializeImageForm();
