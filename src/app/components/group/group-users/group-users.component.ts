@@ -55,7 +55,12 @@ export class GroupUsersComponent implements OnInit{
     );
   }
 
-  public kick(user:GroupUser){
-    console.log("kick to ->"+user.userName);
+  public kick(publicUserId:string){
+    this.groupS.kickUser({
+      "groupName": this.groupName,
+      "publicId": publicUserId
+    }).subscribe(
+      _=> this.groupPage.getGroup(this.groupName)
+    );
   }
 }

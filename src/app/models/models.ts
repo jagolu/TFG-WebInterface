@@ -20,3 +20,4 @@ export { JoinGroup } from './GroupManage/JoinGroup';
 export { MakeAdmin } from './GroupManage/MakeAdmin';
 export { GroupBet } from './GroupManage/GroupBet';
 export { GroupPage } from './GroupManage/GroupPage';
+export { KickUser } from './GroupManage/KickUser';
