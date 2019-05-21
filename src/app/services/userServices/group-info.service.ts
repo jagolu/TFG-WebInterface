@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { GroupPage, GroupUserJoinedAt } from 'src/app/models/models';
+import { GroupPage } from 'src/app/models/models';
 import { GroupService } from '../restServices/group.service';
-import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +41,8 @@ export class GroupInfoService {
    * @constructor
    * 
    * @param {GroupService} _groupS To do the request to get the group page info
-   * @param {SessionService} _sessionS To get the role of the group
    */
-  constructor(private _groupS:GroupService, private _sessionS:SessionService) { }
+  constructor(private _groupS:GroupService) { }
 
   //
   // ──────────────────────────────────────────────────────────────────────────────────
@@ -72,43 +70,13 @@ export class GroupInfoService {
    */
   public getGroup(name:string){
     this._groupS.getPageGroup(name).subscribe((group:any)=>{
-      this._sessionS.User.subscribe(u=>{
-        try{
-          this.updateInfo({
-            "name": group.groupName,
-            "type": group.groupType,
-            "role": this.getGroupRole(u.groups, group.groupName),
-            "members": group.members,
-            "bets": group.bets
-          });
-        }catch(Error){}
-      });
+        this.updateInfo({
+          "name": group.groupName,
+          "type": group.groupType,
+          "role": group.role,
+          "members": group.members,
+          "bets": group.bets
+        });
     });
-  }
-
-
-  //
-  // ────────────────────────────────────────────────────────────────────────────────────
-  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
-  // ────────────────────────────────────────────────────────────────────────────────────
-  //
-  
-  /**
-   * Funtion to get the role from a specific group
-   * 
-   * @access private
-   * @param {GroupUserJoinedAt[]} groups The groups which the user is
-   * joined at 
-   * @param {string} name The name of the group 
-   * @return {string} The role of the group
-   */
-  private getGroupRole(groups:GroupUserJoinedAt[], name:string){
-    let role = "";
-    groups.forEach(group=>{
-      if(group.name == name){
-        role = group.role;
-      }
-    });
-    return role;
   }
 }

@@ -7,5 +7,4 @@
 export interface GroupUserJoinedAt{
     name:string;
     type:boolean;
-    role:string;
 }
