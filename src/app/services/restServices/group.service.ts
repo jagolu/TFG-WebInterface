@@ -144,6 +144,15 @@ export class GroupService extends RestService{
     return this.postRequest(order, this._groupPath+"RemoveUser", true);
   }
 
+  /**
+   * Kick the user from the group
+   * 
+   * @access public
+   */
+  public blockUser(order:MakeUnmake_admin_block){
+    return this.postRequest(order, this._groupPath+"BlockUser", true);
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

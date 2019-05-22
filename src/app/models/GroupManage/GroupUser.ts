@@ -5,4 +5,6 @@ export interface GroupUser{
     dateJoin : string;
     dateRole : string;
     img: string;
+    blocked : boolean;
+    blockedBy : string;
 }

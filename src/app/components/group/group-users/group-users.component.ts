@@ -63,4 +63,14 @@ export class GroupUsersComponent implements OnInit{
       _=> this.groupPage.getGroup(this.groupName)
     );
   }
+
+  public block(publicUserId:string, block:boolean){
+    this.groupS.blockUser({
+      "groupName": this.groupName,
+      "publicid": publicUserId,
+      "make_unmake": block
+    }).subscribe(
+      _=> this.groupPage.getGroup(this.groupName)
+    );
+  }
 }
