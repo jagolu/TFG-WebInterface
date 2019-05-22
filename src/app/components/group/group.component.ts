@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IconModel, Icons } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
+import { GroupService } from 'src/app/services/restServices/group.service';
 
 @Component({
   selector: 'app-group',
@@ -19,12 +20,12 @@ export class GroupComponent {
   public icon_paper:IconModel = Icons.PAPER;
 
 
-  constructor(private aR:ActivatedRoute, private alertS:AlertService, private groupPageS:GroupInfoService) { 
+  constructor(private aR:ActivatedRoute, private alertS:AlertService, private groupPageS:GroupInfoService, private groupS:GroupService) { 
 
     this.aR.params.subscribe(
       param=>{
         if(param.group != this.groupName){
-          this.groupPageS.getGroup(param.group);
+          this.groupS.getPageGroup(param.group);
         }
       }
     );

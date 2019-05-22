@@ -50,18 +50,14 @@ export class GroupUsersComponent implements OnInit{
       "publicid" : publicUserId,
       "groupName": this.groupName,
       "make_unmake": make
-    }).subscribe(
-      _=> this.groupPage.getGroup(this.groupName)
-    );
+    });
   }
 
   public kick(publicUserId:string){
     this.groupS.kickUser({
       "groupName": this.groupName,
       "publicId": publicUserId
-    }).subscribe(
-      _=> this.groupPage.getGroup(this.groupName)
-    );
+    });
   }
 
   public block(publicUserId:string, block:boolean){
@@ -69,8 +65,6 @@ export class GroupUsersComponent implements OnInit{
       "groupName": this.groupName,
       "publicid": publicUserId,
       "make_unmake": block
-    }).subscribe(
-      _=> this.groupPage.getGroup(this.groupName)
-    );
+    });
   }
 }

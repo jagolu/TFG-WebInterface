@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { GroupPage } from 'src/app/models/models';
-import { GroupService } from '../restServices/group.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +38,8 @@ export class GroupInfoService {
   
   /**
    * @constructor
-   * 
-   * @param {GroupService} _groupS To do the request to get the group page info
    */
-  constructor(private _groupS:GroupService) { }
+  constructor() { }
 
   //
   // ──────────────────────────────────────────────────────────────────────────────────
@@ -59,24 +56,5 @@ export class GroupInfoService {
   public updateInfo(info:GroupPage){
     //Update the group page info which is at info var
     this.information.next(info);
-  }
-
-  /**
-   * Function to get the group info to fill the page and
-   * set that info on the info observable
-   * 
-   * @access public
-   * @param {string} name The name of the group
-   */
-  public getGroup(name:string){
-    this._groupS.getPageGroup(name).subscribe((group:any)=>{
-        this.updateInfo({
-          "name": group.groupName,
-          "type": group.groupType,
-          "role": group.role,
-          "members": group.members,
-          "bets": group.bets
-        });
-    });
   }
 }

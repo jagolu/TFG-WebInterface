@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser } from 'src/app/models/models';
+import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser, GroupPage } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
+import { GroupInfoService } from '../userServices/group-info.service';
 
 
 @Injectable({
@@ -46,7 +47,7 @@ export class GroupService extends RestService{
    * @param {SessionService} sessionS To get the user groups
    */
   constructor(http: HttpClient, loading: LoadingService, 
-              private sessionS:SessionService) { 
+              private sessionS:SessionService, private groupInfoS:GroupInfoService) { 
     super(http, loading);
   }
 
@@ -89,7 +90,9 @@ export class GroupService extends RestService{
    * @return {Observable} The result of the request
    */
   public getPageGroup(name:string){
-    return this.getRequest(this._groupPath+"GroupPage?groupName="+name, null);
+    this.getRequest(this._groupPath+"GroupPage?groupName="+name, null).subscribe(
+      (page:GroupPage)=> this.groupInfoS.updateInfo(page)
+    );
   }
 
   /**
@@ -132,7 +135,9 @@ export class GroupService extends RestService{
    * @access public
    */
   public makeAdmin(order:MakeUnmake_admin_block){
-    return this.postRequest(order, this._groupPath+"MakeAdmin", true);
+    this.postRequest(order, this._groupPath+"MakeAdmin", true).subscribe(
+      (page:GroupPage)=>this.groupInfoS.updateInfo(page)
+    );
   }
 
   /**
@@ -141,7 +146,9 @@ export class GroupService extends RestService{
    * @access public
    */
   public kickUser(order:KickUser){
-    return this.postRequest(order, this._groupPath+"RemoveUser", true);
+    this.postRequest(order, this._groupPath+"RemoveUser", true).subscribe(
+      (page:GroupPage)=> this.groupInfoS.updateInfo(page)
+    );
   }
 
   /**
@@ -150,7 +157,9 @@ export class GroupService extends RestService{
    * @access public
    */
   public blockUser(order:MakeUnmake_admin_block){
-    return this.postRequest(order, this._groupPath+"BlockUser", true);
+    this.postRequest(order, this._groupPath+"BlockUser", true).subscribe(
+      (page:GroupPage) => this.groupInfoS.updateInfo(page)
+    );
   }
 
 
