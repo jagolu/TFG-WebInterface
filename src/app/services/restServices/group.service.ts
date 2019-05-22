@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeAdmin, KickUser } from 'src/app/models/models';
+import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 
 
@@ -131,7 +131,7 @@ export class GroupService extends RestService{
    * 
    * @access public
    */
-  public makeAdmin(order:MakeAdmin){
+  public makeAdmin(order:MakeUnmake_admin_block){
     return this.postRequest(order, this._groupPath+"MakeAdmin", true);
   }
 

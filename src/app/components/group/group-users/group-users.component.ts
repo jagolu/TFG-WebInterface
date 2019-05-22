@@ -49,7 +49,7 @@ export class GroupUsersComponent implements OnInit{
     this.groupS.makeAdmin({
       "publicid" : publicUserId,
       "groupName": this.groupName,
-      "makeAdmin": make
+      "make_unmake": make
     }).subscribe(
       _=> this.groupPage.getGroup(this.groupName)
     );
