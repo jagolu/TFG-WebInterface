@@ -32,7 +32,7 @@
               <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
               <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>    
           </a>
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider" *ngIf="groups.length>0"></div>
           <a class="dropdown-item text-center" (click)="openCreateGroupAlert()">Create group</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item text-center" [routerLink]="['joinNewGroup']">Join group</a>
