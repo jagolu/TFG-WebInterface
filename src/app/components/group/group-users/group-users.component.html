@@ -29,7 +29,8 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ member.userName }}</h5>
                   <small class="text-muted">In the group since {{member.dateJoin | onlyDatePipe}}</small><br>
-                  <small class="text-muted">Actual role since {{member.dateRole | onlyDatePipe}}</small>
+                  <small class="text-muted" *ngIf="member.dateJoin != member.dateRole || member.role!='GROUP_NORMAL'"
+                      >Actual role since {{member.dateRole | onlyDatePipe}}</small>
                 </div>
               </div>
             </div>
