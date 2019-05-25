@@ -1,0 +1,12 @@
+<div class="card-body">
+  <h4 class="card-title">{{groupName}}</h4> 
+  <i class="card-text">Capacity: {{actualCapacity}}/{{maxCapacity}}</i>
+  <br>
+  <i class="card-text">Creation date: {{createDate | onlyDatePipe}}</i>
+  <hr>
+  <h4 class="card-title">You</h4>
+  <i class="card-text">Are joined here since {{dateJoin | onlyDatePipe}}</i>
+  <br>
+  <i class="card-text" *ngIf="dateJoin!=dateRole || role!='GROUP_NORMAL'"
+    >Are with your actual role since {{dateRole | onlyDatePipe}}</i>
+</div>

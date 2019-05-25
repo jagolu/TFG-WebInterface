@@ -27,6 +27,7 @@ import { InfoAlertComponent } from './components/shared/alert/info-alert/info-al
 import { JoinPasswordGroupComponent } from './components/shared/alert/join-password-group/join-password-group.component';
 import { CreateOfficialBetAlertComponent } from './components/shared/alert/create-official-bet-alert/create-official-bet-alert.component';
 import { CreateVirtualBetAlertComponent } from './components/shared/alert/create-virtual-bet-alert/create-virtual-bet-alert.component';
+import { GroupInfoComponent } from './components/group/group-info/group-info.component';
 
 
 // Directives
@@ -93,7 +94,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     InfoAlertComponent,
     JoinPasswordGroupComponent,
     CreateOfficialBetAlertComponent,
-    CreateVirtualBetAlertComponent
+    CreateVirtualBetAlertComponent,
+    GroupInfoComponent
   ],
   imports: [
     BrowserModule,
