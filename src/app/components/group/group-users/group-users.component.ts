@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GroupUser, IconModel, Icons } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
@@ -11,7 +11,6 @@ import { SessionService } from 'src/app/services/userServices/session.service';
 })
 export class GroupUsersComponent implements OnInit{
 
-  public width:number;
   public user_role:string;
   public icon_crown:IconModel = Icons.CROWN;
   public icon_wizard:IconModel = Icons.WIZARD;
@@ -26,7 +25,6 @@ export class GroupUsersComponent implements OnInit{
               private sessionS:SessionService) { }
 
   ngOnInit(){
-    this.width = window.innerWidth;
     this.groupPage.info.subscribe(page=>{
       try{
         this.user_role = page.role;
@@ -39,10 +37,6 @@ export class GroupUsersComponent implements OnInit{
       try{this.username = u.username}
       catch(Error){}
     })
-  }
-
-  @HostListener('window:resize', ['$event']) onResize(event) {
-    this.width = window.innerWidth;
   }
 
   public manageAdmin(publicUserId:string, make:boolean){
