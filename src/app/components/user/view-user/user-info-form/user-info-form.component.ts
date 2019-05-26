@@ -48,7 +48,6 @@ export class UserInfoFormComponent implements OnInit {
       'nickname': this.nicknameForm.controls['nickname'].value,
       "oldPassword": null,
       "newPassword":null,
-      "repeatNewPassword":null,
       "image": null
     }).subscribe(
       _=>{
@@ -64,7 +63,6 @@ export class UserInfoFormComponent implements OnInit {
       'nickname': null,
       "oldPassword": this.passwordForm.controls['oldPassword'].value,
       "newPassword":this.passwordForm.controls['newPassword'].value,
-      "repeatNewPassword":this.passwordForm.controls['repeatPassword'].value,
       "image": null
     }).subscribe(
       _=> this.reload()
@@ -81,7 +79,6 @@ export class UserInfoFormComponent implements OnInit {
         "nickname": null,
         "oldPassword": null,
         "newPassword":null,
-        "repeatNewPassword":null,
         "image": fr.result.toString()
       }).subscribe(
         _=> this.reload()
