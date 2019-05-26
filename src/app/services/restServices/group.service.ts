@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser, GroupPage } from 'src/app/models/models';
+import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser, GroupPage, ManagePassword } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 import { GroupInfoService } from '../userServices/group-info.service';
 
@@ -158,6 +158,17 @@ export class GroupService extends RestService{
    */
   public blockUser(order:MakeUnmake_admin_block){
     this.postRequest(order, this._groupPath+"BlockUser", true).subscribe(
+      (page:GroupPage) => this.groupInfoS.updateInfo(page)
+    );
+  }
+
+  /**
+   * Set a password to the group
+   * 
+   * @access public
+   */
+  public managePassword(order:ManagePassword){
+    this.postRequest(order, this._groupPath+"ManagePassword").subscribe(
       (page:GroupPage) => this.groupInfoS.updateInfo(page)
     );
   }
