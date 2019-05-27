@@ -73,7 +73,7 @@ export class AlertComponent  implements AfterViewInit {
    * @constructor
    * @param {AlertService} AlertS To get the info of the alert
    */
-  constructor(private AlertS:AlertService) { 
+  constructor(AlertS:AlertService) { 
     AlertS.mode.subscribe(
       mod => this.mode = mod
     );

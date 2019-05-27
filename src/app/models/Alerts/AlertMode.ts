@@ -39,5 +39,10 @@ export enum AlertMode{
     /**
      * @summary Alerts to create a new bet in a official group
      */
-    CREATEOFFICIALBET = "CREATEOFFICIALBET"
+    CREATEOFFICIALBET = "CREATEOFFICIALBET",
+
+    /**
+     * @summary Alerts to set a password from a social sign
+     */
+    SOCIALPASSWORD = "SOCIALPASSWORD"
 }

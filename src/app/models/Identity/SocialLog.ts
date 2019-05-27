@@ -1,5 +1,3 @@
-import { SocialType } from 'src/app/components/logSign/social-button/social-button.component';
-
 export interface SocialLog{
     authToken:string;
     email:string;
@@ -7,4 +5,10 @@ export interface SocialLog{
     id:string;
     socialProvider:SocialType;
     urlImage:string;
+    password?:string;
+}
+
+export enum SocialType{
+    GOOGLE = "GOOGLE",
+    FACEBOOK = "FACEBOOK"
 }

@@ -40,6 +40,12 @@ export enum AlertInfoType{
     WRONGEMAILORPASSWORD = "WRONGEMAILORPASSWORD",
   
     /**
+     * @summary Error message, when a user tries to log with
+     * a social media but he never did the signUp form
+     */
+    NOTSOCIALSIGNYET = "NOTSOCIALSIGNYET",
+  
+    /**
      * @summary Error when the user tries to log when an account that
      * isn't validated yet
      */

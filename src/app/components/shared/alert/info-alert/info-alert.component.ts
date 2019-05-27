@@ -136,6 +136,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.NOTSOCIALSIGNYET:{
+        msg = [
+          "El email con el que intentas loguearte no está registrado", 
+          "Registrate primero.",
+          ""
+        ];
+        break;
+      }
       case AlertInfoType.NOTVALIDATEDYET:{
         msg = [
           "El correo no se ha validado aun, revise su correo.",
