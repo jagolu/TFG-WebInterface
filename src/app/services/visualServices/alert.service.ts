@@ -182,6 +182,23 @@ export class AlertService {
   }
 
   /**
+   * Open the alert showing the delete group 
+   * alert with or without the form
+   * 
+   * @access public
+   * @param {boolean} needPass Filter to show the
+   * form or not. 
+   * @param {string} GroupName The email of the account
+   * to delete
+   */
+  public deleteGroup(groupName:string){
+    this.setTitle(`Vas a eliminar el grupo ${groupName}. ¿Estás seguro?`);
+    this.changeAlertMode(AlertMode.DELETEGROUP);
+    this.setTarget(groupName);
+    this.openAlert();
+  }
+
+  /**
    * Open the alert showing the join group alert
    * with or without the form
    * 
@@ -230,22 +247,6 @@ export class AlertService {
     (document.querySelector("#hideAlert") as HTMLElement).click();
   }
 
-  /**
-   * Acts like a trigger to reset the form of the alerts
-   * 
-   * @access public
-   */
-  public resetForms(){
-    //First set true the rest form. The components which are
-    //subscribed will catch the 'true' and will reset the form.
-    this.resetForm.next(true);
-
-    //When all the form will be reseted (aprox 0.5 seconds) change
-    // the value to false for not being reseting all the time
-    setTimeout(()=>{ this.resetForm.next(false); }, 500);
-  }
-
-
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
@@ -291,5 +292,20 @@ export class AlertService {
    */
   private setTitle(title:string){
     this.alertTitle.next(title);
+  }
+
+  /**
+   * Acts like a trigger to reset the form of the alerts
+   * 
+   * @access private
+   */
+  private resetForms(){
+    //First set true the rest form. The components which are
+    //subscribed will catch the 'true' and will reset the form.
+    this.resetForm.next(true);
+
+    //When all the form will be reseted (aprox 0.5 seconds) change
+    // the value to false for not being reseting all the time
+    setTimeout(()=>{ this.resetForm.next(false); }, 500);
   }
 }

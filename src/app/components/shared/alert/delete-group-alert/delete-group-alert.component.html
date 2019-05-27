@@ -1,0 +1,16 @@
+<form [formGroup]="deleteGroupForm">
+  <div class="form-group">
+      <input type="password" 
+            class="form-control"
+            placeholder="Your user password"
+            formControlName="password"
+            autocomplete="off">
+  </div>
+  
+
+  <button class="btn btn-danger w-100" 
+          (click)="deleteGroup()"
+          type="submit"
+          [disabled]="!deleteGroupForm.valid"
+  >Delete group</button>
+</form>

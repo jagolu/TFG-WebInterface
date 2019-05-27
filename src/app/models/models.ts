@@ -22,3 +22,4 @@ export { GroupBet } from './GroupManage/GroupBet';
 export { GroupPage } from './GroupManage/GroupPage';
 export { KickUser } from './GroupManage/KickUser';
 export { ManagePassword } from './GroupManage/ManagePassword';
+export { RemoveGroup } from './GroupManage/RemoveGroup';

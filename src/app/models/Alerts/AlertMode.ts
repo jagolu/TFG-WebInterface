@@ -22,6 +22,11 @@ export enum AlertMode{
     DELETEACCOUNT = "DELETEACCOUNT",
 
     /**
+     * @summary For alerts to show a form to delete a group
+     */
+    DELETEGROUP = "DELETEGROUP",
+
+    /**
      * @summary For alerts to join in a group
      */
     JOINGROUP = "JOINGROUP",
