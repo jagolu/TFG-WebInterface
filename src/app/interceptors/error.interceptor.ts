@@ -52,6 +52,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "ErrorBuy") this.alert.openAlertInfo(AlertInfoType.ERRORBUY);
             else if(err.error["error"] == "IncorrectPasswordJoiningGroup") this.alert.openAlertInfo(AlertInfoType.INCORRECTPASSWORDJOININGGROUP);
             else if(err.error["error"] == "MaxGroupJoinsReached") this.alert.openAlertInfo(AlertInfoType.MAXGROUPJOINREACHED);
+            else if(err.error["error"] == "EmailDontExist") this.alert.openAlertInfo(AlertInfoType.EMAILDONTEXIST);
+            else if(err.error["error"] == "CantChangePasswordToday") this.alert.openAlertInfo(AlertInfoType.CANTCHANGEPASSTODAY);
             else this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         }
         else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);

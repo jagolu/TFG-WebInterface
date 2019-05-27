@@ -119,5 +119,23 @@ export enum AlertInfoType{
     /**
      * @summary Success message, when someone creates a new group succesfully
      */
-    SUCCESFULLCREATEDGROUP = "SUCCESFULLCREATEDGROUP"
+    SUCCESFULLCREATEDGROUP = "SUCCESFULLCREATEDGROUP",
+
+    /**
+     * @summary Error message, when a user tries to remember a password in a 
+     * email which doesn't exist
+     */
+    EMAILDONTEXIST = "EMAILDONTEXIST",
+
+    /**
+     * @summary Error message, when a user tries to remember a password in a 
+     * more than once in a day
+     */
+    CANTCHANGEPASSTODAY = "CANTCHANGEPASSTODAY",
+
+    /**
+     * @summary success message, when a user tries a remember a password, this 
+     * message says that the user has an email
+     */
+    SUCCESSPASSWORDEMAIL = "SUCCESSPASSWORDEMAIL"
   }

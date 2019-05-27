@@ -251,6 +251,30 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.EMAILDONTEXIST:{
+        msg = [
+          "El email no existe.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.CANTCHANGEPASSTODAY:{
+        msg = [
+          "VirtualBet solo permite realizar la accion de recordar contraseña una vez al dia.",
+          "Prueba una vez pasadas 24 desde que hiciste la anterior solicitud.",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.SUCCESSPASSWORDEMAIL:{
+        msg = [
+          "Pronto recibirás un correo para cambiar tu contraseña actual.",
+          "No elimines el correo hasta estar seguro, ya que solo permitimos un cambio de contraseña al día.",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

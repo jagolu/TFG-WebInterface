@@ -30,6 +30,7 @@ import { CreateVirtualBetAlertComponent } from './components/shared/alert/create
 import { GroupInfoComponent } from './components/group/group-info/group-info.component';
 import { GroupSettingsComponent } from './components/group/group-settings/group-settings.component';
 import { PasswordFormComponent } from './components/group/group-settings/password-form/password-form.component';
+import { RememberPasswordFormComponent } from './components/logSign/rememberPassword/remember-password-form/remember-password-form.component';
 
 
 // Directives
@@ -99,7 +100,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     CreateVirtualBetAlertComponent,
     GroupInfoComponent,
     GroupSettingsComponent,
-    PasswordFormComponent
+    PasswordFormComponent,
+    RememberPasswordFormComponent
   ],
   imports: [
     BrowserModule,

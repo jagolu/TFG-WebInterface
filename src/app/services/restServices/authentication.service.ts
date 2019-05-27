@@ -153,6 +153,16 @@ export class AuthenticationService extends RestService {
     }, this._authPath+"Refresh");
   }
 
+  /**
+   * Remember the password associated an user
+   * The backend will send an email with a token to reset the password
+   * 
+   * @access public
+   * @param {string} email The email which password which be remembered
+   */
+  public rememberPassword(email:string){
+    this.postRequest({"email":email}, this._authPath+"RememberPassword").subscribe();
+  }
   
   //
   // ────────────────────────────────────────────────────────────────────────────────────
