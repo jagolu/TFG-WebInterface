@@ -16,10 +16,6 @@ export class EmailVerificationComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(){
-    this.checkEmail();
-  }
-
-  private checkEmail(){
     this._authS.checkEmailValidation(this.token);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'angularx-social-login';
-import { LogUser, SignUser, SocialLog } from 'src/app/models/models';
+import { LogUser, SignUser, SocialLog, ResetPassword } from 'src/app/models/models';
 import { RestService } from './rest.service';
 import { HttpClient} from '@angular/common/http';
 import { LoadingService } from 'src/app/services/visualServices/loading.service';
@@ -120,6 +120,21 @@ export class AuthenticationService extends RestService {
   }
 
   /**
+   * Check an password token
+   * 
+   * @access public
+   * @param {string} token The token associated to the user and his email
+   */
+  public checkPasswordToken(token:string){
+    this.getRequest(this._authPath+"checkPasswordToken",[
+      {
+        param: "passwordToken",
+        value: token
+      }
+    ]).subscribe();
+  }
+
+  /**
    * Signs up a new user by the form
    * 
    * @access public
@@ -162,6 +177,16 @@ export class AuthenticationService extends RestService {
    */
   public rememberPassword(email:string){
     this.postRequest({"email":email}, this._authPath+"RememberPassword").subscribe();
+  }
+
+  /**
+   * Change the password of an user account
+   * 
+   * @access public
+   * @param {ResetPassword} newPass The password token & the new password
+   */
+  public resetPassword(newPass:ResetPassword){
+    this.postRequest(newPass, this._authPath+"ResetPassword").subscribe();
   }
   
   //

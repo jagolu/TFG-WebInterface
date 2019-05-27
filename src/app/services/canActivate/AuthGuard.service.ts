@@ -22,16 +22,18 @@ export class AuthGuardService implements CanActivate{
   /**
    * The activated url paths
    * 
+   * @access public
    * @var {ActivatedRouteSnapshot[]} path
    */
-  path: ActivatedRouteSnapshot[];
+  public path: ActivatedRouteSnapshot[];
 
   /**
    * The activated url path
    * 
+   * @access public
    * @var {ActivatedRouteSnapshot} route
    */
-  route: ActivatedRouteSnapshot;
+  public route: ActivatedRouteSnapshot;
 
 
   //
@@ -71,6 +73,8 @@ export class AuthGuardService implements CanActivate{
     if(url.includes("emailVerification") && !this.authService.IsAuthenticated()) return true;
     if(url.includes("rememberPassword") && this.authService.IsAuthenticated()) return false;
     if(url.includes("rememberPassword") && !this.authService.IsAuthenticated()) return true;
+    if(url.includes("changePassword") && this.authService.IsAuthenticated()) return false;
+    if(url.includes("changePassword") && !this.authService.IsAuthenticated()) return true;
 
     return this.authService.IsAuthenticated();
   }

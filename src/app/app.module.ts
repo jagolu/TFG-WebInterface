@@ -32,6 +32,7 @@ import { GroupSettingsComponent } from './components/group/group-settings/group-
 import { PasswordFormComponent } from './components/group/group-settings/password-form/password-form.component';
 import { RememberPasswordFormComponent } from './components/logSign/rememberPassword/remember-password-form/remember-password-form.component';
 import { DeleteGroupAlertComponent } from './components/shared/alert/delete-group-alert/delete-group-alert.component'
+import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 
 
 // Directives
@@ -103,7 +104,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     GroupSettingsComponent,
     PasswordFormComponent,
     RememberPasswordFormComponent,
-    DeleteGroupAlertComponent
+    DeleteGroupAlertComponent,
+    ResetPasswordFormComponent
   ],
   imports: [
     BrowserModule,

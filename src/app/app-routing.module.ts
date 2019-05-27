@@ -15,6 +15,7 @@ import { GroupComponent } from './components/group/group.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { RememberPasswordFormComponent } from './components/logSign/rememberPassword/remember-password-form/remember-password-form.component';
+import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 
 
 
@@ -23,6 +24,7 @@ const ROUTES: Routes = [
   { path: 'signUp', component: SignUpComponent, canActivate: [AuthGuardService]},
   { path: 'logIn', component: LogInComponent, canActivate: [AuthGuardService]},
   { path: 'rememberPassword', component: RememberPasswordFormComponent, canActivate: [AuthGuardService]},
+  { path: 'changePassword/:token', component: ResetPasswordFormComponent, canActivate: [AuthGuardService]},
   { path: 'emailVerification/:token', component: EmailVerificationComponent, canActivate: [AuthGuardService]},
   { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService]},
   { path: 'group/:group', component: GroupComponent, canActivate: [AuthGuardService]},
