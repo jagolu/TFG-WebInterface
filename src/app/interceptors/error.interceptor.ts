@@ -54,8 +54,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "MaxGroupJoinsReached") this.alert.openAlertInfo(AlertInfoType.MAXGROUPJOINREACHED);
             else if(err.error["error"] == "EmailDontExist") this.alert.openAlertInfo(AlertInfoType.EMAILDONTEXIST);
             else if(err.error["error"] == "CantChangePasswordToday") this.alert.openAlertInfo(AlertInfoType.CANTCHANGEPASSTODAY);
-            else this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         }
+        else if(err.status == 400 && !err.error) this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);
         else if(err.status == 0) this.alert.openAlertInfo(AlertInfoType.LOSTCONNECTIONERROR);
         else if(err.status == 401) this.alert.openAlertInfo(AlertInfoType.SESSIONEXPIRED);
@@ -71,7 +71,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         if(err.url.includes("Authorization/Validate") || err.url.includes("Authorization/checkPasswordToken")) {
             this._router.navigate(['']);
         }
-        if(err.status == 400 && err.error["error"] == ""){
+        if(err.status == 400 && !err.error){
             this._authS.logOut();
             this._router.navigate(['../logIn']);
         }
