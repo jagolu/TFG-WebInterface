@@ -30,14 +30,6 @@ export class DeleteAccountAlertComponent{
   public deleteAccountForm:FormGroup;
 
   /**
-   * The filter to know if it's needed to show the password form
-   * 
-   * @access public
-   * @var {Boolean} hasPassword
-   */
-  public hasPassword:Boolean;
-
-  /**
    * The email of the account which will be deleted
    * 
    * @access private
@@ -59,9 +51,6 @@ export class DeleteAccountAlertComponent{
    */
   constructor(private _alertS:AlertService, private _userS:UserService) { 
     this.initializeForm();
-    this._alertS.needForm.subscribe(
-      needPassword=> this.hasPassword = needPassword
-    );
     this._alertS.target.subscribe(
       target => this.email = target
     );
