@@ -26,12 +26,9 @@ export class GroupUsersComponent implements OnInit{
 
   ngOnInit(){
     this.groupPage.info.subscribe(page=>{
-      try{
         this.user_role = page.role;
         this.groupName = page.name;
         this.members = page.members;
-      }
-      catch(Error){}
     });
     this.sessionS.User.subscribe(u=>{
       try{this.username = u.username}

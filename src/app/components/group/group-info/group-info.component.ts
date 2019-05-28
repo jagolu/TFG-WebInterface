@@ -20,19 +20,13 @@ export class GroupInfoComponent implements OnInit {
 
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
-      try{
-        this.role = page.role;
-        this.groupName = page.name;
-        this.dateJoin = page.dateJoin;
-        this.dateRole = page.dateRole;
-        this.maxCapacity = page.maxCapacity;
-        this.actualCapacity = page.actualCapacity;
-        this.createDate = page.createDate;
-      }catch(Error){ 
-        this.createDate = "";
-        this.dateJoin = "";
-        this.dateRole = "";
-      }
+      this.role = page.role;
+      this.groupName = page.name;
+      this.dateJoin = page.dateJoin;
+      this.dateRole = page.dateRole;
+      this.maxCapacity = page.maxCapacity;
+      this.actualCapacity = page.actualCapacity;
+      this.createDate = page.createDate;
     });
   }
 
