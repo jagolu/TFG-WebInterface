@@ -19,15 +19,15 @@ export class ViewUserComponent implements OnInit{
 
   constructor(private _userS:UserService, private userInfoS:UserInfoService, 
               private sessionS:SessionService) { 
+                
     this._userS.getUserOptions().subscribe((user:any)=>{
-      this.email = user.email;
-      this.joinTime = user.timeSignUp;
+        this.email = user.email;
+        this.joinTime = user.timeSignUp;      
+        this.userInfoS.updateInfo({
+          "email": user.email,
+          "image": user.img
+        });
 
-      this.userInfoS.updateInfo({
-        "email": user.email,
-        "image": user.img,
-        "hasPassword": user.password
-      });
     });
   }
 

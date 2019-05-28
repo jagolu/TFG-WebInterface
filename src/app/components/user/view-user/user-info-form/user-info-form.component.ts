@@ -95,7 +95,7 @@ export class UserInfoFormComponent implements OnInit {
   }
 
   public openAlert(){
-    this._alertS.deleteAccount(this.info.hasPassword, this.info.email);
+    this._alertS.deleteAccount(this.info.email);
   }
 
   public loadFile(event){
@@ -141,8 +141,7 @@ export class UserInfoFormComponent implements OnInit {
       (user:any)=>{
         this.userInfoS.updateInfo({
           "email": user.email,
-          "image": user.img,
-          "hasPassword": user.password
+          "image": user.img
         })
       }
     );

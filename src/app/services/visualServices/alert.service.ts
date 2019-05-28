@@ -173,10 +173,9 @@ export class AlertService {
    * @param {string} email The email of the account
    * to delete
    */
-  public deleteAccount(needPass:boolean, email:string){
+  public deleteAccount(email:string){
     this.setTitle("Vas a eliminar tu cuenta de usuario. ¿Estás seguro?");
     this.changeAlertMode(AlertMode.DELETEACCOUNT);
-    this.formNeeded.next(needPass);
     this.setTarget(email);
     this.openAlert();
   }
