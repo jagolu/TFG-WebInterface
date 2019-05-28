@@ -283,6 +283,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESFULLGROUPREMOVED:{
+        msg = [
+          "Tu grupo se eliminó correctamente.",
+          "",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

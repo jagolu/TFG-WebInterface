@@ -180,7 +180,7 @@ export class GroupService extends RestService{
    */
   public removeGroup(order:RemoveGroup){
     this.postRequest(order, this._groupPath+"RemoveGroup").subscribe(
-      ok=> console.log(ok)
+      _=> this.reloadGroups()
     );
   }
 

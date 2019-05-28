@@ -143,5 +143,10 @@ export enum AlertInfoType{
      * @summary success message, when a user tries a remember a password, this 
      * message says that the user has an email
      */
-    SUCCESSPASSWORDEMAIL = "SUCCESSPASSWORDEMAIL"
+    SUCCESSPASSWORDEMAIL = "SUCCESSPASSWORDEMAIL",
+
+    /**
+     * @summary success message, when a removes a group
+     */
+    SUCCESFULLGROUPREMOVED = "SUCCESFULLGROUPREMOVED"
   }

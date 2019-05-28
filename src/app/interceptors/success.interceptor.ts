@@ -56,6 +56,7 @@ export class SuccessInterceptor implements HttpInterceptor {
             if(ok.body.success == "SuccesfullJoinGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLJOINGROUP);
             if(ok.body.success == "SuccesfullCreatedGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCREATEDGROUP);
             if(ok.body.success == "SucessFullPasswordEmail") this.alert.openAlertInfo(AlertInfoType.SUCCESSPASSWORDEMAIL);
+            if(ok.body.success == "SuccesfullGroupRemoved") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPREMOVED);
         }
         else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlertInfo(AlertInfoType.VERIFICATIONSENT);
         else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlertInfo(AlertInfoType.DELETEDACCOUNT);
@@ -65,7 +66,8 @@ export class SuccessInterceptor implements HttpInterceptor {
     
     private successRedirect(url:string){
         if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
-        if(url.includes("User/DeleteAccount")) this._router.navigate(['']);
-        if(url.includes("Authorization/ResetPassword")) this._router.navigate(['logIn']);
+        else if(url.includes("User/DeleteAccount")) this._router.navigate(['']);
+        else if(url.includes("Authorization/ResetPassword")) this._router.navigate(['logIn']);
+        else if(url.includes("Group/RemoveGroup")) this._router.navigate(['']);
     }
 }
