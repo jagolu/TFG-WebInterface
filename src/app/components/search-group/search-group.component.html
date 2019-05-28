@@ -24,7 +24,10 @@
             <app-icon [Icon]="icon_key" *ngIf="group.password == true"></app-icon>
           </td>
           <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
-          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="joinGroups" (click)="joinGroup(group.name, group.password)">Join!</button></td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
+                  (click)="joinGroup(group.name, group.password)">Join!</button></td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped>=group.totalPlaces" 
+                  disabled>Full!</button></td>
           <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="!joinGroups">See</button></td>
     </tr>
   </tbody>
