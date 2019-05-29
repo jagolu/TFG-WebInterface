@@ -148,5 +148,10 @@ export enum AlertInfoType{
     /**
      * @summary success message, when a removes a group
      */
-    SUCCESFULLGROUPREMOVED = "SUCCESFULLGROUPREMOVED"
+    SUCCESFULLGROUPREMOVED = "SUCCESFULLGROUPREMOVED",
+
+    /**
+     * @summary Success message, when a user leaves a group
+     */
+    SUCCESFULLGROUPLEAVE = "SUCCESFULLGROUPLEAVE"
   }

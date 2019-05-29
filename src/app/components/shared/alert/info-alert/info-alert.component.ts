@@ -291,6 +291,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESFULLGROUPLEAVE:{
+        msg = [
+          "Ya no formas parte del grupo.",
+          "",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

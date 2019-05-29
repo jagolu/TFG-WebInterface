@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
+import { GroupService } from 'src/app/services/restServices/group.service';
 
 @Component({
   selector: 'app-group-info',
@@ -16,7 +17,7 @@ export class GroupInfoComponent implements OnInit {
   public createDate:string;
   public role:string;
 
-  constructor(private groupPage:GroupInfoService) { }
+  constructor(private groupPage:GroupInfoService, private groupS:GroupService) { }
 
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
@@ -32,4 +33,7 @@ export class GroupInfoComponent implements OnInit {
     });
   }
 
+  public leaveGroup(){
+    this.groupS.leaveGroup(this.groupName);
+  }
 }

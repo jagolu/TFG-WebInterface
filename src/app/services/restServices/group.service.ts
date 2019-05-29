@@ -128,6 +128,18 @@ export class GroupService extends RestService{
       _=> this.reloadGroups()
     );
   }
+ 
+  /**
+   * Get request for a user leaves a group
+   * 
+   * @access public
+   * @param {string} groupName The name of the group
+   */
+  public leaveGroup(groupName:string){
+    this.getRequest(this._groupPath+"LeaveGroup?groupName="+groupName, null).subscribe(
+      _=> this.reloadGroups()
+    );
+  }
 
   /**
    * Give to another user in a group the role of group admin
