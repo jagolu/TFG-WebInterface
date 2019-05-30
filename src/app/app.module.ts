@@ -25,8 +25,6 @@ import { AlertComponent } from './components/shared/alert/alert.component';
 import { DeleteAccountAlertComponent } from './components/shared/alert/delete-account-alert/delete-account-alert.component';
 import { InfoAlertComponent } from './components/shared/alert/info-alert/info-alert.component';
 import { JoinPasswordGroupComponent } from './components/shared/alert/join-password-group/join-password-group.component';
-import { CreateOfficialBetAlertComponent } from './components/shared/alert/create-official-bet-alert/create-official-bet-alert.component';
-import { CreateVirtualBetAlertComponent } from './components/shared/alert/create-virtual-bet-alert/create-virtual-bet-alert.component';
 import { GroupInfoComponent } from './components/group/group-info/group-info.component';
 import { GroupSettingsComponent } from './components/group/group-settings/group-settings.component';
 import { PasswordFormComponent } from './components/group/group-settings/password-form/password-form.component';
@@ -99,8 +97,6 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     DeleteAccountAlertComponent,
     InfoAlertComponent,
     JoinPasswordGroupComponent,
-    CreateOfficialBetAlertComponent,
-    CreateVirtualBetAlertComponent,
     GroupInfoComponent,
     GroupSettingsComponent,
     PasswordFormComponent,

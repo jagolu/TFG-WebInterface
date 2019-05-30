@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IconModel, Icons } from 'src/app/models/models';
-import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { GroupService } from 'src/app/services/restServices/group.service';
 
@@ -20,7 +19,8 @@ export class GroupComponent {
   public icon_paper:IconModel = Icons.PAPER;
 
 
-  constructor(private aR:ActivatedRoute, private alertS:AlertService, private groupPageS:GroupInfoService, private groupS:GroupService) { 
+  constructor(private aR:ActivatedRoute, private groupPageS:GroupInfoService, 
+    private groupS:GroupService) { 
 
     this.aR.params.subscribe(
       param=>{
@@ -41,7 +41,5 @@ export class GroupComponent {
   }
 
   public createBet(){
-    if(!this.groupType) this.alertS.createVirtualBet();
-    else this.alertS.createOfficialBet();
   }
 }

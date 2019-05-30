@@ -32,16 +32,6 @@ export enum AlertMode{
     JOINGROUP = "JOINGROUP",
 
     /**
-     * @summary Alerts to create a new bet in a virtual group
-     */
-    CREATEVIRTUALBET = "CREATEVIRTUALBET",
-
-    /**
-     * @summary Alerts to create a new bet in a official group
-     */
-    CREATEOFFICIALBET = "CREATEOFFICIALBET",
-
-    /**
      * @summary Alerts to set a password from a social sign
      */
     SOCIALPASSWORD = "SOCIALPASSWORD"

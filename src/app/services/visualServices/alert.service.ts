@@ -226,30 +226,6 @@ export class AlertService {
     this.setTarget(groupName);
     this.openAlert();
   }
-
-  /**
-   * Open the alert showing the form to create a 
-   * new virtual bet
-   * 
-   * @access public
-   */
-  public createVirtualBet(){
-    this.setTitle("Create a new virtual bet");
-    this.changeAlertMode(AlertMode.CREATEVIRTUALBET);
-    this.openAlert();
-  }
-
-  /**
-   * Open the alert showing the form to create a 
-   * new official bet
-   * 
-   * @access public
-   */
-  public createOfficialBet(){
-    this.setTitle("Create a new official bet");
-    this.changeAlertMode(AlertMode.CREATEOFFICIALBET);
-    this.openAlert();
-  }
   
   /**
    * Close the alert clicking a hide button
