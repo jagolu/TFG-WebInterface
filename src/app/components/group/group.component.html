@@ -32,6 +32,7 @@
 <div class="tab-content">
     <div class="tab-pane fade show active" id="nav_group_bets" role="tabpanel" aria-labelledby="nav_group_bets_tab">
         <button class="btn btn-outline-info w-100 mb-3" *ngIf="role=='GROUP_MAKER'" (click)="createBet()">Crear apuesta</button>
+                    <app-football-bet></app-football-bet>
         <app-group-bet></app-group-bet>
     </div>
     <div class="tab-pane fade" id="nav_group_members" role="tabpanel" aria-labelledby="nav_group_members_tab">
