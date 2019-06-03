@@ -32,6 +32,7 @@ import { RememberPasswordFormComponent } from './components/logSign/rememberPass
 import { DeleteGroupAlertComponent } from './components/shared/alert/delete-group-alert/delete-group-alert.component'
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 import { SocialSignPasswordComponent } from './components/shared/alert/social-sign-password/social-sign-password.component';
+import { FootballBetComponent } from './components/bet/create/football-bet/football-bet.component';
 
 
 // Directives
@@ -103,7 +104,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     RememberPasswordFormComponent,
     DeleteGroupAlertComponent,
     ResetPasswordFormComponent,
-    SocialSignPasswordComponent
+    SocialSignPasswordComponent,
+    FootballBetComponent
   ],
   imports: [
     BrowserModule,

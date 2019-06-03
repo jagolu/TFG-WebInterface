@@ -1,0 +1,78 @@
+<select class="form-control">
+  <option selected disabled value="">Select a competition</option>
+  <option *ngFor="let bet of bets; let i = index" 
+      (click)="selectCompetition(i)">{{bet.competition}}</option>
+</select>
+
+
+<div class="collapse mt-2" id="newBet_competitionMatches">
+    <div class="row">
+      <div class="col-lg-7 col-12 mb-2">
+        <select class="form-control" id="newBet_competitionMatches_select">
+          <option selected disabled value="" >Select a match</option>
+          <option value="{{i}}" *ngFor="let match of matches; let i = index"
+            (click)="selectMatchDay(i)"
+            >{{match.homeTeam}} <small>vs</small> {{match.awayTeam}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
+        </select>      
+      </div>
+      <div class="col-lg-3 col-12">
+        <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch">
+            <option selected disabled value="" >Bet type</option>
+            <option value="allowedBet" (click)="selectedBet=true; getExplainBetType(allowedBet)"
+              *ngFor="let allowedBet of allowedBets">{{allowedBet}}</option>
+        </select>
+      </div>      
+      <div class="col-lg-2 col-12">
+        <select class="form-control" *ngIf="selectedBet">
+            <option selected disabled value="" >Prize type</option>
+            <option value="exactBet" (click)="selectedPrice=true; getExplainPriceType('exactBet')">Exact bet</option> 
+            <option value="closerBet" (click)="selectedPrice=true; getExplainPriceType('closerBet')">Closer bet</option> 
+        </select>
+      </div>     
+    </div>
+    <div class="row mt-2" *ngIf="selectedBet || selectedPrice">
+      <div class="col-lg-7 col-12">
+        <form [formGroup]="betForm" (ngSubmit)="makeBet()" *ngIf="selectedBet && selectedPrice">
+          <div class="form-group row">
+            <label class="col-form-label col-lg-4 col-12">Min and max bet</label>
+            <div class="col-lg-4 col-6">
+              <select class="form-control" formControlName="minBet" id="minBet">
+                <option selected disabled value="0" >Select a min bet</option>
+                <option value={{min}} *ngFor="let min of mins" (click)="setMaxBet()">{{min}}</option>
+              </select>
+            </div>
+            <div class="col-lg-4 col-6">
+              <select class="form-control" formControlName="maxBet" id="maxBet">
+                <option selected disabled value="0" >Select a max bet</option>
+                <option value="10001">Without max</option>
+                <option value={{max}} *ngFor="let max of maxs" (click)="setMinBet()">{{max}}</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-outline-dark w-100" type="submit" [disabled]="!betForm.valid">Launch Bet</button>
+        </form>
+      </div>
+      <div class="col-lg-3 col-12" *ngIf="selectedBet">
+        <div class="card card-body">
+          <p class="card-text">{{explanationBetType}}</p>
+        </div>
+      </div>
+      <div class="col-lg-2 col-12" *ngIf="selectedPrice">
+        <div class="card card-body">
+          <p class="card-text">{{explanationPriceType}}</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<button class="btn btn-primary" 
+        type="button" data-toggle="collapse" 
+        data-target="#newBet_competitionMatches" 
+        aria-expanded="false" 
+        aria-controls="newBet_competitionMatches"
+        style="display:none"
+        id="newBet_competitionMatches_button">
+  InvisibleButton to launch the collapse 
+  of choose a matchday in a specific competition
+</button>

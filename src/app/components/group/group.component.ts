@@ -19,8 +19,7 @@ export class GroupComponent {
   public icon_paper:IconModel = Icons.PAPER;
 
 
-  constructor(private aR:ActivatedRoute, private groupPageS:GroupInfoService, 
-    private groupS:GroupService) { 
+  constructor(private aR:ActivatedRoute, private groupPageS:GroupInfoService, private groupS:GroupService) { 
 
     this.aR.params.subscribe(
       param=>{
@@ -38,8 +37,5 @@ export class GroupComponent {
       }
       catch(Error){}
     });
-  }
-
-  public createBet(){
   }
 }
