@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o --ssl true --ssl-cert \"C:\\Users\\Javi\\Documentos\\sslCert\\example.crt\" --ssl-key \"C:\\Users\\Javi\\Documentos\\sslCert\\example.key\"",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
