@@ -1,0 +1,34 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th class="text-center">Search a group</th>
+      <th ></th>
+      <th >
+          <input  class="form-control form-control-sm" 
+                  type="search" 
+                  placeholder="Search group" 
+                  #groupname 
+                  (keyup)="search(groupname.value)">
+      </th>
+    </tr>
+  </thead>
+</table>
+<table class="table table-hover">
+  <tbody>
+    <tr *ngFor="let group of groups">
+          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.name }}</td>
+          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">    
+            <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+            <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>
+            &nbsp;
+            <app-icon [Icon]="icon_key" *ngIf="group.password == true"></app-icon>
+          </td>
+          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
+                  (click)="joinGroup(group.name, group.password)">Join!</button></td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped>=group.totalPlaces" 
+                  disabled>Full!</button></td>
+          <td *ngIf="!isJoinedInGroup(group.name)"><button class="btn btn-outline-primary w-100" *ngIf="!joinGroups">See</button></td>
+    </tr>
+  </tbody>
+</table>

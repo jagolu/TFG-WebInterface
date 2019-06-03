@@ -1,24 +1,70 @@
 import { Injectable } from '@angular/core';
-import { SessionStorage } from 'src/app/models/SessionStorage';
+import { SessionStorage } from 'src/app/models/Identity/SessionStorage';
 import { BehaviorSubject } from 'rxjs';
-import { Session, Group } from 'src/app/models/models';
+import { Session, GroupUserJoinedAt } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service to manage the user session
+ * 
+ * @class
+ */
 export class SessionService {
 
-  private sessionStorageKey = "session";
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * The key with which the info will be saved
+   * in the sessionStorage
+   * 
+   * @access private
+   * @readonly
+   * @var {string} sessionStorageKey
+   */
+  private readonly sessionStorageKey = "session";
+
+  /**
+   * The var to save the sessionStorage info
+   * 
+   * @access private
+   * @var {BehaviorSubject<Session>} user
+   */
   private user = new BehaviorSubject<Session>(null);
 
+  /**
+   * The var at which other components will subscribe to
+   * get the user info
+   * 
+   * @access public
+   * @var {Observable} User
+   */
   public User = this.user.asObservable();
 
 
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Tries to update a session if the user token is still valid
+   * else, set a null value at the sessionStorage
+   * 
+   * @constructor
+   */
   constructor() { 
     try{
       let u = this.getSession();
       this.updateUser({
         "role": u.role,
+        "username": u.username,
         "groups": u.groups
       });
     }catch(Exception){
@@ -27,7 +73,25 @@ export class SessionService {
   }
 
 
-  public getAPIToken(){
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+  
+
+  //
+  // ─── SESSIONSTORAGE GETTERS ─────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Gets the API Session Token
+   * 
+   * @access public
+   * @return {string} The api session token or an 0-lenght string
+   * if the token doesn't exists
+   */
+  public getAPIToken():string{
     try{
       return this.getSession().api_token;
     }catch(Exception){
@@ -35,8 +99,15 @@ export class SessionService {
     }
   }
 
-
-  public getExpiresAt(){
+  /**
+   * Get the time in miliseconds that the token
+   * will expires at
+   * 
+   * @access public 
+   * @return {int} The time in miliseconds when the
+   * token expires at or 0 if there is any exception
+   */
+  public getExpiresAt():number{
     try{
       return this.getSession().expires_at;
     }catch(Exception){
@@ -45,11 +116,28 @@ export class SessionService {
   }
 
 
-  setSession(user: SessionStorage){
+
+  //
+  // ─────────────────────────────────────────────────── SESSIONSTORAGE GETTERS ─────
+  //
+
+
+  //
+  // ─── SESSION MANAGEMENT ─────────────────────────────────────────────────────────
+  //  
+
+  /**
+   * Sets the session info at the sessionStorage
+   * 
+   * @access public
+   * @param {SessionStorage} user The info to store
+   */
+  public setSession(user: SessionStorage):void{
     sessionStorage.setItem(
       this.sessionStorageKey, JSON.stringify({
         "api_token":user.api_token,
         "role":user.role,
+        "username": user.username,
         "expires_at": this.getUTCFromNow20Min(),
         "groups": user.groups
       })
@@ -57,47 +145,105 @@ export class SessionService {
 
     this.updateUser({
       "role": user.role,
+      "username": user.username,
       "groups": user.groups
     });
   }
 
-  renewToken(user: SessionStorage){
+  /**
+   * Renew an existing token 
+   * 
+   * @access public
+   * @param {SessionStorage} user The session info 
+   */
+  public renewToken(user: SessionStorage):void{
     this.removeSession();
     this.setSession(user);
     this.updateUser({
       "role": user.role,
+      "username": user.username,
       "groups": user.groups
     });
   }
 
-  updateUser(u:Session):void{
-    this.user.next(u);
-  }
-
-  addGroup(group:Group){
-    let nowGroups:Group[] = this.getSession().groups;
-    nowGroups.push(group);
-    this.renewToken({
-      "api_token": this.getAPIToken(),
-      "role": this.getSession().role,
-      "groups": nowGroups
-    });
-  }
-
-  // removeGroup(group:Group){
-  //   //TODO
-  // }
-
-  public removeSession(){
+  /**
+   * Removes the session info stored at sessionStorage
+   * 
+   * @access public
+   */
+  public removeSession():void{
     sessionStorage.removeItem(this.sessionStorageKey);
     this.updateUser(null);
   }
 
-  /*---------------Private functions------------------- */
-  private getSession(){
+  //
+  // ─────────────────────────────────────────────────────── SESSION MANAGEMENT ─────
+  //
+
+
+  //
+  // ─── USERSESSION MANAGEMENT ─────────────────────────────────────────────────────
+  //
+
+  /**
+   * Function to fully update the groups of the user
+   * 
+   * @access public
+   * @param {GroupUserJoinedAt[]} groups ALL the groups of the user 
+   */
+  public updateGroups(groups:GroupUserJoinedAt[]):void{
+    this.renewToken({
+      "api_token": this.getAPIToken(),
+      "role": this.getRole(),
+      "username": this.getUsername(),
+      "expires_at": this.getExpiresAt(),
+      "groups": groups
+    });
+  }
+
+  /**
+   * Function to update de username of the user
+   * 
+   * @access public
+   * @param {string} username The new username of the user
+   */
+  public updateUsername(username:string):void{
+    this.renewToken({
+      "api_token": this.getAPIToken(),
+      "role": this.getRole(),
+      "username": username,
+      "expires_at": this.getExpiresAt(),
+      "groups": this.getGroups(),
+    });
+  }
+
+  //
+  // ─────────────────────────────────────────────────── USERSESSION MANAGEMENT ─────
+  //  
+
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Gets the session info stored in the sessionStorage
+   * 
+   * @access private
+   * @return {Object} The session info
+   */
+  private getSession():SessionStorage{
     return JSON.parse(sessionStorage.getItem(this.sessionStorageKey));
   }
 
+  /**
+   * Get the time in miliseconds from now to 20 mins later
+   * 
+   * @access private
+   * @return {int} The time in miliseconds from now to 20 mins later
+   */
   private getUTCFromNow20Min():number{
     return Date.UTC(
       new Date().getUTCFullYear(),
@@ -106,5 +252,57 @@ export class SessionService {
       new Date().getUTCHours(),
       new Date().getUTCMinutes()+20
     );
+  }
+
+  /**
+   * Update the session of an user
+   * 
+   * @access private
+   * @param {Session} user The session info to update 
+   */
+  private updateUser(user:Session):void{
+    this.user.next(user);
+  }
+  
+  /**
+   * Gets the role of the session
+   * 
+   * @access private
+   * @return {string} The role of the user
+   */
+  private getRole():string{
+    try{
+      return this.getSession().role;
+    }catch(Exception){
+      return "";
+    }
+  }
+
+  /**
+   * Get the username of the session
+   * 
+   * @access private
+   * @return {string} The username of the user
+   */
+  private getUsername():string{
+    try{
+      return this.getSession().username;
+    }catch(Exception){
+      return "";
+    }
+  }
+
+  /**
+   * Get the groups of the user
+   * 
+   * @access private
+   * @return {GroupUserJoinedAt[]} The groups of the user
+   */
+  private getGroups():GroupUserJoinedAt[]{
+    try{
+      return this.getSession().groups;
+    }catch(Exception){
+      return [];
+    }
   }
 }

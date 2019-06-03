@@ -6,13 +6,64 @@ import { AuthenticationService } from '../restServices/authentication.service';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service to ban a user to a route
+ * 
+ * @class 
+ */
 export class AuthGuardService implements CanActivate{
-  path: ActivatedRouteSnapshot[];
-  route: ActivatedRouteSnapshot;
+  
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * The activated url paths
+   * 
+   * @access public
+   * @var {ActivatedRouteSnapshot[]} path
+   */
+  public path: ActivatedRouteSnapshot[];
 
+  /**
+   * The activated url path
+   * 
+   * @access public
+   * @var {ActivatedRouteSnapshot} route
+   */
+  public route: ActivatedRouteSnapshot;
+
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {AuthenticationService} authService 
+   * @param {Router} router 
+   */
   constructor(private authService:AuthenticationService, private router:Router) { }
 
-  canActivate(next:ActivatedRouteSnapshot){
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Check if an user can access to a especific uri
+   * 
+   * @access public
+   * @param {ActivatedRouteSnapshot} next The url the user is trying to access
+   * @return {Boolean} True if the user is authenticated, false otherwise
+   */
+  public canActivate(next:ActivatedRouteSnapshot){
     let url = next.url.toString();
     if(url.includes("signUp") && this.authService.IsAuthenticated()) return false;
     if(url.includes("signUp") && !this.authService.IsAuthenticated()) return true;
@@ -20,6 +71,11 @@ export class AuthGuardService implements CanActivate{
     if(url.includes("logIn") && !this.authService.IsAuthenticated()) return true;
     if(url.includes("emailVerification") && this.authService.IsAuthenticated()) return false;
     if(url.includes("emailVerification") && !this.authService.IsAuthenticated()) return true;
+    if(url.includes("rememberPassword") && this.authService.IsAuthenticated()) return false;
+    if(url.includes("rememberPassword") && !this.authService.IsAuthenticated()) return true;
+    if(url.includes("changePassword") && this.authService.IsAuthenticated()) return false;
+    if(url.includes("changePassword") && !this.authService.IsAuthenticated()) return true;
+
     return this.authService.IsAuthenticated();
   }
 }

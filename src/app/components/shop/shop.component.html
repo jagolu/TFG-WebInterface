@@ -1,0 +1,72 @@
+<h1 class="display-4">Shop</h1>
+<div class="row">
+  <div class="col-xl-10  col-sm-12 mb-4">
+    <div class="accordion" id="shopOfferts">
+      <div *ngFor="let offer of offers; let i = index">
+        <div class="card" style="cursor: default" *ngIf="(offer.type==show || show=='All') && ((showGroups && offer.type == 'Group') || offer.type != 'Group' )">
+          <div class="card-header" 
+              id="headingShopItem{{i}}" 
+              data-toggle="collapse" 
+              [attr.data-target]="'#collapseShopItem'+i" 
+              aria-expanded="false" 
+              [attr.aria-controls]="'#collapseShopItem'+i">
+            <div class="row">
+              <div class="col-xl-11 col-sm-8">
+                <h3>{{offer.title}}</h3>
+              </div>
+              <div class="col-xl-1 col-sm-2 text-right">
+                <small class="font-italic">{{offer.price}}€</small>
+              </div>
+            </div>
+          </div>
+
+          <div id="collapseShopItem{{i}}" 
+              class="collapse hide" 
+              [attr.aria-labelledby]="'headingShopItem'+i" >
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-8 col-sm-12 mb-4"> {{offer.description}} </div>
+                <div class="col-xl-4 col-sm-12">
+                  <div *ngIf="offer.type == 'Group'">
+                    <div class="col-12 mb-1">
+                      <select   class="custom-select w-100" 
+                                [attr.id]="'selectgroup'+i">
+                        <option *ngFor="let group of groups" [attr.value]="group.name">{{ group.name }}</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-info w-100" type="button"
+                              (click)="buy(offer.productId, 'selectgroup'+i)">Buy!</button>
+                    </div>
+                  </div>
+                  <div *ngIf="offer.type != 'Group'">
+                    <div class="col-12">
+                      <button class="btn btn-info w-100" type="button"
+                              (click)="buy(offer.productId)">Buy!</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-sm-12">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let filter of filters; let i = index">
+        <div class="form-check">
+          <input  class="form-check-input" 
+                  type="radio" 
+                  name="offerFilter" 
+                  id="offerFilter{{i}}" 
+                  value="{{filter}}" 
+                  [checked]="filter == show"
+                  (click)="show = filter">
+          <label class="form-check-label" for="offerFilter{{i}}" (click)="show = filter">{{filter}}</label>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

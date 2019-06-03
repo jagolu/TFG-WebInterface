@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IconModel, Icons } from 'src/app/models/models';
+import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { GroupService } from 'src/app/services/restServices/group.service';
-import { GroupUser } from 'src/app/models/models';
 
 @Component({
   selector: 'app-group',
@@ -10,24 +11,35 @@ import { GroupUser } from 'src/app/models/models';
 })
 export class GroupComponent {
 
-  public groupName:string;
+  public groupName:string = null;
   public groupType:boolean;
-  public members:GroupUser[];
-  public bets:any[];
   public role:string;
 
+  public icon_ball:IconModel = Icons.BALL;
+  public icon_paper:IconModel = Icons.PAPER;
 
-  constructor(private aR:ActivatedRoute, private groupS:GroupService) { 
-    this.groupName = this.aR.snapshot.paramMap.get('group');
-    this.groupS.getPageGroup(this.groupName).subscribe(
-      (ok:any)=> {
-        this.groupName = ok.groupName;
-        this.groupType = ok.groupType;
-        this.bets = ok.bets;
-        this.members = ok.members;
-        this.role = ok.role;
-      },
-      err=>console.log(err)
+
+  constructor(private aR:ActivatedRoute, private groupPageS:GroupInfoService, 
+    private groupS:GroupService) { 
+
+    this.aR.params.subscribe(
+      param=>{
+        if(param.group != this.groupName){
+          this.groupS.getPageGroup(param.group);
+        }
+      }
     );
+
+    this.groupPageS.info.subscribe(page=>{
+      try{
+        this.role = page.role;
+        this.groupName = page.name;
+        this.groupType = page.type;
+      }
+      catch(Error){}
+    });
+  }
+
+  public createBet(){
   }
 }

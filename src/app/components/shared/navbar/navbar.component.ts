@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
-import { CreateGroupAlertService } from 'src/app/services/visualServices/create-group-alert.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
-import { Group } from 'src/app/models/Group';
-import { RouterStateSnapshot, Router, NavigationEnd } from '@angular/router';
+import { GroupUserJoinedAt, IconModel, Icons } from 'src/app/models/models';
+import { Router, NavigationEnd } from '@angular/router';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 
 @Component({
@@ -16,9 +16,13 @@ export class NavbarComponent implements OnInit{
 
   public width:number;
   public actualGroup:string = "Groups";
-  public groups:Group[];
+  public groups:GroupUserJoinedAt[];
+  public username:string;
 
-  constructor(private authS:AuthenticationService, private createGroupS:CreateGroupAlertService,
+  public icon_ball:IconModel = Icons.BALL;
+  public icon_paper:IconModel = Icons.PAPER;
+
+  constructor(private authS:AuthenticationService, private _alertS:AlertService,
               private sessionS:SessionService, private router:Router) { 
 
     this.router.events.subscribe( (activeRoute:any)=>{
@@ -31,8 +35,14 @@ export class NavbarComponent implements OnInit{
 
   ngOnInit(){
     this.sessionS.User.subscribe(u => {
-      try{ this.groups = u.groups; }
-      catch(Exception){ this.groups = []; }
+      try{ 
+        this.groups = u.groups; 
+        this.username = u.username;
+      }
+      catch(Exception){ 
+        this.groups = []; 
+        this.username = "";
+      }
     });
     this.width = window.innerWidth;
     
@@ -47,7 +57,7 @@ export class NavbarComponent implements OnInit{
   }
 
   openCreateGroupAlert(){
-    this.createGroupS.openAlert();
+    this._alertS.openCreateGroup();
   }
 
   @HostListener('window:resize', ['$event']) onResize(event) {

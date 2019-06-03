@@ -1,0 +1,16 @@
+<form [formGroup]="deleteAccountForm">
+  <div class="form-group">
+      <input type="password" 
+            class="form-control"
+            placeholder="Your password"
+            formControlName="password"
+            autocomplete="off">
+  </div>
+  
+
+  <button class="btn btn-danger w-100" 
+          (click)="deleteAccount()"
+          type="submit"
+          [disabled]="!deleteAccountForm.valid"
+  >Delete account</button>
+</form>

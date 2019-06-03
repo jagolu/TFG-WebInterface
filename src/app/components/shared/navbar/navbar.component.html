@@ -29,30 +29,20 @@
               *ngFor="let group of groups"
               disabled
           >{{group.name}} 
-              <app-icon base="fas"
-                        firstIcon="fa-futbol"
-                        firstColor="#006400"
-                        *ngIf="group.type == false">
-              </app-icon>
-              <app-icon base="fas"
-                        firstIcon="fa-file-invoice"
-                        firstColor="#00008B"
-                        *ngIf="group.type == true">
-              </app-icon>    
+              <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+              <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>    
           </a>
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider" *ngIf="groups.length>0"></div>
           <a class="dropdown-item text-center" (click)="openCreateGroupAlert()">Create group</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-center" [routerLink]="['joinNewGroup']">Join group</a>
         </div>
       </li>
       <li class="nav-item">
-        <a  class="nav-link disabled" 
-            [routerLink]="['index']" 
-        >Foro </a>
-      </li>
-      <li class="nav-item">
-        <a  class="nav-link disabled" 
-            [routerLink]="['index']" 
-        >Tienda </a>
+        <a  class="nav-link" 
+            [routerLink]="['shop', 'All']" 
+            *ngIf="isAuthenticated()" 
+        >Shop </a>
       </li>
       <li class="nav-item">
         <a  class="nav-link disabled" 
@@ -84,7 +74,7 @@
               aria-haspopup="true" 
               aria-expanded="false"
               style="cursor:pointer">
-          User
+          {{username}}
         </div>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="groupsDropdown">
           <a class="dropdown-item text-center" 

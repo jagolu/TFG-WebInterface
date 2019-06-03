@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PasswordAlertService, PasswordAlertType } from 'src/app/services/visualServices/password-alert.service';
 import { UserService } from 'src/app/services/restServices/user.service';
 import { UserInfoService } from 'src/app/services/userServices/user-info.service';
 import { UserInfo } from 'src/app/models/models';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 
 @Component({
@@ -21,15 +22,20 @@ export class UserInfoFormComponent implements OnInit {
   public imageForm:FormGroup;
   public equalPasswords : boolean;
   public info:UserInfo;
+  public username:string;
 
   private selectedFile;
 
-  constructor(private _passwordAlertS:PasswordAlertService,
+  constructor(private _alertS:AlertService,
               private _userS:UserService,
-              private  userInfoS:UserInfoService) { }
+              private  userInfoS:UserInfoService, private sessionS:SessionService) { }
 
   ngOnInit() {
     this.userInfoS.info.subscribe(info=> this.info = info);
+    this.sessionS.User.subscribe(u=>{
+      try{this.username = u.username}
+      catch(Error){}
+    });
     this.initializeNicknameForm();
     this.initializePasswordForm();
     this.initializeImageForm();
@@ -37,34 +43,35 @@ export class UserInfoFormComponent implements OnInit {
     this.selectedFile = false;
   }
 
-  private changeNickname(){
+  public changeNickname(){
     this._userS.changeUserInfo({
       'nickname': this.nicknameForm.controls['nickname'].value,
       "oldPassword": null,
       "newPassword":null,
-      "repeatNewPassword":null,
       "image": null
     }).subscribe(
-      _=>this.reload(),
+      _=>{
+        this.sessionS.updateUsername(this.nicknameForm.controls['nickname'].value);
+        this.reload();
+      },
       _=>this.resetForm()
     );
   }
 
-  private changePassword(){
+  public changePassword(){
     this._userS.changeUserInfo({
       'nickname': null,
       "oldPassword": this.passwordForm.controls['oldPassword'].value,
       "newPassword":this.passwordForm.controls['newPassword'].value,
-      "repeatNewPassword":this.passwordForm.controls['repeatPassword'].value,
       "image": null
     }).subscribe(
-      _=>this.reload()
+      _=> this.reload()
     );
     this.resetForm();
   }
   
 
-  private changeImg(){
+  public changeImg(){
     let fr = new FileReader();
 
     fr.onload = () =>{
@@ -72,7 +79,6 @@ export class UserInfoFormComponent implements OnInit {
         "nickname": null,
         "oldPassword": null,
         "newPassword":null,
-        "repeatNewPassword":null,
         "image": fr.result.toString()
       }).subscribe(
         _=> this.reload()
@@ -89,10 +95,10 @@ export class UserInfoFormComponent implements OnInit {
   }
 
   public openAlert(){
-    this._passwordAlertS.openAlert(PasswordAlertType.DELETEACCOUNT, this.info.hasPassword);
+    this._alertS.deleteAccount(this.info.email);
   }
 
-  private loadFile(event){
+  public loadFile(event){
     this.selectedFile = event.target.files[0];
   }
 
@@ -120,7 +126,7 @@ export class UserInfoFormComponent implements OnInit {
   private initializeNicknameForm(){
     this.nicknameForm = new FormGroup({
       'nickname': new FormControl(
-        this.info.nickname,
+        this.username,
         [
           Validators.required,
           Validators.minLength(4),
@@ -135,10 +141,7 @@ export class UserInfoFormComponent implements OnInit {
       (user:any)=>{
         this.userInfoS.updateInfo({
           "email": user.email,
-          "nickname": user.nickname,
-          "image": user.img,
-          "joinTime": user.timeSignUp,
-          "hasPassword": user.password
+          "image": user.img
         })
       }
     );
@@ -146,7 +149,7 @@ export class UserInfoFormComponent implements OnInit {
   
   private resetForm(){
     this.nicknameForm.reset({
-      "nickname": this.info.nickname
+      "nickname": this.username
     });
     this.passwordForm.reset({
       "oldPassword": "",

@@ -1,21 +1,46 @@
-<h1 class="display-4">{{groupName}}  
-    <app-icon base="fas"
-                firstIcon="fa-futbol"
-                firstColor="#006400"
+<h1 class="display-4 mb-5">{{groupName}}  
+    <app-icon   [Icon]="icon_ball"
                 *ngIf="groupType == false">
     </app-icon>
-    <app-icon base="fas"
-                firstIcon="fa-file-invoice"
-                firstColor="#00008B"
+    <app-icon   [Icon]="icon_paper"
                 *ngIf="groupType == true">
     </app-icon>
 </h1>
-<div class="row w-100">
-    <div class="col-xl-10  col-sm-12 mb-4">
-        <button class="btn btn-outline-info w-100 mb-3" *ngIf="role=='GROUP_MAKER'">Crear apuesta</button>
+
+
+<nav>
+    <div class="nav nav-tabs flex-column flex-sm-row mb-2" role="tablist">
+        <a  class="nav-item nav-link active" 
+            id="nav_group_bets_tab" data-toggle="tab" 
+            href="#nav_group_bets" role="tab" 
+            aria-controls="nav_group_bets" aria-selected="true">Bet</a>
+        <a  class="nav-item nav-link" 
+            id="nav_group_members_tab" data-toggle="tab" 
+            href="#nav_group_members" role="tab" 
+            aria-controls="nav_group_members" aria-selected="false">Members</a>
+        <a  class="nav-item nav-link" 
+            id="nav_group_options_tab" data-toggle="tab" 
+            href="#nav_group_options" role="tab" 
+            aria-controls="nav_group_options" aria-selected="false"
+            *ngIf="role == 'GROUP_MAKER'">Options</a>
+        <a  class="nav-item nav-link" 
+            id="nav_group_info_tab" data-toggle="tab" 
+            href="#nav_group_info" role="tab" 
+            aria-controls="nav_group_info" aria-selected="false">Info</a>
+    </div>
+</nav>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="nav_group_bets" role="tabpanel" aria-labelledby="nav_group_bets_tab">
+        <button class="btn btn-outline-info w-100 mb-3" *ngIf="role=='GROUP_MAKER'" (click)="createBet()">Crear apuesta</button>
         <app-group-bet></app-group-bet>
     </div>
-    <div class="col-xl-2 col-sm-12">
-        <app-group-users [members]="members"></app-group-users>
+    <div class="tab-pane fade" id="nav_group_members" role="tabpanel" aria-labelledby="nav_group_members_tab">
+        <app-group-users></app-group-users>
+    </div>
+    <div class="tab-pane fade" id="nav_group_options" role="tabpanel" aria-labelledby="nav_group_options_tab" *ngIf="role == 'GROUP_MAKER'">
+        <app-group-settings></app-group-settings>
+    </div>
+    <div class="tab-pane fade" id="nav_group_info" role="tabpanel" aria-labelledby="nav_group_info_tab">
+        <app-group-info></app-group-info>
     </div>
 </div>

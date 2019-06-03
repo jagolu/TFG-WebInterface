@@ -5,10 +5,11 @@ import { HttpEvent, HttpInterceptor, HttpHandler,
 } from '@angular/common/http';
 import { Observable, EMPTY } from 'rxjs';
 import { switchMap, catchError, finalize } from 'rxjs/operators';
-import { AlertService, AlertType } from '../services/visualServices/alert.service';
+import { AlertService } from '../services/visualServices/alert.service';
 import { LoadingService } from '../services/visualServices/loading.service';
 import { SessionService } from '../services/userServices/session.service';
 import { AuthenticationService } from '../services/restServices/authentication.service';
+import { AlertInfoType } from '../models/models';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -40,18 +41,25 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     private showErrorAlert(err:HttpErrorResponse){
         if(err.status == 400 && err.error){
-            if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlert(AlertType.EMAILTAKENERROR);
-            else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlert(AlertType.WRONGEMAILORPASSWORD);
-            else if(err.error["error"] == "NotValidatedYet") this.alert.openAlert(AlertType.NOTVALIDATEDYET);
-            else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlert(AlertType.SOCIALERROR);
-            else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlert(AlertType.CANTDELETEACCOUNT);
-            else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlert(AlertType.LIMITATIONCREATEGROUP);
-            else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlert(AlertType.INCORRECTOLDPASSWORD);
-            else this.alert.openAlert(AlertType.VALIDATINGUSERERROR);
+            if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlertInfo(AlertInfoType.EMAILTAKENERROR);
+            else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlertInfo(AlertInfoType.WRONGEMAILORPASSWORD);
+            else if(err.error["error"] == "NotValidatedYet") this.alert.openAlertInfo(AlertInfoType.NOTVALIDATEDYET);
+            else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlertInfo(AlertInfoType.SOCIALERROR);
+            else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlertInfo(AlertInfoType.CANTDELETEACCOUNT);
+            else if(err.error["error"] == "LimitationSpecificCreateGroup") this.alert.openAlertInfo(AlertInfoType.LIMITATIONSPECIFICCREATEGROUP);
+            else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlertInfo(AlertInfoType.LIMITATIONCREATEGROUP);
+            else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlertInfo(AlertInfoType.INCORRECTOLDPASSWORD);
+            else if(err.error["error"] == "ErrorBuy") this.alert.openAlertInfo(AlertInfoType.ERRORBUY);
+            else if(err.error["error"] == "IncorrectPasswordJoiningGroup") this.alert.openAlertInfo(AlertInfoType.INCORRECTPASSWORDJOININGGROUP);
+            else if(err.error["error"] == "MaxGroupJoinsReached") this.alert.openAlertInfo(AlertInfoType.MAXGROUPJOINREACHED);
+            else if(err.error["error"] == "EmailDontExist") this.alert.openAlertInfo(AlertInfoType.EMAILDONTEXIST);
+            else if(err.error["error"] == "CantChangePasswordToday") this.alert.openAlertInfo(AlertInfoType.CANTCHANGEPASSTODAY);
+            else if(err.error["error"] == "NotSocialSignYet") this.alert.openAlertInfo(AlertInfoType.NOTSOCIALSIGNYET);
         }
-        else if(err.status == 500) this.alert.openAlert(AlertType.SERVERERROR);
-        else if(err.status == 0) this.alert.openAlert(AlertType.LOSTCONNECTIONERROR);
-        else if(err.status == 401) this.alert.openAlert(AlertType.SESSIONEXPIRED);
+        else if(err.status == 400 && !err.error) this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
+        else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);
+        else if(err.status == 0) this.alert.openAlertInfo(AlertInfoType.LOSTCONNECTIONERROR);
+        else if(err.status == 401) this.alert.openAlertInfo(AlertInfoType.SESSIONEXPIRED);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
@@ -61,7 +69,13 @@ export class ErrorInterceptor implements HttpInterceptor {
             this._authS.logOut();
             this._router.navigate(['../logIn']);
         }
-        if(err.url.includes("Authorization/Validate")) this._router.navigate(['']);
+        if(err.url.includes("Authorization/Validate") || err.url.includes("Authorization/checkPasswordToken")) {
+            this._router.navigate(['']);
+        }
+        if(err.status == 400 && !err.error){
+            this._authS.logOut();
+            this._router.navigate(['../logIn']);
+        }
     }
 
 /**********************REFRESHTOKEN********************************/
@@ -73,6 +87,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if(newToken){
                     this._sessionS.renewToken({
                         "api_token": newToken.api_token,
+                        "username": newToken.username,
                         "role" : newToken.role,
                         "groups" : newToken.groups
                     });

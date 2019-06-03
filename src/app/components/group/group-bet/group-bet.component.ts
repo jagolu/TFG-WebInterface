@@ -7,7 +7,7 @@ import { littleNew } from '../../home/home.component';
   styles: []
 })
 export class GroupBetComponent implements OnInit {
-  private news:littleNew[] = [];
+  public news:littleNew[] = [];
 
   constructor() { 
     this.news.push({title:"title1", body:"body1", time:"14/01/19 14:32", owner:"SYS"});

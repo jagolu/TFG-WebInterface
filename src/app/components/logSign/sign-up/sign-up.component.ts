@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
+import { IconModel, Icons } from 'src/app/models/models';
 
 
 @Component({
@@ -15,6 +16,8 @@ export class SignUpComponent{
   signUpForm: FormGroup;
   passwordType: string;
   passwordsAreEqual: boolean;
+
+  public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
 
   constructor(private _authentication:AuthenticationService) {
     this.passwordType = "password"

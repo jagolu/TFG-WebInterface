@@ -1,0 +1,47 @@
+<form [formGroup]="createGroupForm">
+  <div class="form-group">
+    <label>Group name</label>
+    <input type="text" 
+          class="form-control"
+          placeholder="Your group name"
+          class="form-control"
+          formControlName="name"
+          autocomplete="off">
+    <small class="text-danger"
+    *ngIf="createGroupForm.controls['name'].errors && 
+          !createGroupForm.controls['name'].pristine && 
+          createGroupForm.controls['name'].errors.required"
+    >The name is required</small>
+    <small class="text-danger"
+          *ngIf="createGroupForm.controls['name'].errors && 
+                !createGroupForm.controls['name'].pristine && 
+                createGroupForm.controls['name'].errors.minlength"
+    >The name need to have at least 4 characters</small>
+    <small class="text-danger"
+          *ngIf="createGroupForm.controls['name'].errors && 
+                !createGroupForm.controls['name'].pristine && 
+                createGroupForm.controls['name'].errors.maxlength"
+    >The name need to have less than 20 characters</small>
+    <small class="text-danger"
+          *ngIf="createGroupForm.controls['name'].errors &&
+                createGroupForm.controls['name'].errors.groupNameTaken"
+    >The group name isn't available</small>
+  </div>
+
+  <div class="form-group">
+    <select class="form-control"
+            formControlName="groupType">
+        <option selected disabled value=""> -- Choose the group type -- </option>
+        <option value="false">Virtual</option>
+        <option value="true">Official</option>
+      </select>
+  </div>       
+
+  <button class="btn btn-danger w-100 mt-2"
+          (click)="createGroup()"
+          id="createGroup"
+          [disabled]="!createGroupForm.valid"
+          data-target="#alertMessage"
+  >Create group</button>
+
+</form>
