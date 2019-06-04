@@ -11,7 +11,6 @@ import { SessionService } from 'src/app/services/userServices/session.service';
 })
 export class GroupUsersComponent implements OnInit{
 
-  public user_role:string;
   public icon_crown:IconModel = Icons.CROWN;
   public icon_wizard:IconModel = Icons.WIZARD;
   public icon_cog:IconModel = Icons.COG;
@@ -19,23 +18,16 @@ export class GroupUsersComponent implements OnInit{
   public icon_info:IconModel = Icons.INFO;
   private groupName:string;
   public members:GroupUser[] = [];
-  public username:string;
 
-  constructor(private groupS:GroupService, private groupPage:GroupInfoService,
-              private sessionS:SessionService) { }
+  constructor(private groupS:GroupService, private groupPage:GroupInfoService) { }
 
   ngOnInit(){
     this.groupPage.info.subscribe(page=>{
       try{
-        this.user_role = page.role;
         this.groupName = page.name;
         this.members = page.members;
       }catch(Error){}
     });
-    this.sessionS.User.subscribe(u=>{
-      try{this.username = u.username}
-      catch(Error){}
-    })
   }
 
   public manageAdmin(publicUserId:string, make:boolean){
