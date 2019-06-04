@@ -1,6 +1,10 @@
 <ul class="list-group">
   <div *ngFor="let member of members; let i = index">
-    <li class="list-group-item text-center" [ngClass]="{'bg-secondary text-white': member.blocked }">{{member.userName}}
+    <li class="list-group-item text-center" [ngClass]="{'bg-secondary text-white': member.blocked }">
+      <span style="float:left" *ngIf="i != (members.length-1) && !group_type">
+        {{member.coins}} <app-icon [Icon]="icon_coin"></app-icon>
+      </span>
+      {{member.userName}}
       
       <app-icon [Icon]="icon_user" *ngIf="i == (members.length-1)"></app-icon>
       <app-icon [Icon]="icon_crown" *ngIf="member.role=='GROUP_MAKER'"></app-icon>
