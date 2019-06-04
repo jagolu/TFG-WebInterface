@@ -31,7 +31,7 @@ export class GroupComponent {
 
     this.groupPageS.info.subscribe(page=>{
       try{
-        this.role = page.role;
+        this.role = page.members ? page.members[page.members.length-1].role : "";
         this.groupName = page.name;
         this.groupType = page.type;
       }
