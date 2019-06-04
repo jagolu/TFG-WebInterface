@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { GroupUser, IconModel, Icons } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
-import { SessionService } from 'src/app/services/userServices/session.service';
 
 @Component({
   selector: 'app-group-users',
@@ -16,8 +15,10 @@ export class GroupUsersComponent implements OnInit{
   public icon_cog:IconModel = Icons.COG;
   public icon_user:IconModel = Icons.USER;
   public icon_info:IconModel = Icons.INFO;
-  private groupName:string;
   public members:GroupUser[] = [];
+  public user_role:string;
+  private groupName:string;
+  
 
   constructor(private groupS:GroupService, private groupPage:GroupInfoService) { }
 
@@ -26,6 +27,7 @@ export class GroupUsersComponent implements OnInit{
       try{
         this.groupName = page.name;
         this.members = page.members;
+        this.user_role = page.members ? page.members[page.members.length-1].role : "";
       }catch(Error){}
     });
   }
