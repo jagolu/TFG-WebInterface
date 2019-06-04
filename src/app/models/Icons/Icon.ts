@@ -152,4 +152,18 @@ export class Icons{
         "firstColor": "#228BD7",
         "secondColor": null
     };
+
+    /**
+     * Icon of a coin
+     * Yellow color
+     * 
+     * @static
+     */
+    static COIN: IconModel = {
+        "base": "fas",
+        "firstIcon": "fa-coins",
+        "secondIcon": null,
+        "firstColor": "#DAA520",
+        "secondColor": null
+    };
 }

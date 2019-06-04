@@ -14,9 +14,11 @@ export class GroupComponent {
   public groupName:string = null;
   public groupType:boolean;
   public role:string;
+  public coins?:number;
 
   public icon_ball:IconModel = Icons.BALL;
   public icon_paper:IconModel = Icons.PAPER;
+  public icon_coin:IconModel = Icons.COIN;
 
 
   constructor(private aR:ActivatedRoute, private groupPageS:GroupInfoService, private groupS:GroupService) { 
@@ -34,6 +36,7 @@ export class GroupComponent {
         this.role = page.members ? page.members[page.members.length-1].role : "";
         this.groupName = page.name;
         this.groupType = page.type;
+        this.coins = page.members ? page.members[page.members.length-1].coins : 0;
       }
       catch(Error){}
     });

@@ -7,6 +7,16 @@
     </app-icon>
 </h1>
 
+<ul class="nav justify-content-end" *ngIf="!groupType">
+    <li class="nav-item">
+        <a class="nav-link active">
+            {{coins}}
+            <app-icon   [Icon]="icon_coin"
+                *ngIf="groupType == false">
+            </app-icon>
+        </a>
+    </li>
+</ul>
 
 <nav>
     <div class="nav nav-tabs flex-column flex-sm-row mb-2" role="tablist">
