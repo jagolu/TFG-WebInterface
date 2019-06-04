@@ -63,4 +63,16 @@ export class UserInfoService {
     //Update the user info which is at info var
     this.information.next(info);
   }
+
+  /**
+   * Cleans the info of the observable
+   * 
+   * @access public
+   */
+  public removeInfo(){
+    this.information.next({
+      "email": "",
+      "image": ""
+    });
+  }
 }

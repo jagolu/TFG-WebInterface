@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { AvailableBet, FootballMatch } from 'src/app/models/models';
@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './football-bet.component.html',
   styles: []
 })
-export class FootballBetComponent  {
+export class FootballBetComponent implements OnDestroy {
 
   private groupName:string = null;
   public explanationBetType:string;
@@ -38,6 +38,10 @@ export class FootballBetComponent  {
       }
       catch(Error){}
     });
+  }
+
+  ngOnDestroy(){
+    this.groupPageS.removeInfo();
   }
 
   public selectCompetition(competition:number){
