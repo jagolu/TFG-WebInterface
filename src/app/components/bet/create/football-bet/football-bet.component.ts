@@ -84,8 +84,8 @@ export class FootballBetComponent  {
   }
 
   public setMaxBet(){
-    let max = this.betForm.controls["maxBet"].value;
-    let min = this.betForm.controls["minBet"].value;
+    let max = parseInt(this.betForm.controls["maxBet"].value);
+    let min = parseInt(this.betForm.controls["minBet"].value);
     if(max == 0 || (max<min && max!=0)){
       let minOut = min/100;
       this.maxs = Array(100-minOut+1).fill(0).map((x,i)=>(i+minOut)*100);
@@ -94,9 +94,9 @@ export class FootballBetComponent  {
   }
 
   public setMinBet(){
-    let max = this.betForm.controls["maxBet"].value;
-    let min = this.betForm.controls["minBet"].value;
-    if(min.selectedIndex == 0 || (min>max && min!=0)){
+    let max = parseInt(this.betForm.controls["maxBet"].value);
+    let min = parseInt(this.betForm.controls["minBet"].value);
+    if(min == 0 || (min>max && min!=0)){
       let minOut = max/100;
       this.mins = Array(minOut).fill(0).map((x,i)=>(i+1)*100);
       this.betForm.controls["minBet"].setValue(0);
