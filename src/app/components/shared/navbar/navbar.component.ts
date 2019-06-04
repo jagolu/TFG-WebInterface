@@ -22,6 +22,8 @@ export class NavbarComponent implements OnInit{
   public icon_ball:IconModel = Icons.BALL;
   public icon_paper:IconModel = Icons.PAPER;
 
+  private actualUrl = null;
+
   constructor(private authS:AuthenticationService, private _alertS:AlertService,
               private sessionS:SessionService, private router:Router) { 
 
@@ -29,7 +31,12 @@ export class NavbarComponent implements OnInit{
       if(activeRoute instanceof NavigationEnd && activeRoute.urlAfterRedirects.includes("/group/")){
         this.actualGroup = decodeURIComponent(activeRoute.urlAfterRedirects.substring(7));
       }
-      else if(activeRoute instanceof NavigationEnd && !activeRoute.urlAfterRedirects.includes("/group/")) this.actualGroup = "Groups"
+      else if(activeRoute instanceof NavigationEnd && !activeRoute.urlAfterRedirects.includes("/group/")) this.actualGroup = "Groups";
+
+      if(activeRoute.urlAfterRedirects && activeRoute.urlAfterRedirects != this.actualUrl) {
+        this.actualUrl = activeRoute.urlAfterRedirects;
+        this.resetNavbar();
+      }
     })
   }
 
@@ -66,5 +73,10 @@ export class NavbarComponent implements OnInit{
 
   disableActualGroup(groupName:string){
     return groupName.includes(this.actualGroup);
+  }
+
+  private resetNavbar(){
+    (document.querySelector("#navHamburgerButton") as HTMLElement).className = "navbar-toggler";
+    (document.querySelector("#navbarSupportedContent") as HTMLElement).className = "collapse navbar-collapse";
   }
 }
