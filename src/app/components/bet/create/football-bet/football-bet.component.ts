@@ -32,7 +32,8 @@ export class FootballBetComponent  {
       try{
         if(this.groupName != page.name && page.name.length > 1){
           this.groupName = page.name;
-          if(!page.type) this.getPageGroup(this.groupName);         
+          let role = page.members ? page.members[page.members.length-1].role : "";
+          if(!page.type && role == "GROUP_MAKER") this.getPageGroup(this.groupName);         
         }
       }
       catch(Error){}
