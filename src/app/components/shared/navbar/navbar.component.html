@@ -53,20 +53,24 @@
       </li>
     </ul>
     <!-- Authentication Buttons -->
-      <!-- LogIn & SignUp Buttons -->
-    <button class="btn btn-outline-success mr-2" 
-            [routerLink]="['logIn']" 
-            type="button"
-            *ngIf="!isAuthenticated()"
-            [ngClass]="{'w-45': width<992}"
-    >Log In</button>
-    <button class="btn btn-outline-info mr-2" 
-            [routerLink]="['signUp']" 
-            type="button"
-            *ngIf="!isAuthenticated()"
-            [ngClass]="{'w-45': width<992}"
-    >Sign Up</button>
-        <!-- UserButtons -->
+    <!-- LogIn & SignUp Buttons -->
+    <ul class="navbar-nav" *ngIf="!isAuthenticated()">
+      <li >
+        <button class="btn btn-outline-success mr-2" 
+          [routerLink]="['logIn']" 
+          [ngClass]="{'w-45': width<992}"
+        >Log In</button>
+      </li>
+      <li >
+        <button class="btn btn-outline-info mr-2" 
+          [routerLink]="['signUp']" 
+          [ngClass]="{'w-45': width<992}"
+        >Sign Up</button>
+      </li>
+    </ul>
+
+
+    <!-- UserButtons -->
     <ul class="navbar-nav" *ngIf="isAuthenticated()">
       <li class="nav-item dropdown">
         <div  class="btn btn-outline-secondary w-100" 

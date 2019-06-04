@@ -9,7 +9,7 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styles:['.w-45{width:49%;}']
+  styles:['.w-45{width:100%;margin-top:1%}']
 })
 
 export class NavbarComponent implements OnInit{
