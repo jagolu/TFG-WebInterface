@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit{
 
     this.router.events.subscribe( (activeRoute:any)=>{
       if(activeRoute instanceof NavigationEnd && activeRoute.urlAfterRedirects.includes("/group/")){
-        this.actualGroup = activeRoute.urlAfterRedirects.substring(7);
+        this.actualGroup = decodeURIComponent(activeRoute.urlAfterRedirects.substring(7));
       }
       else if(activeRoute instanceof NavigationEnd && !activeRoute.urlAfterRedirects.includes("/group/")) this.actualGroup = "Groups"
     })

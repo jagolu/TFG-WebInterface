@@ -25,7 +25,7 @@ export class GroupComponent {
 
     this.aR.params.subscribe(
       param=>{
-        if(param.group != this.groupName){
+        if(decodeURIComponent(param.group) != this.groupName){
           this.groupS.getPageGroup(param.group);
         }
       }
