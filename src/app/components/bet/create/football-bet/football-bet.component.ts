@@ -65,30 +65,6 @@ export class FootballBetComponent implements OnDestroy {
     else this.selectedMatch = true;
   }
 
-  public getExplainBetType(type:NameWinRate){
-    if(type.name=="FULLTIME_SCORE"){
-      this.explanationBetType = "The players must guess the exact result of the match.";
-    }
-    else if(type.name=="PARTTIME_SCORE"){
-      this.explanationBetType = "The players must guess the exact result of the first half of the match."
-    }
-    else if(type.name=="FULLTIME_WINNER"){
-      this.explanationBetType = "The players must guess the winner of the match."
-    }
-    else if(type.name=="PARTTIME_WINNER"){
-      this.explanationBetType = "The players must guess the winner of the first half of the match."
-    }
-  }
-
-  public getExplainPriceType(type:NameWinRate){
-    if(type.name=="EXACT_BET"){
-      this.explanationPriceType = "The prize will be for the player who hits the exact result.";
-    }
-    else if(type.name=="CLOSER_BET"){
-      this.explanationPriceType = "The prize will be for the player or players who come closest to the exact result"
-    }
-  }
-
   public setMaxBet(){
     let max = parseInt(this.betForm.controls["maxBet"].value);
     let min = parseInt(this.betForm.controls["minBet"].value);

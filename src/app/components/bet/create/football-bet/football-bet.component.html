@@ -18,14 +18,14 @@
       <div class="col-lg-3 col-12">
         <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch">
             <option selected disabled value="" >Bet type</option>
-            <option value="allowedBet" (click)="selectedBet=true; getExplainBetType(allowedBet)"
+            <option value="allowedBet" (click)="selectedBet=true; explanationBetType=allowedBet.description"
               *ngFor="let allowedBet of allowedBets">{{allowedBet.name}}</option>
         </select>
       </div>      
       <div class="col-lg-2 col-12">
         <select class="form-control" *ngIf="selectedBet">
             <option selected disabled value="" >Prize type</option>
-            <option value="" (click)="selectedPrice=true; getExplainPriceType(allowedPay)" 
+            <option value="" (click)="selectedPrice=true; explanationPriceType=allowedPay.description" 
                 *ngFor="let allowedPay of allowedPays">{{allowedPay.name}}</option>
         </select>
       </div>     
