@@ -12,21 +12,21 @@
           <option selected disabled value="" >Select a match</option>
           <option value="{{i}}" *ngFor="let match of matches; let i = index"
             (click)="selectMatchDay(i)"
-            >{{match.homeTeam}} <small>vs</small> {{match.awayTeam}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
+            >{{match.match_name}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
         </select>      
       </div>
       <div class="col-lg-3 col-12">
         <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch">
             <option selected disabled value="" >Bet type</option>
             <option value="allowedBet" (click)="selectedBet=true; getExplainBetType(allowedBet)"
-              *ngFor="let allowedBet of allowedBets">{{allowedBet}}</option>
+              *ngFor="let allowedBet of allowedBets">{{allowedBet.name}}</option>
         </select>
       </div>      
       <div class="col-lg-2 col-12">
         <select class="form-control" *ngIf="selectedBet">
             <option selected disabled value="" >Prize type</option>
-            <option value="exactBet" (click)="selectedPrice=true; getExplainPriceType('exactBet')">Exact bet</option> 
-            <option value="closerBet" (click)="selectedPrice=true; getExplainPriceType('closerBet')">Closer bet</option> 
+            <option value="" (click)="selectedPrice=true; getExplainPriceType(allowedPay)" 
+                *ngFor="let allowedPay of allowedPays">{{allowedPay.name}}</option>
         </select>
       </div>     
     </div>

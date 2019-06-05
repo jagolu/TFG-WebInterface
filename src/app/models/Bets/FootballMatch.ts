@@ -1,7 +1,9 @@
+import { NameWinRate } from './NameWinRate';
+
 export interface FootballMatch{
     competition:string;
-    homeTeam:string;
-    awayTeam:string;
+    match_name:string;
     date:string;
-    allowedTypeBets:string[];
+    matchday:string;
+    allowedTypeBets:NameWinRate[];
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
-import { AvailableBet, FootballMatch } from 'src/app/models/models';
+import { AvailableBet, FootballMatch, NameWinRate } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,8 @@ export class FootballBetComponent implements OnDestroy {
   public betForm:FormGroup;
   public bets:AvailableBet[];
   public matches : FootballMatch[];
-  public allowedBets : string[];
+  public allowedBets : NameWinRate[];
+  public allowedPays : NameWinRate[];
   public mins:number[];
   public maxs:number[];
 
@@ -52,6 +53,7 @@ export class FootballBetComponent implements OnDestroy {
     (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex = 0;
     this.selectedMatch = false;
     this.matches = this.bets[competition].matches;
+    this.allowedPays = this.bets[competition].allowedTypePays;
   }
 
   public selectMatchDay(matchday:number){
@@ -63,26 +65,26 @@ export class FootballBetComponent implements OnDestroy {
     else this.selectedMatch = true;
   }
 
-  public getExplainBetType(type:string){
-    if(type=="FULLTIME_SCORE"){
+  public getExplainBetType(type:NameWinRate){
+    if(type.name=="FULLTIME_SCORE"){
       this.explanationBetType = "The players must guess the exact result of the match.";
     }
-    else if(type=="PARTTIME_SCORE"){
+    else if(type.name=="PARTTIME_SCORE"){
       this.explanationBetType = "The players must guess the exact result of the first half of the match."
     }
-    else if(type=="FULLTIME_WINNER"){
+    else if(type.name=="FULLTIME_WINNER"){
       this.explanationBetType = "The players must guess the winner of the match."
     }
-    else if(type=="PARTTIME_WINNER"){
+    else if(type.name=="PARTTIME_WINNER"){
       this.explanationBetType = "The players must guess the winner of the first half of the match."
     }
   }
 
-  public getExplainPriceType(type:string){
-    if(type=="exactBet"){
+  public getExplainPriceType(type:NameWinRate){
+    if(type.name=="EXACT_BET"){
       this.explanationPriceType = "The prize will be for the player who hits the exact result.";
     }
-    else if(type=="closerBet"){
+    else if(type.name=="CLOSER_BET"){
       this.explanationPriceType = "The prize will be for the player or players who come closest to the exact result"
     }
   }

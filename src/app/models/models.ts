@@ -26,3 +26,4 @@ export { RemoveGroup } from './GroupManage/RemoveGroup';
 export { ResetPassword } from './Identity/ResetPassword';
 export { FootballMatch } from  './Bets/FootballMatch';
 export { AvailableBet } from  './Bets/AvailableBet';
+export { NameWinRate } from  './Bets/NameWinRate';
