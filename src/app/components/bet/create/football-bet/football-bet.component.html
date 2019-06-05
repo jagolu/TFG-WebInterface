@@ -18,21 +18,39 @@
       <div class="col-lg-3 col-12">
         <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch">
             <option selected disabled value="" >Bet type</option>
-            <option value="allowedBet" (click)="selectedBet=true; explanationBetType=allowedBet.description"
+            <option value="allowedBet" (click)="setBetType(allowedBet)"
               *ngFor="let allowedBet of allowedBets">{{allowedBet.name}}</option>
         </select>
       </div>      
       <div class="col-lg-2 col-12">
         <select class="form-control" *ngIf="selectedBet">
             <option selected disabled value="" >Prize type</option>
-            <option value="" (click)="selectedPrice=true; explanationPriceType=allowedPay.description" 
+            <option value="" (click)="setPriceType(allowedPay)" 
                 *ngFor="let allowedPay of allowedPays">{{allowedPay.name}}</option>
         </select>
-      </div>     
+      </div>      
     </div>
     <div class="row mt-2" *ngIf="selectedBet || selectedPrice">
       <div class="col-lg-7 col-12">
-        <form [formGroup]="betForm" (ngSubmit)="makeBet()" *ngIf="selectedBet && selectedPrice">
+        <div class="row">
+          <div class="col-6">
+            <select class="form-control mb-2" id="newBet_allowedDates_select" *ngIf="selectedBet && selectedPrice">
+              <option selected disabled value="" >Select the max day to do the bet</option>
+              <option value={{date}} *ngFor="let date of allowedDates" (click)="setDate(date)"
+                >{{date|onlyDatePipe}}</option>
+              </select>   
+          </div>
+          <div class="col-6">
+            <div class="form-group row" *ngIf="selectedBet && selectedPrice">
+              <label class="col-sm-8 col-form-label">WinRate</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" value={{winRate}} readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <form [formGroup]="betForm" (ngSubmit)="makeBet()" *ngIf="selectedBet && selectedPrice && selectedMaxDay">
           <div class="form-group row">
             <label class="col-form-label col-lg-4 col-12">Min and max bet</label>
             <div class="col-lg-4 col-6">
@@ -50,7 +68,7 @@
             </div>
           </div>
           <button class="btn btn-outline-dark w-100" type="submit" [disabled]="!betForm.valid">Launch Bet</button>
-        </form>
+        </form>   
       </div>
       <div class="col-lg-3 col-12" *ngIf="selectedBet">
         <div class="card card-body">

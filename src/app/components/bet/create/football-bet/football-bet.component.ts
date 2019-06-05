@@ -11,21 +11,46 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class FootballBetComponent implements OnDestroy {
 
-  private groupName:string = null;
+  //
+  // ─── EXPLANATION VARS ───────────────────────────────────────────────────────────
+  //
   public explanationBetType:string;
   public explanationPriceType:string;
+  public winRate:number = 0.0;
+
+  //
+  // ─── SELECT VARS ────────────────────────────────────────────────────────────────
+  //
+  public allowedDates : string[];
+  public mins:number[];
+  public maxs:number[];
+
+  //
+  // ─── SHOW BACKEND INFO ──────────────────────────────────────────────────────────
+  //
   public betForm:FormGroup;
   public bets:AvailableBet[];
   public matches : FootballMatch[];
   public allowedBets : NameWinRate[];
   public allowedPays : NameWinRate[];
-  public mins:number[];
-  public maxs:number[];
 
+  //
+  // ─── VALIDATORS FOR SHOW OR NOT FORMS ───────────────────────────────────────────
+  //
   private newBet_competitionMatches_launched = false;
   public selectedBet:boolean = false;
   public selectedMatch:boolean = false;
   public selectedPrice:boolean = false; 
+  public selectedMaxDay:boolean = false;
+
+  //
+  // ─── TO DO THE BACKEND REQUEST ──────────────────────────────────────────────────
+  //
+  private groupName:string = null;
+  private match:FootballMatch = null;
+  private maxDate:string = null;
+  private betType:NameWinRate = null;
+  private priceType:NameWinRate = null;
 
   constructor(private groupPageS:GroupInfoService, private betS:BetService) { 
     this.initializeForm();
@@ -50,19 +75,19 @@ export class FootballBetComponent implements OnDestroy {
       this.newBet_competitionMatches_launched = true;
       (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
     }
+    this.resetForm();
     (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex = 0;
-    this.selectedMatch = false;
     this.matches = this.bets[competition].matches;
     this.allowedPays = this.bets[competition].allowedTypePays;
   }
 
   public selectMatchDay(matchday:number){
+    if(this.selectedMatch) (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex = 0;
     this.resetForm();
-    this.allowedBets = this.matches[matchday].allowedTypeBets;
-    if(this.selectedMatch){
-      (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex = 0;
-    }
-    else this.selectedMatch = true;
+    this.match = this.matches[matchday];
+    this.setAllowedDays(this.match);
+    this.allowedBets = this.match.allowedTypeBets;
+    this.selectedMatch = true;
   }
 
   public setMaxBet(){
@@ -85,6 +110,34 @@ export class FootballBetComponent implements OnDestroy {
     }
   }
 
+  public setBetType(type:NameWinRate){
+    this.selectedBet = true;
+    this.explanationBetType = type.description;
+    this.betType = type;
+    this.winRate = type.winRate;
+    if(this.priceType != null) this.winRate+=this.priceType.winRate;
+  }
+
+  public setPriceType(type:NameWinRate){
+    this.selectedPrice = true;
+    this.explanationPriceType = type.description;
+    this.priceType = type;
+    this.winRate = type.winRate;
+    if(this.betType != null) this.winRate+=this.betType.winRate;
+  }
+
+  public setDate(date:string){
+    this.maxDate = date;
+    this.selectedMaxDay = true;
+  }
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  
   private getPageGroup(name:string){
     this.betS.getPageGroup(name).subscribe(
       (bets:AvailableBet[])=> this.bets = bets
@@ -117,9 +170,31 @@ export class FootballBetComponent implements OnDestroy {
     this.maxs = this.mins = Array(100).fill(0).map((x,i)=>(i+1)*100);
     this.selectedBet = false;
     this.selectedPrice = false;
+    this.selectedMatch = false;
+    this.selectedMaxDay = false;
+    this.betType = null;
+    this.priceType = null;
     this.betForm.reset({
       'minBet':0,
       'maxBet':0
     });
+  }
+
+  private setAllowedDays(match:FootballMatch){
+    let endDate = new Date(match.date);
+    let now = new Date();
+    this.allowedDates = [];
+    if(now.getDate() != endDate.getDate()){
+      this.allowedDates.push(now.toISOString());
+    }
+
+    while(true){
+      now = new Date(now.getTime() + (1000*60*60*24));
+      if(now<=endDate && now.getDate() != endDate.getDate()) {
+        this.allowedDates.push(now.toISOString());
+      }
+      else break;
+    }
+    this.allowedDates.push(endDate.toISOString());
   }
 }
