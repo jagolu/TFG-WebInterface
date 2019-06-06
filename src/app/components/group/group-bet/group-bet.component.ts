@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { GroupBet } from 'src/app/models/models';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
   selector: 'app-group-bet',
@@ -11,7 +12,7 @@ export class GroupBetComponent implements OnInit {
   public bets:GroupBet[] = [];
   public userCoins:number = 0;
 
-  constructor(private groupPage:GroupInfoService) { }
+  constructor(private groupPage:GroupInfoService, private alertS:AlertService) { }
 
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
@@ -22,4 +23,7 @@ export class GroupBetComponent implements OnInit {
     })
   }
 
+  public doBet(bet:GroupBet){
+    this.alertS.doAFootballBet(bet, this.userCoins);
+  }
 }

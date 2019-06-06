@@ -78,11 +78,8 @@
           </div>
         </div>
         <button class="btn btn-outline-success w-100 mt-4" [disabled]="userCoins<bet.minBet"
-            data-toggle="collapse" [attr.data-target]="'#DoFootballBet'+bet.bet" aria-expanded="false" 
-           >Do the bet</button>
-        <div class="collapse" [id]="'DoFootballBet'+bet.bet">
-          asdfasdf
-        </div>
+        (click)="doBet(bet)"
+            >Do the bet</button>
       </div>
     </div>
   </div>

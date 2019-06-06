@@ -28,3 +28,4 @@ export { FootballMatch } from  './Bets/FootballMatch';
 export { AvailableBet } from  './Bets/AvailableBet';
 export { NameWinRate } from  './Bets/NameWinRate';
 export { LaunchFootballBet } from  './Bets/LaunchFootballBet';
+export { DoAFootballBet } from  './Bets/DoAFootballBet';
