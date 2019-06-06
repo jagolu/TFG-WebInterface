@@ -71,8 +71,6 @@ import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Base64ImagePipe } from './pipes/base64-image.pipe';
-import { GoalsBetComponent } from './components/shared/alert/DoFootballBet/goals-bet/goals-bet.component';
-import { OneXTwoBetComponent } from './components/shared/alert/do-football-bet/one-xtwo-bet/one-xtwo-bet.component';
 
 
 @NgModule({
