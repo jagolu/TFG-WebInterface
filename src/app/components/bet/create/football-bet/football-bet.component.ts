@@ -3,6 +3,7 @@ import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { AvailableBet, FootballMatch, NameWinRate } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { isString } from 'util';
 
 @Component({
   selector: 'app-football-bet',
@@ -17,6 +18,7 @@ export class FootballBetComponent implements OnDestroy {
   public explanationBetType:string;
   public explanationPriceType:string;
   public winRate:number = 0.0;
+  public errorMessage:string;
 
   //
   // ─── SELECT VARS ────────────────────────────────────────────────────────────────
@@ -29,7 +31,7 @@ export class FootballBetComponent implements OnDestroy {
   // ─── SHOW BACKEND INFO ──────────────────────────────────────────────────────────
   //
   public betForm:FormGroup;
-  public bets:AvailableBet[];
+  public bets:AvailableBet[] = [];
   public matches : FootballMatch[];
   public allowedBets : NameWinRate[];
   public allowedPays : NameWinRate[];
@@ -48,7 +50,6 @@ export class FootballBetComponent implements OnDestroy {
   //
   private groupName:string = null;
   private match:FootballMatch = null;
-  private maxDate:string = null;
   private betType:NameWinRate = null;
   private priceType:NameWinRate = null;
 
@@ -68,6 +69,29 @@ export class FootballBetComponent implements OnDestroy {
 
   ngOnDestroy(){
     this.groupPageS.removeInfo();
+  }
+
+  public launchBet(){
+    let date = (document.querySelector("#newBet_allowedDates_select") as HTMLSelectElement).value;
+
+    this.betS.launchBet({
+      "groupName": this.groupName,
+      "matchDay": this.match.matchday,
+      "typeBet": this.betType.name,
+      "typePay": this.priceType.name,
+      "minBet": this.betForm.controls["minBet"].value,
+      "maxBet": this.betForm.controls["maxBet"].value,
+      "lastBetTime": new Date(date)
+    }).subscribe(
+      _=>{
+        this.resetForm();
+        this.getPageGroup(this.groupName);
+        this.newBet_competitionMatches_launched = false;
+        (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
+        (document.querySelector("#launchFootBallBetButton") as HTMLElement).click();
+        (document.querySelector("#newBet_competitionSelect") as HTMLSelectElement).selectedIndex = 0;
+      }
+    );
   }
 
   public selectCompetition(competition:number){
@@ -126,8 +150,7 @@ export class FootballBetComponent implements OnDestroy {
     if(this.betType != null) this.winRate+=this.betType.winRate;
   }
 
-  public setDate(date:string){
-    this.maxDate = date;
+  public setDate(){
     this.selectedMaxDay = true;
   }
 
@@ -140,7 +163,19 @@ export class FootballBetComponent implements OnDestroy {
   
   private getPageGroup(name:string){
     this.betS.getPageGroup(name).subscribe(
-      (bets:AvailableBet[])=> this.bets = bets
+      (bets:AvailableBet[])=> {
+        if(isString(bets) && bets=="MaximunWeekBetsReached"){
+          this.bets = [];
+          this.errorMessage = "Has alcanzado el cupo máximo de apuestas que puedes lanzar esta semana.";
+        }
+        else if(bets.length == 0){
+          this.bets = [];
+          this.errorMessage = "No hay apuestas disponibles esta semana.";
+        }
+        else if(bets.length>0){
+          this.bets = bets;
+        } 
+      }
     );
   }
   
@@ -181,16 +216,20 @@ export class FootballBetComponent implements OnDestroy {
   }
 
   private setAllowedDays(match:FootballMatch){
+    this.allowedDates = [];
     let endDate = new Date(match.date);
     let now = new Date();
-    this.allowedDates = [];
-    if(now.getDate() != endDate.getDate()){
+    now = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 25, 59, 59, 0);
+    endDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 
+                      endDate.getHours()+2, endDate.getMinutes(), 0, 0);
+                      
+    if(now.getUTCDate() != endDate.getUTCDate()){
       this.allowedDates.push(now.toISOString());
     }
 
     while(true){
       now = new Date(now.getTime() + (1000*60*60*24));
-      if(now<=endDate && now.getDate() != endDate.getDate()) {
+      if(now<=endDate && now.getUTCDate() != endDate.getUTCDate()) {
         this.allowedDates.push(now.toISOString());
       }
       else break;

@@ -153,5 +153,10 @@ export enum AlertInfoType{
     /**
      * @summary Success message, when a user leaves a group
      */
-    SUCCESFULLGROUPLEAVE = "SUCCESFULLGROUPLEAVE"
+    SUCCESFULLGROUPLEAVE = "SUCCESFULLGROUPLEAVE",
+
+    /**
+     * @summary Success message, when a user launchs a football bet
+     */
+    SUCCESFULLFOOTBALLBET = "SUCCESFULLFOOTBALLBET"
   }

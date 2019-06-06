@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
+import { LaunchFootballBet } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,16 @@ export class BetService extends RestService{
    */
   public getPageGroup(name:string){
     return this.getRequest(this._betPath+"FootBallBetPage?groupName="+name, null);
+  }
+
+  /**
+   * Launch a new football bet
+   * 
+   * @access public
+   * @param {LaunchFootballBet} order The details of the request
+   * @return {Observable} The result of the request
+   */
+  public launchBet(order:LaunchFootballBet){
+    return this.postRequest(order, this._betPath+"LaunchFootBallBet");
   }
 }

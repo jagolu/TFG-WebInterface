@@ -299,6 +299,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESFULLFOOTBALLBET:{
+        msg = [
+          "Se ha lanzado correctamente la apuesta deportiva.",
+          "",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
