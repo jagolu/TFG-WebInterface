@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { littleNew } from '../../home/home.component';
+import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
+import { GroupBet } from 'src/app/models/models';
 
 @Component({
   selector: 'app-group-bet',
@@ -7,18 +8,18 @@ import { littleNew } from '../../home/home.component';
   styles: []
 })
 export class GroupBetComponent implements OnInit {
-  public news:littleNew[] = [];
+  public bets:GroupBet[] = [];
+  public userCoins:number = 0;
 
-  constructor() { 
-    this.news.push({title:"title1", body:"body1", time:"14/01/19 14:32", owner:"SYS"});
-    this.news.push({title:"title2", body:"body2", time:"14/01/19 14:32", owner:"SYS"});
-    this.news.push({title:"title3", body:"body3", time:"14/01/19 14:32", owner:"GROUP1"});
-    this.news.push({title:"title4", body:"body4", time:"14/01/19 14:32", owner:"GROUP1"});
-    this.news.push({title:"title5", body:"body5", time:"14/01/19 14:32", owner:"SYS"});
-    this.news.push({title:"title6", body:"body6", time:"14/01/19 14:32", owner:"GROUP2"});
-  }
+  constructor(private groupPage:GroupInfoService) { }
 
   ngOnInit() {
+    this.groupPage.info.subscribe(page=>{
+      try{
+        this.userCoins =  page.members ? page.members[page.members.length-1].coins : 0;
+        this.bets = page.bets;
+      }catch(Error){}
+    })
   }
 
 }
