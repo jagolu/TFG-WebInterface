@@ -163,7 +163,7 @@ export class FootballBetComponent implements OnDestroy {
   
   private getPageGroup(name:string){
     this.betS.getPageGroup(name).subscribe(
-      (bets:AvailableBet[])=> {
+      (bets:any[])=> {
         if(isString(bets) && bets=="MaximunWeekBetsReached"){
           this.bets = [];
           this.errorMessage = "Has alcanzado el cupo máximo de apuestas que puedes lanzar esta semana.";
