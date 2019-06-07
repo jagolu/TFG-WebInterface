@@ -158,5 +158,11 @@ export enum AlertInfoType{
     /**
      * @summary Success message, when a user launchs a football bet
      */
-    SUCCESFULLFOOTBALLBET = "SUCCESFULLFOOTBALLBET"
+    SUCCESFULLFOOTBALLBET = "SUCCESFULLFOOTBALLBET",
+
+    /**
+     * @summary Info message when a user tries to launch
+     * a bet which min bet is higher that his actual coins
+     */
+    BETHIGHERTHANYOURCOINS = "BETHIGHERTHANYOURCOINS"
   }

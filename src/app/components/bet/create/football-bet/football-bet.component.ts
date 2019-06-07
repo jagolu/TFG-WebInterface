@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
-import { AvailableBet, FootballMatch, NameWinRate } from 'src/app/models/models';
+import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { isString } from 'util';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
   selector: 'app-football-bet',
@@ -53,12 +54,18 @@ export class FootballBetComponent implements OnDestroy {
   private betType:NameWinRate = null;
   private priceType:NameWinRate = null;
 
-  constructor(private groupPageS:GroupInfoService, private betS:BetService) { 
+  //
+  // ─── TO NOW THE ACTUAL USER COINS ───────────────────────────────────────────────
+  //
+  private userCoins:number = 0;
+
+  constructor(private groupPageS:GroupInfoService, private betS:BetService, private alertS:AlertService) { 
     this.initializeForm();
     this.groupPageS.info.subscribe(page=>{
       try{
         if(this.groupName != page.name && page.name.length > 1){
           this.groupName = page.name;
+          this.userCoins = page.members[page.members.length-1].coins;
           let role = page.members ? page.members[page.members.length-1].role : "";
           if(!page.type && role == "GROUP_MAKER") this.getPageGroup(this.groupName);         
         }
@@ -122,6 +129,7 @@ export class FootballBetComponent implements OnDestroy {
       this.maxs = Array(100-minOut+1).fill(0).map((x,i)=>(i+minOut)*100);
       this.betForm.controls["maxBet"].setValue(0);
     }
+    if(min>this.userCoins) this.alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
   }
 
   public setMinBet(){

@@ -307,6 +307,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.BETHIGHERTHANYOURCOINS:{
+        msg = [
+          "Cuiado, el mínimo de apuesta que has elegido es superior a las monedas que tienes actualmente.",
+          "Si no consigues más monedas no podrás apostar en esta apuesta.",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
