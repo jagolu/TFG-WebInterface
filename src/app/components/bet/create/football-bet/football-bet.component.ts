@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType } from 'src/app/models/models';
@@ -11,7 +11,11 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
   templateUrl: './football-bet.component.html',
   styles: []
 })
-export class FootballBetComponent implements OnDestroy {
+export class FootballBetComponent implements OnDestroy, OnInit {
+  //
+  // ─── SIZE WINDOW ────────────────────────────────────────────────────────────────
+  //
+  public width:number;
 
   //
   // ─── EXPLANATION VARS ───────────────────────────────────────────────────────────
@@ -75,8 +79,16 @@ export class FootballBetComponent implements OnDestroy {
     });
   }
 
+  ngOnInit(){
+    this.width = window.innerWidth;
+  }
+
   ngOnDestroy(){
     this.groupPageS.removeInfo();
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event) {
+    this.width = window.innerWidth;
   }
 
   public launchBet(){

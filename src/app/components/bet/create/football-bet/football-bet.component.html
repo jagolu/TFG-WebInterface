@@ -12,12 +12,50 @@
       <div class="col-lg-7 col-12 mb-2">
         <div class="row">
           <div class="col-12">
-            <select class="form-control" id="newBet_competitionMatches_select" 
-                  (change)="selectMatchDay()"  [ngClass]="{'border border-warning': !selectedMatch}">
-              <option selected disabled value="" >Select a match</option>
-              <option value="{{i}}" *ngFor="let match of matches; let i = index"
-                >{{match.match_name}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
-            </select>               
+            <div class="row">
+              <div class="col-12">
+                <select class="form-control" id="newBet_competitionMatches_select" 
+                      (change)="selectMatchDay()"  [ngClass]="{'border border-warning': !selectedMatch}">
+                  <option selected disabled value="" >Select a match</option>
+                  <option value="{{i}}" *ngFor="let match of matches; let i = index"
+                    >{{match.match_name}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
+                </select>                       
+              </div>
+              <div class="col-12 mt-2" *ngIf="width<=992">
+                <div class="row">
+                    <div class="col-12 mb-2">
+                      <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch" 
+                              (change)="setBetType()" [ngClass]="{'border border-warning': !selectedBet}">
+                          <option selected disabled value="" >Bet type</option>
+                          <option value="{{i}}" *ngFor="let allowedBet of allowedBets; let i = index"
+                            >{{allowedBet.name}}</option>
+                      </select>                
+                    </div>
+                    <div class="col-12 mb-2" *ngIf="selectedBet">
+                      <div class="card card-body bg-light">
+                        <p class="card-text">{{explanationBetType}}</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-12" *ngIf="width<=992">
+                <div class="row">
+                    <div class="col-12 mb-2">
+                      <select class="form-control" *ngIf="selectedBet" id="newBet_priceType_select" 
+                              (change)="setPriceType()" [ngClass]="{'border border-warning': !selectedPrice}">
+                          <option selected disabled value="">Prize type</option>
+                          <option value="{{i}}" *ngFor="let allowedPay of allowedPays; let i = index"
+                            >{{allowedPay.name}}</option>
+                      </select>               
+                    </div>
+                    <div class="col-12 mb-2" *ngIf="selectedPrice">
+                      <div class="card card-body bg-light">
+                        <p class="card-text">{{explanationPriceType}}</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
           </div>
           <div class="col-12" *ngIf="selectedBet && selectedPrice">
             <div class="row">
@@ -73,7 +111,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-2 col-12">
+      <div class="col-lg-2 col-12" *ngIf="width>992">
         <div class="row">
           <div class="col-12 mb-2">
             <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch" 
@@ -90,7 +128,7 @@
           </div>
         </div>
       </div>      
-      <div class="col-lg-3 col-12">
+      <div class="col-lg-3 col-12" *ngIf="width>992">
         <div class="row">
           <div class="col-12 mb-2">
             <select class="form-control" *ngIf="selectedBet" id="newBet_priceType_select" 
