@@ -22,37 +22,43 @@
         data-parent="#groupBets">
       <div class="card card-body">
         <div class="row">
-          <div class="col-lg-6 col-12">
-            <div class="row">
-              <div class="col-lg-6 col-12">
-                <p>Max day to do your bet</p>
+          <div class="col-lg-6 col-12 mt-3">
+            <div class="row mb-1">
+              <div class="col-lg-6 col-12" [ngClass]="{'col-lg-6 col-12': !isGroupBet(bet.typePay.name), 'col-12': isGroupBet(bet.typePay.name)}">
+                Max day to do your bet
               </div>
-              <div class="col-lg-6 col-12">
-                <p>Fee</p>
+              <div class="col-lg-6 col-12" *ngIf="!isGroupBet(bet.typePay.name)">
+                Fee
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6 col-12">
+            <div class="row mt-2">
+              <div class="col-lg-6 col-12" [ngClass]="{'col-lg-6 col-12': !isGroupBet(bet.typePay.name), 'col-12': isGroupBet(bet.typePay.name)}">
                 <input type="text" readonly class="form-control" value="{{bet.lastBetTime | onlyDatePipe}}">
               </div>
-              <div class="col-lg-6 col-12">
+              <div class="col-lg-6 col-12" *ngIf="!isGroupBet(bet.typePay.name)">
                 <input type="text" readonly class="form-control" value="{{bet.typeBet.winRate + bet.typePay.winRate}}">
               </div>  
             </div>
-            <div class="row mt-3">
-              <div class="col-lg-6 col-12">
-                <p>Min bet</p>
+            <div class="row mt-3 mb-1">
+              <div class="col-lg-6 col-12" *ngIf="!isGroupBet(bet.typePay.name)">
+                Min bet
               </div>
-              <div class="col-lg-6 col-12">
-                <p>Max bet</p>
+              <div class="col-lg-6 col-12" *ngIf="!isGroupBet(bet.typePay.name)">
+                Max bet
+              </div>
+              <div class="col-12" *ngIf="isGroupBet(bet.typePay.name)">
+                Entry bet
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-6 col-12">
+              <div class="col-lg-6 col-12" *ngIf="!isGroupBet(bet.typePay.name)">
                 <input type="text" readonly class="form-control" value="{{bet.minBet}}">
               </div>
-              <div class="col-lg-6 col-12">
+              <div class="col-lg-6 col-12" *ngIf="!isGroupBet(bet.typePay.name)">
                 <input type="text" readonly class="form-control" value="{{bet.maxBet==10001 ? 'No Max' : bet.maxBet}}">
+              </div>  
+              <div class="col-12" *ngIf="isGroupBet(bet.typePay.name)">
+                <input type="text" readonly class="form-control" value="{{bet.minBet}}">
               </div>  
             </div>
           </div>

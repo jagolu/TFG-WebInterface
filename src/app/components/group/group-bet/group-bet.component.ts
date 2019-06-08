@@ -20,10 +20,14 @@ export class GroupBetComponent implements OnInit {
         this.userCoins =  page.members ? page.members[page.members.length-1].coins : 0;
         this.bets = page.bets;
       }catch(Error){}
-    })
+    });
   }
 
   public doBet(bet:GroupBet){
     this.alertS.doAFootballBet(bet, this.userCoins);
+  }
+
+  public isGroupBet(type:string){
+    return type.includes("GROUP");
   }
 }
