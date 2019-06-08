@@ -52,7 +52,7 @@
                 <input type="text" readonly class="form-control" value="{{bet.minBet}}">
               </div>
               <div class="col-lg-6 col-12">
-                <input type="text" readonly class="form-control" value="{{bet.maxBet}}">
+                <input type="text" readonly class="form-control" value="{{bet.maxBet==10001 ? 'No Max' : bet.maxBet}}">
               </div>  
             </div>
           </div>
