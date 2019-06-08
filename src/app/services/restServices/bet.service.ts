@@ -60,7 +60,7 @@ export class BetService extends RestService{
    * @param {string} name The group name
    * @return {Observable} The result of the request
    */
-  public getPageGroup(name:string){
+  public getLaunchFootballBet(name:string){
     return this.getRequest(this._betPath+"FootBallBetPage?groupName="+name, null);
   }
 

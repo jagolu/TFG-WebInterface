@@ -75,7 +75,7 @@
                 </div>
               </div>  
               <div class="col-12">
-                <form [formGroup]="betForm" (ngSubmit)="launchBet()" *ngIf="selectedBet && selectedPrice && selectedMaxDay">
+                <form [formGroup]="betForm" (ngSubmit)="launchBet()" *ngIf="selectedMaxDay">
                   <div class="form-group row" *ngIf="!type_group_bet">
                     <label class="col-form-label col-lg-4 col-12">Min and max bet</label>
                     <div class="col-lg-4 col-6">
