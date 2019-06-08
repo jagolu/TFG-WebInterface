@@ -2,8 +2,7 @@
 <div *ngIf="bets.length>1">  
   <select class="form-control" id="newBet_competitionSelect" (change)="selectCompetition()">
     <option selected disabled value="">Select a competition</option>
-    <option *ngFor="let bet of bets; let i = index" value="{{i}}"
-        >{{bet.competition}}</option>
+    <option *ngFor="let bet of bets">{{bet.competition}}</option>
   </select>
 
 
@@ -17,7 +16,7 @@
                 <select class="form-control" id="newBet_competitionMatches_select" 
                       (change)="selectMatchDay()"  [ngClass]="{'border border-warning': !selectedMatch}">
                   <option selected disabled value="" >Select a match</option>
-                  <option value="{{i}}" *ngFor="let match of matches; let i = index"
+                  <option *ngFor="let match of matches"
                     >{{match.match_name}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
                 </select>                       
               </div>
@@ -27,7 +26,7 @@
                       <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch" 
                               (change)="setBetType()" [ngClass]="{'border border-warning': !selectedBet}">
                           <option selected disabled value="" >Bet type</option>
-                          <option value="{{i}}" *ngFor="let allowedBet of allowedBets; let i = index"
+                          <option *ngFor="let allowedBet of allowedBets"
                             >{{allowedBet.name}}</option>
                       </select>                
                     </div>
@@ -44,7 +43,7 @@
                       <select class="form-control" *ngIf="selectedBet" id="newBet_priceType_select" 
                               (change)="setPriceType()" [ngClass]="{'border border-warning': !selectedPrice}">
                           <option selected disabled value="">Prize type</option>
-                          <option value="{{i}}" *ngFor="let allowedPay of allowedPays; let i = index"
+                          <option *ngFor="let allowedPay of allowedPays"
                             >{{allowedPay.name}}</option>
                       </select>               
                     </div>
@@ -117,7 +116,7 @@
             <select class="form-control" id="newBet_betType_select" *ngIf="selectedMatch" 
                     (change)="setBetType()" [ngClass]="{'border border-warning': !selectedBet}">
                 <option selected disabled value="" >Bet type</option>
-                <option value="{{i}}" *ngFor="let allowedBet of allowedBets; let i = index"
+                <option *ngFor="let allowedBet of allowedBets"
                   >{{allowedBet.name}}</option>
             </select>                
           </div>
@@ -134,7 +133,7 @@
             <select class="form-control" *ngIf="selectedBet" id="newBet_priceType_select" 
                     (change)="setPriceType()" [ngClass]="{'border border-warning': !selectedPrice}">
                 <option selected disabled value="">Prize type</option>
-                <option value="{{i}}" *ngFor="let allowedPay of allowedPays; let i = index"
+                <option *ngFor="let allowedPay of allowedPays"
                   >{{allowedPay.name}}</option>
             </select>               
           </div>

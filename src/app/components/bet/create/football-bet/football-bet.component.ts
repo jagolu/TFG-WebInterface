@@ -344,6 +344,7 @@ export class FootballBetComponent implements OnDestroy, OnInit {
         (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
         (document.querySelector("#launchFootBallBetButton") as HTMLElement).click();
         (document.querySelector("#newBet_competitionSelect") as HTMLSelectElement).selectedIndex = 0;
+        this.getPageGroup(this.groupName);
       }
     );
   }
@@ -356,7 +357,7 @@ export class FootballBetComponent implements OnDestroy, OnInit {
    * @access public
    */
   public selectCompetition(){
-    let competition = (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex;
+    let competition = (document.querySelector("#newBet_competitionSelect") as HTMLSelectElement).selectedIndex-1;
     if(!this.newBet_competitionMatches_launched){
       this.newBet_competitionMatches_launched = true;
       (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
@@ -375,7 +376,7 @@ export class FootballBetComponent implements OnDestroy, OnInit {
    * @access public
    */
   public selectMatchDay(){
-    let matchday = (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex;
+    let matchday = (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex-1;
     if(this.selectedMatch) (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex = 0;
     this.resetForm();
     this.match = this.matches[matchday];
