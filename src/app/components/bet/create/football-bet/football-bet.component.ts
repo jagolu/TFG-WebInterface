@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
-import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType } from 'src/app/models/models';
+import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { isString } from 'util';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
@@ -336,7 +336,8 @@ export class FootballBetComponent implements OnDestroy, OnInit {
       "maxBet": !this.type_group_bet ? this.betForm.controls["maxBet"].value : this.betForm.controls["exactBet"].value,
       "lastBetTime": new Date(date)
     }).subscribe(
-      _=>{
+      (page:GroupPage)=>{
+        this.groupPageS.updateInfo(page);
         this.resetForm();
         this.getPageGroup(this.groupName);
         this.newBet_competitionMatches_launched = false;
