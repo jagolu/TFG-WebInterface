@@ -45,6 +45,7 @@ export class FootballBetComponent implements OnDestroy {
   public selectedMatch:boolean = false;
   public selectedPrice:boolean = false; 
   public selectedMaxDay:boolean = false;
+  public type_group_bet:boolean = false;
 
   //
   // ─── TO DO THE BACKEND REQUEST ──────────────────────────────────────────────────
@@ -60,14 +61,14 @@ export class FootballBetComponent implements OnDestroy {
   private userCoins:number = 0;
 
   constructor(private groupPageS:GroupInfoService, private betS:BetService, private alertS:AlertService) { 
-    this.initializeForm();
+    this.initializeForm();  
     this.groupPageS.info.subscribe(page=>{
       try{
         if(this.groupName != page.name && page.name.length > 1){
           this.groupName = page.name;
           this.userCoins = page.members[page.members.length-1].coins;
           let role = page.members ? page.members[page.members.length-1].role : "";
-          if(!page.type && role == "GROUP_MAKER") this.getPageGroup(this.groupName);         
+          if(!page.type && role == "GROUP_MAKER") this.getPageGroup(this.groupName);  
         }
       }
       catch(Error){}
@@ -86,8 +87,8 @@ export class FootballBetComponent implements OnDestroy {
       "matchDay": this.match.matchday,
       "typeBet": this.betType.name,
       "typePay": this.priceType.name,
-      "minBet": this.betForm.controls["minBet"].value,
-      "maxBet": this.betForm.controls["maxBet"].value,
+      "minBet": !this.type_group_bet ? this.betForm.controls["minBet"].value : this.betForm.controls["exactBet"].value,
+      "maxBet": !this.type_group_bet ? this.betForm.controls["maxBet"].value : this.betForm.controls["exactBet"].value,
       "lastBetTime": new Date(date)
     }).subscribe(
       _=>{
@@ -101,7 +102,8 @@ export class FootballBetComponent implements OnDestroy {
     );
   }
 
-  public selectCompetition(competition:number){
+  public selectCompetition(){
+    let competition = (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex;
     if(!this.newBet_competitionMatches_launched){
       this.newBet_competitionMatches_launched = true;
       (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
@@ -112,7 +114,8 @@ export class FootballBetComponent implements OnDestroy {
     this.allowedPays = this.bets[competition].allowedTypePays;
   }
 
-  public selectMatchDay(matchday:number){
+  public selectMatchDay(){
+    let matchday = (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex;
     if(this.selectedMatch) (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex = 0;
     this.resetForm();
     this.match = this.matches[matchday];
@@ -132,6 +135,11 @@ export class FootballBetComponent implements OnDestroy {
     if(min>this.userCoins) this.alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
   }
 
+  public setExactBet(){
+    let minMax = parseInt(this.betForm.controls["exactBet"].value);
+    if(minMax>this.userCoins) this.alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
+  }
+
   public setMinBet(){
     let max = parseInt(this.betForm.controls["maxBet"].value);
     let min = parseInt(this.betForm.controls["minBet"].value);
@@ -142,7 +150,9 @@ export class FootballBetComponent implements OnDestroy {
     }
   }
 
-  public setBetType(type:NameWinRate){
+  public setBetType(){
+    let typeid = (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex-1;
+    let type:NameWinRate = this.allowedBets[typeid];
     this.selectedBet = true;
     this.explanationBetType = type.description;
     this.betType = type;
@@ -150,12 +160,16 @@ export class FootballBetComponent implements OnDestroy {
     if(this.priceType != null) this.winRate+=this.priceType.winRate;
   }
 
-  public setPriceType(type:NameWinRate){
+  public setPriceType(){    
+    let typeid = (document.querySelector("#newBet_priceType_select") as HTMLSelectElement).selectedIndex-1;
+    let type:NameWinRate = this.allowedPays[typeid];
+    this.type_group_bet = type.name.includes("GROUP");
     this.selectedPrice = true;
     this.explanationPriceType = type.description;
     this.priceType = type;
     this.winRate = type.winRate;
     if(this.betType != null) this.winRate+=this.betType.winRate;
+    this.initializeForm();
   }
 
   public setDate(){
@@ -171,8 +185,8 @@ export class FootballBetComponent implements OnDestroy {
   
   private getPageGroup(name:string){
     this.betS.getPageGroup(name).subscribe(
-      (bets:any)=> {
-        if(isString(bets) && bets=="MaximunWeekBetsReached"){
+      (bets:AvailableBet[])=> {
+        if(bets.length == 1 && bets[0].competition=="MaximunWeekBetsReached"){
           this.bets = [];
           this.errorMessage = "Has alcanzado el cupo máximo de apuestas que puedes lanzar esta semana.";
         }
@@ -193,19 +207,27 @@ export class FootballBetComponent implements OnDestroy {
       'minBet': new FormControl(
         0,
         [
-          Validators.required,
-          Validators.min(100),
+          !this.type_group_bet ? Validators.required : Validators.nullValidator,
+          Validators.min(!this.type_group_bet ? 100 : -1),
           Validators.max(10000)
         ]
       ),
       'maxBet': new FormControl(
         0,
         [
-          Validators.required,
-          Validators.min(100),
+          !this.type_group_bet ? Validators.required : Validators.nullValidator,
+          Validators.min(!this.type_group_bet ? 100 : -1),
           Validators.max(10001)
         ]
-      )
+      ),
+      'exactBet': new FormControl(
+        0,
+        [
+          this.type_group_bet ? Validators.required : Validators.nullValidator,
+          Validators.min(this.type_group_bet ? 100 : -1),
+          Validators.max(10001)
+        ]
+      ),
     })
   }
 
@@ -215,12 +237,15 @@ export class FootballBetComponent implements OnDestroy {
     this.selectedPrice = false;
     this.selectedMatch = false;
     this.selectedMaxDay = false;
+    this.type_group_bet = false;
     this.betType = null;
     this.priceType = null;
-    this.betForm.reset({
-      'minBet':0,
-      'maxBet':0
-    });
+    this.initializeForm();
+    // this.betForm.reset({
+    //   'minBet':0,
+    //   'maxBet':0,
+    //   "exactBet": 0
+    // });
   }
 
   private setAllowedDays(match:FootballMatch){
