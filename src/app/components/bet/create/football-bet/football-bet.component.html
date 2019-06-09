@@ -1,5 +1,6 @@
-  
+  <!-- THERE ARE SOME AVAILABLE BETS -->
 <div *ngIf="bets.length>1">  
+  <!-- SELECT COMPETITION -->
   <select class="form-control" id="newBet_competitionSelect" (change)="selectCompetition()">
     <option selected disabled value="">Select a competition</option>
     <option *ngFor="let bet of bets">{{bet.competition}}</option>
@@ -8,10 +9,13 @@
 
   <div class="collapse mt-2" id="newBet_competitionMatches">
     <div class="row">
+      <!-- FULL FORM -->
       <div class="col-lg-7 col-12 mb-2">
         <div class="row">
+          <!-- SELECT MATCH & (BET/PRICE TYPE WIDTH<=992) -->
           <div class="col-12">
             <div class="row">
+              <!-- SELECT MATCH -->
               <div class="col-12">
                 <select class="form-control" id="newBet_competitionMatches_select" 
                       (change)="selectMatchDay()"  [ngClass]="{'border border-warning': !selectedMatch}">
@@ -20,6 +24,7 @@
                     >{{match.match_name}}&nbsp;&nbsp;&nbsp;&nbsp;({{match.date|onlyDatePipe}})</option>
                 </select>                       
               </div>
+              <!-- BET TYPE WIDTH<=992 -->
               <div class="col-12 mt-2" *ngIf="width<=992">
                 <div class="row">
                     <div class="col-12 mb-2">
@@ -37,6 +42,7 @@
                     </div>
                   </div>
               </div>
+              <!-- PRICE TYPE WIDTH<=992 -->
               <div class="col-12" *ngIf="width<=992">
                 <div class="row">
                     <div class="col-12 mb-2">
@@ -58,6 +64,7 @@
           </div>
           <div class="col-12" *ngIf="selectedBet && selectedPrice">
             <div class="row">
+              <!-- SELECT MAX DAY -->
               <div [ngClass]="{'col-lg-6 col-12': !type_group_bet, 'col-12': type_group_bet}">
                 <select class="form-control mb-2 mt-2" id="newBet_allowedDates_select" [ngClass]="{'border border-warning': !selectedMaxDay}"
                       *ngIf="selectedBet && selectedPrice" (change)="setDate()">
@@ -65,6 +72,7 @@
                   <option value="{{date}}" *ngFor="let date of allowedDates">{{date|onlyDatePipe}}</option>
                   </select>   
               </div>
+              <!-- WINRATE IF TYPE_PRICE == 'GROUP BET' -->
               <div class="col-lg-6 col-12" *ngIf="!type_group_bet">
                 <div class="form-group row mb-2 mt-2" *ngIf="selectedBet && selectedPrice">
                   <label class="col-6 col-form-label">Fee</label>
@@ -73,10 +81,13 @@
                   </div>
                 </div>
               </div>  
+              <!-- MIN, MAX, EXACT BET & SUBMIT BUTTON -->
               <div class="col-12">
                 <form [formGroup]="betForm" (ngSubmit)="launchBet()" *ngIf="selectedMaxDay">
+                  <!-- MIN & MAX IF TYPE_PRICE == 'GROUP BET' -->
                   <div class="form-group row" *ngIf="!type_group_bet">
                     <label class="col-form-label col-lg-4 col-12">Min and max bet</label>
+                    <!-- MIN BET -->
                     <div class="col-lg-4 col-6">
                       <select class="form-control" formControlName="minBet" id="minBet" 
                               (change)="setMaxBet()" [ngClass]="{'border border-warning': !betForm.controls.minBet.valid}">
@@ -84,6 +95,7 @@
                         <option value="{{min}}" *ngFor="let min of mins">{{min}}</option>
                       </select>
                     </div>
+                    <!-- MAX BET -->
                     <div class="col-lg-4 col-6">
                       <select class="form-control" formControlName="maxBet" id="maxBet" 
                               (change)="setMinBet()" [ngClass]="{'border border-warning': !betForm.controls.maxBet.valid}">
@@ -92,6 +104,7 @@
                       </select>
                     </div>
                   </div>
+                  <!-- EXACT BET IF TYPE_PRICE == 'GROUP BET' -->
                   <div class="form-group row" *ngIf="type_group_bet">
                       <label class="col-form-label col-lg-6 col-12">The bet</label>
                       <div class="col-lg-6 col-12">
@@ -102,6 +115,7 @@
                           </select>
                         </div>
                   </div>
+                  <!-- SUBMIT BUTTON -->
                   <button class="btn btn-dark w-100" type="submit" [disabled]="!betForm.valid">Launch Bet</button>
                 </form>     
               </div>
@@ -109,6 +123,7 @@
           </div>
         </div>
       </div>
+      <!-- BET TIPE WIDTH>992 -->
       <div class="col-lg-2 col-12" *ngIf="width>992">
         <div class="row">
           <div class="col-12 mb-2">
@@ -126,6 +141,7 @@
           </div>
         </div>
       </div>      
+      <!-- PRICE TYPE WIDTH>992 -->
       <div class="col-lg-3 col-12" *ngIf="width>992">
         <div class="row">
           <div class="col-12 mb-2">
@@ -147,6 +163,7 @@
   </div>
 
 
+  <!-- HIDDEN BUTTON TO LAUNCH DE ALERT -->
   <button class="btn btn-primary" 
           type="button" data-toggle="collapse" 
           data-target="#newBet_competitionMatches" 
@@ -159,6 +176,7 @@
   </button>
 </div>
 
+<!-- NO AVAILABLE BETS -->
 <div *ngIf="bets.length == 0">
   <p class="h3">{{ errorMessage }}</p>
 </div>
