@@ -44,7 +44,6 @@ export class CreateGroupAlertComponent{
    */
   constructor(private groupS:GroupService, private _alertS:AlertService) { 
     this.initializeForm();
-    this.resetForm();
     this._alertS.reset.subscribe(
       reset=>{ if(reset) this.resetForm() }
     );

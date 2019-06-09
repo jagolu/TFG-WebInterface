@@ -45,13 +45,10 @@ export class DeleteGroupAlertComponent{
    * @param {UserService} _userS To do the user requests
    */
   constructor(private _alertS:AlertService, private groupS:GroupService) { 
-    this.initializeForm();
-    this._alertS.target.subscribe(
-      target => this.name = target
-    );
-    this._alertS.reset.subscribe(
-      reset=>{ if(reset) this.resetForm(); }
-    );
+    this._alertS.target.subscribe(target =>{
+      this.name = target;
+      this.initializeForm();
+    });
   }
 
 
@@ -75,10 +72,6 @@ export class DeleteGroupAlertComponent{
     //show 2 modals, so first hide that and in 0.35 seconds
     //send the petition and show the modal of the response
     setTimeout(this.remove.bind(this), 350);
-
-    //When the alert do the fade out, the user can see the reset of
-    // the form, waiting 0.75 seconds the user doesn't see that
-    setTimeout(this.resetForm.bind(this), 750);
   }
 
 
@@ -105,17 +98,6 @@ export class DeleteGroupAlertComponent{
         ]
       )
     });
-  }
-
-  /**
-   * Reset the remove account form to emtpy
-   * 
-   * @access private
-   */
-  private resetForm(){
-    this.deleteGroupForm.reset({
-      'password': ""
-    })
   }
   
   /**
