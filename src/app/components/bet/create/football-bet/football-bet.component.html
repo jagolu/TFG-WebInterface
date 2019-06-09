@@ -88,7 +88,6 @@
                       <select class="form-control" formControlName="maxBet" id="maxBet" 
                               (change)="setMinBet()" [ngClass]="{'border border-warning': !betForm.controls.maxBet.valid}">
                         <option selected disabled value="0" >Select a max bet</option>
-                        <option value="10001">Without max</option>
                         <option value="{{max}}" *ngFor="let max of maxs">{{max}}</option>
                       </select>
                     </div>

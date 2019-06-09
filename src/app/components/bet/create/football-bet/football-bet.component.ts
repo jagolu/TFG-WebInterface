@@ -525,7 +525,7 @@ export class FootballBetComponent implements OnDestroy, OnInit {
         [
           !this.type_group_bet ? Validators.required : Validators.nullValidator,
           Validators.min(!this.type_group_bet ? 100 : -1),
-          Validators.max(10001)
+          Validators.max(10000)
         ]
       ),
       'exactBet': new FormControl(
@@ -533,7 +533,7 @@ export class FootballBetComponent implements OnDestroy, OnInit {
         [
           this.type_group_bet ? Validators.required : Validators.nullValidator,
           Validators.min(this.type_group_bet ? 100 : -1),
-          Validators.max(10001)
+          Validators.max(10000)
         ]
       ),
     })
