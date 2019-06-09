@@ -250,7 +250,6 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        // "",
         {value: this.min, disabled: this.groupBet},
         [
           this.requiredNumber,
@@ -268,14 +267,6 @@ export class DoFootballBetComponent{
    */
   private resetForm(){
     this.coins_bet = 0;
-    // this.doAFootballBetForm.reset({
-    //   "winner": '',
-    //   "homeGoals": '',
-    //   "awayGoals": '',
-    //   "coinsBet": {value: 0, disabled: this.groupBet}
-    // });
-    
-    console.log(this.doAFootballBetForm);
   }
   
   /**
@@ -284,10 +275,6 @@ export class DoFootballBetComponent{
    * @access private
    */
   private betReq(){
-    console.log(this.show1X2, 
-                parseInt(this.doAFootballBetForm.controls["homeGoals"].value),
-                parseInt(this.doAFootballBetForm.controls["awayGoals"].value),
-                parseInt(this.doAFootballBetForm.controls["winner"].value));
     this._betS.doFootballBet({
       "groupName": this.groupName,
       "footballBet": this.bet,
@@ -308,7 +295,7 @@ export class DoFootballBetComponent{
    */
   private requiredNumber(control:FormControl):{[ret:string]:boolean}{
     let num = control.value;
-    if(num == null || isNaN(num) || num%1 !== 0) {
+    if(num == null || isNaN(num) || num%1 !== 0 || control.pristine) {
       return {"requiredNumber":true}
     }
     return null;
