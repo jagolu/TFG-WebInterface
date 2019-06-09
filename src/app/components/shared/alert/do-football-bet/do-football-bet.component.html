@@ -1,6 +1,8 @@
 <form [formGroup]="doAFootballBetForm" (ngSumit)="doBet()">
-  <div class="row justify-content-md-center mb-2" *ngIf="show1X2">  
-    <div class="col-4">
+  <!-- 1X2 -->
+  <div class="row" *ngIf="show1X2">
+    <label class="col-6 col-form-label">Result of the match</label>
+    <div class="col-6 pt-2 pb-2">
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="1" formControlName="winner">
         <label class="form-check-label">1</label>
@@ -12,50 +14,57 @@
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="2" formControlName="winner">
         <label class="form-check-label">2</label>
-      </div> 
+      </div>       
     </div>
   </div>
 
+  <!-- Home/Away goals -->
   <div *ngIf="!show1X2">
     <div class="row mb-2">
-      <label class="col-sm-5 col-form-label">Home goals</label>
-      <div class="col-sm-7">    
+      <label class="col-5 col-form-label">Home goals</label>
+      <div class="col-7">    
         <input type="number" class="form-control" placeholder="Home team goals" 
           formControlName="homeGoals" min=0 max=20>
       </div>
     </div>
     <div class="row mb-2">
-      <label class="col-sm-5 col-form-label">Away goals</label>
-      <div class="col-sm-7">    
+      <label class="col-5 col-form-label">Away goals</label>
+      <div class="col-7">    
         <input type="number" class="form-control" placeholder="Away team goals" 
             formControlName="awayGoals" min=0 max=20>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-6">
-      <div class="row">
-        <div class="col-6">Your coins</div>
-        <div class="col-6">
-            {{user_coins-coins_bet}} <app-icon [Icon]="coin_icon"></app-icon>
-        </div>
-      </div>
-        
+  <!-- USER COINS & POSSIBLE WIN -->
+  <div class="row m-2 pt-1 pb-1 w-100">
+    <div [ngClass]="{'col-4': groupBet, 'col-6': !groupBet}">
+        <small>Your will have {{user_coins-coins_bet}} <app-icon [Icon]="coin_icon"></app-icon></small>
     </div>
-    <div class="col-6">
-        <div class="row">
-          <div class="col-8">Maximum gain</div>
-          <div class="col-4">
-              {{max_win}} <app-icon [Icon]="coin_icon"></app-icon>
-            </div>
-        </div>
+    <div [ngClass]="{'col-8': groupBet, 'col-6': !groupBet}">
+      <small *ngIf="!groupBet">Maximum gain: {{max_win}} <app-icon [Icon]="coin_icon"></app-icon></small>
+      <small *ngIf="groupBet">You can win all the coins bet in this bet <app-icon [Icon]="coin_icon"></app-icon></small>
+    </div>   
+  </div>
+
+  <!-- Your bet -->
+  <div class="row justify-content-center mb-3" *ngIf="!groupBet">
+    <div class="col-4">Min bet: {{min}}</div>
+    <div class="col-4">Max bet: {{max}}</div>
+    <div class="col-3">Fee: {{win_rate}}</div>
+  </div>
+  <div class="form-group row">
+    <label class="col-4 col-form-label">Your bet</label>
+    <div class="col-8">  
+      <!-- Custom bet -->
+      <input type="number" class="form-control" min={{min}} max={{max_user}} *ngIf="!groupBet" placeholder="Your bet"
+              formControlName="coinsBet" (change)="setBetCoins()" (keyup)="setBetCoins()">
+      <!-- Entry bet -->
+      <input type="text" class="form-control" formControlName="coinsBet" *ngIf="groupBet" value={{min}}>
     </div>
   </div>
 
-  <input type="number" class="form-control" placeholder="Your bet" 
-            formControlName="coinsBet" min={{min}} max={{max}} 
-            (change)="setBetCoins()" (keyup)="setBetCoins()">
-  <button class="btn btn-outline-dark w-100 mt-4" type="submit"
+  <!-- SUBMIT BUTTON -->
+  <button class="btn btn-outline-dark w-100 mt-1" type="submit"
           [disabled]="!doAFootballBetForm.valid">Do the bet</button>
 </form>

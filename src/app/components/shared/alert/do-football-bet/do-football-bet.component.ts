@@ -34,6 +34,15 @@ export class DoFootballBetComponent{
   public show1X2:boolean = false;
 
   /**
+   * A filter know if the bet
+   * is a group bet or a solo bet
+   * 
+   * @access public
+   * @var {boolean} groupBet
+   */
+  public groupBet:boolean = false;
+
+  /**
    * The min of the bet
    * 
    * @access public
@@ -48,6 +57,14 @@ export class DoFootballBetComponent{
    * @var {number} max
    */
   public max:number = 0;
+
+  /**
+   * The max what user can bet
+   * 
+   * @access public
+   * @var {number} max_user
+   */
+  public max_user:number = 0;
 
   /**
    * The coins of the user
@@ -102,13 +119,24 @@ export class DoFootballBetComponent{
    * @param {AlertService} _alertS To get the alert info
    * @param {UserService} _userS To do the user requests
    */
-  constructor(private _alertS:AlertService, private _userS:BetService) { 
+  constructor(private _alertS:AlertService, private _betS:BetService) { 
     this._alertS.fBet.subscribe(bet=>{
+      //Check if the bet is about the match winner 
       this.show1X2 = bet.bet.typeBet.name.includes("WINNER");
+      //Get the winrate of the bet
       this.win_rate = bet.bet.typeBet.winRate+bet.bet.typePay.winRate;
-      this.user_coins = bet.userCoins;
+      //Check if the bet is a group bet or a solo bet
+      this.groupBet = bet.bet.typePay.name.includes("GROUP");
+      //The min of the bet (No user can reach this point if his actual coins
+      // are less than the min of the bet)
       this.min = bet.bet.minBet;
-      this.max = Math.min(bet.bet.maxBet, this.user_coins);
+      //The max of the bet
+      this.max = bet.bet.maxBet;
+      //The max what user can bet (the min value of the maxBet and the actual user coins)
+      this.max_user = Math.min(bet.bet.maxBet, this.user_coins);
+      //The actual user coins (If is a group bet, the actual user coins would be 
+      // the actual 'user_coins-min_bet', else the actual user coins)
+      this.user_coins = this.groupBet ? bet.userCoins-this.min : bet.userCoins;
       this.initializeForm();
     });
     this._alertS.reset.subscribe(
@@ -135,13 +163,19 @@ export class DoFootballBetComponent{
     //Bootstrap modal close on form submit. So, I have to
     //show 2 modals, so first hide that and in 0.35 seconds
     //send the petition and show the modal of the response
-    setTimeout(this.remove.bind(this), 350);
+    setTimeout(this.betReq.bind(this), 350);
 
     //When the alert do the fade out, the user can see the reset of
     // the form, waiting 0.75 seconds the user doesn't see that
     setTimeout(this.resetForm.bind(this), 750);
   }
 
+  /**
+   * Change the value of the actual coins of the user
+   * and the value of the possible coins won
+   * 
+   * @access public
+   */
   public setBetCoins(){
     let coins = this.doAFootballBetForm.controls["coinsBet"];
     if(coins.valid) {
@@ -188,11 +222,11 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        '',
+        this.groupBet ? {value: '', disabled: true} : '',
         [
           this.requiredNumber,
           Validators.min(this.min),
-          Validators.max(this.max)
+          Validators.max(this.max_user)
         ]
       )
     });
@@ -204,6 +238,7 @@ export class DoFootballBetComponent{
    * @access private
    */
   private resetForm(){
+    this.coins_bet = 0;
     this.doAFootballBetForm.reset({
       "winner": '',
       "homeGoals": 'Home team goals',
@@ -213,11 +248,11 @@ export class DoFootballBetComponent{
   }
   
   /**
-   * Do the request to remove the user account
+   * Do the request to do the bet
    * 
    * @access private
    */
-  private remove(){
+  private betReq(){
     // this._userS.deleteUser({
     //   "email": '',
     //   "homeGoals": '',
@@ -226,6 +261,14 @@ export class DoFootballBetComponent{
     // }).subscribe();
   }
 
+  /**
+   * Custom validator to do a required for input type number
+   * 
+   * @access private
+   * @param {FormControl} control The value of the input
+   * @return {[string]:boolean} The id of the error and the result if
+   * the input is empty, null otherwise
+   */
   private requiredNumber(control:FormControl):{[ret:string]:boolean}{
     let num = control.value;
     if(num == null || isNaN(num) || num%1 !== 0) {
