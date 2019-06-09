@@ -182,5 +182,11 @@ export enum AlertInfoType{
      * @summary Error message when a user tries to do
      * a football bet but the time to bet is passed
      */
-    BETLASTBETPASSED = "BETLASTBETPASSED"
+    BETLASTBETPASSED = "BETLASTBETPASSED",
+
+    /**
+     * @summary Success message when a user do 
+     * succesfully a football bet
+     */
+    SUCCESFULLDOFOOTBALLBET = "SUCCESFULLDOFOOTBALLBET"
   }

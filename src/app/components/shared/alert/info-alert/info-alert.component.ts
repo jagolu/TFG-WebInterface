@@ -339,6 +339,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESFULLDOFOOTBALLBET:{
+        msg = [
+          "Tu apuesta se ha realizado con exito.",
+          "",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
