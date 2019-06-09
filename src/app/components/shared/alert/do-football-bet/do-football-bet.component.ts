@@ -3,12 +3,18 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IconModel, Icons } from 'src/app/models/models';
+import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 
 @Component({
   selector: 'app-do-football-bet',
   templateUrl: './do-football-bet.component.html',
   styles: []
 })
+/**
+ * Class to fill an alert with a form to do a football bet
+ * 
+ * @class
+ */
 export class DoFootballBetComponent{
 
   //
@@ -107,6 +113,26 @@ export class DoFootballBetComponent{
    */
   public coin_icon:IconModel = Icons.COIN;
 
+  //
+  // ─── VARS TO DO THE REQUEST ─────────────────────────────────────────────────────
+  //
+
+  /**
+   * The name of the group
+   * 
+   * @access private
+   * @var {string} groupName 
+   */
+  private groupName:string;
+
+  /**
+   * The id of the bet
+   * 
+   * @access private
+   * @var {string} bet
+   */
+  private bet:string;
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -119,7 +145,7 @@ export class DoFootballBetComponent{
    * @param {AlertService} _alertS To get the alert info
    * @param {UserService} _userS To do the user requests
    */
-  constructor(private _alertS:AlertService, private _betS:BetService) { 
+  constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
     this._alertS.fBet.subscribe(bet=>{
       //Check if the bet is about the match winner 
       this.show1X2 = bet.bet.typeBet.name.includes("WINNER");
@@ -132,13 +158,16 @@ export class DoFootballBetComponent{
       this.min = bet.bet.minBet;
       //The max of the bet
       this.max = bet.bet.maxBet;
-      //The max what user can bet (the min value of the maxBet and the actual user coins)
-      this.max_user = Math.min(bet.bet.maxBet, this.user_coins);
       //The actual user coins (If is a group bet, the actual user coins would be 
       // the actual 'user_coins-min_bet', else the actual user coins)
       this.user_coins = this.groupBet ? bet.userCoins-this.min : bet.userCoins;
+      //The max what user can bet (the min value of the maxBet and the actual user coins)
+      this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
+      //The id of the bet
+      this.bet = bet.bet.bet;
       this.initializeForm();
     });
+    this.groupInfo.info.subscribe(group=>this.groupName = group.name);
     this._alertS.reset.subscribe(
       reset=>{ if(reset) this.resetForm(); }
     );
@@ -159,7 +188,6 @@ export class DoFootballBetComponent{
    */
   public doBet(){
     this._alertS.hideAlert();
-    
     //Bootstrap modal close on form submit. So, I have to
     //show 2 modals, so first hide that and in 0.35 seconds
     //send the petition and show the modal of the response
@@ -222,7 +250,8 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        this.groupBet ? {value: '', disabled: true} : '',
+        // "",
+        {value: this.min, disabled: this.groupBet},
         [
           this.requiredNumber,
           Validators.min(this.min),
@@ -239,12 +268,14 @@ export class DoFootballBetComponent{
    */
   private resetForm(){
     this.coins_bet = 0;
-    this.doAFootballBetForm.reset({
-      "winner": '',
-      "homeGoals": 'Home team goals',
-      "awayGoals": 'Away team goals',
-      "coinsBet": 'Your bet',
-    })
+    // this.doAFootballBetForm.reset({
+    //   "winner": '',
+    //   "homeGoals": '',
+    //   "awayGoals": '',
+    //   "coinsBet": {value: 0, disabled: this.groupBet}
+    // });
+    
+    console.log(this.doAFootballBetForm);
   }
   
   /**
@@ -253,12 +284,18 @@ export class DoFootballBetComponent{
    * @access private
    */
   private betReq(){
-    // this._userS.deleteUser({
-    //   "email": '',
-    //   "homeGoals": '',
-    //   "awayGoals": '',
-    //   "coinsBet": '',
-    // }).subscribe();
+    console.log(this.show1X2, 
+                parseInt(this.doAFootballBetForm.controls["homeGoals"].value),
+                parseInt(this.doAFootballBetForm.controls["awayGoals"].value),
+                parseInt(this.doAFootballBetForm.controls["winner"].value));
+    this._betS.doFootballBet({
+      "groupName": this.groupName,
+      "footballBet": this.bet,
+      "bet": this.doAFootballBetForm.controls["coinsBet"].value,
+      "homeGoals": this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["homeGoals"].value),
+      "awayGoals": this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["awayGoals"].value),
+      "winner": !this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["winner"].value),
+    });
   }
 
   /**

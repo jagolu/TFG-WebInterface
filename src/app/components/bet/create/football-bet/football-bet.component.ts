@@ -3,7 +3,6 @@ import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { isString } from 'util';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({

@@ -1,18 +1,18 @@
-<form [formGroup]="doAFootballBetForm" (ngSumit)="doBet()">
+<form [formGroup]="doAFootballBetForm" (ngSubmit)="doBet()">
   <!-- 1X2 -->
   <div class="row" *ngIf="show1X2">
     <label class="col-6 col-form-label">Result of the match</label>
     <div class="col-6 pt-2 pb-2">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="1" formControlName="winner">
+        <input class="form-check-input" type="radio" value=1 formControlName="winner">
         <label class="form-check-label">1</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="X" formControlName="winner">
+        <input class="form-check-input" type="radio" value=0 formControlName="winner">
         <label class="form-check-label">X</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="2" formControlName="winner">
+        <input class="form-check-input" type="radio" value=2 formControlName="winner">
         <label class="form-check-label">2</label>
       </div>       
     </div>
@@ -47,20 +47,21 @@
     </div>   
   </div>
 
-  <!-- Your bet -->
+  <!-- Max/Min/Fee info -->
   <div class="row justify-content-center mb-3" *ngIf="!groupBet">
     <div class="col-4">Min bet: {{min}}</div>
     <div class="col-4">Max bet: {{max}}</div>
     <div class="col-3">Fee: {{win_rate}}</div>
   </div>
+  <!-- Your bet -->
   <div class="form-group row">
     <label class="col-4 col-form-label">Your bet</label>
     <div class="col-8">  
       <!-- Custom bet -->
-      <input type="number" class="form-control" min={{min}} max={{max_user}} *ngIf="!groupBet" placeholder="Your bet"
+      <input type="number" class="form-control" min={{min}} max={{max_user}} *ngIf="!groupBet"
               formControlName="coinsBet" (change)="setBetCoins()" (keyup)="setBetCoins()">
       <!-- Entry bet -->
-      <input type="text" class="form-control" formControlName="coinsBet" *ngIf="groupBet" value={{min}}>
+      <input type="text" class="form-control" formControlName="coinsBet" *ngIf="groupBet">
     </div>
   </div>
 

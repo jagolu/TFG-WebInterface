@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
-import { LaunchFootballBet } from 'src/app/models/models';
+import { LaunchFootballBet, UserFootballBet, GroupPage } from 'src/app/models/models';
+import { GroupInfoService } from '../userServices/group-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +42,9 @@ export class BetService extends RestService{
    * @constructor
    * @param {HttpClient} http For RestService constructor
    * @param {LoadingService} loading For RestService constructor
+   * @param {GroupInfoService} groupPageS For update the group page info
    */
-  constructor(http: HttpClient, loading: LoadingService) { 
+  constructor(http: HttpClient, loading: LoadingService, private groupPageS:GroupInfoService) { 
     super(http, loading);
   }
 
@@ -79,5 +81,18 @@ export class BetService extends RestService{
    */
   public launchBet(order:LaunchFootballBet){
     return this.postRequest(order, this._betPath+"LaunchFootBallBet");
+  }
+
+  /**
+   * Do a user football bet in a football bet
+   * 
+   * @access public
+   * @param {UserFootballBet} order The details of the request
+   */
+  public doFootballBet(order:UserFootballBet){
+    console.log("order", order);
+    this.postRequest(order, this._betPath+"DoFootballBet").subscribe(
+      (page:GroupPage)=> this.groupPageS.updateInfo(page)
+    );
   }
 }
