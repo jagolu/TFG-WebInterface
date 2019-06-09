@@ -47,7 +47,7 @@ export class SocialSignPasswordComponent{
    * @access public
    * @var {string} passwordType
    */
-  public passwordType: string;
+  public passwordType: string = "password";
 
   /**
    * The type of socialLog (Facebook or Google)
@@ -79,10 +79,12 @@ export class SocialSignPasswordComponent{
    */
   constructor(private _authenticationS:AuthenticationService, private _authS:AuthService, private _alertS:AlertService) { 
     this._alertS.target.subscribe(target =>{
-        this.providerId = target;
-        this.equalPasswords = false;
+      if(this.passwordType != "password"){
         this.passwordType = "password";
-        this.initializeForm();
+      }
+      this.providerId = target;
+      this.equalPasswords = false;
+      this.initializeForm();
     });
   }
 
