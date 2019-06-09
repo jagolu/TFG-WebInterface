@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IconModel, Icons, SocialType } from 'src/app/models/models';
@@ -65,6 +65,13 @@ export class SocialSignPasswordComponent{
    */
   public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
 
+  /**
+   * Selector of the eye icon
+   * 
+   * @var eye
+   */
+  @ViewChild('chooseSocialPasswordEye') eye;
+
   //
   // ──────────────────────────────────────────────────────────────────────────
   //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
@@ -80,6 +87,8 @@ export class SocialSignPasswordComponent{
   constructor(private _authenticationS:AuthenticationService, private _authS:AuthService, private _alertS:AlertService) { 
     this._alertS.target.subscribe(target =>{
       if(this.passwordType != "password"){
+        this.eye.eR.nativeElement.click();
+        this.eye.icon.style.color = "black"
         this.passwordType = "password";
       }
       this.providerId = target;
