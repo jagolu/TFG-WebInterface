@@ -315,6 +315,30 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.BETCANCELLED:{
+        msg = [
+          "La apuesta en la que estas intentado apostar, se ha cancelado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.BETENDED:{
+        msg = [
+          "La apuesta en la que estas intentado apostar, ha terminado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.BETLASTBETPASSED:{
+        msg = [
+          "El tiempo para participar en esta apuesta ha acabado.",
+          "",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

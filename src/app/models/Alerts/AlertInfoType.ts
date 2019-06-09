@@ -164,5 +164,23 @@ export enum AlertInfoType{
      * @summary Info message when a user tries to launch
      * a bet which min bet is higher that his actual coins
      */
-    BETHIGHERTHANYOURCOINS = "BETHIGHERTHANYOURCOINS"
+    BETHIGHERTHANYOURCOINS = "BETHIGHERTHANYOURCOINS",
+
+    /**
+     * @summary Error message when a user tries to do
+     * a football bet but this one is already cancelled
+     */
+    BETCANCELLED = "BETCANCELLED",
+
+    /**
+     * @summary Error message when a user tries to do
+     * a football bet but this one is already ended
+     */
+    BETENDED = "BETENDED",
+
+    /**
+     * @summary Error message when a user tries to do
+     * a football bet but the time to bet is passed
+     */
+    BETLASTBETPASSED = "BETLASTBETPASSED"
   }
