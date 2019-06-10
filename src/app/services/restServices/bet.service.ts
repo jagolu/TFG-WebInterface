@@ -90,7 +90,6 @@ export class BetService extends RestService{
    * @param {UserFootballBet} order The details of the request
    */
   public doFootballBet(order:UserFootballBet){
-    console.log("order", order);
     this.postRequest(order, this._betPath+"DoFootballBet").subscribe(
       (page:GroupPage)=> this.groupPageS.updateInfo(page)
     );
