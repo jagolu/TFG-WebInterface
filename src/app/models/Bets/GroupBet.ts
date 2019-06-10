@@ -10,4 +10,5 @@ export interface GroupBet{
     maxBet:number;
     matchdayDate:Date;
     lastBetTime:Date;
+    usersJoined?:number;
 }
