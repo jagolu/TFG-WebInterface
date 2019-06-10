@@ -4,11 +4,11 @@ import { GroupBet } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
-  selector: 'app-group-bet',
-  templateUrl: './group-bet.component.html',
+  selector: 'app-launched-bets',
+  templateUrl: './launched-bets.component.html',
   styles: []
 })
-export class GroupBetComponent implements OnInit {
+export class LaunchedBetsComponent implements OnInit {
   public bets:GroupBet[] = [];
   public userCoins:number = 0;
 

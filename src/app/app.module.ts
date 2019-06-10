@@ -17,7 +17,7 @@ import { UserGroupsComponent } from './components/user/view-user/user-groups/use
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 import { CreateGroupAlertComponent } from './components/shared/alert/create-group-alert/create-group-alert.component';
 import { GroupComponent } from './components/group/group.component';
-import { GroupBetComponent } from './components/bet/group-bet/group-bet.component';
+import { LaunchedBetsComponent } from './components/bet/launched-bets/launched-bets.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
 import { ShopComponent } from './components/shop/shop.component';
@@ -92,7 +92,7 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     CreateGroupAlertComponent,
     GroupComponent,
     GroupUsersComponent,
-    GroupBetComponent,
+    LaunchedBetsComponent,
     SearchGroupComponent,
     ShopComponent,
     AlertComponent,
