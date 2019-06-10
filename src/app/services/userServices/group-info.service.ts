@@ -66,6 +66,7 @@ export class GroupInfoService {
   public removeInfo(){
     this.information.next({
       "actualCapacity": 0,
+      "myBets":[],
       "bets":[],
       "canPutPassword": false,
       "createDate": "",

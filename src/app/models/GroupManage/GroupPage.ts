@@ -1,5 +1,6 @@
 import { GroupBet } from '../Bets/GroupBet';
 import { GroupUser } from './GroupUser';
+import { EndedFootballBet } from '../models';
 
 export interface GroupPage{
     name:string;
@@ -12,5 +13,6 @@ export interface GroupPage{
     actualCapacity: number;
     createDate:string;
     bets:GroupBet[];
+    myBets:EndedFootballBet[];
     members:GroupUser[];
 }
