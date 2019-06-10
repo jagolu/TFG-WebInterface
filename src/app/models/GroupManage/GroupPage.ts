@@ -1,4 +1,4 @@
-import { GroupBet } from './GroupBet';
+import { GroupBet } from '../Bets/GroupBet';
 import { GroupUser } from './GroupUser';
 
 export interface GroupPage{

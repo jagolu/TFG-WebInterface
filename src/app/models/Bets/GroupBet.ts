@@ -1,4 +1,4 @@
-import { NameWinRate } from '../Bets/NameWinRate';
+import { NameWinRate } from './NameWinRate';
 
 export interface GroupBet{
     bet:string;
