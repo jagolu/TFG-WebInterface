@@ -17,7 +17,7 @@ import { UserGroupsComponent } from './components/user/view-user/user-groups/use
 import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
 import { CreateGroupAlertComponent } from './components/shared/alert/create-group-alert/create-group-alert.component';
 import { GroupComponent } from './components/group/group.component';
-import { LaunchedBetsComponent } from './components/bet/launched-bets/launched-bets.component';
+import { LaunchedBetsComponent } from './components/footballBet/launched-bets/launched-bets.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
 import { ShopComponent } from './components/shop/shop.component';
@@ -32,7 +32,7 @@ import { RememberPasswordFormComponent } from './components/logSign/rememberPass
 import { DeleteGroupAlertComponent } from './components/shared/alert/delete-group-alert/delete-group-alert.component'
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 import { SocialSignPasswordComponent } from './components/shared/alert/social-sign-password/social-sign-password.component';
-import { FootballBetComponent } from './components/bet/create/football-bet/football-bet.component';
+import { CreateFootballBetComponent } from './components/footballBet/create-football-bet/create-football-bet.component';
 import { DoFootballBetComponent } from './components/shared/alert/do-football-bet/do-football-bet.component';
 
 
@@ -106,7 +106,7 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     DeleteGroupAlertComponent,
     ResetPasswordFormComponent,
     SocialSignPasswordComponent,
-    FootballBetComponent,
+    CreateFootballBetComponent,
     DoFootballBetComponent
   ],
   imports: [

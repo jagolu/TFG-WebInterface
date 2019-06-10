@@ -6,8 +6,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
-  selector: 'app-football-bet',
-  templateUrl: './football-bet.component.html',
+  selector: 'app-create-football-bet',
+  templateUrl: './create-football-bet.component.html',
   styles: []
 })
 /**
@@ -17,7 +17,7 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
  * @implements OnDestroy
  * @implements OnInit
  */
-export class FootballBetComponent implements OnDestroy, OnInit {
+export class CreateFootballBetComponent implements OnDestroy, OnInit {
   //
   // ────────────────────────────────────────────────────────────  ──────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
