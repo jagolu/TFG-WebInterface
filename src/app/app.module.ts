@@ -73,6 +73,7 @@ import { CreateFootballBetComponent } from './components/footballBet/create-foot
 import { DoFootballBetComponent } from './components/shared/alert/do-football-bet/do-football-bet.component';
 import { FootballBetHistoryComponent } from './components/footballBet/football-bet-history/football-bet-history.component';
 import { MyOwnFootballBetsComponent } from './components/footballBet/my-own-football-bets/my-own-football-bets.component';
+import { FootballBetCardInfoComponent } from './components/footballBet/football-bet-card-info/football-bet-card-info.component';
 
 
 
@@ -112,7 +113,8 @@ import { MyOwnFootballBetsComponent } from './components/footballBet/my-own-foot
     CreateFootballBetComponent,
     DoFootballBetComponent,
     FootballBetHistoryComponent,
-    MyOwnFootballBetsComponent
+    MyOwnFootballBetsComponent,
+    FootballBetCardInfoComponent
   ],
   imports: [
     BrowserModule,
