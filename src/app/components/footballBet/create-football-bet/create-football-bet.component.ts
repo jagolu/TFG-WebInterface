@@ -210,9 +210,9 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    * Filter to show a "group" bet form
    * or a "solo" bet form
    * @access public
-   * @var {boolean} type_group_bet
+   * @var {boolean} type_jackpot_bet
    */
-  public type_group_bet:boolean = false;
+  public type_jackpot_bet:boolean = false;
 
     //
     // ─── VARS TO DO THE LAUNCH BET REQUEST ───────────────────────────
@@ -331,8 +331,8 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
       "matchDay": this.match.matchday,
       "typeBet": this.betType.name,
       "typePay": this.priceType.name,
-      "minBet": !this.type_group_bet ? this.betForm.controls["minBet"].value : this.betForm.controls["exactBet"].value,
-      "maxBet": !this.type_group_bet ? this.betForm.controls["maxBet"].value : this.betForm.controls["exactBet"].value,
+      "minBet": !this.type_jackpot_bet ? this.betForm.controls["minBet"].value : this.betForm.controls["exactBet"].value,
+      "maxBet": !this.type_jackpot_bet ? this.betForm.controls["maxBet"].value : this.betForm.controls["exactBet"].value,
       "lastBetTime": new Date(date)
     }).subscribe(
       (page:GroupPage)=>{
@@ -401,7 +401,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
 
   /**
    * Show the part of the select of max day. Set to
-   * explanationPriceType, type_group_bet, priceType & winRate their correctValue.
+   * explanationPriceType, type_jackpot_bet, priceType & winRate their correctValue.
    * Also reset the form.
    * 
    * @access public
@@ -409,7 +409,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   public setPriceType(){    
     let typeid = (document.querySelector("#newBet_priceType_select") as HTMLSelectElement).selectedIndex-1;
     let type:NameWinRate = this.allowedPays[typeid];
-    this.type_group_bet = type.name.includes("GROUP");
+    this.type_jackpot_bet = type.name.includes("JACKPOT");
     this.selectedPrice = true;
     this.explanationPriceType = type.description;
     this.priceType = type;
@@ -514,24 +514,24 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
       'minBet': new FormControl(
         0,
         [
-          !this.type_group_bet ? Validators.required : Validators.nullValidator,
-          Validators.min(!this.type_group_bet ? 100 : -1),
+          !this.type_jackpot_bet ? Validators.required : Validators.nullValidator,
+          Validators.min(!this.type_jackpot_bet ? 100 : -1),
           Validators.max(10000)
         ]
       ),
       'maxBet': new FormControl(
         0,
         [
-          !this.type_group_bet ? Validators.required : Validators.nullValidator,
-          Validators.min(!this.type_group_bet ? 100 : -1),
+          !this.type_jackpot_bet ? Validators.required : Validators.nullValidator,
+          Validators.min(!this.type_jackpot_bet ? 100 : -1),
           Validators.max(10000)
         ]
       ),
       'exactBet': new FormControl(
         0,
         [
-          this.type_group_bet ? Validators.required : Validators.nullValidator,
-          Validators.min(this.type_group_bet ? 100 : -1),
+          this.type_jackpot_bet ? Validators.required : Validators.nullValidator,
+          Validators.min(this.type_jackpot_bet ? 100 : -1),
           Validators.max(10000)
         ]
       ),
@@ -549,7 +549,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     this.selectedPrice = false;
     this.selectedMatch = false;
     this.selectedMaxDay = false;
-    this.type_group_bet = false;
+    this.type_jackpot_bet = false;
     this.betType = null;
     this.priceType = null;
     this.initializeForm();

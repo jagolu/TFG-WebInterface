@@ -27,7 +27,7 @@ export class LaunchedBetsComponent implements OnInit {
     this.alertS.doAFootballBet(bet, this.userCoins);
   }
 
-  public isGroupBet(type:string){
-    return type.includes("GROUP");
+  public isJackpotBet(type:string){
+    return type.includes("JACKPOT");
   }
 }

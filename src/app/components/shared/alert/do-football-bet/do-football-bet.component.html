@@ -38,17 +38,17 @@
 
   <!-- USER COINS & POSSIBLE WIN -->
   <div class="row m-2 pt-1 pb-1 w-100">
-    <div [ngClass]="{'col-4': groupBet, 'col-6': !groupBet}">
+    <div [ngClass]="{'col-4': jackpotBet, 'col-6': !jackpotBet}">
         <small>Your will have {{user_coins-coins_bet}} <app-icon [Icon]="coin_icon"></app-icon></small>
     </div>
-    <div [ngClass]="{'col-8': groupBet, 'col-6': !groupBet}">
-      <small *ngIf="!groupBet">Maximum gain: {{max_win}} <app-icon [Icon]="coin_icon"></app-icon></small>
-      <small *ngIf="groupBet">You can win all the coins bet in this bet <app-icon [Icon]="coin_icon"></app-icon></small>
+    <div [ngClass]="{'col-8': jackpotBet, 'col-6': !jackpotBet}">
+      <small *ngIf="!jackpotBet">Maximum gain: {{max_win}} <app-icon [Icon]="coin_icon"></app-icon></small>
+      <small *ngIf="jackpotBet">At this moment, the jackpot is {{jackpot}} <app-icon [Icon]="coin_icon"></app-icon></small>
     </div>   
   </div>
 
   <!-- Max/Min/Fee info -->
-  <div class="row justify-content-center mb-3" *ngIf="!groupBet">
+  <div class="row justify-content-center mb-3" *ngIf="!jackpotBet">
     <div class="col-4">Min bet: {{min}}</div>
     <div class="col-4">Max bet: {{max}}</div>
     <div class="col-3">Fee: {{win_rate}}</div>
@@ -58,10 +58,10 @@
     <label class="col-4 col-form-label">Your bet</label>
     <div class="col-8">  
       <!-- Custom bet -->
-      <input type="number" class="form-control" min={{min}} max={{max_user}} *ngIf="!groupBet"
+      <input type="number" class="form-control" min={{min}} max={{max_user}} *ngIf="!jackpotBet"
               formControlName="coinsBet" (change)="setBetCoins()" (keyup)="setBetCoins()">
       <!-- Entry bet -->
-      <input type="text" class="form-control" formControlName="coinsBet" *ngIf="groupBet">
+      <input type="text" class="form-control" formControlName="coinsBet" *ngIf="jackpotBet">
     </div>
   </div>
 

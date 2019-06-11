@@ -44,9 +44,9 @@ export class DoFootballBetComponent{
    * is a group bet or a solo bet
    * 
    * @access public
-   * @var {boolean} groupBet
+   * @var {boolean} jackpotBet
    */
-  public groupBet:boolean = false;
+  public jackpotBet:boolean = false;
 
   /**
    * The min of the bet
@@ -98,12 +98,20 @@ export class DoFootballBetComponent{
   public max_win:number = 0;
 
   /**
-   * The winrate of the bet
+   * The winrate of a solo bet
    * 
    * @access private
    * @var {number} win_rate
    */
   private win_rate:number = 0;
+
+  /**
+   * The jackpot of a group bet
+   * 
+   * @access private
+   * @var {number} jackpot
+   */
+  private jackpot:number = 0;
 
   /**
    * Coin icon
@@ -152,15 +160,17 @@ export class DoFootballBetComponent{
       //Get the winrate of the bet
       this.win_rate = bet.bet.typeBet.winRate+bet.bet.typePay.winRate;
       //Check if the bet is a group bet or a solo bet
-      this.groupBet = bet.bet.typePay.name.includes("GROUP");
+      this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
       //The min of the bet (No user can reach this point if his actual coins
       // are less than the min of the bet)
       this.min = bet.bet.minBet;
       //The max of the bet
       this.max = bet.bet.maxBet;
+      // If it is a group bet, it calculate the jackpot
+      this.jackpot = this.jackpotBet ? bet.bet.usersJoined * this.min : 0;
       //The actual user coins (If is a group bet, the actual user coins would be 
       // the actual 'user_coins-min_bet', else the actual user coins)
-      this.user_coins = this.groupBet ? bet.userCoins-this.min : bet.userCoins;
+      this.user_coins = this.jackpotBet ? bet.userCoins-this.min : bet.userCoins;
       //The max what user can bet (the min value of the maxBet and the actual user coins)
       this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
       //The id of the bet
@@ -250,7 +260,7 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        {value: this.min, disabled: this.groupBet},
+        {value: this.min, disabled: this.jackpotBet},
         [
           this.requiredNumber,
           Validators.min(this.min),

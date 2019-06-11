@@ -65,7 +65,7 @@
           <div class="col-12" *ngIf="selectedBet && selectedPrice">
             <div class="row">
               <!-- SELECT MAX DAY -->
-              <div [ngClass]="{'col-lg-6 col-12': !type_group_bet, 'col-12': type_group_bet}">
+              <div [ngClass]="{'col-lg-6 col-12': !type_jackpot_bet, 'col-12': type_jackpot_bet}">
                 <select class="form-control mb-2 mt-2" id="newBet_allowedDates_select" [ngClass]="{'border border-warning': !selectedMaxDay}"
                       *ngIf="selectedBet && selectedPrice" (change)="setDate()">
                   <option selected disabled value="" >Select the max day to do the bet</option>
@@ -73,7 +73,7 @@
                   </select>   
               </div>
               <!-- WINRATE IF TYPE_PRICE == 'GROUP BET' -->
-              <div class="col-lg-6 col-12" *ngIf="!type_group_bet">
+              <div class="col-lg-6 col-12" *ngIf="!type_jackpot_bet">
                 <div class="form-group row mb-2 mt-2" *ngIf="selectedBet && selectedPrice">
                   <label class="col-6 col-form-label">Fee</label>
                   <div class="col-6">
@@ -85,7 +85,7 @@
               <div class="col-12">
                 <form [formGroup]="betForm" (ngSubmit)="launchBet()" *ngIf="selectedMaxDay">
                   <!-- MIN & MAX IF TYPE_PRICE == 'GROUP BET' -->
-                  <div class="form-group row" *ngIf="!type_group_bet">
+                  <div class="form-group row" *ngIf="!type_jackpot_bet">
                     <label class="col-form-label col-lg-4 col-12">Min and max bet</label>
                     <!-- MIN BET -->
                     <div class="col-lg-4 col-6">
@@ -105,7 +105,7 @@
                     </div>
                   </div>
                   <!-- EXACT BET IF TYPE_PRICE == 'GROUP BET' -->
-                  <div class="form-group row" *ngIf="type_group_bet">
+                  <div class="form-group row" *ngIf="type_jackpot_bet">
                       <label class="col-form-label col-lg-6 col-12">The bet</label>
                       <div class="col-lg-6 col-12">
                           <select class="form-control" formControlName="exactBet" 
