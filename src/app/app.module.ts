@@ -35,6 +35,7 @@ import { SocialSignPasswordComponent } from './components/shared/alert/social-si
 import { CreateFootballBetComponent } from './components/footballBet/create-football-bet/create-football-bet.component';
 import { DoFootballBetComponent } from './components/shared/alert/do-football-bet/do-football-bet.component';
 import { FootballBetHistoryComponent } from './components/footballBet/football-bet-history/football-bet-history.component';
+import { MyOwnFootballBetsComponent } from './components/footballBet/my-own-football-bets/my-own-football-bets.component';
 
 
 // Directives
@@ -109,7 +110,8 @@ import { Base64ImagePipe } from './pipes/base64-image.pipe';
     SocialSignPasswordComponent,
     CreateFootballBetComponent,
     DoFootballBetComponent,
-    FootballBetHistoryComponent
+    FootballBetHistoryComponent,
+    MyOwnFootballBetsComponent
   ],
   imports: [
     BrowserModule,
