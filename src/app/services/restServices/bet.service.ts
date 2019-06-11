@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
-import { LaunchFootballBet, UserFootballBet, GroupPage } from 'src/app/models/models';
+import { LaunchFootballBet, UserFootballBet, GroupPage, CancelUserFootballBet } from 'src/app/models/models';
 import { GroupInfoService } from '../userServices/group-info.service';
 
 @Injectable({
@@ -91,6 +91,18 @@ export class BetService extends RestService{
    */
   public doFootballBet(order:UserFootballBet){
     this.postRequest(order, this._betPath+"DoFootballBet").subscribe(
+      (page:GroupPage)=> this.groupPageS.updateInfo(page)
+    );
+  }
+
+  /**
+   * Cancel a user football bet
+   * 
+   * @access public
+   * @param {CancelUserFootballBet} order The details of the request
+   */
+  public cancelUserFootballBet(order:CancelUserFootballBet){
+    this.postRequest(order, this._betPath+"CancelUserFootballBet").subscribe(
       (page:GroupPage)=> this.groupPageS.updateInfo(page)
     );
   }

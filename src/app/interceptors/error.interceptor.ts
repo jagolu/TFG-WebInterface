@@ -58,6 +58,9 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "BetCancelled") this.alert.openAlertInfo(AlertInfoType.BETCANCELLED);
             else if(err.error["error"] == "BetEnded") this.alert.openAlertInfo(AlertInfoType.BETENDED);
             else if(err.error["error"] == "BetLastBetPassed") this.alert.openAlertInfo(AlertInfoType.BETLASTBETPASSED);
+            else if(err.error["error"] == "CancelBetCancelled") this.alert.openAlertInfo(AlertInfoType.CANCELBETCANCELLED);
+            else if(err.error["error"] == "CancelBetEnded") this.alert.openAlertInfo(AlertInfoType.CANCELBETENDED);
+            else if(err.error["error"] == "CancelBetLastBetPassed") this.alert.openAlertInfo(AlertInfoType.CANCELBETLASTBETPASSED);
         }
         else if(err.status == 400 && !err.error) this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);

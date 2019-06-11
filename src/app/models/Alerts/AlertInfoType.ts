@@ -186,7 +186,32 @@ export enum AlertInfoType{
 
     /**
      * @summary Success message when a user do 
-     * succesfully a football bet
+     * succesfully a user football bet
      */
-    SUCCESFULLDOFOOTBALLBET = "SUCCESFULLDOFOOTBALLBET"
+    SUCCESFULLDOFOOTBALLBET = "SUCCESFULLDOFOOTBALLBET",
+
+    /**
+     * @summary Error message when a user tries to cancel
+     * a user football bet bet the football bet is cancelled
+     */
+    CANCELBETCANCELLED = "CANCELBETCANCELLED",
+
+    /**
+     * @summary Error message when a user tries to cancel
+     * a user football bet but the football bet is already ended
+     */
+    CANCELBETENDED = "CANCELBETENDED",
+
+    /**
+     * @summary Error message when a user tries to cancel
+     * a user football bet but the time to bet in the football 
+     * bet is passed
+     */
+    CANCELBETLASTBETPASSED = "CANCELBETLASTBETPASSED",
+
+    /**
+     * @summary Success message when a user cancels 
+     * succesfully a user football bet
+     */
+    SUCCESFULLCANCELFOOTBALLBET = "SUCCESFULLCANCELFOOTBALLBET"
   }
