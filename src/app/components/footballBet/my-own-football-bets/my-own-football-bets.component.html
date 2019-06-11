@@ -31,22 +31,29 @@
             </div>
           <div class="card-body">
             <div class="row">
-                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="isWinnerBet(bet.bet.typeBet.name)">
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isWinnerBet(bet.bet.typeBet.name)">
                     {{correctPart(bet.bet.typeBet.name)}} winner: {{getWinnerWord(ownBet.winner)}}
                 </div>
-                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!isWinnerBet(bet.bet.typeBet.name)">
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isWinnerBet(bet.bet.typeBet.name)">
                   {{correctPart(bet.bet.typeBet.name)}} result: {{ownBet.homeGoals}}-{{ownBet.awayGoals}}
                 </div>
-                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!isJackpotBet(bet.bet.typePay.name)">
+                <div class="col-lg-3 col-12 text-center mb-2">
+                  You bet: {{ownBet.bet}} <app-icon [Icon]="coin_icon"></app-icon>
+                </div>
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(bet.bet.typePay.name) && ownBet.valid">
                   Possible win: {{getWinRate(bet.bet,ownBet)}} <app-icon [Icon]="coin_icon"></app-icon>
                 </div>
-                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="isJackpotBet(bet.bet.typePay.name)">
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isJackpotBet(bet.bet.typePay.name) && ownBet.valid">
                   Actual jackpot: {{getJackpot(bet.bet)}} <app-icon [Icon]="coin_icon"></app-icon>
                 </div>
-                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="ownBet.valid">
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!ownBet.valid">
+                  You got back: {{howMuchMoneyBack(bet.bet.typeBet.cancelRate, bet.bet.typePay.cancelRate, ownBet.bet)}} 
+                    <app-icon [Icon]="coin_icon"></app-icon>
+                </div>
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="ownBet.valid">
                   The bet was done {{ownBet.dateDone|onlyDatePipe}}
                 </div>
-                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!ownBet.valid">
+                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!ownBet.valid">
                   The bet was cancelled {{ownBet.dateInvalid|onlyDatePipe}}
                 </div>
             </div>

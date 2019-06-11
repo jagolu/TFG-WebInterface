@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { EndedFootballBet, IconModel, Icons, GroupBet, HistoryUserFootballBet } from 'src/app/models/models';
+import { MoneyBack } from 'src/app/models/Bets/MoneyBack';
 
 @Component({
   selector: 'app-my-own-football-bets',
@@ -45,5 +46,9 @@ export class MyOwnFootballBetsComponent implements OnInit {
 
   public getWinRate(bet:GroupBet, own:HistoryUserFootballBet){
     return Math.round((bet.typeBet.winRate+bet.typePay.winRate)*own.bet);
+  }
+
+  public  howMuchMoneyBack(typeBetLose:number, typePayLose:number, coins:number){
+    return MoneyBack.getMoneyBack(typeBetLose, typePayLose, coins);
   }
 }
