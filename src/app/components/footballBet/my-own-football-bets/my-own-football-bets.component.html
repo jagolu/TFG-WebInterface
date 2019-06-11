@@ -24,7 +24,11 @@
         <app-football-bet-card-info [bet]="bet.bet"></app-football-bet-card-info>
         <div class="card m-2" *ngFor="let ownBet of bet.ownBet" style="cursor:default" 
             [ngClass]="{'text-white bg-danger': !ownBet.valid}">
-          <div class="card-header">Your bet</div>
+          <div class="card-header">
+            <div class="row">
+              <div class="col-9"> Your bet </div>
+              <div class="col-3 text-right"><span *ngIf="!ownBet.valid"><h5>INVALID</h5></span></div></div>
+            </div>
           <div class="card-body">
             <div class="row">
                 <div class="col-lg-4 col-12 text-center mb-2" *ngIf="isWinnerBet(bet.bet.typeBet.name)">
