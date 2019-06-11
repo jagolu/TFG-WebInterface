@@ -1,3 +1,54 @@
-<p>
-  my-own-football-bets works!
-</p>
+<div class="accordion" id="myActiveBetsAccordion">
+  <div class="card" *ngFor="let bet of bets; let i = index" style="cursor: default">
+    <div class="card-header" 
+        id="headingBet{{i}}" 
+        data-toggle="collapse" 
+        [attr.data-target]="'#collapseMyOwnActiveBets'+i" 
+        aria-expanded="false" 
+        [attr.aria-controls]="'#collapseMyOwnActiveBets'+i">
+      <div class="row">
+        <div class="col">
+          <h3>{{bet.bet.betName}}</h3>
+        </div>
+        <div class="col-2 text-right">
+          <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+        </div>
+      </div>
+    </div>
+
+    <div id="collapseMyOwnActiveBets{{i}}" 
+        class="collapse hide" 
+        [attr.aria-labelledby]="'headingBet'+i" 
+        data-parent="#myActiveBetsAccordion">
+      <div class="card card-body">
+        <app-football-bet-card-info [bet]="bet.bet"></app-football-bet-card-info>
+        <div class="card m-2" *ngFor="let ownBet of bet.ownBet" style="cursor:default" 
+            [ngClass]="{'text-white bg-danger': !ownBet.valid}">
+          <div class="card-header">Your bet</div>
+          <div class="card-body">
+            <div class="row">
+                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="isWinnerBet(bet.bet.typeBet.name)">
+                    {{correctPart(bet.bet.typeBet.name)}} winner: {{getWinnerWord(ownBet.winner)}}
+                </div>
+                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!isWinnerBet(bet.bet.typeBet.name)">
+                  {{correctPart(bet.bet.typeBet.name)}} result: {{ownBet.homeGoals}}-{{ownBet.awayGoals}}
+                </div>
+                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!isJackpotBet(bet.bet.typePay.name)">
+                  Possible win: {{getWinRate(bet.bet,ownBet)}} <app-icon [Icon]="coin_icon"></app-icon>
+                </div>
+                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="isJackpotBet(bet.bet.typePay.name)">
+                  Actual jackpot: {{getJackpot(bet.bet)}} <app-icon [Icon]="coin_icon"></app-icon>
+                </div>
+                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="ownBet.valid">
+                  The bet was done {{ownBet.dateDone|onlyDatePipe}}
+                </div>
+                <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!ownBet.valid">
+                  The bet was cancelled {{ownBet.dateInvalid|onlyDatePipe}}
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

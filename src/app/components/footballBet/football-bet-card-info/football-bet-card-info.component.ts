@@ -12,7 +12,7 @@ export class FootballBetCardInfoComponent{
 
   constructor() { }
 
-  public isJackpotBet(type:string){
+  public isJackpotBet(type:string):boolean{
     return type.includes("JACKPOT");
   }
 
