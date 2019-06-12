@@ -1,4 +1,5 @@
 export interface HistoryUserFootballBet{
+    userFootballBet:string;
     username:string;
     bet?:number;
     homeGoals?:number;

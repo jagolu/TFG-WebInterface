@@ -74,6 +74,7 @@ import { DoFootballBetComponent } from './components/shared/alert/do-football-be
 import { FootballBetHistoryComponent } from './components/footballBet/football-bet-history/football-bet-history.component';
 import { MyOwnFootballBetsComponent } from './components/footballBet/my-own-football-bets/my-own-football-bets.component';
 import { FootballBetCardInfoComponent } from './components/footballBet/football-bet-card-info/football-bet-card-info.component';
+import { CancellUserFootballBetComponent } from './components/shared/alert/cancell-user-football-bet/cancell-user-football-bet.component';
 
 
 
@@ -114,7 +115,8 @@ import { FootballBetCardInfoComponent } from './components/footballBet/football-
     DoFootballBetComponent,
     FootballBetHistoryComponent,
     MyOwnFootballBetsComponent,
-    FootballBetCardInfoComponent
+    FootballBetCardInfoComponent,
+    CancellUserFootballBetComponent
   ],
   imports: [
     BrowserModule,

@@ -244,6 +244,13 @@ export class AlertService {
     this.openAlert();
   }
 
+  /**
+   * Open the alert showing a form to do a
+   * user football bet
+   * 
+   * @param {GroupBet} bet The info of the bet 
+   * @param {number} coins The actual coins of the user
+   */
   public doAFootballBet(bet:GroupBet, coins:number){
     this.setTitle(bet.betName);
     this.changeAlertMode(AlertMode.FOOTBALLBET);
@@ -251,6 +258,25 @@ export class AlertService {
       "bet":bet,
       "userCoins": coins
     });
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the info and button
+   * to cancel a user football bet
+   * 
+   * @param {GroupBet} bet The info of the bet
+   * @param {number} user_coins The coins bet by the user
+   * @param {string} userFootballBet The id of the userFootballBet
+   */
+  public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBet:string){
+    this.setTitle("You are going to cancel your bet!");
+    this.changeAlertMode(AlertMode.CANCELUSERFOOTBALLBET);
+    this.footballBet.next({
+      "bet":bet,
+      "userCoins": user_coins
+    });
+    this.setTarget(userFootballBet);
     this.openAlert();
   }
   

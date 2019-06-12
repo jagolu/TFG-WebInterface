@@ -39,5 +39,10 @@ export enum AlertMode{
     /**
      * @summary Alerts to do a football bet
      */
-    FOOTBALLBET = "FOOTBALLBET"
+    FOOTBALLBET = "FOOTBALLBET",
+
+    /**
+     * @summary Alerts to cancel a user football bet
+     */
+    CANCELUSERFOOTBALLBET = "CANCELUSERFOOTBALLBET"
 }

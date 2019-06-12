@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { EndedFootballBet, IconModel, Icons, GroupBet, HistoryUserFootballBet } from 'src/app/models/models';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { MoneyBack } from 'src/app/models/Bets/MoneyBack';
 
 @Component({
@@ -13,7 +14,7 @@ export class MyOwnFootballBetsComponent implements OnInit {
   public bets:EndedFootballBet[];  
   public coin_icon:IconModel = Icons.COIN;
 
-  constructor(private groupPage:GroupInfoService) { }
+  constructor(private groupPage:GroupInfoService, private alertS:AlertService) { }
 
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
@@ -50,5 +51,9 @@ export class MyOwnFootballBetsComponent implements OnInit {
 
   public  howMuchMoneyBack(typeBetLose:number, typePayLose:number, coins:number){
     return MoneyBack.getMoneyBack(typeBetLose, typePayLose, coins);
+  }
+
+  public cancelUserFootballBet(footballBet:GroupBet, coins:number, userFootballBet:string){
+    this.alertS.cancelUserFootballBet(footballBet, coins, userFootballBet);
   }
 }

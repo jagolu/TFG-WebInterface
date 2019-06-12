@@ -57,6 +57,12 @@
                   The bet was cancelled {{ownBet.dateInvalid|onlyDatePipe}}
                 </div>
             </div>
+            <div class="row justify-content-md-center mt-3" *ngIf="ownBet.valid">
+              <div class="col-4">
+                  <button class="btn btn-outline-danger w-100"
+                    (click)="cancelUserFootballBet(bet.bet, ownBet.bet, ownBet.userFootballBet)">Cancel bet</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
