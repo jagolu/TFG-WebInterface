@@ -3,19 +3,48 @@
   <div class="row" *ngIf="show1X2">
     <label class="col-6 col-form-label">Result of the match</label>
     <div class="col-6 pt-2 pb-2">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value=1 formControlName="winner">
-        <label class="form-check-label">1</label>
+      <div class="row justify-content-md-center">
+        <div class="col-3">
+          <div class="col-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=1 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">1</label>
+          </div>          
+        </div>
+        <div class="col-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=3 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">X</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=2 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">2</label>
+          </div>   
+        </div>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value=0 formControlName="winner">
-        <label class="form-check-label">X</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value=2 formControlName="winner">
-        <label class="form-check-label">2</label>
-      </div>       
+      <div class="row justify-content-md-center">
+        <div class="col-4">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=13 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">1/X</label>
+          </div>              
+        </div>
+        <div class="col-4">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=23 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">2/X</label>
+          </div> 
+        </div>
+        <div class="col-4">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=12 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">1/2</label>
+          </div>   
+        </div>
+      </div>    
     </div>
+    <small class="text-center text-info w-100" *ngIf="info_winner_msg.length>0">{{info_winner_msg}}</small>
   </div>
 
   <!-- Home/Away goals -->

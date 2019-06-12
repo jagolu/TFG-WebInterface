@@ -106,12 +106,12 @@ export class DoFootballBetComponent{
   private win_rate:number = 0;
 
   /**
-   * The jackpot of a group bet
+   * Info message for winner bet options
    * 
-   * @access private
-   * @var {number} jackpot
+   * @access public
+   * @var {string} info_winner_msg
    */
-  private jackpot:number = 0;
+  public info_winner_msg:string;
 
   /**
    * Coin icon
@@ -155,6 +155,7 @@ export class DoFootballBetComponent{
    */
   constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
     this._alertS.fBet.subscribe(bet=>{
+      this.info_winner_msg = "";
       //Check if the bet is about the match winner 
       this.show1X2 = bet.bet.typeBet.name.includes("WINNER");
       //Get the winrate of the bet
@@ -166,8 +167,6 @@ export class DoFootballBetComponent{
       this.min = bet.bet.minBet;
       //The max of the bet
       this.max = bet.bet.maxBet;
-      // If it is a group bet, it calculate the jackpot
-      this.jackpot = this.jackpotBet ? bet.bet.usersJoined * this.min : 0;
       //The actual user coins (If is a group bet, the actual user coins would be 
       // the actual 'user_coins-min_bet', else the actual user coins)
       this.user_coins = this.jackpotBet ? bet.userCoins-this.min : bet.userCoins;
@@ -221,6 +220,16 @@ export class DoFootballBetComponent{
       this.max_win = Math.round(this.coins_bet*this.win_rate);
     }
     else this.coins_bet = 0;
+  }
+
+  public setMessage(){
+    let winner:number = this.doAFootballBetForm.controls['winner'].value;
+    if(winner==1) this.info_winner_msg = "The home team will win";
+    else if(winner==2) this.info_winner_msg = "The away team will win";
+    else if(winner==3) this.info_winner_msg = "Both teams will draw";
+    else if(winner==13) this.info_winner_msg = "The home team will win or draw";
+    else if(winner==23) this.info_winner_msg = "The home away will win or draw";
+    else if(winner==13) this.info_winner_msg = "Any team will win but there will no draw";
   }
 
 
