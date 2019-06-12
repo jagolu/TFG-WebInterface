@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener, ɵConsole } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage } from 'src/app/models/models';
@@ -364,7 +364,6 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     this.resetForm();
     (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex = 0;
     this.matches = this.bets[competition].matches;
-    this.allowedPays = this.bets[competition].allowedTypePays;
   }
 
   /**
@@ -397,6 +396,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     this.explanationBetType = type.description;
     this.betType = type;
     this.winRate = this.selectedPrice ? type.winRate + this.priceType.winRate : type.winRate;
+    this.addAllPriceType(this.allowedBets[typeid].name);  
   }
 
   /**
@@ -475,6 +475,23 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
   // ────────────────────────────────────────────────────────────────────────────────────
   //
+
+  /**
+   * Function to set the allowed prices to the selected bet type
+   * 
+   * @param {string} betType 
+   */
+  private addAllPriceType(betType:string){
+    this.allowedPays = [];
+    let winner = betType.includes("WINNER");
+    this.bets[0].allowedTypePays.forEach(x=>{
+      if(!x.name.includes("CLOSER") || !winner) this.allowedPays.push(x);
+    });
+    if(this.selectedPrice){
+      (document.querySelector("#newBet_priceType_select") as HTMLSelectElement).selectedIndex = 0;
+      this.selectedPrice = false;
+    } 
+  }
 
   /**
    * Get the info for the
