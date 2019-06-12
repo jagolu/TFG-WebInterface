@@ -226,10 +226,7 @@ export class DoFootballBetComponent{
     let winner:number = this.doAFootballBetForm.controls['winner'].value;
     if(winner==1) this.info_winner_msg = "The home team will win";
     else if(winner==2) this.info_winner_msg = "The away team will win";
-    else if(winner==3) this.info_winner_msg = "Both teams will draw";
-    else if(winner==13) this.info_winner_msg = "The home team will win or draw";
-    else if(winner==23) this.info_winner_msg = "The home away will win or draw";
-    else if(winner==13) this.info_winner_msg = "Any team will win but there will no draw";
+    else if(winner==0) this.info_winner_msg = "Both teams will draw";
   }
 
 

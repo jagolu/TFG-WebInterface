@@ -32,13 +32,16 @@ export class MyOwnFootballBetsComponent implements OnInit {
   }
 
   public correctPart(type:string):string{
-    return type.includes("FULLTIME") ? "Full match" : "First time";
+    if(type.includes("FULLTIME")) return "Full match";
+    if(type.includes("FIRSTHALF")) return "First half";
+    if(type.includes("SECONDHALF")) return "Second half";
   }
 
   public getWinnerWord(winner:number){
-    if(winner==0) "Draw (X)";
-    else if(winner==1) "Home (1)";
-    else if(winner==2) "Away (2)";
+    console.log(winner);
+    if(winner==0) return "Draw (X)";
+    else if(winner==1) return "Home (1)";
+    else if(winner==2) return "Away (2)";
   }
 
   public getJackpot(bet:GroupBet){
