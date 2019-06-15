@@ -57,6 +57,15 @@ export class DoFootballBetComponent{
   private jackpot:number = 0;
 
   /**
+   * To know the actual time
+   * (first time, second time, full match)
+   * 
+   * @access private
+   * @var {string} timeMessage
+   */
+  public timeMessage:string = "";
+
+  /**
    * The min of the bet
    * 
    * @access public
@@ -184,6 +193,8 @@ export class DoFootballBetComponent{
       this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
       //The id of the bet
       this.bet = bet.bet.bet;
+      //The message to correct time
+      this.timeMessage = this.correctPart(bet.bet.typeBet.name);
       this.initializeForm();
     });
     this.groupInfo.info.subscribe(group=>this.groupName = group.name);
@@ -325,5 +336,20 @@ export class DoFootballBetComponent{
       return {"requiredNumber":true}
     }
     return null;
+  }
+
+  /**
+   * Function to set the correct time message
+   * 
+   * @access private
+   * @param {string} type The type bet of the bet
+   * 
+   * @return {string} The correct message for the 
+   * correct part. 
+   */
+  private correctPart(type:string):string{
+    if(type.includes("FULLTIME")) return "Full match";
+    if(type.includes("FIRSTHALF")) return "First half";
+    if(type.includes("SECONDHALF")) return "Second half";
   }
 }
