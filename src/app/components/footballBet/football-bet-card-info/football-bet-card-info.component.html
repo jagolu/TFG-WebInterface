@@ -4,7 +4,7 @@
       <div class="col-lg-6 col-12" [ngClass]="{'col-lg-6 col-12': !isJackpotBet(bet.typePay.name), 'col-12': isJackpotBet(bet.typePay.name)}">
         <div class="row">
           <div class="col-12 mb-2">
-            Max day to do your bet                    
+            Max day to do the bet                    
           </div>
           <div class="col-12">
             <input type="text" readonly class="form-control" value="{{bet.lastBetTime | onlyDatePipe}}">

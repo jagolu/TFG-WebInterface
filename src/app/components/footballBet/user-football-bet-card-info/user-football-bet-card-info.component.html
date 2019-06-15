@@ -1,0 +1,44 @@
+<div class="card m-2" *ngFor="let bet of userBet" style="cursor:default" 
+    [ngClass]="{'text-white bg-danger': !bet.valid}">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-9"> Your bet </div>
+      <div class="col-3 text-right"><span *ngIf="!bet.valid"><h5>INVALID</h5></span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isWinnerBet(footballBet.typeBet.name)">
+          {{correctPart(footballBet.typeBet.name)}} winner: {{getWinnerWord(bet.winner)}}
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isWinnerBet(footballBet.typeBet.name)">
+          {{correctPart(footballBet.typeBet.name)}} result: {{bet.homeGoals}}-{{bet.awayGoals}}
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2">
+          Bet: {{bet.bet}} <app-icon [Icon]="coin_icon"></app-icon>
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(footballBet.typePay.name) && bet.valid">
+          Possible win: {{getWinRate(footballBet, bet)}} <app-icon [Icon]="coin_icon"></app-icon>
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isJackpotBet(footballBet.typePay.name) && bet.valid">
+          Jackpot: {{getJackpot(footballBet)}} <app-icon [Icon]="coin_icon"></app-icon>
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!bet.valid">
+          Returned coins: {{howMuchMoneyBack(footballBet.typeBet.cancelRate, footballBet.typePay.cancelRate, bet.bet)}} 
+            <app-icon [Icon]="coin_icon"></app-icon>
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="bet.valid">
+          The bet was done {{bet.dateDone|onlyDatePipe}}
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!bet.valid">
+          The bet was cancelled {{bet.dateInvalid|onlyDatePipe}}
+        </div>
+    </div>
+    <div class="row justify-content-md-center mt-3" *ngIf="bet.valid && !ended">
+      <div class="col-4">
+          <button class="btn btn-outline-danger w-100"
+            (click)="cancelUserFootballBet(footballBet, bet.bet, bet.userFootballBet)">Cancel bet</button>
+      </div>
+    </div>
+  </div>
+</div>

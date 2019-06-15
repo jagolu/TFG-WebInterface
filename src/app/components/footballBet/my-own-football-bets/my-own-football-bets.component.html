@@ -22,49 +22,7 @@
         data-parent="#myActiveBetsAccordion">
       <div class="card card-body">
         <app-football-bet-card-info [bet]="bet.bet"></app-football-bet-card-info>
-        <div class="card m-2" *ngFor="let ownBet of bet.ownBet" style="cursor:default" 
-            [ngClass]="{'text-white bg-danger': !ownBet.valid}">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-9"> Your bet </div>
-              <div class="col-3 text-right"><span *ngIf="!ownBet.valid"><h5>INVALID</h5></span></div></div>
-            </div>
-          <div class="card-body">
-            <div class="row">
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isWinnerBet(bet.bet.typeBet.name)">
-                    {{correctPart(bet.bet.typeBet.name)}} winner: {{getWinnerWord(ownBet.winner)}}
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isWinnerBet(bet.bet.typeBet.name)">
-                  {{correctPart(bet.bet.typeBet.name)}} result: {{ownBet.homeGoals}}-{{ownBet.awayGoals}}
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2">
-                  You bet: {{ownBet.bet}} <app-icon [Icon]="coin_icon"></app-icon>
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(bet.bet.typePay.name) && ownBet.valid">
-                  Possible win: {{getWinRate(bet.bet,ownBet)}} <app-icon [Icon]="coin_icon"></app-icon>
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isJackpotBet(bet.bet.typePay.name) && ownBet.valid">
-                  Actual jackpot: {{getJackpot(bet.bet)}} <app-icon [Icon]="coin_icon"></app-icon>
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!ownBet.valid">
-                  You got back: {{howMuchMoneyBack(bet.bet.typeBet.cancelRate, bet.bet.typePay.cancelRate, ownBet.bet)}} 
-                    <app-icon [Icon]="coin_icon"></app-icon>
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="ownBet.valid">
-                  The bet was done {{ownBet.dateDone|onlyDatePipe}}
-                </div>
-                <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!ownBet.valid">
-                  The bet was cancelled {{ownBet.dateInvalid|onlyDatePipe}}
-                </div>
-            </div>
-            <div class="row justify-content-md-center mt-3" *ngIf="ownBet.valid">
-              <div class="col-4">
-                  <button class="btn btn-outline-danger w-100"
-                    (click)="cancelUserFootballBet(bet.bet, ownBet.bet, ownBet.userFootballBet)">Cancel bet</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-user-football-bet-card-info [userBet]="bet.ownBet" [footballBet]="bet.bet" [ended]="false"></app-user-football-bet-card-info>
       </div>
     </div>
   </div>
