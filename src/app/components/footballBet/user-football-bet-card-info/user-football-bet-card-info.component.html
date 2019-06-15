@@ -1,7 +1,7 @@
 <div class="card m-2" *ngFor="let bet of userBet" style="cursor:default">
   <div class="card-header">
     <div class="row">
-      <div class="col-9"> Your bet </div>
+      <div class="col-9">{{name}} bet</div>
       <div class="col-3 text-right"><span *ngIf="!bet.valid"><h5 class="text-danger">INVALID</h5></span></div>
     </div>
   </div>

@@ -13,6 +13,8 @@ export class UserFootballBetCardInfoComponent{
   @Input() userBet:EndedFootballBet[] = [];
   @Input() footballBet:GroupBet[] = [];
   @Input() ended:boolean;
+  @Input() name:string;
+
   public coin_icon:IconModel = Icons.COIN;
   
   constructor(private alertS:AlertService) { }

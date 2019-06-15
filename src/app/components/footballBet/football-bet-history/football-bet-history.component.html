@@ -33,7 +33,7 @@
             <div  id="collapseBetsHistoryOtherUser_{{i}}_{{ii}}" 
                   class="collapse hide" [attr.aria-labelledby]="'headingOtherUserBets_'+i+'_'+ii">
                 <div class="card card-body">
-                  <app-user-football-bet-card-info [userBet]="otherUser.bets" [ended]="true"
+                  <app-user-football-bet-card-info [userBet]="otherUser.bets" [ended]="true" [name]="otherUser.username"
                       [footballBet]="bet.bet"></app-user-football-bet-card-info>
                 </div>
             </div>
@@ -54,7 +54,7 @@
           <div  id="collapseOwnBetsHistory_{{i}}" 
                 class="collapse hide" [attr.aria-labelledby]="'headingOwnUserBet_'+i">
             <div class="card card-body">
-              <app-user-football-bet-card-info [userBet]="bet.ownBet" [ended]="true"
+              <app-user-football-bet-card-info [userBet]="bet.ownBet" [ended]="true" [name]="'Your'"
                   [footballBet]="bet.bet"></app-user-football-bet-card-info>
             </div>
           </div>
