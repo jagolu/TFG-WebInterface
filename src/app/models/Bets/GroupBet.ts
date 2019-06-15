@@ -11,4 +11,10 @@ export interface GroupBet{
     matchdayDate:Date;
     lastBetTime:Date;
     usersJoined?:number;
+    firstHalfHomeGoals?:number;
+    firstHalfAwayGoals?:number;
+    secondHalfHomeGoals?:number;
+    secondHalfAwayGoals?:number;
+    fullTimeHomeGoals?:number;
+    fullTimeAwayGoals?:number;
 }
