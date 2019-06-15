@@ -67,6 +67,7 @@ export class GroupInfoService {
     this.information.next({
       "actualCapacity": 0,
       "myBets":[],
+      "betsHistory": [],
       "bets":[],
       "canPutPassword": false,
       "createDate": "",

@@ -14,5 +14,6 @@ export interface GroupPage{
     createDate:string;
     bets:GroupBet[];
     myBets:EndedFootballBet[];
+    betsHistory:EndedFootballBet[];
     members:GroupUser[];
 }
