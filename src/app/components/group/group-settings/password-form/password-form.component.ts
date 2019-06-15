@@ -52,7 +52,6 @@ export class PasswordFormComponent implements OnInit {
 
   public removePassword(){
     let oldPass = this.removePasswordForm.controls["oldPassword"].value;
-    console.log(oldPass);
     this.setPassword(null, oldPass);
     this.resetForm();
   }

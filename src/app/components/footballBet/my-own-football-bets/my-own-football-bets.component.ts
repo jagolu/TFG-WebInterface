@@ -38,7 +38,6 @@ export class MyOwnFootballBetsComponent implements OnInit {
   }
 
   public getWinnerWord(winner:number){
-    console.log(winner);
     if(winner==0) return "Draw (X)";
     else if(winner==1) return "Home (1)";
     else if(winner==2) return "Away (2)";
