@@ -49,6 +49,14 @@ export class DoFootballBetComponent{
   public jackpotBet:boolean = false;
 
   /**
+   * To know the actual jackpot
+   * 
+   * @access private
+   * @var {number} jackpot
+   */
+  private jackpot:number = 0;
+
+  /**
    * The min of the bet
    * 
    * @access public
@@ -167,6 +175,8 @@ export class DoFootballBetComponent{
       this.min = bet.bet.minBet;
       //The max of the bet
       this.max = bet.bet.maxBet;
+      // If it is a group bet, it calculate the jackpot
+      this.jackpot = this.jackpotBet ? bet.bet.usersJoined * this.min : 0;
       //The actual user coins (If is a group bet, the actual user coins would be 
       // the actual 'user_coins-min_bet', else the actual user coins)
       this.user_coins = this.jackpotBet ? bet.userCoins-this.min : bet.userCoins;
