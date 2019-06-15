@@ -1,8 +1,9 @@
 import { GroupBet } from './GroupBet';
-import { HistoryUserFootballBet } from '../models';
+import { HistoryUserFootballBet, OtherUserBets } from '../models';
 
 export interface EndedFootballBet{
     bet:GroupBet;
-    users:HistoryUserFootballBet[];
+    users:OtherUserBets[];
     ownBet:HistoryUserFootballBet[];
+    userWins?:boolean;
 }
