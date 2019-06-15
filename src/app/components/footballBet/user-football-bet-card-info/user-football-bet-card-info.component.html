@@ -13,14 +13,17 @@
         <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isWinnerBet(footballBet.typeBet.name)">
           {{correctPart(footballBet.typeBet.name)}} result: {{bet.homeGoals}}-{{bet.awayGoals}}
         </div>
-        <div class="col-lg-3 col-12 text-center mb-2">
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!ended || (ended && !isJackpotBet(footballBet.typePay.name))">
           Bet: {{bet.bet}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
-        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(footballBet.typePay.name) && bet.valid">
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(footballBet.typePay.name) && bet.valid && !ended">
           Possible win: {{getWinRate(footballBet, bet)}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
-        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isJackpotBet(footballBet.typePay.name) && bet.valid">
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="isJackpotBet(footballBet.typePay.name)">
           Jackpot: {{getJackpot(footballBet)}} <app-icon [Icon]="coin_icon"></app-icon>
+        </div>
+        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="ended && bet.valid">
+          Earnings: {{bet.earnings}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
         <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!bet.valid">
           Returned coins: {{howMuchMoneyBack(footballBet.typeBet.cancelRate, footballBet.typePay.cancelRate, bet.bet)}} 
