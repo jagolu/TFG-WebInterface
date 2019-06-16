@@ -69,14 +69,14 @@ import { RememberPasswordFormComponent } from './components/logSign/rememberPass
 import { DeleteGroupAlertComponent } from './components/shared/alert/delete-group-alert/delete-group-alert.component'
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 import { SocialSignPasswordComponent } from './components/shared/alert/social-sign-password/social-sign-password.component';
-import { CreateFootballBetComponent } from './components/footballBet/create-football-bet/create-football-bet.component';
+import { CreateFootballBetComponent } from './components/footballBet/manageBetTab/create-football-bet/create-football-bet.component';
 import { DoFootballBetComponent } from './components/shared/alert/do-football-bet/do-football-bet.component';
 import { FootballBetHistoryComponent } from './components/footballBet/football-bet-history/football-bet-history.component';
 import { MyOwnFootballBetsComponent } from './components/footballBet/my-own-football-bets/my-own-football-bets.component';
-import { FootballBetCardInfoComponent } from './components/footballBet/football-bet-card-info/football-bet-card-info.component';
+import { FootballBetCardInfoComponent } from './components/footballBet/card-info/football-bet-card-info/football-bet-card-info.component';
 import { CancellUserFootballBetComponent } from './components/shared/alert/cancell-user-football-bet/cancell-user-football-bet.component';
-import { UserFootballBetCardInfoComponent } from './components/footballBet/user-football-bet-card-info/user-football-bet-card-info.component';
-import { ManageFootballBetComponent } from './components/footballBet/manage-football-bet/manage-football-bet.component';
+import { UserFootballBetCardInfoComponent } from './components/footballBet/card-info/user-football-bet-card-info/user-football-bet-card-info.component';
+import { ManageFootballBetComponent } from './components/footballBet/manageBetTab/manage-football-bet/manage-football-bet.component';
 
 
 
