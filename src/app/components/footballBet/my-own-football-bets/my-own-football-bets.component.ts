@@ -5,7 +5,7 @@ import { EndedFootballBet, HistoryUserFootballBet  } from 'src/app/models/models
 @Component({
   selector: 'app-my-own-football-bets',
   templateUrl: './my-own-football-bets.component.html',
-  styles: ['.redTitle{color:#FE3838 !important;}']
+  styles: []
 })
 export class MyOwnFootballBetsComponent implements OnInit {
 

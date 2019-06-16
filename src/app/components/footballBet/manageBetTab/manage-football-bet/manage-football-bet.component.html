@@ -15,14 +15,9 @@
         [attr.data-target]="'#collapseManageBets'+i" 
         aria-expanded="false" 
         [attr.aria-controls]="'#collapseManageBets'+i">
-      <div class="row">
-        <div class="col">
-          <h3>{{bet.bet.betName}}</h3>
-        </div>
-        <div class="col-2 text-right">
-          <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
-        </div>
-      </div>
+
+      <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+
     </div>
 
     <div id="collapseManageBets{{i}}" 
