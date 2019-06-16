@@ -1,4 +1,4 @@
-<div class="accordion" id="betsHistoryAccordion">
+<div class="accordion" id="betsHistoryAccordion" *ngIf="betsHistory.length>0">
   <div class="card" *ngFor="let bet of betsHistory; let i = index" style="cursor: default">
     <div class="card-header" id="headingHistoryBet{{i}}" 
         data-toggle="collapse" [attr.data-target]="'#collapseBetsHistory'+i" 
@@ -62,4 +62,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="betsHistory.length == 0">
+  <p class="h3">You haven't done any bet</p>
 </div>

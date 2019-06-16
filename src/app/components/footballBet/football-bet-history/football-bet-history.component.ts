@@ -16,7 +16,7 @@ export class FootballBetHistoryComponent implements OnInit {
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
       try{ this.betsHistory = page.betsHistory;}
-      catch(Error){}
+      catch(Error){this.betsHistory = []}
     });
   }
 }

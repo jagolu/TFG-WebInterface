@@ -332,7 +332,7 @@ export class DoFootballBetComponent{
    */
   private requiredNumber(control:FormControl):{[ret:string]:boolean}{
     let num = control.value;
-    if(num == null || isNaN(num) || num%1 !== 0 || control.pristine) {
+    if(num == null || isNaN(num) || num%1 !== 0) {
       return {"requiredNumber":true}
     }
     return null;
