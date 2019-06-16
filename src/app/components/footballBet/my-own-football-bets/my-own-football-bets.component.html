@@ -10,7 +10,7 @@
         <div [ngClass]="{'col-lg-9 col-12': !isValid(bet.ownBet), 'col-12': isValid(bet.ownBet) }">
           <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
         </div>
-        <div class="col-lg-3 col-12 text-right" *ngIf="!isValid(bet.ownBet)">
+        <div class="col-lg-3 col-12 text-right my-auto" *ngIf="!isValid(bet.ownBet)">
           <h2 class="text-danger">INVALID</h2>
         </div>
       </div>

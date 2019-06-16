@@ -16,8 +16,21 @@
         aria-expanded="false" 
         [attr.aria-controls]="'#collapseManageBets'+i">
 
-      <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
-
+      <div class="row">
+        <div class="col-lg-9 col-12">
+            <h3>{{bet.bet.betName}}</h3> 
+            <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+        </div>
+        <div class="col-lg-3 col-12 text-right" *ngIf="!bet.cancelled">
+            <h2 class="text-warning" *ngIf="bet.ended">ENDED</h2>
+            <h2 class="text-success" *ngIf="!bet.ended && !bet.cancelled">ACTIVE</h2>
+            <small>{{bet.dateLaunch|onlyDatePipe}} - {{bet.bet.lastBetTime|onlyDatePipe}}</small>
+        </div>
+        <div class="col-lg-3 col-12 text-right" *ngIf="bet.cancelled">
+            <h2 class="text-danger">CANCELLED</h2>
+            <small>{{bet.dateCancelled|onlyDatePipe}}</small>
+        </div>
+       </div>
     </div>
 
     <div id="collapseManageBets{{i}}" 
