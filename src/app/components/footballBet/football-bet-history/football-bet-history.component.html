@@ -4,7 +4,8 @@
         data-toggle="collapse" [attr.data-target]="'#collapseBetsHistory'+i" 
         aria-expanded="false" [attr.aria-controls]="'#collapseBetsHistory'+i">
 
-      <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+      <h3>{{bet.bet.betName}} <small>{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> 
+      <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
     </div>
 
     <div id="collapseBetsHistory{{i}}" class="collapse hide" 

@@ -18,7 +18,7 @@
 
       <div class="row">
         <div class="col-lg-9 col-12">
-            <h3>{{bet.bet.betName}}</h3> 
+            <h3>{{bet.bet.betName}} <small *ngIf="bet.bet.fullTimeHomeGoals != null">{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> 
             <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
         </div>
         <div class="col-lg-3 col-12 text-right" *ngIf="!bet.cancelled">

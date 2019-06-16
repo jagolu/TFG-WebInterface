@@ -147,8 +147,6 @@ export class CancellUserFootballBetComponent{
    * @access private
    */
   private cancelBetReq(){
-    // console.log(this.footballBetId);
-    // console.log(this.userFootballBetId);
     this._betS.cancelUserFootballBet({
       "groupName": this.groupName,
       "footballBet": this.footballBetId,
