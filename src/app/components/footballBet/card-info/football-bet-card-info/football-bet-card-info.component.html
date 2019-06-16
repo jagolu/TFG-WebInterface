@@ -1,0 +1,90 @@
+<div class="row justify-content-around mb-4" *ngIf="bet.firstHalfHomeGoals!=null">
+  <div class="col-2">
+      First time: {{bet.firstHalfHomeGoals}} - {{bet.firstHalfAwayGoals}}
+  </div>
+  <div class="col-2">
+    Second time: {{bet.secondHalfHomeGoals}} - {{bet.secondHalfAwayGoals}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 col-12 mt-3">
+    <div class="row mb-1">
+      <div class="col-lg-6 col-12" [ngClass]="{'col-lg-6 col-12': !isJackpotBet(bet.typePay.name), 'col-12': isJackpotBet(bet.typePay.name)}">
+        <div class="row">
+          <div class="col-12 mb-2">
+            Max day to do the bet                    
+          </div>
+          <div class="col-12">
+            <input type="text" readonly class="form-control" value="{{bet.lastBetTime | onlyDatePipe}}">
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-12" *ngIf="!isJackpotBet(bet.typePay.name)">
+        <div class="row">
+          <div class="col-12 mb-2">
+            Fee
+          </div>
+          <div class="col-12">
+            <input type="text" readonly class="form-control" value="{{bet.typeBet.winRate + bet.typePay.winRate}}">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3 mb-1">
+      <div class="col-lg-6 col-12" *ngIf="!isJackpotBet(bet.typePay.name)">
+        <div class="row">
+          <div class="col-12 mb-2">
+            Min bet
+          </div>
+          <div class="col-12 mb-1">
+            <input type="text" readonly class="form-control" value="{{bet.minBet}}">
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-12" *ngIf="!isJackpotBet(bet.typePay.name)">
+        <div class="row">
+          <div class="col-12 mb-2">
+            Max bet
+          </div>
+          <div class="col-12 mb-1">
+            <input type="text" readonly class="form-control" value="{{bet.maxBet==10001 ? 'No Max' : bet.maxBet}}">
+          </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="isJackpotBet(bet.typePay.name)">
+        <div class="row">
+          <div class="col-12 mb-2">
+            Entry bet
+          </div>
+          <div class="col-12 mb-1">
+            <input type="text" readonly class="form-control" value="{{bet.minBet}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-12">
+    <div class="row">
+      <div class="col-12">
+        <input type="text" readonly class="form-control" value="{{bet.typeBet.name}}">
+      </div>
+      <div class="col-12 mb-2 mt-2">
+        <div class="card card-body">
+          <p class="card-text">{{bet.typeBet.description}}</p>
+        </div>
+      </div>              
+    </div>
+  </div>
+  <div class="col-lg-3 col-12">
+    <div class="row">
+      <div class="col-12">
+        <input type="text" readonly class="form-control" value="{{bet.typePay.name}}">
+      </div>
+      <div class="col-12 mt-2">
+        <div class="card card-body">
+          <p class="card-text">{{bet.typePay.description}}</p>
+        </div>
+      </div>              
+    </div>
+  </div>
+</div>

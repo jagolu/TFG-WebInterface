@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertMode, IconModel, Icons } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
@@ -13,29 +13,13 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
  * @class
  * @implements AfterViewInit
  */
-export class AlertComponent  implements AfterViewInit {
+export class AlertComponent{
 
   //
   // ──────────────────────────────────────────────────────────────────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────
   //
-
-  /**
-   * For interact with the navbar tag
-   * 
-   * @access private
-   * @var {HTMLElement} navbar
-   */
-  private navbar:HTMLElement;
-
-  /**
-   * For intercat with the outlet tag
-   * 
-   * @access private
-   * @var {HTMLElement} outlet
-   */
-  private outlet:HTMLElement;
 
   /**
    * The mode of the alert to show the
@@ -83,39 +67,7 @@ export class AlertComponent  implements AfterViewInit {
   }
 
   /**
-   * Gets the navbar & outlet tags
-   * 
-   * @AfterViewInit
+   * The focus-in & the focus-out is done on 
+   * the src/assets/auxJs.js
    */
-  ngAfterViewInit(){
-    this.navbar = (document.querySelector("#navbarId") as HTMLElement);
-    this.outlet = (document.querySelector(".main") as HTMLElement);
-  }
-
-
-  //
-  // ──────────────────────────────────────────────────────────────────────────────────
-  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
-  // ──────────────────────────────────────────────────────────────────────────────────
-  //
-  
-  /**
-   * Focus the screen on the alert
-   * 
-   * @access public
-   */
-  public focusIn(){
-    this.navbar.style.filter = "blur(6px)";
-    this.outlet.style.filter = "blur(6px)";
-  }
-
-  /**
-   * Blur the screen of the alert
-   * 
-   * @access public
-   */
-  public focusOut(){
-    this.navbar.style.filter = "none";
-    this.outlet.style.filter = "none";
-  }
 }

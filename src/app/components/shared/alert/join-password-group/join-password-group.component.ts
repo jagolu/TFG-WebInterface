@@ -58,15 +58,12 @@ export class JoinPasswordGroupComponent{
    * @param {UserService} _userS To do the user requests
    */
   constructor(private _alertS:AlertService, private _groupS:GroupService) { 
-    this.initializeForm();
-    this._alertS.needForm.subscribe(
-      needPassword=> this.hasPassword = needPassword
-    );
+    this._alertS.needForm.subscribe(needPassword=>{
+      this.initializeForm();
+      this.hasPassword = needPassword;
+    });
     this._alertS.target.subscribe(
       target => this.groupName = target
-    );
-    this._alertS.reset.subscribe(
-      reset=>{ if(reset) this.resetForm(); }
     );
   }
 
@@ -90,10 +87,6 @@ export class JoinPasswordGroupComponent{
     //show 2 modals, so first hide that and in 0.35 seconds
     //send the petition and show the modal of the response
     setTimeout(this.join.bind(this), 350);
-
-    //When the alert do the fade out, the user can see the reset of
-    // the form, waiting 0.75 seconds the user doesn't see that
-    setTimeout(this.resetForm.bind(this), 750);
   }
 
 
@@ -120,17 +113,6 @@ export class JoinPasswordGroupComponent{
         ]
       )
     });
-  }
-
-  /**
-   * Reset the join-group form to emtpy
-   * 
-   * @access private
-   */
-  private resetForm(){
-    this.joinGroupForm.reset({
-      "password" : ""
-    })
   }
   
   /**

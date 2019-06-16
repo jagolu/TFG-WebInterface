@@ -79,7 +79,13 @@ export class GroupService extends RestService{
    * @return {Observable} The result of the request
    */
   public checkGroupName(name:string){
-    return this.getRequest(this._groupPath+"CheckGroupName?name="+name,null, true);
+    return this.getRequest(this._groupPath+"CheckGroupName",
+    [
+      {
+        param: "name",
+        value : name
+      }
+    ], true);
   }
 
   /**
@@ -90,7 +96,13 @@ export class GroupService extends RestService{
    * @return {Observable} The result of the request
    */
   public getPageGroup(name:string){
-    this.getRequest(this._groupPath+"GroupPage?groupName="+name, null).subscribe(
+    this.getRequest(this._groupPath+"GroupPage", 
+    [
+      {
+        param:"groupName",
+        value: name
+      }
+    ]).subscribe(
       (page:GroupPage)=> this.groupInfoS.updateInfo(page)
     );
   }
@@ -103,7 +115,13 @@ export class GroupService extends RestService{
    * @return {Observable} The result of the request
    */
   public getGroups(name:string){
-    return this.getRequest(this._groupPath+"SearchGroup?name="+name, null, true);
+    return this.getRequest(this._groupPath+"SearchGroup", 
+    [
+      {
+        param : "name",
+        value : name
+      }
+    ], true);
   }
 
   /**
@@ -136,7 +154,13 @@ export class GroupService extends RestService{
    * @param {string} groupName The name of the group
    */
   public leaveGroup(groupName:string){
-    this.getRequest(this._groupPath+"LeaveGroup?groupName="+groupName, null).subscribe(
+    this.getRequest(this._groupPath+"LeaveGroup", 
+    [
+      {
+        param: "groupName",
+        value: groupName
+      }
+    ]).subscribe(
       _=> this.reloadGroups()
     );
   }
@@ -147,7 +171,7 @@ export class GroupService extends RestService{
    * @access public
    */
   public makeAdmin(order:MakeUnmake_admin_block){
-    this.postRequest(order, this._groupPath+"MakeAdmin", true).subscribe(
+    this.postRequest(order, this._groupPath+"MakeAdmin").subscribe(
       (page:GroupPage)=>this.groupInfoS.updateInfo(page)
     );
   }
@@ -158,7 +182,7 @@ export class GroupService extends RestService{
    * @access public
    */
   public kickUser(order:KickUser){
-    this.postRequest(order, this._groupPath+"RemoveUser", true).subscribe(
+    this.postRequest(order, this._groupPath+"RemoveUser").subscribe(
       (page:GroupPage)=> this.groupInfoS.updateInfo(page)
     );
   }
@@ -169,7 +193,7 @@ export class GroupService extends RestService{
    * @access public
    */
   public blockUser(order:MakeUnmake_admin_block){
-    this.postRequest(order, this._groupPath+"BlockUser", true).subscribe(
+    this.postRequest(order, this._groupPath+"BlockUser").subscribe(
       (page:GroupPage) => this.groupInfoS.updateInfo(page)
     );
   }

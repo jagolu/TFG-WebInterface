@@ -1,0 +1,80 @@
+<form [formGroup]="doAFootballBetForm" (ngSubmit)="doBet()">
+  <!-- 1X2 -->
+  <div class="row" *ngIf="show1X2">
+    <label class="col-6 col-form-label">{{timeMessage}} result</label>
+    <div class="col-6 pt-2 pb-2">
+      <div class="row justify-content-md-center">
+        <div class="col-3">
+          <div class="col-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=1 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">1</label>
+          </div>          
+        </div>
+        <div class="col-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=0 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">X</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value=2 formControlName="winner" (change)="setMessage()">
+            <label class="form-check-label">2</label>
+          </div>   
+        </div>
+      </div>
+    </div>
+    <small class="text-center text-info w-100" *ngIf="info_winner_msg.length>0">{{info_winner_msg}}</small>
+  </div>
+
+  <!-- Home/Away goals -->
+  <div *ngIf="!show1X2">
+    <div class="row mb-2">
+      <label class="col-5 col-form-label">{{timeMessage}} home goals</label>
+      <div class="col-7">    
+        <input type="number" class="form-control" placeholder="Home team goals" 
+          formControlName="homeGoals" min=0 max=20>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-5 col-form-label">{{timeMessage}} away goals</label>
+      <div class="col-7">    
+        <input type="number" class="form-control" placeholder="Away team goals" 
+            formControlName="awayGoals" min=0 max=20>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER COINS & POSSIBLE WIN -->
+  <div class="row m-2 pt-1 pb-1 w-100">
+    <div [ngClass]="{'col-4': jackpotBet, 'col-6': !jackpotBet}">
+        <small>Your will have {{user_coins-coins_bet}} <app-icon [Icon]="coin_icon"></app-icon></small>
+    </div>
+    <div [ngClass]="{'col-8': jackpotBet, 'col-6': !jackpotBet}">
+      <small *ngIf="!jackpotBet">Maximum gain: {{max_win}} <app-icon [Icon]="coin_icon"></app-icon></small>
+      <small *ngIf="jackpotBet">At this moment, the jackpot is {{jackpot}} <app-icon [Icon]="coin_icon"></app-icon></small>
+    </div>   
+  </div>
+
+  <!-- Max/Min/Fee info -->
+  <div class="row justify-content-center mb-3" *ngIf="!jackpotBet">
+    <div class="col-4">Min bet: {{min}}</div>
+    <div class="col-4">Max bet: {{max}}</div>
+    <div class="col-3">Fee: {{win_rate}}</div>
+  </div>
+  <!-- Your bet -->
+  <div class="form-group row">
+    <label class="col-4 col-form-label">Your bet</label>
+    <div class="col-8">  
+      <!-- Custom bet -->
+      <input type="number" class="form-control" min={{min}} max={{max_user}} *ngIf="!jackpotBet"
+              formControlName="coinsBet" (change)="setBetCoins()" (keyup)="setBetCoins()">
+      <!-- Entry bet -->
+      <input type="text" class="form-control" formControlName="coinsBet" *ngIf="jackpotBet">
+    </div>
+  </div>
+
+  <!-- SUBMIT BUTTON -->
+  <button class="btn btn-outline-dark w-100 mt-1" type="submit"
+          [disabled]="!doAFootballBetForm.valid">Do the bet</button>
+</form>

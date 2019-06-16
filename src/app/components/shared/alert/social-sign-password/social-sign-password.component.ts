@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { IconModel, Icons, SocialType } from 'src/app/models/models';
@@ -47,7 +47,7 @@ export class SocialSignPasswordComponent{
    * @access public
    * @var {string} passwordType
    */
-  public passwordType: string;
+  public passwordType: string = "password";
 
   /**
    * The type of socialLog (Facebook or Google)
@@ -65,6 +65,13 @@ export class SocialSignPasswordComponent{
    */
   public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
 
+  /**
+   * Selector of the eye icon
+   * 
+   * @var eye
+   */
+  @ViewChild('chooseSocialPasswordEye') eye;
+
   //
   // ──────────────────────────────────────────────────────────────────────────
   //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
@@ -78,15 +85,16 @@ export class SocialSignPasswordComponent{
    * @param {AlertService} _alertS To get the data to rightly do the alert
    */
   constructor(private _authenticationS:AuthenticationService, private _authS:AuthService, private _alertS:AlertService) { 
+    this._alertS.target.subscribe(target =>{
+      if(this.passwordType != "password"){
+        this.eye.eR.nativeElement.click();
+        this.eye.icon.style.color = "black"
+        this.passwordType = "password";
+      }
+      this.providerId = target;
       this.equalPasswords = false;
-      this.passwordType = "password"
       this.initializeForm();
-      this._alertS.target.subscribe(
-        target => this.providerId = target
-      );
-      this._alertS.reset.subscribe(
-        reset=>{ if(reset) this.resetForm(); }
-      );
+    });
   }
 
 
@@ -109,10 +117,6 @@ export class SocialSignPasswordComponent{
     //show 2 modals, so first hide that and in 0.35 seconds
     //send the petition and show the modal of the response
     setTimeout(this.setPasswordRequest.bind(this), 350);
-
-    //When the alert do the fade out, the user can see the reset of
-    // the form, waiting 0.75 seconds the user doesn't see that
-    setTimeout(this.resetForm.bind(this), 750);
   }
 
   /**
@@ -184,18 +188,6 @@ export class SocialSignPasswordComponent{
     this.socialPasswordForm = new FormGroup({
       'password' : new FormControl('', passValidators),
       'repeatPassword' : new FormControl('', passValidators)
-    });
-  }
-
-  /**
-   * Resets the form
-   * 
-   * @access private
-   */
-  private resetForm(){
-    this.socialPasswordForm.reset({
-      'password' : "",
-      'repeatPassword' : ""
     });
   }
 }

@@ -2,15 +2,13 @@
     tabindex="-1" 
     role="dialog" 
     aria-hidden="true"
-    id="alertMessage"
-    (focusin)="focusIn()"
-    (focusout)="focusOut()">
+    id="alertMessage">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
         <h4 class="modal-title">{{title}}</h4>
-        <app-icon [Icon]="icon_cross" style="font-size:160%" data-dismiss="modal" (click)="focusOut()"></app-icon>
+        <app-icon [Icon]="icon_cross" style="font-size:160%" data-dismiss="modal"></app-icon>
       </div>
 
       <div class="modal-body">
@@ -23,6 +21,8 @@
             <app-join-password-group *ngIf="mode == 'JOINGROUP'"></app-join-password-group>
             <app-delete-group-alert *ngIf="mode == 'DELETEGROUP'"></app-delete-group-alert>
             <app-social-sign-password *ngIf="mode == 'SOCIALPASSWORD'"></app-social-sign-password>
+            <app-do-football-bet *ngIf="mode == 'FOOTBALLBET'"></app-do-football-bet >
+            <app-cancell-user-football-bet *ngIf="mode == 'CANCELUSERFOOTBALLBET'"></app-cancell-user-football-bet>
 
           </div>
         </div>

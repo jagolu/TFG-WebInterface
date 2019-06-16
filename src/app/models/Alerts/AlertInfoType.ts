@@ -153,5 +153,65 @@ export enum AlertInfoType{
     /**
      * @summary Success message, when a user leaves a group
      */
-    SUCCESFULLGROUPLEAVE = "SUCCESFULLGROUPLEAVE"
+    SUCCESFULLGROUPLEAVE = "SUCCESFULLGROUPLEAVE",
+
+    /**
+     * @summary Success message, when a user launchs a football bet
+     */
+    SUCCESFULLFOOTBALLBET = "SUCCESFULLFOOTBALLBET",
+
+    /**
+     * @summary Info message when a user tries to launch
+     * a bet which min bet is higher that his actual coins
+     */
+    BETHIGHERTHANYOURCOINS = "BETHIGHERTHANYOURCOINS",
+
+    /**
+     * @summary Error message when a user tries to do
+     * a football bet but this one is already cancelled
+     */
+    BETCANCELLED = "BETCANCELLED",
+
+    /**
+     * @summary Error message when a user tries to do
+     * a football bet but this one is already ended
+     */
+    BETENDED = "BETENDED",
+
+    /**
+     * @summary Error message when a user tries to do
+     * a football bet but the time to bet is passed
+     */
+    BETLASTBETPASSED = "BETLASTBETPASSED",
+
+    /**
+     * @summary Success message when a user do 
+     * succesfully a user football bet
+     */
+    SUCCESFULLDOFOOTBALLBET = "SUCCESFULLDOFOOTBALLBET",
+
+    /**
+     * @summary Error message when a user tries to cancel
+     * a user football bet bet the football bet is cancelled
+     */
+    CANCELBETCANCELLED = "CANCELBETCANCELLED",
+
+    /**
+     * @summary Error message when a user tries to cancel
+     * a user football bet but the football bet is already ended
+     */
+    CANCELBETENDED = "CANCELBETENDED",
+
+    /**
+     * @summary Error message when a user tries to cancel
+     * a user football bet but the time to bet in the football 
+     * bet is passed
+     */
+    CANCELBETLASTBETPASSED = "CANCELBETLASTBETPASSED",
+
+    /**
+     * @summary Success message when a user cancels 
+     * succesfully a user football bet
+     */
+    SUCCESFULLCANCELFOOTBALLBET = "SUCCESFULLCANCELFOOTBALLBET"
   }

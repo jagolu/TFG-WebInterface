@@ -299,6 +299,86 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESFULLFOOTBALLBET:{
+        msg = [
+          "Se ha lanzado correctamente la apuesta deportiva.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.BETHIGHERTHANYOURCOINS:{
+        msg = [
+          "Cuiado, el mínimo de apuesta que has elegido es superior a las monedas que tienes actualmente.",
+          "Si no consigues más monedas no podrás apostar en esta apuesta.",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.BETCANCELLED:{
+        msg = [
+          "La apuesta en la que estas intentado apostar, se ha cancelado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.BETENDED:{
+        msg = [
+          "La apuesta en la que estas intentado apostar, ha terminado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.BETLASTBETPASSED:{
+        msg = [
+          "El tiempo para participar en esta apuesta ha acabado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.SUCCESFULLDOFOOTBALLBET:{
+        msg = [
+          "Tu apuesta se ha realizado con exito.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.CANCELBETCANCELLED:{
+        msg = [
+          "No puedes cancelar tu apuesta, el evento de apuesta ha sido cancelado.",
+          "Tus monedas deberían haber sido devueltas",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.CANCELBETENDED:{
+        msg = [
+          "No puedes cancelar tu apuesta, el evento de apuesta ha terminado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.CANCELBETLASTBETPASSED:{
+        msg = [
+          "No puedes cancelar tu apuesta, el tiempo para modificar las apuestas ha terminado.",
+          "",
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.SUCCESFULLCANCELFOOTBALLBET:{
+        msg = [
+          "Tu apuesta se ha cancelado con exito. Puedes volver a apostar en el mismo evento de apuesta si lo deseas.",
+          "Algunas monedas de las que apostaste se te habrán devuelto.",
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

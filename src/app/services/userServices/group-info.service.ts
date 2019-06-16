@@ -57,4 +57,28 @@ export class GroupInfoService {
     //Update the group page info which is at info var
     this.information.next(info);
   }
+
+  /**
+   * Cleans the info of the observable
+   * 
+   * @access public
+   */
+  public removeInfo(){
+    this.information.next({
+      "actualCapacity": 0,
+      "myBets":[],
+      "manageBets":[],
+      "betsHistory": [],
+      "bets":[],
+      "canPutPassword": false,
+      "createDate": "",
+      "dateJoin": "",
+      "dateRole": "",
+      "hasPassword": false,
+      "maxCapacity": 0,
+      "members": [],
+      "name": "",
+      "type": true
+    });
+  }
 }

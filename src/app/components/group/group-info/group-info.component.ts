@@ -22,7 +22,7 @@ export class GroupInfoComponent implements OnInit {
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
       try{
-        this.role = page.role;
+        this.role = page.members ? page.members[page.members.length-1].role : "";
         this.groupName = page.name;
         this.dateJoin = page.dateJoin;
         this.dateRole = page.dateRole;

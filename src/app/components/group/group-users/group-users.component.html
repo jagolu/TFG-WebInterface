@@ -1,22 +1,28 @@
 <ul class="list-group">
   <div *ngFor="let member of members; let i = index">
-    <li class="list-group-item text-center" [ngClass]="{'bg-secondary text-white': member.blocked }">{{member.userName}}
+    <li class="list-group-item text-center" [ngClass]="{'bg-secondary text-white': member.blocked }">
+      <span style="float:left" *ngIf="i != (members.length-1) && !group_type">
+        {{member.coins}} <app-icon [Icon]="icon_coin"></app-icon>
+      </span>
+      {{member.userName}}
+      
+      <app-icon [Icon]="icon_user" *ngIf="i == (members.length-1)"></app-icon>
       <app-icon [Icon]="icon_crown" *ngIf="member.role=='GROUP_MAKER'"></app-icon>
       <app-icon [Icon]="icon_wizard" *ngIf="member.role=='GROUP_ADMIN'"></app-icon>
 
 
-      <app-icon [Icon]="icon_info" class="float-right ml-2"
+      <app-icon [Icon]="icon_info" class="float-right ml-2" *ngIf="i != (members.length-1)"
                 data-toggle="collapse" [attr.href]="'#collapseGroupUserInfo'+i" 
                 role="button" aria-expanded="false" [attr.aria-controls]="'collapseGroupUserInfo'+i"></app-icon>
 
       <app-icon [Icon]="icon_cog" class="float-right" 
-                *ngIf="(user_role!='GROUP_NORMAL' && member.role!='GROUP_MAKER' && user_role!=member.role && !member.blocked) || 
-                        (member.blocked && (user_role == 'GROUP_MAKER' || user_role == member.blockedBy))" 
+                *ngIf="((user_role!='GROUP_NORMAL' && member.role!='GROUP_MAKER' && user_role!=member.role && !member.blocked) || 
+                        (member.blocked && (user_role == 'GROUP_MAKER' || user_role == member.blockedBy))) &&  i != (members.length-1)"
                 data-toggle="collapse" [attr.href]="'#collapseGroupUserOptions'+i" 
                 role="button" aria-expanded="false" [attr.aria-controls]="'collapseGroupUserOptions'+i"></app-icon>
     </li>
 
-    <div class="collapse" [id]="'collapseGroupUserInfo'+i">
+    <div class="collapse" [id]="'collapseGroupUserInfo'+i" *ngIf="i != (members.length-1)">
       <div class="card">
         <div class="row justify-content-around">
           <div class="col-md-5">
@@ -41,7 +47,8 @@
 
 
     <div class="collapse" [id]="'collapseGroupUserOptions'+i" 
-                  *ngIf="user_role!='GROUP_NORMAL' && member.role!='GROUP_MAKER' && user_role!=member.role">
+          *ngIf="((user_role!='GROUP_NORMAL' && member.role!='GROUP_MAKER' && user_role!=member.role && !member.blocked) || 
+          (member.blocked && (user_role == 'GROUP_MAKER' || user_role == member.blockedBy))) &&  i != (members.length-1)">
       <div class="card card-body">
         <div class="row justify-content-center">
           <div class="col-6">
@@ -69,10 +76,4 @@
 
 
   </div>
-  <li class="list-group-item text-center">
-    {{username}} 
-    <app-icon [Icon]="icon_user"></app-icon>
-    <app-icon [Icon]="icon_crown" *ngIf="user_role=='GROUP_MAKER'"></app-icon>
-    <app-icon [Icon]="icon_wizard" *ngIf="user_role=='GROUP_ADMIN'"></app-icon>
-  </li>
 </ul>

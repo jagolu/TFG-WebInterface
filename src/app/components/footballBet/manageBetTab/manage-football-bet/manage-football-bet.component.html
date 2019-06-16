@@ -1,0 +1,49 @@
+<button class="btn btn-outline-dark w-100 mb-2" type="button" data-toggle="collapse" 
+        data-target="#collapse_createNewBet" aria-expanded="false" aria-controls="collapse_createNewBet" id="launchFootBallBetButton">
+    Launch new bet
+</button>
+<div class="collapse" id="collapse_createNewBet">
+  <div class="card card-body mb-3"><app-create-football-bet></app-create-football-bet></div>
+</div>
+
+
+<div class="accordion" id="manageBetsAccordion" *ngIf="betsM.length>0">
+  <div class="card" *ngFor="let bet of betsM; let i = index" style="cursor: default">
+    <div class="card-header" 
+        id="headingManageBet{{i}}" 
+        data-toggle="collapse" 
+        [attr.data-target]="'#collapseManageBets'+i" 
+        aria-expanded="false" 
+        [attr.aria-controls]="'#collapseManageBets'+i">
+
+      <div class="row">
+        <div class="col-lg-9 col-12">
+            <h3>{{bet.bet.betName}} <small *ngIf="bet.bet.fullTimeHomeGoals != null">{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> 
+            <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+        </div>
+        <div class="col-lg-3 col-12 text-right" *ngIf="!bet.cancelled">
+            <h2 class="text-warning" *ngIf="bet.ended">ENDED</h2>
+            <h2 class="text-success" *ngIf="!bet.ended && !bet.cancelled">ACTIVE</h2>
+            <small>{{bet.dateLaunch|onlyDatePipe}} - {{bet.bet.lastBetTime|onlyDatePipe}}</small>
+        </div>
+        <div class="col-lg-3 col-12 text-right" *ngIf="bet.cancelled">
+            <h2 class="text-danger">CANCELLED</h2>
+            <small>{{bet.dateCancelled|onlyDatePipe}}</small>
+        </div>
+       </div>
+    </div>
+
+    <div id="collapseManageBets{{i}}" 
+        class="collapse hide" 
+        [attr.aria-labelledby]="'headingManageBet'+i" 
+        data-parent="#manageBetsAccordion">
+      <div class="card card-body">
+        <app-football-bet-card-info [bet]="bet.bet"></app-football-bet-card-info>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="betsM.length == 0">
+  <p class="h3">You don't have launch any bet. Try it!</p>
+</div>

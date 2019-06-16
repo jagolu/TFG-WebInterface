@@ -1,0 +1,25 @@
+<div class="accordion" id="groupBets">
+  <div class="card" *ngFor="let bet of bets; let i = index" style="cursor: default">
+    <div class="card-header" 
+        id="headingBet{{i}}" 
+        data-toggle="collapse" 
+        [attr.data-target]="'#collapseBet'+i" 
+        aria-expanded="false" 
+        [attr.aria-controls]="'#collapseBet'+i">
+
+      <h3>{{bet.betName}}</h3> <small class="font-italic">{{bet.competition}}  ({{bet.matchdayDate|onlyDatePipe}})</small>
+    </div>
+
+    <div id="collapseBet{{i}}" 
+        class="collapse hide" 
+        [attr.aria-labelledby]="'headingBet'+i" 
+        data-parent="#groupBets">
+      <div class="card card-body">
+        <app-football-bet-card-info [bet]="bet"></app-football-bet-card-info>
+        <button class="btn btn-outline-success w-100 mt-4" 
+                [disabled]="userCoins<bet.minBet" (click)="doBet(bet)"
+        >Do the bet</button>
+      </div>
+    </div>
+  </div>
+</div>

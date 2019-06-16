@@ -7,6 +7,8 @@ import { LoadingService } from 'src/app/services/visualServices/loading.service'
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { GroupInfoService } from '../userServices/group-info.service';
+import { UserInfoService } from '../userServices/user-info.service';
 
 
 @Injectable({
@@ -51,7 +53,7 @@ export class AuthenticationService extends RestService {
    * @param {SessionService} _sessionS For set and remove the session
    * @param {Router} _router For when the user logs out, redirect him to index
    */
-  constructor(_http:HttpClient,  _loading:LoadingService, 
+  constructor(_http:HttpClient,  _loading:LoadingService, private groupInfoS:GroupInfoService, private userInfoS:UserInfoService,
               private _authS:AuthService, private _sessionS:SessionService, private _router:Router){
     super(_http, _loading);
   }
@@ -91,6 +93,8 @@ export class AuthenticationService extends RestService {
   public logOut(){
     this._authS.signOut().catch(Error);
     this._sessionS.removeSession();
+    this.groupInfoS.removeInfo();
+    this.userInfoS.removeInfo();
     this._router.navigate(['']);
   }
 

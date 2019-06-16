@@ -34,5 +34,15 @@ export enum AlertMode{
     /**
      * @summary Alerts to set a password from a social sign
      */
-    SOCIALPASSWORD = "SOCIALPASSWORD"
+    SOCIALPASSWORD = "SOCIALPASSWORD",
+
+    /**
+     * @summary Alerts to do a football bet
+     */
+    FOOTBALLBET = "FOOTBALLBET",
+
+    /**
+     * @summary Alerts to cancel a user football bet
+     */
+    CANCELUSERFOOTBALLBET = "CANCELUSERFOOTBALLBET"
 }

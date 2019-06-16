@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AlertMode, AlertInfoType } from 'src/app/models/models';
+import { AlertMode, AlertInfoType, DoAFootballBet, GroupBet } from 'src/app/models/models';
 
 
 @Injectable({
@@ -118,6 +118,23 @@ export class AlertService {
    */
   public reset = this.resetForm.asObservable();
   
+  /**
+   * The behaviour to fill the alert to do a football alert
+   * 
+   * @access private
+   * @var {BehaviorSubject<DoAFootballBet>} footballBet
+   */
+  private footballBet = new BehaviorSubject<DoAFootballBet>(null);
+
+  /**
+   * The data to fill the alerts when a user tries to do a new football bet
+   * at which the other components will subscribe at
+   * 
+   * @access public
+   * @var {Observable} reset
+   */
+  public fBet = this.footballBet.asObservable();
+  
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -224,6 +241,42 @@ export class AlertService {
     this.changeAlertMode(AlertMode.JOINGROUP);
     this.formNeeded.next(needPass);
     this.setTarget(groupName);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing a form to do a
+   * user football bet
+   * 
+   * @param {GroupBet} bet The info of the bet 
+   * @param {number} coins The actual coins of the user
+   */
+  public doAFootballBet(bet:GroupBet, coins:number){
+    this.setTitle(bet.betName);
+    this.changeAlertMode(AlertMode.FOOTBALLBET);
+    this.footballBet.next({
+      "bet":bet,
+      "userCoins": coins
+    });
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the info and button
+   * to cancel a user football bet
+   * 
+   * @param {GroupBet} bet The info of the bet
+   * @param {number} user_coins The coins bet by the user
+   * @param {string} userFootballBet The id of the userFootballBet
+   */
+  public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBet:string){
+    this.setTitle("You are going to cancel your bet!");
+    this.changeAlertMode(AlertMode.CANCELUSERFOOTBALLBET);
+    this.footballBet.next({
+      "bet":bet,
+      "userCoins": user_coins
+    });
+    this.setTarget(userFootballBet);
     this.openAlert();
   }
   

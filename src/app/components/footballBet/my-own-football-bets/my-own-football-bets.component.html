@@ -1,0 +1,33 @@
+<div class="accordion" id="myActiveBetsAccordion" *ngIf="bets.length>0">
+  <div class="card" *ngFor="let bet of bets; let i = index" style="cursor: default">
+    <div class="card-header" 
+        id="headingBet{{i}}" 
+        data-toggle="collapse" 
+        [attr.data-target]="'#collapseMyOwnActiveBets'+i" 
+        aria-expanded="false" 
+        [attr.aria-controls]="'#collapseMyOwnActiveBets'+i">
+      <div class="row">
+        <div [ngClass]="{'col-lg-9 col-12': !isValid(bet.ownBet), 'col-12': isValid(bet.ownBet) }">
+          <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+        </div>
+        <div class="col-lg-3 col-12 text-right my-auto" *ngIf="!isValid(bet.ownBet)">
+          <h2 class="text-danger">INVALID</h2>
+        </div>
+      </div>
+    </div>
+
+    <div id="collapseMyOwnActiveBets{{i}}" 
+        class="collapse hide" 
+        [attr.aria-labelledby]="'headingBet'+i" 
+        data-parent="#myActiveBetsAccordion">
+      <div class="card card-body">
+        <app-football-bet-card-info [bet]="bet.bet"></app-football-bet-card-info>
+        <app-user-football-bet-card-info [userBet]="bet.ownBet" [footballBet]="bet.bet" [ended]="false" [name]="'Your'"></app-user-football-bet-card-info>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="bets.length == 0">
+  <p class="h3">You don't have active bets</p>
+</div>

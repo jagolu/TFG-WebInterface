@@ -23,6 +23,5 @@ export class GroupSettingsComponent implements OnInit {
 
   public openDeleteGroupAlert(){
     this.alertS.deleteGroup(this.groupName);
-    // this.alertS.o
   }
 }
