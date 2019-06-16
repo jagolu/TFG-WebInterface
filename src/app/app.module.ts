@@ -76,6 +76,7 @@ import { MyOwnFootballBetsComponent } from './components/footballBet/my-own-foot
 import { FootballBetCardInfoComponent } from './components/footballBet/football-bet-card-info/football-bet-card-info.component';
 import { CancellUserFootballBetComponent } from './components/shared/alert/cancell-user-football-bet/cancell-user-football-bet.component';
 import { UserFootballBetCardInfoComponent } from './components/footballBet/user-football-bet-card-info/user-football-bet-card-info.component';
+import { ManageFootballBetComponent } from './components/footballBet/manage-football-bet/manage-football-bet.component';
 
 
 
@@ -118,7 +119,8 @@ import { UserFootballBetCardInfoComponent } from './components/footballBet/user-
     MyOwnFootballBetsComponent,
     FootballBetCardInfoComponent,
     CancellUserFootballBetComponent,
-    UserFootballBetCardInfoComponent
+    UserFootballBetCardInfoComponent,
+    ManageFootballBetComponent
   ],
   imports: [
     BrowserModule,
