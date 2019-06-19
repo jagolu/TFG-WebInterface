@@ -295,6 +295,7 @@ export class DoFootballBetComponent{
         ]
       )
     });
+    if(this.jackpotBet) this.doAFootballBetForm.controls["coinsBet"].markAsTouched();
   }
 
   /**
@@ -332,7 +333,7 @@ export class DoFootballBetComponent{
    */
   private requiredNumber(control:FormControl):{[ret:string]:boolean}{
     let num = control.value;
-    if(num == null || isNaN(num) || num%1 !== 0) {
+    if(num == null || isNaN(num) || num%1 !== 0 || control.pristine) {
       return {"requiredNumber":true}
     }
     return null;
