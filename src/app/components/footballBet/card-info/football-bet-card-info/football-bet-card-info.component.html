@@ -1,9 +1,15 @@
 <div class="row justify-content-around mb-4" *ngIf="bet.firstHalfHomeGoals!=null">
-  <div class="col-2">
-      First time: {{bet.firstHalfHomeGoals}} - {{bet.firstHalfAwayGoals}}
+  <div class="col-lg-3 col-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-8 col-9">First time</div>
+        <div class="col-7">{{bet.firstHalfHomeGoals}} - {{bet.firstHalfAwayGoals}}</div>
+      </div>
   </div>
-  <div class="col-2">
-    Second time: {{bet.secondHalfHomeGoals}} - {{bet.secondHalfAwayGoals}}
+  <div class="col-lg-3 col-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-9 col-11">Second time</div>
+      <div class="col-lg-4 col-7">{{bet.secondHalfHomeGoals}} - {{bet.secondHalfAwayGoals}}</div>
+    </div>
   </div>
 </div>
 <div class="row">
