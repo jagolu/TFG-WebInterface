@@ -78,6 +78,8 @@ import { FootballBetCardInfoComponent } from './components/footballBet/card-info
 import { CancellUserFootballBetComponent } from './components/shared/alert/cancell-user-football-bet/cancell-user-football-bet.component';
 import { UserFootballBetCardInfoComponent } from './components/footballBet/card-info/user-football-bet-card-info/user-football-bet-card-info.component';
 import { ManageFootballBetComponent } from './components/footballBet/manageBetTab/manage-football-bet/manage-football-bet.component';
+import { ChatWindowComponent } from './components/Chat/chat-window/chat-window.component';
+import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-collapse.component';
 
 
 
@@ -121,7 +123,9 @@ import { ManageFootballBetComponent } from './components/footballBet/manageBetTa
     FootballBetCardInfoComponent,
     CancellUserFootballBetComponent,
     UserFootballBetCardInfoComponent,
-    ManageFootballBetComponent
+    ManageFootballBetComponent,
+    ChatWindowComponent,
+    ChatCollapseComponent
   ],
   imports: [
     BrowserModule,
