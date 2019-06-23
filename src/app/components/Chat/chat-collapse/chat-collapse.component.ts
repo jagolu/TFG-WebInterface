@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GroupUserJoinedAt, IconModel, Icons } from 'src/app/models/models';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 @Component({
   selector: 'app-chat-collapse',
@@ -7,9 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatCollapseComponent implements OnInit {
 
-  constructor() { }
+  
+  public groups:GroupUserJoinedAt[];
+  public groupName:string = "";
+  public groupType:boolean = false;
+  public icon_ball:IconModel = Icons.BALL;
+  public icon_paper:IconModel = Icons.PAPER;
+
+  constructor(private sessionS:SessionService) { }
 
   ngOnInit() {
+    this.sessionS.User.subscribe(u => {
+      try{ 
+        this.groups = u.groups;
+        this.setGroup(); 
+        console.log(this.groupName);
+      }
+      catch(Exception){ 
+        this.groups = []; 
+      }
+    });
   }
 
+  private setGroup(){
+    this.groupName = this.groups.length >= 1 ? this.groups[0].name : "";
+    this.groupType = this.groups.length >= 1 ? this.groups[0].type : false;
+  }
 }
