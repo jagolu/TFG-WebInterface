@@ -54,4 +54,9 @@ export class UserFootballBetCardInfoComponent{
   public cancelUserFootballBet(footballBet:GroupBet, coins:number, userFootballBet:string){
     this.alertS.cancelUserFootballBet(footballBet, coins, userFootballBet);
   }
+
+  public lg_3(valid:boolean, type:string){
+    let part = valid && !this.isJackpotBet(type);
+    return !valid || part || this.ended;
+  }
 }
