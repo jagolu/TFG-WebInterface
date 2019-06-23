@@ -37,6 +37,7 @@ import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Base64ImagePipe } from './pipes/base64-image.pipe';
+import { ChartsModule } from 'ng2-charts';
 
 
 // Components
@@ -128,7 +129,8 @@ import { ManageFootballBetComponent } from './components/footballBet/manageBetTa
     AppRoutingModule,
     SocialLoginModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ChartsModule
   ],
   providers: [
     {
