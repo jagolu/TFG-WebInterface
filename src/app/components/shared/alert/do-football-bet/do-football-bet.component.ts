@@ -295,7 +295,7 @@ export class DoFootballBetComponent{
         ]
       )
     });
-    if(this.jackpotBet) this.doAFootballBetForm.controls["coinsBet"].markAsTouched();
+    if(!this.show1X2) this.doAFootballBetForm.controls["coinsBet"].markAsDirty();
   }
 
   /**
