@@ -21,7 +21,8 @@
             Groups
           </div>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="chatGroupsDropdown">
-            <a class="dropdown-item text-center" *ngFor="let group of groups">
+            <a class="dropdown-item text-center" style="cursor:default;" 
+                *ngFor="let group of groups" (click)="changeGroupChat(group.name)">
               {{group.name}}
               <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
               <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>  
@@ -32,30 +33,7 @@
     </div>
   </nav>
       
-  <div class="card-body overflow-auto" style="max-height: 300px">
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
-    <p>a</p>
+  <div class="card-body overflow-auto p-0 pl-2 pr-2" style="max-height: 300px" id="chatScroll">
+    <app-chat-messages [groupName]="groupName"></app-chat-messages>
   </div>
 </div>

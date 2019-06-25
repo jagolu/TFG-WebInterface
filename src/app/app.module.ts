@@ -18,6 +18,7 @@ import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { ShopService } from './services/restServices/shop.service';
+import { ChatService } from './services/restServices/chat.service';
 
 
 // Interceptors
@@ -80,6 +81,7 @@ import { UserFootballBetCardInfoComponent } from './components/footballBet/card-
 import { ManageFootballBetComponent } from './components/footballBet/manageBetTab/manage-football-bet/manage-football-bet.component';
 import { ChatWindowComponent } from './components/Chat/chat-window/chat-window.component';
 import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-collapse.component';
+import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-messages.component';
 
 
 
@@ -125,7 +127,8 @@ import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-coll
     UserFootballBetCardInfoComponent,
     ManageFootballBetComponent,
     ChatWindowComponent,
-    ChatCollapseComponent
+    ChatCollapseComponent,
+    ChatMessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -163,7 +166,8 @@ import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-coll
     SessionService,
     AuthGuardService,
     GroupService,
-    ShopService
+    ShopService,
+    ChatService
   ],
   bootstrap: [AppComponent]
 })

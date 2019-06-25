@@ -1,0 +1,12 @@
+<div class="w-100" *ngIf="isValid()">
+  <p *ngFor="let msg of messages">{{msg.message}}</p>
+  <hr class="m-0 mt-2 mb-2">
+  <form [formGroup]="sendChatMessageForm" class="sticky-bottom form-group" (ngSubmit)="send()">
+    <input class="form-control" style="font-size:14px" formControlName="message">
+  </form>
+</div>
+<div *ngIf="!isValid()">
+  There is not messages
+</div>
+
+

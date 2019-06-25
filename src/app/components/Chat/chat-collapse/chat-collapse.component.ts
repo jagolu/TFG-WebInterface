@@ -23,7 +23,6 @@ export class ChatCollapseComponent implements OnInit {
       try{ 
         this.groups = u.groups;
         this.setGroup(); 
-        console.log(this.groupName);
       }
       catch(Exception){ 
         this.groups = []; 
@@ -34,5 +33,14 @@ export class ChatCollapseComponent implements OnInit {
   private setGroup(){
     this.groupName = this.groups.length >= 1 ? this.groups[0].name : "";
     this.groupType = this.groups.length >= 1 ? this.groups[0].type : false;
+  }
+
+  public changeGroupChat(name:string){
+    this.groups.forEach(g=>{
+      if(g.name == name){
+        this.groupName = g.name;
+        this.groupType = g.type;
+      }
+    });
   }
 }
