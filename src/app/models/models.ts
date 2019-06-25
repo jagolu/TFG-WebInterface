@@ -35,4 +35,4 @@ export { EndedFootballBet } from  './Bets/EndedFootballBet';
 export { CancelUserFootballBet } from  './Bets/CancelUserFootballBet';
 export { OtherUserBets } from  './Bets/OtherUserBets';
 export { BetsManager } from  './Bets/BetsManager';
-export { ChatModel } from  './Chat/ChatModel';
+export { ChatMessage } from  './Chat/ChatMessage';

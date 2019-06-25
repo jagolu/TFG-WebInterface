@@ -1,5 +1,15 @@
 <div class="w-100" *ngIf="isValid()">
-  <p *ngFor="let msg of messages">{{msg.message}}</p>
+  <div *ngFor="let msg of messages" [ngClass]="{'text-right': msg.publicUserId == publicUserId}">
+     <div *ngIf="msg.username!=''">
+      <span class="badge"
+          [ngClass]="{'badge-primary': publicUserId == msg.publicUserId,
+          'badge-success': publicUserId!=msg.publicUserId}">{{msg.username}}</span>
+      <p>{{msg.message}}</p>
+    </div>
+    <div *ngIf="msg.username==''" class="text-center">
+      <small >{{msg.message}}</small>
+    </div>
+  </div>
   <hr class="m-0 mt-2 mb-2">
   <form [formGroup]="sendChatMessageForm" class="sticky-bottom form-group" (ngSubmit)="send()">
     <input class="form-control" style="font-size:14px" formControlName="message">

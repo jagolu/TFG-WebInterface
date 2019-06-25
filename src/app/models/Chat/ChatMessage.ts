@@ -1,4 +1,4 @@
-export interface ChatModel{
+export interface ChatMessage{
     group:string;
     username:string;
     publicUserId:string;

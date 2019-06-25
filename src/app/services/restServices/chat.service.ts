@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
-import { ChatModel } from 'src/app/models/models';
+import { ChatMessage } from 'src/app/models/models';
 import { URL } from 'src/environments/secret';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
@@ -99,7 +99,7 @@ export class ChatService extends RestService{
    * 
    * @param {ChatModel} message The info of the chat message
    */
-  public sendMessageToChat(message:ChatModel) {
+  public sendMessageToChat(message:ChatMessage) {
     this.hubConnection.invoke("BroadcastChartData", message)
     .catch( err=> {this.validConnection = false; console.log(err)});
   }
