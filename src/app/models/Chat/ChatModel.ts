@@ -1,5 +1,8 @@
 export interface ChatModel{
-    user:string;
-    Group:string;
+    group:string;
+    username:string;
+    publicUserId:string;
+    role:string;
     message:string;
+    time:Date;
 }

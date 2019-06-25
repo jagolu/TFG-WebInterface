@@ -5,35 +5,117 @@ import { URL } from 'src/environments/secret';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
-import { SessionService } from '../userServices/session.service';
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service to do the chat requests & communicate with the chat socket
+ * 
+ * @class
+ * @extends RestService
+ */
 export class ChatService extends RestService{
 
-  public data: ChatModel[];
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * The connection to the socket path
+   * 
+   * @access private
+   * @var {string} urlConnection
+   */
+  private urlConnection:string = URL.baseURL+"chatter";
+
+  /**
+   * The path to the alive http requests
+   * 
+   * @access private
+   * @var {string} __chatPath
+   */
+  private __chatPath:string = "Alive/";
+  
+  /**
+   * The connection to the socket
+   * 
+   * @access public
+   * @var {HubConnection} hubConnection
+   */
   public hubConnection: signalR.HubConnection;
 
-  private urlConnection:string = URL.baseURL+"chatter";
-  private __chatPath:string = "Alive/";
-  private validConnection:boolean = false;
-  private username:string = "";
+  /**
+   * To know if the connection is valid
+   * 
+   * @access public
+   * @var {boolean} validConnection
+   */
+  public validConnection:boolean = false;
 
-  constructor(http: HttpClient, loading: LoadingService, private sessionS:SessionService) {
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * @constructor
+   * @param {HttpClient} http For the RestService constructor 
+   * @param {LoadingService} loading For the RestService constructor
+   */
+  constructor(http: HttpClient, loading: LoadingService) {
     super(http, loading);
     this.startConnection();
-    this.sessionS.User.subscribe(u => {
-      try{ 
-        this.username = u.username;
-      }
-      catch(Exception){ 
-        this.username = "";
-      }
-    });
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
   
+  /**
+   * Log to an specific group chat
+   * 
+   * @access public
+   * @param {string} groupName The name of the group
+   * @return {Observable} The result of the request 
+   */
+  public logChat(groupName:string){
+    return this.getRequest(this.__chatPath+"ChatLogin",
+    [{
+        param: "groupName",
+        value: groupName
+    }]);
+  }
+
+  /**
+   * Send a message to a group chat
+   * 
+   * @param {ChatModel} message The info of the chat message
+   */
+  public sendMessageToChat(message:ChatModel) {
+    this.hubConnection.invoke("BroadcastChartData", message)
+    .catch( err=> {this.validConnection = false; console.log(err)});
+  }
+
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Function to start a connection against the chat socket
+   * 
+   * @access private
+   */
   private startConnection () {
     this.hubConnection = new signalR.HubConnectionBuilder()
                         .withUrl(this.urlConnection)
@@ -43,34 +125,5 @@ export class ChatService extends RestService{
           .start()
           .then( _=> this.validConnection = true)
           .catch(_=>this.validConnection = false);
-  }
-
-  public isValid(){
-    return this.validConnection;
-  }
-
-  public logChat(groupName:string){
-    this.getRequest(this.__chatPath+"ChatLogin",
-    [{
-        param: "groupName",
-        value: groupName
-    }]).subscribe();
-  }
-
-  public getConnection(){
-    return this.hubConnection;
-  }
-
-  public addTransferChartDataListener (groupName:string){
-    this.hubConnection.on(groupName, (data)=>{
-      this.data = data;
-      console.log("------------------------------------------------------",data);
-    });
-  }
-
-  public broadcastChartData (message:ChatModel) {
-    message.user = this.username;
-    this.hubConnection.invoke("BroadcastChartData", message)
-    .catch( err=> {this.validConnection = false; console.log(err)});
   }
 }
