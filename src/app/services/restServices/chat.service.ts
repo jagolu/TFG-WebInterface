@@ -5,6 +5,9 @@ import { URL } from 'src/environments/secret';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { ChatMessagesService } from '../userServices/chat-messages.service';
+import { EMPTY } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,18 +45,18 @@ export class ChatService extends RestService{
   /**
    * The connection to the socket
    * 
-   * @access public
+   * @access private
    * @var {HubConnection} hubConnection
    */
-  public hubConnection: signalR.HubConnection;
+  private hubConnection: signalR.HubConnection;
 
   /**
-   * To know if the connection is valid
+   * The public id of the user who is logged
    * 
-   * @access public
-   * @var {boolean} validConnection
+   * @access private
+   * @var {string} userPublicId
    */
-  public validConnection:boolean = false;
+  private userPublicId:string = "";
 
 
   //
@@ -66,8 +69,9 @@ export class ChatService extends RestService{
    * @constructor
    * @param {HttpClient} http For the RestService constructor 
    * @param {LoadingService} loading For the RestService constructor
+   * @param {ChatMessagesService} userChat For the visual messages in the chat
    */
-  constructor(http: HttpClient, loading: LoadingService) {
+  constructor(http: HttpClient, loading: LoadingService, private userChat:ChatMessagesService) {
     super(http, loading);
     this.startConnection();
   }
@@ -80,19 +84,31 @@ export class ChatService extends RestService{
   //
   
   /**
-   * Log to an specific group chat
+   * Log to an specific group chat, subscribes to 
+   * the response and get the public Id and initializes
+   * a new group and its messages on the userChat service
    * 
    * @access public
    * @param {string} groupName The name of the group
-   * @return {Observable} The result of the request 
+   * @return {Observable} True if the request was fine
    */
   public logChat(groupName:string){
     return this.getRequest(this.__chatPath+"ChatLogin",
     [{
         param: "groupName",
         value: groupName
-    }],
-    true);
+    }], true)
+    .pipe(
+      map((chatInfo:any)=>{
+        this.userPublicId = chatInfo.callerPublicId;
+        this.userChat.addNewGroup(groupName, chatInfo.messages);
+        return EMPTY;
+      }),
+      catchError(_=>{
+        this.userChat.setConnection(false);
+        return EMPTY;
+      })
+    );
   }
 
   /**
@@ -102,9 +118,46 @@ export class ChatService extends RestService{
    */
   public sendMessageToChat(message:ChatMessage) {
     this.hubConnection.invoke("BroadcastChartData", message)
-    .catch( err=> {this.validConnection = false; console.log(err)});
+    .catch( _=>this.userChat.setConnection(false));
   }
 
+  /**
+   * Subscribe to a socket channel of an specific group
+   * 
+   * @access public
+   * @param {string} groupName The name of the group
+   */
+  public subscribeChatHub(groupName:string){
+    this.hubConnection.on(groupName, (message:ChatMessage)=>{
+      this.userChat.addMessage(groupName, message);
+    })
+  }
+
+  /**
+   * Gets the public id of the user 
+   * who is logged
+   * 
+   * @access public
+   * @returns {string} The public id of the 
+   * user whos logged
+   */
+  public getUserPublicId(){
+    return this.userPublicId;
+  }
+
+  /**
+   * To know if the group there already is
+   * on the log messages
+   * 
+   * @access public
+   * @param {string} groupName The name of 
+   * the group to check
+   * @returns {boolean} True if the group
+   * is already logged, false otherwise 
+   */
+  public alreadyLogged(groupName:string){
+    return this.userChat.groupExists(groupName);
+  }
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────
@@ -124,7 +177,7 @@ export class ChatService extends RestService{
 
     this.hubConnection
           .start()
-          .then( _=> this.validConnection = true)
-          .catch(_=>this.validConnection = false);
+          .then( _=> this.userChat.setConnection(true))
+          .catch(_=> this.userChat.setConnection(false));
   }
 }
