@@ -66,29 +66,17 @@ export class ChatMessagesService {
 
   public groupExists(groupName){
     let exists = false;
-    this.allRooms.forEach(r=>{
-      if(r.groupName == groupName) exists = true;
-    });
+    this.allRooms.forEach(r=> exists = r.groupName == groupName && !exists ? true : exists);
 
     return exists;
   }
 
   public downThemAll(){
-    this.allRooms.forEach(room=>{
-      this.sendReDown(room.groupName);
-    });
+    this.allRooms.forEach(room=> this.sendReDown(room.groupName));
   }
 
   private sendReDown(groupName:string){
     this.chatScrollDown.next([groupName, true]);
     setTimeout(_=> this.chatScrollDown.next([groupName, false]), 30);
   }  
-
-  // private addRoomToLog(groupName:string, msgs:ChatMessage[]){
-  //   this.allRooms.push({
-  //     "groupName": groupName,
-  //     "messages": msgs,
-  //     "newMessages": 0
-  //   });
-  // }
 }

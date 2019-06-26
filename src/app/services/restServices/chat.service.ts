@@ -5,9 +5,7 @@ import { URL } from 'src/environments/secret';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
 import { ChatMessagesService } from '../userServices/chat-messages.service';
-import { EMPTY } from 'rxjs';
 import { SessionService } from '../userServices/session.service';
 
 @Injectable({
@@ -129,9 +127,8 @@ export class ChatService extends RestService{
    * @param {string} groupName The name of the group
    */
   public subscribeChatHub(groupName:string){
-    this.hubConnection.on(groupName, (message:ChatMessage)=>{
-      this.userChat.addMessage(groupName, message);
-    })
+    this.hubConnection.on(groupName, 
+      (message:ChatMessage)=> this.userChat.addMessage(groupName, message));
   }
 
   /**

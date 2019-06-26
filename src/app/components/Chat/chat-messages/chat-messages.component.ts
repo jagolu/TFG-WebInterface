@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChatMessage } from 'src/app/models/models';
 import { ChatService } from 'src/app/services/restServices/chat.service';
-import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
 
@@ -20,7 +19,7 @@ export class ChatMessagesComponent implements OnInit{
   public loading:boolean = false;
   public valid:boolean = true;
 
-  constructor(private _chatS:ChatService, private _authS:AuthenticationService, private userChat:ChatMessagesService) { 
+  constructor(private _chatS:ChatService, private userChat:ChatMessagesService) { 
     this.initializeForm();
     this.loading = false;
   }
@@ -44,7 +43,6 @@ export class ChatMessagesComponent implements OnInit{
 
   public send(){
     if(this.sendChatMessageForm.valid){
-      console.log("sendin");
       this._chatS.sendMessageToChat({
         "group": this.groupName,
         "message": this.sendChatMessageForm.controls["message"].value,
