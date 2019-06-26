@@ -40,16 +40,22 @@ export class ChatMessagesService {
     
     this.allRooms.forEach(r=>{
       if(r.groupName == groupName){
-        r.logMessages.messages.push(msg);
-        r.logMessages.newMessages++;
+        let lastMsg = r.logMessages.messages[r.logMessages.messages.length-1];
+        if(lastMsg.username!="" || msg.username!="" || lastMsg.message != msg.message){
+          r.logMessages.messages.push(msg);
+          r.logMessages.newMessages++;
+        }
       }
     });
 
-    let newMsgs_aux = this.newMessagesCount.value;
-    newMsgs_aux.forEach(nmc=>{
-      if(nmc[0] == groupName) nmc[1] = nmc[1] +1;
-    });
-    this.newMessagesCount.next(newMsgs_aux);
+    if(msg.username != ""){
+      let newMsgs_aux = this.newMessagesCount.value;
+      newMsgs_aux.forEach(nmc=>{
+        if(nmc[0] == groupName) nmc[1] = nmc[1] +1;
+      });
+      this.newMessagesCount.next(newMsgs_aux);      
+    }
+
     this.sendReDown(groupName);
   }
 
