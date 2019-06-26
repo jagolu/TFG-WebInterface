@@ -91,7 +91,8 @@ export class ChatService extends RestService{
     [{
         param: "groupName",
         value: groupName
-    }]);
+    }],
+    true);
   }
 
   /**

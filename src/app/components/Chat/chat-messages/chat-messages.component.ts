@@ -16,9 +16,11 @@ export class ChatMessagesComponent implements OnInit{
   public messages:ChatMessage[] = [];
   private publicUserId:string ="";
   public sendChatMessageForm:FormGroup;
+  public loading:boolean = true;
 
   constructor(private _chatS:ChatService, private _authS:AuthenticationService) { 
     this.initializeForm();
+    this.loading = true;
   }
 
   ngOnInit(){
@@ -26,6 +28,7 @@ export class ChatMessagesComponent implements OnInit{
       this._chatS.logChat(this.groupName).subscribe((chatInfo:any)=>{
         this.publicUserId = chatInfo.callerPublicId;
         this.messages = chatInfo.messages;
+        this.loading = false;
         this.scrollDown();
       });
       this.getMessages();

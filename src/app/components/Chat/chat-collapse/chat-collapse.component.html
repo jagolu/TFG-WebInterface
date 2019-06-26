@@ -34,6 +34,8 @@
   </nav>
       
   <div class="card-body overflow-auto p-0 pl-2 pr-2" style="max-height: 300px" id="chatScroll">
-    <app-chat-messages [groupName]="groupName"></app-chat-messages>
+    <div *ngFor="let group of groups">
+      <app-chat-messages [groupName]="group.name" *ngIf="group.name == groupName"></app-chat-messages>
+    </div>
   </div>
 </div>

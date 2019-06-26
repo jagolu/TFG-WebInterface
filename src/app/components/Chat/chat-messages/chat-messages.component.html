@@ -1,4 +1,4 @@
-<div class="w-100" *ngIf="isValid()">
+<div class="w-100" *ngIf="isValid() && !loading">
   <div *ngFor="let msg of messages" [ngClass]="{'text-right': msg.publicUserId == publicUserId}">
      <div *ngIf="msg.username!=''">
       <span class="badge"
@@ -15,8 +15,11 @@
     <input class="form-control" style="font-size:14px" formControlName="message">
   </form>
 </div>
-<div *ngIf="!isValid()">
+<div *ngIf="!isValid() && !loading">
   There is not messages
+</div>
+<div *ngIf="loading" style="height:105px" class="text-center">
+  <i class="fa fa-cog fa-spin fa-5x fa-fw align-middle"></i>
 </div>
 
 
