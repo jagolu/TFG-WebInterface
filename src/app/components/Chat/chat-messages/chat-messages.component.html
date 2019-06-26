@@ -1,13 +1,19 @@
 <div class="w-100" *ngIf="!loading">
-  <div *ngFor="let msg of messages" [ngClass]="{'text-right': msg.publicUserId == publicUserId}">
+  <div *ngFor="let msg of messages; let i = index" [ngClass]="{'text-right': msg.publicUserId == publicUserId}">
      <div *ngIf="msg.username!=''">
-      <span class="badge"
-          [ngClass]="{'badge-primary': publicUserId == msg.publicUserId,
-          'badge-success': publicUserId!=msg.publicUserId}">{{msg.username}}</span>
-      <p>{{msg.message}}</p>
+
+      <div *ngIf="isOtherUser(i); else sameUser">
+        <span class="badge"
+            [ngClass]="{'badge-primary': publicUserId == msg.publicUserId,
+            'badge-success': publicUserId!=msg.publicUserId}">{{msg.username}}</span>
+        <p>{{msg.message}}</p>
+      </div>
+      <ng-template #sameUser>
+        <p style="margin-top: -1rem;">{{msg.message}}</p>
+      </ng-template>
     </div>
     <div *ngIf="msg.username=='' && msg.publicUserId!=publicUserId" class="text-center">
-      <small >{{msg.message}}</small>
+      <small>{{msg.message}}</small>
     </div>
   </div>
   <hr class="m-0 mt-2 mb-2">

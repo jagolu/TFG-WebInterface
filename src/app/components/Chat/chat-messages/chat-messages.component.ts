@@ -72,4 +72,16 @@ export class ChatMessagesComponent implements OnInit{
       }
     });
   }
+  
+  public isOtherUser(index:number){
+    if(index == 0) return true;
+    let nowMsg = this.messages[index];
+    let lastMsg = this.messages[index-1];
+
+    if(nowMsg.publicUserId == lastMsg.publicUserId && lastMsg.username != ""){
+      return false;
+    }
+
+    return true;
+  }
 }
