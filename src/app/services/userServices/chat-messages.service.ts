@@ -6,13 +6,16 @@ import { LogChatRoom, ChatMessage } from 'src/app/models/models';
   providedIn: 'root'
 })
 export class ChatMessagesService {
-  public allRooms : LogChatRoom[] =[];
+  private allRooms : LogChatRoom[] =[];
 
   private chatRoom = new BehaviorSubject<ChatMessage[]>([]);
   public room = this.chatRoom.asObservable();
 
   private chatScrollDown = new BehaviorSubject<[string, boolean]>(["", false]);
   public reDown = this.chatScrollDown.asObservable();
+
+  private newMessagesCount = new BehaviorSubject<[string, number][]>([]);
+  public newMsgs = this.newMessagesCount.asObservable();
 
   private validConnection = new BehaviorSubject<boolean>(true);
   public connection = this.validConnection.asObservable();
@@ -32,6 +35,10 @@ export class ChatMessagesService {
         "newMessages": 0
       }
     });
+
+    let newMsgs_aux = this.newMessagesCount.value;
+    newMsgs_aux.push([groupName, 0]);
+    this.newMessagesCount.next(newMsgs_aux);
   }
 
   public addMessage(groupName:string, msg:ChatMessage){
@@ -45,6 +52,12 @@ export class ChatMessagesService {
         r.logMessages.newMessages++;
       }
     });
+
+    let newMsgs_aux = this.newMessagesCount.value;
+    newMsgs_aux.forEach(nmc=>{
+      if(nmc[0] == groupName) nmc[1] = nmc[1] +1;
+    });
+    this.newMessagesCount.next(newMsgs_aux);
     this.sendReDown(groupName);
   }
 

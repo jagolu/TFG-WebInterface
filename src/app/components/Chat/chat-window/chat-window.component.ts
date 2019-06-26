@@ -9,7 +9,15 @@ import { ChatMessagesService } from 'src/app/services/userServices/chat-messages
 })
 export class ChatWindowComponent{
 
-  constructor(private authS:AuthenticationService, private userChat:ChatMessagesService) { }
+  public newMessages:number = 0;
+
+  constructor(private authS:AuthenticationService, private userChat:ChatMessagesService) { 
+    this.userChat.newMsgs.subscribe(allGroupNotReadMsgs=>{
+      console.log(allGroupNotReadMsgs);
+      this.newMessages = 0;
+      allGroupNotReadMsgs.forEach(c=>this.newMessages += c[1]);
+    });
+  }
 
   public openChat(){
     this.userChat.downThemAll();
