@@ -67,8 +67,8 @@ export class ChatMessagesComponent implements OnInit{
 
   private userChatSub(){
     this.loading = false;
-    this.publicUserId = this._chatS.getUserPublicId();
     this.userChat.room.subscribe(msgs=>{
+      this.publicUserId = this._chatS.getUserPublicId();
       this.messages = msgs;
       this.scrollDown();
     });
