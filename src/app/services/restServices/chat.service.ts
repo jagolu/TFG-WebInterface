@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { ChatMessagesService } from '../userServices/chat-messages.service';
 import { EMPTY } from 'rxjs';
+import { SessionService } from '../userServices/session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -71,9 +72,11 @@ export class ChatService extends RestService{
    * @param {LoadingService} loading For the RestService constructor
    * @param {ChatMessagesService} userChat For the visual messages in the chat
    */
-  constructor(http: HttpClient, loading: LoadingService, private userChat:ChatMessagesService) {
+  constructor(http: HttpClient, loading: LoadingService, 
+              private userChat:ChatMessagesService, private sessionS:SessionService) {
     super(http, loading);
     this.startConnection();
+    this.logInChats();
   }
 
 
@@ -90,26 +93,21 @@ export class ChatService extends RestService{
    * 
    * @access public
    * @param {string} groupName The name of the group
-   * @return {Observable} True if the request was fine
    */
   public logChat(groupName:string, setThis:boolean){
-    return this.getRequest(this.__chatPath+"ChatLogin",
+    this.getRequest(this.__chatPath+"ChatLogin",
     [{
         param: "groupName",
         value: groupName
     }], true)
-    .pipe(
-      map((chatInfo:any)=>{
+    .subscribe(
+      (chatInfo:any)=>{
         this.userPublicId = chatInfo.callerPublicId;
         this.userChat.addNewGroup(groupName, chatInfo.messages);
         this.subscribeChatHub(groupName);
         if(setThis) this.userChat.setGroupMessages(groupName);
-        return EMPTY;
-      }),
-      catchError(_=>{
-        this.userChat.setConnection(false);
-        return EMPTY;
-      })
+      },
+      _=> this.userChat.setConnection(false)
     );
   }
 
@@ -182,5 +180,17 @@ export class ChatService extends RestService{
           .start()
           .then( _=> this.userChat.setConnection(true))
           .catch(_=> this.userChat.setConnection(false));
+  }
+
+  private logInChats(){
+    this.sessionS.User.subscribe(u=>{
+      try{
+        u.groups.forEach((group, index)=>{
+          if(!this.userChat.groupExists(group.name)){
+            this.logChat(group.name, index == 0);
+          }
+        })
+      }catch(Exception){this.userChat.setConnection(false)}
+    })
   }
 }
