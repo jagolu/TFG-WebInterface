@@ -6,7 +6,7 @@
           'badge-success': publicUserId!=msg.publicUserId}">{{msg.username}}</span>
       <p>{{msg.message}}</p>
     </div>
-    <div *ngIf="msg.username==''" class="text-center">
+    <div *ngIf="msg.username=='' && msg.publicUserId!=publicUserId" class="text-center">
       <small >{{msg.message}}</small>
     </div>
   </div>
