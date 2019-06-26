@@ -1,9 +1,11 @@
-<div class="fixed-bottom mb-3 mr-2">
-    <div class="float-right col-lg-3 col-12">
-        <div class="collapse" id="chatWindowCollapse">
-            <app-chat-collapse></app-chat-collapse>
+<div id="mainChatWindowId">
+    <div class="fixed-bottom mb-3 mr-2" *ngIf="isAuthenticated()">
+        <div class="float-right col-lg-3 col-12">
+            <div class="collapse" id="chatWindowCollapse">
+                <app-chat-collapse></app-chat-collapse>
+            </div>
+            <button class="btn btn-info w-100"
+                data-toggle="collapse" data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse">Chat</button>
         </div>
-        <button class="btn btn-info w-100"
-            data-toggle="collapse" data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse">Chat</button>
     </div>
 </div>

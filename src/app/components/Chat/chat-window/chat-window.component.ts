@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styles: []
 })
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent{
 
-  constructor() { }
+  constructor(private authS:AuthenticationService) { }
 
-  ngOnInit() {
+
+
+  public isAuthenticated(){
+    return this.authS.IsAuthenticated();
   }
-
 }

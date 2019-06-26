@@ -2,9 +2,6 @@
 <div class="main container" style="cursor:pointer" id="mainOutlet">
     <router-outlet></router-outlet>
 </div>
-<div *ngIf="isAuthenticated()">
-    <app-chat-window></app-chat-window>
-</div>
-
+<app-chat-window></app-chat-window>
 <app-loading></app-loading>
 <app-alert></app-alert>
