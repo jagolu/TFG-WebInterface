@@ -98,15 +98,12 @@ export class ChatService extends RestService{
         param: "groupName",
         value: groupName
     }], true)
-    .subscribe(
-      (chatInfo:any)=>{
-        this.userPublicId = chatInfo.callerPublicId;
-        this.userChat.addNewGroup(groupName, chatInfo.messages);
-        this.subscribeChatHub(groupName);
-        if(setThis) this.userChat.setGroupMessages(groupName);
-      },
-      _=> this.userChat.setConnection(false)
-    );
+    .subscribe((chatInfo:any)=>{
+      this.userPublicId = chatInfo.callerPublicId;
+      this.userChat.addNewGroup(groupName, chatInfo.messages);
+      this.subscribeChatHub(groupName);
+      if(setThis) this.userChat.setGroupMessages(groupName);
+    });
   }
 
   /**
@@ -116,8 +113,7 @@ export class ChatService extends RestService{
    */
   public sendMessageToChat(message:ChatMessage) {
     message.publicUserId = this.userPublicId;
-    this.hubConnection.invoke("BroadcastChartData", message)
-    .catch( _=>this.userChat.setConnection(false));
+    this.hubConnection.invoke("BroadcastChartData", message);
   }
 
   /**
@@ -173,10 +169,7 @@ export class ChatService extends RestService{
                         .withUrl(this.urlConnection)
                         .build();
 
-    this.hubConnection
-          .start()
-          .then( _=> this.userChat.setConnection(true))
-          .catch(_=> this.userChat.setConnection(false));
+    this.hubConnection.start();
   }
 
   private logInChats(){
@@ -185,9 +178,9 @@ export class ChatService extends RestService{
         u.groups.forEach((group, index)=>{
           if(!this.userChat.groupExists(group.name)){
             this.logChat(group.name, index == 0);
-          }
-        })
-      }catch(Exception){this.userChat.setConnection(false)}
+          } 
+        });
+      }catch(Exception){}
     })
   }
 }

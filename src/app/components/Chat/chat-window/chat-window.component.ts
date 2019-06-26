@@ -13,7 +13,6 @@ export class ChatWindowComponent{
 
   constructor(private authS:AuthenticationService, private userChat:ChatMessagesService) { 
     this.userChat.newMsgs.subscribe(allGroupNotReadMsgs=>{
-      console.log(allGroupNotReadMsgs);
       this.newMessages = 0;
       allGroupNotReadMsgs.forEach(c=>this.newMessages += c[1]);
     });

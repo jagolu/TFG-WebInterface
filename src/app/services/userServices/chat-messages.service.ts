@@ -17,16 +17,10 @@ export class ChatMessagesService {
   private newMessagesCount = new BehaviorSubject<[string, number][]>([]);
   public newMsgs = this.newMessagesCount.asObservable();
 
-  private validConnection = new BehaviorSubject<boolean>(true);
-  public connection = this.validConnection.asObservable();
-
   constructor() { }
 
   public addNewGroup(groupName:string, msgs:ChatMessage[]){
-    if(this.groupExists(groupName)){
-      this.setConnection(false);
-      return;
-    }
+    if(this.groupExists(groupName)) return;
     
     this.allRooms.push({
       "groupName": groupName,
@@ -42,10 +36,8 @@ export class ChatMessagesService {
   }
 
   public addMessage(groupName:string, msg:ChatMessage){
-    if(!this.groupExists(groupName)){
-      this.setConnection(false);
-      return;
-    }
+    if(!this.groupExists(groupName)) return;
+    
     this.allRooms.forEach(r=>{
       if(r.groupName == groupName){
         r.logMessages.messages.push(msg);
@@ -62,19 +54,13 @@ export class ChatMessagesService {
   }
 
   public setGroupMessages(groupName:string){
-    if(!this.groupExists(groupName)){
-      this.setConnection(false);
-      return;
-    }
+    if(!this.groupExists(groupName)) return;
+    
     this.allRooms.forEach(room=>{
       if(room.groupName == groupName){
         this.chatRoom.next(room.logMessages.messages);
       }
     });
-  }
-
-  public setConnection(value:boolean){
-    return this.validConnection.next(value);
   }
 
   public groupExists(groupName){
