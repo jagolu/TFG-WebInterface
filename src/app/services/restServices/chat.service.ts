@@ -92,7 +92,7 @@ export class ChatService extends RestService{
    * @param {string} groupName The name of the group
    * @return {Observable} True if the request was fine
    */
-  public logChat(groupName:string){
+  public logChat(groupName:string, setThis:boolean){
     return this.getRequest(this.__chatPath+"ChatLogin",
     [{
         param: "groupName",
@@ -102,6 +102,8 @@ export class ChatService extends RestService{
       map((chatInfo:any)=>{
         this.userPublicId = chatInfo.callerPublicId;
         this.userChat.addNewGroup(groupName, chatInfo.messages);
+        this.subscribeChatHub(groupName);
+        if(setThis) this.userChat.setGroupMessages(groupName);
         return EMPTY;
       }),
       catchError(_=>{
@@ -117,6 +119,7 @@ export class ChatService extends RestService{
    * @param {ChatModel} message The info of the chat message
    */
   public sendMessageToChat(message:ChatMessage) {
+    message.publicUserId = this.userPublicId;
     this.hubConnection.invoke("BroadcastChartData", message)
     .catch( _=>this.userChat.setConnection(false));
   }

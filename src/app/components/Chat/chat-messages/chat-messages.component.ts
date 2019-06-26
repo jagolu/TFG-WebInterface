@@ -17,25 +17,16 @@ export class ChatMessagesComponent implements OnInit{
   public messages:ChatMessage[] = [];
   private publicUserId:string ="";
   public sendChatMessageForm:FormGroup;
-  public loading:boolean = true;
+  public loading:boolean = false;
   public valid:boolean = true;
 
   constructor(private _chatS:ChatService, private _authS:AuthenticationService, private userChat:ChatMessagesService) { 
     this.initializeForm();
-    this.loading = true;
+    this.loading = false;
   }
 
   ngOnInit(){
-    if(this._authS.IsAuthenticated() && !this._chatS.alreadyLogged(this.groupName)){
-      this._chatS.logChat(this.groupName).subscribe(_=> {
-        this.userChatSub();
-        this._chatS.subscribeChatHub(this.groupName);
-      });
-    }
-    else if(this._chatS.alreadyLogged(this.groupName)){
-      this.userChatSub();
-      this._chatS.subscribeChatHub(this.groupName);
-    }
+    this.userChatSub();
   }
 
   private initializeForm(){
@@ -53,6 +44,7 @@ export class ChatMessagesComponent implements OnInit{
 
   public send(){
     if(this.sendChatMessageForm.valid){
+      console.log("sendin");
       this._chatS.sendMessageToChat({
         "group": this.groupName,
         "message": this.sendChatMessageForm.controls["message"].value,
@@ -76,11 +68,9 @@ export class ChatMessagesComponent implements OnInit{
   private userChatSub(){
     this.loading = false;
     this.publicUserId = this._chatS.getUserPublicId();
-    this.userChat.room.subscribe(r=>{
-      r.forEach(room=>{
-        if(room.groupName == this.groupName) this.messages = room.messages;
-        this.scrollDown();
-      });
+    this.userChat.room.subscribe(msgs=>{
+      this.messages = msgs;
+      this.scrollDown();
     });
     this.userChat.reDown.subscribe((down:[string,boolean])=>{
       if(down[0] == this.groupName && down[1] == true){
