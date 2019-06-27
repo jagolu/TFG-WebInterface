@@ -36,8 +36,8 @@ export class ChatCollapseComponent implements OnInit {
   }
 
   private setGroup(){
-    this.groupName = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].name : this.groupName;
     this.groupType = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].type :  this.groupType;
+    this.groupName = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].name : this.groupName;
   }
 
   public getCountMsgs(name:string){
