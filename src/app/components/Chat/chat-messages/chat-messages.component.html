@@ -18,7 +18,7 @@
   </div>
   <hr class="m-0 mt-2 mb-2">
   <form [formGroup]="sendChatMessageForm" class="sticky-bottom form-group" (ngSubmit)="send()">
-    <input class="form-control" style="font-size:14px" formControlName="message">
+    <input class="form-control" style="font-size:14px" formControlName="message" (focus)="startReseting()" (focusout)="stopReseting()">
   </form>
 </div>
 <div *ngIf="loading" style="height:105px" class="text-center">

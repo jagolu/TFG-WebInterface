@@ -12,6 +12,7 @@ export class ChatCollapseComponent implements OnInit {
 
   
   public groups:GroupUserJoinedAt[];
+  public groupNewMessages:[string,number][] = [];
   public groupName:string = "";
   public groupType:boolean = false;
   public icon_ball:IconModel = Icons.BALL;
@@ -21,17 +22,29 @@ export class ChatCollapseComponent implements OnInit {
 
   ngOnInit() {
     this.sessionS.User.subscribe(u => {
-      try{ 
-        this.groups = u.groups;
-        this.setGroup(); 
-      }
-      catch(Exception){this.groups = [];}
+      this.userChat.newMsgs.subscribe(newMsgs=>{
+        try{ 
+          this.groups = u.groups;
+          this.groupNewMessages = newMsgs;
+          this.setGroup(); 
+        }
+        catch(Exception){this.groups = [];}
+      });
+
     });
   }
 
   private setGroup(){
-    this.groupName = this.groups.length >= 1 ? this.groups[0].name : "";
-    this.groupType = this.groups.length >= 1 ? this.groups[0].type : false;
+    this.groupName = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].name : this.groupName;
+    this.groupType = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].type :  this.groupType;
+  }
+
+  public getCountMsgs(name:string){
+    let number = 0;
+    this.groupNewMessages.forEach(g=>{
+      if(g[0] == name) number = g[1];
+    });
+    return number;
   }
 
   public changeGroupChat(name:string){
@@ -40,6 +53,7 @@ export class ChatCollapseComponent implements OnInit {
         this.groupName = g.name;
         this.groupType = g.type;
         this.userChat.setGroupMessages(g.name);
+        this.userChat.readMessagesGroup(g.name);
       }
     });
   }

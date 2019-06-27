@@ -9,12 +9,12 @@ import { ChatMessagesService } from 'src/app/services/userServices/chat-messages
 })
 export class ChatWindowComponent{
 
-  public newMessages:number = 0;
+  public totalNewMessages:number = 0;
 
   constructor(private authS:AuthenticationService, private userChat:ChatMessagesService) { 
     this.userChat.newMsgs.subscribe(allGroupNotReadMsgs=>{
-      this.newMessages = 0;
-      allGroupNotReadMsgs.forEach(c=>this.newMessages += c[1]);
+      this.totalNewMessages = 0;
+      allGroupNotReadMsgs.forEach(c=>this.totalNewMessages += c[1]);
     });
   }
 

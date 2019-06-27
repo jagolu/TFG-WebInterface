@@ -59,6 +59,18 @@ export class ChatMessagesService {
     this.sendReDown(groupName);
   }
 
+  public readMessagesGroup(groupName:string){
+    if(!this.groupExists(groupName)) return;
+    this.allRooms.forEach(r=>{
+      if(r.groupName == groupName) r.logMessages.newMessages = 0;
+    });
+    let newMsgs_aux = this.newMessagesCount.value;
+    newMsgs_aux.forEach(nmc=>{
+      if(nmc[0] == groupName) nmc[1] = 0;
+    });
+    this.newMessagesCount.next(newMsgs_aux);   
+  }
+
   public setGroupMessages(groupName:string){
     if(!this.groupExists(groupName)) return;
     

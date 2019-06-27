@@ -16,6 +16,7 @@ export class ChatMessagesComponent implements OnInit{
   public messages:ChatMessage[] = [];
   private publicUserId:string ="";
   public sendChatMessageForm:FormGroup;
+  private timerReset = null;
 
   constructor(private _chatS:ChatService, private userChat:ChatMessagesService) { 
     this.initializeForm();
@@ -83,5 +84,12 @@ export class ChatMessagesComponent implements OnInit{
     }
 
     return true;
+  }
+
+  public startReseting(){
+    this.timerReset = setInterval(_=>this.userChat.readMessagesGroup(this.groupName), 50);
+  }
+  public stopReseting(){
+    clearInterval(this.timerReset);
   }
 }
