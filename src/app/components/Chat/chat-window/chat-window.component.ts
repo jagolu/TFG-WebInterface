@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
 import { IconModel, Icons } from 'src/app/models/models';
@@ -8,8 +8,9 @@ import { IconModel, Icons } from 'src/app/models/models';
   templateUrl: './chat-window.component.html',
   styles: []
 })
-export class ChatWindowComponent{
+export class ChatWindowComponent implements OnInit{
 
+  public width:number;
   public totalNewMessages:number = 0;
   public bell_icon:IconModel = Icons.BELL;
 
@@ -18,6 +19,18 @@ export class ChatWindowComponent{
       this.totalNewMessages = 0;
       allGroupNotReadMsgs.forEach(c=>this.totalNewMessages += c[1]);
     });
+  }
+
+  ngOnInit(){
+    this.width = window.innerWidth;
+  }
+
+  /**
+   * Function to know the actual screen width
+   * @param {any} event The event of resizing the screen
+   */
+  @HostListener('window:resize', ['$event']) onResize(event) {
+    this.width = window.innerWidth;
   }
 
   public openChat(){
