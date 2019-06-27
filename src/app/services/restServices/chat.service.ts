@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
-import { ChatMessage } from 'src/app/models/models';
+import { ChatMessage, GroupUserJoinedAt } from 'src/app/models/models';
 import { URL } from 'src/environments/secret';
 import { RestService } from './rest.service';
 import { LoadingService } from '../visualServices/loading.service';
@@ -56,6 +56,8 @@ export class ChatService extends RestService{
    * @var {string} userPublicId
    */
   private userPublicId:string = "";
+
+  private alreadyLoggedGroups:GroupUserJoinedAt[] = [];
 
 
   //
@@ -175,6 +177,7 @@ export class ChatService extends RestService{
   private logInChats(){
     this.sessionS.User.subscribe(u=>{
       try{
+        this.checkAuxGroups(u.groups);
         u.groups.forEach((group, index)=>{
           if(!this.userChat.groupExists(group.name)){
             this.logChat(group.name, index == 0);
@@ -182,5 +185,16 @@ export class ChatService extends RestService{
         });
       }catch(Exception){}
     })
+  }
+
+  
+  private checkAuxGroups(newGroups:GroupUserJoinedAt[]){
+    let deletedGroups:GroupUserJoinedAt[] = [];
+    this.alreadyLoggedGroups.forEach(g=>{
+      if(newGroups.indexOf(g) == -1) deletedGroups.push(g);
+    });
+
+    deletedGroups.forEach(g => this.userChat.removeGroup(g.name));
+    this.alreadyLoggedGroups = newGroups;
   }
 }

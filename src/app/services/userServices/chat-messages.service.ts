@@ -35,6 +35,18 @@ export class ChatMessagesService {
     this.newMessagesCount.next(newMsgs_aux);
   }
 
+  public removeGroup(groupName:string){
+    if(!this.groupExists(groupName)) return;
+    
+    let delI = -1; //Remove from allRooms array
+    this.allRooms.forEach((r, index) => delI = r.groupName == groupName ? index : delI);
+    if(delI!=-1) this.allRooms.splice(delI);
+
+    delI = -1; //Remove from newMessagesCount array
+    this.newMessagesCount.value.forEach((nmc, index)=>delI = nmc[0] == groupName ? index : delI);
+    if(delI!=-1) this.newMessagesCount.value.splice(delI);
+  }
+
   public addMessage(groupName:string, msg:ChatMessage){
     if(!this.groupExists(groupName)) return;
     
