@@ -17,6 +17,7 @@ export class ChatCollapseComponent implements OnInit {
   public groupType:boolean = false;
   public icon_ball:IconModel = Icons.BALL;
   public icon_paper:IconModel = Icons.PAPER;
+  public bell_icon:IconModel = Icons.BELL;
 
   constructor(private sessionS:SessionService, private userChat:ChatMessagesService) { }
 

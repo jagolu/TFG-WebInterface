@@ -23,9 +23,18 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="chatGroupsDropdown">
             <a class="dropdown-item text-center" style="cursor:default;" 
                 *ngFor="let group of groups" (click)="changeGroupChat(group.name)">
-              {{group.name}}
-              <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
-              <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>  
+              <div class="row">
+                <div class="p-0" 
+                    [ngClass]="{'col-9 text-left': getCountMsgs(group.name)>0, 'col-12 text-center': getCountMsgs(group.name)==0}">
+                  {{group.name}}
+                  <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+                  <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon> 
+                </div>
+                <div class="col-3 p-0" *ngIf="getCountMsgs(group.name)>0">
+                  {{getCountMsgs(group.name)}}  
+                  <app-icon [Icon]="bell_icon"></app-icon> 
+                </div>
+              </div>
             </a>
           </div>
         </li>

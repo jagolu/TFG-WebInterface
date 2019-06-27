@@ -4,9 +4,18 @@
             <div class="collapse" id="chatWindowCollapse">
                 <app-chat-collapse></app-chat-collapse>
             </div>
-            <button class="btn btn-info w-100" (click)="openChat()"
-                data-toggle="collapse" data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse"
-            >Chat {{newMessages}}</button>
+            <button class="btn btn-info w-100" (click)="openChat()" data-toggle="collapse" 
+                    data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse">
+                <table class="w-100">
+                    <tr>
+                        <td align="middle" *ngIf="totalNewMessages == 0">Chat</td>
+                        <td align="right" *ngIf="totalNewMessages > 0">Chat</td>
+                        <td align="middle" *ngIf="totalNewMessages > 0">
+                            <app-icon [Icon]="bell_icon"></app-icon> {{totalNewMessages}}
+                        </td>
+                    </tr>    
+                </table>
+            </button>
         </div>
     </div>
 </div>

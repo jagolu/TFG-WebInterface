@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
+import { IconModel, Icons } from 'src/app/models/models';
 
 @Component({
   selector: 'app-chat-window',
@@ -10,6 +11,7 @@ import { ChatMessagesService } from 'src/app/services/userServices/chat-messages
 export class ChatWindowComponent{
 
   public totalNewMessages:number = 0;
+  public bell_icon:IconModel = Icons.BELL;
 
   constructor(private authS:AuthenticationService, private userChat:ChatMessagesService) { 
     this.userChat.newMsgs.subscribe(allGroupNotReadMsgs=>{
