@@ -11,7 +11,7 @@ import { ChatMessagesService } from 'src/app/services/userServices/chat-messages
 export class ChatCollapseComponent implements OnInit {
 
   
-  public groups:GroupUserJoinedAt[];
+  public groups:GroupUserJoinedAt[] = [];
   public groupNewMessages:[string,number][] = [];
   public groupName:string = "";
   public groupType:boolean = false;
@@ -58,4 +58,5 @@ export class ChatCollapseComponent implements OnInit {
       }
     });
   }
+
 }
