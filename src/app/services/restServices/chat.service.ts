@@ -129,6 +129,11 @@ export class ChatService extends RestService{
       (message:ChatMessage)=> this.userChat.addMessage(groupName, message));
   }
 
+  public unsubscribeChatHub(groupName:string){
+    if(!this.alreadyLogged(groupName)) return;
+    this.hubConnection.off(groupName);
+  }
+
   /**
    * Gets the public id of the user 
    * who is logged
@@ -194,7 +199,10 @@ export class ChatService extends RestService{
       if(newGroups.indexOf(g) == -1) deletedGroups.push(g);
     });
 
-    deletedGroups.forEach(g => this.userChat.removeGroup(g.name));
+    deletedGroups.forEach(g => {
+      this.userChat.removeGroup(g.name);
+      this.unsubscribeChatHub(g.name);
+    });
     this.alreadyLoggedGroups = newGroups;
   }
 }
