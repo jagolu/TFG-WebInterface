@@ -41,7 +41,7 @@ export class ChatMessagesService {
     this.allRooms.forEach(r=>{
       if(r.groupName == groupName){
         let lastMsg = r.logMessages.messages[r.logMessages.messages.length-1];
-        if(lastMsg.username!="" || msg.username!="" || lastMsg.message != msg.message){
+        if(r.logMessages.messages.length == 0 || (lastMsg.username!="" || msg.username!="" || lastMsg.message != msg.message)){
           r.logMessages.messages.push(msg);
           r.logMessages.newMessages++;
         }
