@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
 import { IconModel, Icons } from 'src/app/models/models';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -12,12 +13,17 @@ export class ChatWindowComponent implements OnInit{
 
   public width:number;
   public totalNewMessages:number = 0;
+  public thereIsAnyChat:boolean = false;
   public bell_icon:IconModel = Icons.BELL;
 
-  constructor(private authS:AuthenticationService, private userChat:ChatMessagesService) { 
+  constructor(private authS:AuthenticationService, private userChat:ChatMessagesService, private sessionS:SessionService) { 
     this.userChat.newMsgs.subscribe(allGroupNotReadMsgs=>{
       this.totalNewMessages = 0;
       allGroupNotReadMsgs.forEach(c=>this.totalNewMessages += c[1]);
+    });
+    this.sessionS.User.subscribe(u=> {
+      try{this.thereIsAnyChat = u.groups.length > 0}
+      catch(Exception){this.thereIsAnyChat = false}
     });
   }
 
