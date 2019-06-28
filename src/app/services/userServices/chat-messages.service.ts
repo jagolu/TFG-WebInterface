@@ -40,11 +40,11 @@ export class ChatMessagesService {
     
     let delI = -1; //Remove from allRooms array
     this.allRooms.forEach((r, index) => delI = r.groupName == groupName ? index : delI);
-    if(delI!=-1) this.allRooms.splice(delI);
+    if(delI!=-1) this.allRooms.splice(delI, 1);
 
     delI = -1; //Remove from newMessagesCount array
     this.newMessagesCount.value.forEach((nmc, index)=>delI = nmc[0] == groupName ? index : delI);
-    if(delI!=-1) this.newMessagesCount.value.splice(delI);
+    if(delI!=-1) this.newMessagesCount.value.splice(delI, 1);
   }
 
   public addMessage(groupName:string, msg:ChatMessage){
@@ -96,7 +96,6 @@ export class ChatMessagesService {
   public groupExists(groupName){
     let exists = false;
     this.allRooms.forEach(r=> exists = r.groupName == groupName && !exists ? true : exists);
-
     return exists;
   }
 

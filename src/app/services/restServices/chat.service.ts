@@ -184,25 +184,22 @@ export class ChatService extends RestService{
       try{
         this.checkAuxGroups(u.groups);
         u.groups.forEach((group, index)=>{
-          if(!this.userChat.groupExists(group.name)){
+          if(!this.userChat.groupExists(group.name, true)){
             this.logChat(group.name, index == 0);
           } 
         });
       }catch(Exception){}
     })
   }
-
   
   private checkAuxGroups(newGroups:GroupUserJoinedAt[]){
-    let deletedGroups:GroupUserJoinedAt[] = [];
     this.alreadyLoggedGroups.forEach(g=>{
-      if(newGroups.indexOf(g) == -1) deletedGroups.push(g);
+      if(!newGroups.some(ng=> ng.name == g.name)) {
+        this.userChat.removeGroup(g.name);
+        this.unsubscribeChatHub(g.name);
+      }
     });
-
-    deletedGroups.forEach(g => {
-      this.userChat.removeGroup(g.name);
-      this.unsubscribeChatHub(g.name);
-    });
+    
     this.alreadyLoggedGroups = newGroups;
   }
 }
