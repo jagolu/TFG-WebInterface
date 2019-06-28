@@ -59,6 +59,8 @@ export class ChatService extends RestService{
 
   private alreadyLoggedGroups:GroupUserJoinedAt[] = [];
 
+  private loading:string[] = [];
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -105,6 +107,7 @@ export class ChatService extends RestService{
       this.userChat.addNewGroup(groupName, chatInfo.messages);
       this.subscribeChatHub(groupName);
       if(setThis) this.userChat.setGroupMessages(groupName);
+      this.loading.splice(this.loading.indexOf(groupName), 1);
     });
   }
 
@@ -184,8 +187,11 @@ export class ChatService extends RestService{
       try{
         this.checkAuxGroups(u.groups);
         u.groups.forEach((group, index)=>{
-          if(!this.userChat.groupExists(group.name, true)){
-            this.logChat(group.name, index == 0);
+          if(!this.userChat.groupExists(group.name)){
+            if(!this.loading.some(g => g == group.name)){
+              this.logChat(group.name, index == 0);
+              this.loading.push(group.name);
+            }
           } 
         });
       }catch(Exception){}
