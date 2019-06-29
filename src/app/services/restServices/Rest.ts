@@ -8,7 +8,7 @@ import { URL } from 'src/environments/secret';
  * @class 
  * @abstract
  */
-export abstract class Rest {
+export class Rest {
 
   //
   // ──────────────────────────────────────────────────────────────────────
