@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LogChatRoom, ChatMessage } from 'src/app/models/models';
+import { newLogChatRoom } from 'src/app/models/Chat/LogChatRoom';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +23,7 @@ export class ChatMessagesService {
   public addNewGroup(groupName:string, msgs:ChatMessage[]){
     if(this.groupExists(groupName)) return;
     
-    this.allRooms.push({
-      "groupName": groupName,
-      "logMessages": {
-        "messages": msgs,
-        "newMessages": 0
-      }
-    });
+    this.allRooms.push(newLogChatRoom(groupName, msgs));
 
     let newMsgs_aux = this.newMessagesCount.value;
     newMsgs_aux.push([groupName, 0]);
