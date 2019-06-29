@@ -23,21 +23,24 @@ export class ChatCollapseComponent implements OnInit {
 
   ngOnInit() {
     this.sessionS.User.subscribe(u => {
-      this.userChat.newMsgs.subscribe(newMsgs=>{
-        try{ 
-          this.groups = u.groups;
-          this.groupNewMessages = newMsgs;
-          this.setGroup(); 
-        }
-        catch(Exception){this.groups = [];}
-      });
-
+      if(u!=null){
+        this.groups = u.groups;
+        this.setGroup(this.groups); 
+      }
+      this.userChat.newMsgs.subscribe(newMsgs=> this.groupNewMessages =  newMsgs);
     });
   }
 
-  private setGroup(){
-    this.groupType = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].type :  this.groupType;
-    this.groupName = this.groups.length >= 1 && this.groupName== "" ? this.groups[0].name : this.groupName;
+  private setGroup(newGroups){
+    if(newGroups.some(g => g.name == this.groupName)) return;
+    this.groupType = newGroups.length >= 1 && this.groupName== "" ? newGroups[0].type :  this.groupType;
+    this.groupName = newGroups.length >= 1 && this.groupName== "" ? newGroups[0].name : this.groupName;
+
+    if(!newGroups.some(g => g.name == this.groupName) && newGroups.length > 0){
+      this.groupName = newGroups[0].name;
+      this.groupType = newGroups[0].type;
+      this.changeGroupChat(this.groupName, this.groupType);
+    }
   }
 
   public getCountMsgs(name:string){
@@ -48,15 +51,12 @@ export class ChatCollapseComponent implements OnInit {
     return number;
   }
 
-  public changeGroupChat(name:string){
-    this.groups.forEach(g=>{
-      if(g.name == name){
-        this.groupName = g.name;
-        this.groupType = g.type;
-        this.userChat.setGroupMessages(g.name);
-        this.userChat.readMessagesGroup(g.name);
-      }
-    });
+  public changeGroupChat(name:string, type:boolean){
+    if(!this.groups.some(g=> g.name == name)) return;
+    this.groupName = name;
+    this.groupType = type;
+    this.userChat.setGroupMessages(name);
+    this.userChat.readMessagesGroup(name);
   }
 
 }
