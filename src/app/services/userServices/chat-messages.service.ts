@@ -94,9 +94,7 @@ export class ChatMessagesService {
   }
 
   public groupExists(groupName){
-    let exists = false;
-    this.allRooms.forEach(r=> exists = r.groupName == groupName && !exists ? true : exists);
-    return exists;
+    return this.allRooms.some(r => r.groupName == groupName);
   }
 
   public downThemAll(){

@@ -15,7 +15,7 @@ import { SessionService } from '../userServices/session.service';
  * Service to do the chat requests & communicate with the chat socket
  * 
  * @class
- * @extends RestService
+ * @extends Rest
  */
 export class AliveService extends Rest{
 
