@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChatMessage } from 'src/app/models/models';
-import { ChatService } from 'src/app/services/restServices/chat.service';
+import { AliveService } from 'src/app/services/restServices/alive.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
 
@@ -18,7 +18,7 @@ export class ChatMessagesComponent implements OnInit{
   public sendChatMessageForm:FormGroup;
   private timerReset = null;
 
-  constructor(private _chatS:ChatService, private userChat:ChatMessagesService) { 
+  constructor(private _aliveS:AliveService, private userChat:ChatMessagesService) { 
     this.initializeForm();
   }
 
@@ -41,7 +41,7 @@ export class ChatMessagesComponent implements OnInit{
 
   public send(){
     if(this.sendChatMessageForm.valid){
-      this._chatS.sendMessageToChat({
+      this._aliveS.sendMessageToChat({
         "group": this.groupName,
         "message": this.sendChatMessageForm.controls["message"].value,
         "username": "",
@@ -63,7 +63,7 @@ export class ChatMessagesComponent implements OnInit{
 
   private userChatSub(){
     this.userChat.room.subscribe(msgs=>{
-      this.publicUserId = this._chatS.getUserPublicId();
+      this.publicUserId = this._aliveS.getUserPublicId();
       this.messages = msgs;
       this.scrollDown();
     });

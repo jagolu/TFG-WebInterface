@@ -18,7 +18,7 @@ import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { ShopService } from './services/restServices/shop.service';
-import { ChatService } from './services/restServices/chat.service';
+import { AliveService } from './services/restServices/alive.service';
 
 
 // Interceptors
@@ -167,7 +167,7 @@ import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-mess
     AuthGuardService,
     GroupService,
     ShopService,
-    ChatService
+    AliveService
   ],
   bootstrap: [AppComponent]
 })

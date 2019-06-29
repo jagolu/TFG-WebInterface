@@ -17,7 +17,7 @@ import { SessionService } from '../userServices/session.service';
  * @class
  * @extends RestService
  */
-export class ChatService extends RestService{
+export class AliveService extends RestService{
 
   //
   // ──────────────────────────────────────────────────────────────────────
