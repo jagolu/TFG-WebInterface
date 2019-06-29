@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestService } from './rest.service';
+import { Rest } from './Rest';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
 import { BuyInfo } from 'src/app/models/models';
@@ -11,9 +11,9 @@ import { BuyInfo } from 'src/app/models/models';
  * Service to do the shop requests
  * 
  * @class
- * @extends RestService
+ * @extends Rest
  */
-export class ShopService extends RestService{
+export class ShopService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'angularx-social-login';
 import { LogUser, SignUser, SocialLog, ResetPassword } from 'src/app/models/models';
-import { RestService } from './rest.service';
+import { Rest } from './Rest';
 import { HttpClient} from '@angular/common/http';
 import { LoadingService } from 'src/app/services/visualServices/loading.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
@@ -19,9 +19,9 @@ import { UserInfoService } from '../userServices/user-info.service';
  * Service to do the authentication requests
  * 
  * @class
- * @extends RestService
+ * @extends Rest
  */
-export class AuthenticationService extends RestService {
+export class AuthenticationService extends Rest {
 
   //
   // ──────────────────────────────────────────────────────────────────────

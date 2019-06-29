@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from "@aspnet/signalr";
 import { ChatMessage, GroupUserJoinedAt } from 'src/app/models/models';
 import { URL } from 'src/environments/secret';
-import { RestService } from './rest.service';
+import { Rest } from './Rest';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
 import { ChatMessagesService } from '../userServices/chat-messages.service';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestService } from './rest.service';
+import { Rest } from './Rest';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from 'src/app/services/visualServices/loading.service';
 import { ChangeUserInfo, DeleteUser } from 'src/app/models/models';
@@ -11,9 +11,9 @@ import { ChangeUserInfo, DeleteUser } from 'src/app/models/models';
  * Service to do the user requests
  * 
  * @class
- * @extends RestService
+ * @extends Rest
  */
-export class UserService extends RestService{
+export class UserService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────

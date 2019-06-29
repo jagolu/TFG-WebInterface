@@ -1,18 +1,14 @@
-import { Injectable } from '@angular/core';
 import { LoadingService } from 'src/app/services/visualServices/loading.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { URL } from 'src/environments/secret';
 
-@Injectable({
-  providedIn: 'root'
-})
 /**
  * Class to define the basic request
  * 
  * @class 
  * @abstract
  */
-export abstract class RestService {
+export abstract class Rest {
 
   //
   // ──────────────────────────────────────────────────────────────────────
@@ -59,7 +55,7 @@ export abstract class RestService {
    * @param {boolean} [notStartLoad] A filter to start the loading animation or not
    * @return {Observable} The result of the request
    */
-  protected postRequest(body:any, path:string, notStartLoad?:boolean){
+  public postRequest(body:any, path:string, notStartLoad?:boolean){
     if(!notStartLoad) this.__loading.startLoading();
     return this.__http.post(this.__baseURL+path, body, {
       headers: this.basicHeaders()
@@ -75,7 +71,7 @@ export abstract class RestService {
    * @param {boolean} [notStartLoad] A filter to start the loading animation or not
    * @return {Observable} The result of the request
    */
-  protected getRequest(path:string ,params?:paramValue[], notStartLoad?:boolean){
+  public getRequest(path:string ,params?:paramValue[], notStartLoad?:boolean){
     if(!notStartLoad) this.__loading.startLoading();
     let options = params ? 
       {
