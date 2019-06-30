@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ChatMessage, ChatRoomInfo, ChatUserMessages, SingleUserChatMessage } from 'src/app/models/models';
+import { 
+  ChatMessage, ChatRoomInfo, 
+  SingleUserChatMessage, newSingleUserChatMessage, 
+  ChatUserMessages, newChatUserMessages 
+} from 'src/app/models/models';
 import { hubConnection } from './hubConnection';
 import { GROUP_SOCKET_ID } from 'src/environments/secret';
 
@@ -362,26 +366,14 @@ export class ChatService extends hubConnection{
   private addMessage(groupName:string, msg:ChatMessage){
     if(!this.groupExists(groupName)) return;
     
-    this.__allRooms.forEach(r=>{
-      if(r.group == groupName){
-        if(this.canAddMessage(r.userMessages, msg)){
-          if(this.isTheSameUserOfTheLastMessage(r.userMessages, msg)){
-            r.userMessages[r.userMessages.length-1].messages.push({"message": msg.message, "time": msg.time});
+    this.__allRooms.forEach(room=>{
+      if(room.group == groupName){
+        if(this.canAddMessage(room.userMessages, msg)){
+          if(this.isTheSameUserOfTheLastMessage(room.userMessages, msg)){
+            room.userMessages[room.userMessages.length-1].messages.push(newSingleUserChatMessage(msg));
           }
-          else{
-            console.log("OtherUser");
-            r.userMessages.push({
-              "publicUserId": msg.publicUserId,
-              "username": msg.username,
-              "role": msg.role,
-              "messages": [
-                {
-                  "message": msg.message,
-                  "time": msg.time
-                }
-              ]
-            });
-          }
+          else room.userMessages.push(newChatUserMessages(msg));
+          
           if(msg.username != "") this.changeCount(groupName, false); 
         }
       }

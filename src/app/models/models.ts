@@ -36,6 +36,6 @@ export { CancelUserFootballBet } from  './Bets/CancelUserFootballBet';
 export { OtherUserBets } from  './Bets/OtherUserBets';
 export { BetsManager } from  './Bets/BetsManager';
 export { ChatMessage } from  './Chat/ChatMessage';
-export { ChatUserMessages } from  './Chat/ChatUserMessages';
-export { SingleUserChatMessage } from  './Chat/ChatUserMessages';
+export { ChatUserMessages, newChatUserMessages } from  './Chat/ChatUserMessages';
+export { SingleUserChatMessage, newSingleUserChatMessage } from  './Chat/SingleUserChatMessage';
 export { ChatRoomInfo } from  './Chat/ChatRoomInfo';
