@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ChatMessage } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
+import { ChatUserMessages } from 'src/app/models/models';
 
 
 @Component({
@@ -36,9 +36,9 @@ export class ChatMessagesComponent implements OnInit{
    * The messages of the actual chat room
    * 
    * @access public
-   * @var {ChatMessage[]} messages
+   * @var {ChatUserMessages[]} messages
    */
-  public messages:ChatMessage[] = [];
+  public messages:ChatUserMessages[] = [];
 
   /**
    * The form to enter a message
@@ -105,23 +105,6 @@ export class ChatMessagesComponent implements OnInit{
       
       this.sendChatMessageForm.reset({"message" : ""});
     }
-  }
-  
-  /**
-   * Checks if the messages if a message of the
-   * logged user or not
-   * 
-   * @access public
-   * @param {number} index The index of the message 
-   * @return {boolean} True if the message is from the
-   * logged user, false otherwise
-   */
-  public isOtherUser(index:number){
-    if(index == 0) return true;
-    let nowMsg = this.messages[index];
-    let lastMsg = this.messages[index-1];
-
-    return !(nowMsg.publicUserId == lastMsg.publicUserId && lastMsg.username != "");
   }
 
   /**
@@ -205,5 +188,19 @@ export class ChatMessagesComponent implements OnInit{
         this.scrollDown();
       }
     });
+  }
+
+  /**
+   * Calcualtes the height for an
+   * bootstrap card
+   * 
+   * @param {number} index The index of the user 
+   * messages in the data
+   */
+  public calculateHeight(index:number){
+    let height = 4+8+8+24;
+    height+= this.messages[index].messages.length*24;
+    
+    return height+"px";
   }
 }

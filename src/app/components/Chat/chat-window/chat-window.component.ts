@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
-import { IconModel, Icons } from 'src/app/models/models';
+import { IconModel, Icons, ChatRoomInfo } from 'src/app/models/models';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
 import { AliveService } from 'src/app/services/restServices/alive.service';
@@ -89,7 +89,7 @@ export class ChatWindowComponent implements OnInit{
           if(!this._chatS.alreadyLogged(g.name)){
               this._chatS.startLoading(g.name);
               this._alive.logChat(g.name).subscribe(
-                (info:any)=>this._chatS.addNewGroup(g.name, info, index == 0));            
+                (info:ChatRoomInfo)=>this._chatS.addNewGroup(info, index == 0));            
           }
         });
       }

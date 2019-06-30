@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { LogChatRoom, ChatMessage, LogChatter } from 'src/app/models/models';
+import { ChatMessage, ChatRoomInfo, ChatUserMessages } from 'src/app/models/models';
 import { hubConnection } from './hubConnection';
 import { GROUP_SOCKET_ID } from 'src/environments/secret';
 
@@ -44,9 +44,9 @@ export class ChatService extends hubConnection{
    * that the user is joined
    * 
    * @access private
-   * @var {LogChatRoom[]} __allRooms
+   * @var {ChatRoomInfo[]} __allRooms
    */
-  private __allRooms : LogChatRoom[] =[];
+  private __allRooms : ChatRoomInfo[] =[];
 
   /**
    * The chat messages of the actual chat room
@@ -54,7 +54,7 @@ export class ChatService extends hubConnection{
    * @access private
    * @var {BehaviorSubject<ChatMessage[]>} __chatRoom
    */
-  private __chatRoom = new BehaviorSubject<ChatMessage[]>([]);
+  private __chatRoom = new BehaviorSubject<ChatUserMessages[]>([]);
 
   /**
    * The var at which other components will subscribe to
@@ -128,18 +128,18 @@ export class ChatService extends hubConnection{
    * 
    * @access public
    * @param {string} groupName The name of the group
-   * @param {LogChatter} log The chat log info 
+   * @param {ChatRoomInfo} log The chat log info 
    * @param {boolean} addThis A filter to know if show this chat room messages
    */
-  public addNewGroup(groupName:string, log:LogChatter, addThis:boolean){
-    if(this.groupExists(groupName)) return;
+  public addNewGroup(log:ChatRoomInfo, addThis:boolean){
+    if(this.groupExists(log.group)) return;
     this.__publicUserId = log.callerPublicId;
-    this.subscribeHub(groupName);
-    this.__allRooms.push({"groupName": groupName, "messages": log.messages});
-    if(addThis) this.setGroupMessages(groupName);
-    this.__newMessagesCount.value.push([groupName, 0]);
+    this.subscribeHub(log.group);
+    this.__allRooms.push(log);
+    if(addThis) this.setGroupMessages(log.group);
+    this.__newMessagesCount.value.push([log.group, 0]);
     this.__newMessagesCount.next(this.__newMessagesCount.value);
-    this.stopLoading(groupName);
+    this.stopLoading(log.group);
   }
 
   /**
@@ -162,8 +162,8 @@ export class ChatService extends hubConnection{
    */
   public setGroupMessages(groupName:string){
     this.__allRooms.forEach(room=>{
-      if(room.groupName == groupName){
-        this.__chatRoom.next(room.messages);
+      if(room.group == groupName){
+        this.__chatRoom.next(room.userMessages);
       }
     });
   }
@@ -199,7 +199,7 @@ export class ChatService extends hubConnection{
    * @access public
    */
   public downThemAll(){
-    this.__allRooms.forEach(room=> this.sendReDown(room.groupName));
+    this.__allRooms.forEach(room=> this.sendReDown(room.group));
   }
 
   /**
@@ -281,7 +281,7 @@ export class ChatService extends hubConnection{
    * service data, false otherwise
    */
   private groupExists(groupName){
-    return this.__allRooms.some(r => r.groupName == groupName);
+    return this.__allRooms.some(r => r.group == groupName);
   }
   
   /**
@@ -343,7 +343,7 @@ export class ChatService extends hubConnection{
     if(!this.groupExists(groupName)) return;
     
     let delI = -1; //Remove from allRooms array
-    this.__allRooms.forEach((r, index) => delI = r.groupName == groupName ? index : delI);
+    this.__allRooms.forEach((r, index) => delI = r.group == groupName ? index : delI);
     if(delI!=-1) this.__allRooms.splice(delI, 1);
 
     delI = -1; //Remove from newMessagesCount array
@@ -363,15 +363,30 @@ export class ChatService extends hubConnection{
     if(!this.groupExists(groupName)) return;
     
     this.__allRooms.forEach(r=>{
-      if(r.groupName == groupName){
-        let lastMsg = r.messages[r.messages.length-1];
-        if(r.messages.length == 0 || (lastMsg.username!="" || msg.username!="" || lastMsg.message != msg.message)){
-          r.messages.push(msg);
+      if(r.group == groupName){
+        let lastUserMessage = r.userMessages[r.userMessages.length-1];
+        let lastMsg = lastUserMessage.messages[lastUserMessage.messages.length-1];
+        if(r.userMessages.length == 0 || (lastUserMessage.username!="" || msg.username!="" || lastMsg.message != msg.message)){
+          if(lastUserMessage.publicUserId == msg.publicUserId && msg.username!=""){
+            r.userMessages[r.userMessages.length-1].messages.push({"message": msg.message, "time": msg.time});
+          }
+          else{
+            r.userMessages.push({
+              "publicUserId": msg.publicUserId,
+              "username": msg.username,
+              "role": msg.role,
+              "messages": [
+                {
+                  "message": msg.message,
+                  "time": msg.time
+                }
+              ]
+            });
+          }
           if(msg.username != "") this.changeCount(groupName, false); 
         }
       }
     });
-
     this.sendReDown(groupName);
   }
 }
