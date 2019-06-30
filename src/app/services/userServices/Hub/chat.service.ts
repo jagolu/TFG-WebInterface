@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ChatMessage, ChatRoomInfo, ChatUserMessages } from 'src/app/models/models';
+import { ChatMessage, ChatRoomInfo, ChatUserMessages, SingleUserChatMessage } from 'src/app/models/models';
 import { hubConnection } from './hubConnection';
 import { GROUP_SOCKET_ID } from 'src/environments/secret';
 
@@ -364,13 +364,12 @@ export class ChatService extends hubConnection{
     
     this.__allRooms.forEach(r=>{
       if(r.group == groupName){
-        let lastUserMessage = r.userMessages[r.userMessages.length-1];
-        let lastMsg = lastUserMessage.messages[lastUserMessage.messages.length-1];
-        if(r.userMessages.length == 0 || (lastUserMessage.username!="" || msg.username!="" || lastMsg.message != msg.message)){
-          if(lastUserMessage.publicUserId == msg.publicUserId && msg.username!=""){
+        if(this.canAddMessage(r.userMessages, msg)){
+          if(this.isTheSameUserOfTheLastMessage(r.userMessages, msg)){
             r.userMessages[r.userMessages.length-1].messages.push({"message": msg.message, "time": msg.time});
           }
           else{
+            console.log("OtherUser");
             r.userMessages.push({
               "publicUserId": msg.publicUserId,
               "username": msg.username,
@@ -388,5 +387,47 @@ export class ChatService extends hubConnection{
       }
     });
     this.sendReDown(groupName);
+  }
+
+  /**
+   * Function to know if we can add the new received message
+   * to the service data
+   * 
+   * @access private
+   * @param {ChatUserMessages[]} room The room messages
+   * @param {ChatMessage} newMessage The new message to add
+   * @returns {boolean} True if we can add the new message, 
+   * false otherwise
+   */
+  private canAddMessage(room:ChatUserMessages[], newMessage:ChatMessage):boolean{
+    let roomLength:boolean = room.length == 0;
+    if(roomLength) return true;
+
+    let lastUser:ChatUserMessages = room[room.length-1];
+    let lastMsg:SingleUserChatMessage = lastUser.messages[lastUser.messages.length-1];
+    
+    let isOnlineMessage:boolean = lastUser.username!="" || newMessage.username!="";
+    let notEqualMessage:boolean = lastMsg.message != newMessage.message;
+
+    return roomLength || isOnlineMessage || notEqualMessage;
+  }
+
+  /**
+   * Checks if the last message of the room comes from the same
+   * user that sends the new message
+   * 
+   * @access private
+   * @param {ChatUserMessages[]} room The messages of the chat room
+   * @param {ChatMessage} newMessage The new message to add
+   * @returns {boolean} True if the new message comes from the same user
+   * than the last message, false otherwise
+   */
+  private isTheSameUserOfTheLastMessage(room:ChatUserMessages[], newMessage:ChatMessage):boolean{
+    if(room.length == 0) return true;
+
+    let lastUser:ChatUserMessages = room[room.length-1];
+    let isSameUser:boolean = lastUser.publicUserId == newMessage.publicUserId;
+    let notUserName:boolean = lastUser.username != "" && newMessage.username != "";
+    return isSameUser && notUserName;
   }
 }
