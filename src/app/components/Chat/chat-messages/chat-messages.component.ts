@@ -189,18 +189,4 @@ export class ChatMessagesComponent implements OnInit{
       }
     });
   }
-
-  /**
-   * Calcualtes the height for an
-   * bootstrap card
-   * 
-   * @param {number} index The index of the user 
-   * messages in the data
-   */
-  public calculateHeight(index:number){
-    let height = 4+8+8+24;
-    height+= this.messages[index].messages.length*24;
-    
-    return height+"px";
-  }
 }
