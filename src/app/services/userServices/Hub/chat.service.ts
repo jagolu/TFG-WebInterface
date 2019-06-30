@@ -367,16 +367,14 @@ export class ChatService extends hubConnection{
     if(!this.groupExists(groupName)) return;
     
     this.__allRooms.forEach(room=>{
-      if(room.group == groupName){
-        if(this.canAddMessage(room.userMessages, msg)){
-          if(this.isTheSameUserOfTheLastMessage(room.userMessages, msg)){
-            room.userMessages[room.userMessages.length-1].messages.push(newSingleUserChatMessage(msg));
-          }
-          else room.userMessages.push(newChatUserMessages(msg));
-          
-          if(msg.username != "") this.changeCount(groupName, false); 
-        }
-      }
+      let isTheGroup:boolean = room.group == groupName;
+      let canAdd:boolean = !isTheGroup ? false : this.canAddMessage(room.userMessages, msg);
+      let sameUser:boolean = !isTheGroup ? false : this.isTheSameUserOfTheLastMessage(room.userMessages, msg);
+
+      if(!canAdd) return;
+      if(sameUser) room.userMessages[room.userMessages.length-1].messages.push(newSingleUserChatMessage(msg));
+      else room.userMessages.push(newChatUserMessages(msg));
+      if(msg.username != "") this.changeCount(groupName, false); 
     });
     this.sendReDown(groupName);
   }
