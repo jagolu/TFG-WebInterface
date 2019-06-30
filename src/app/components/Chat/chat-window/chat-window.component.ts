@@ -10,15 +10,75 @@ import { AliveService } from 'src/app/services/restServices/alive.service';
   templateUrl: './chat-window.component.html',
   styles: []
 })
+/**
+ * Class to manage the chat "window". The button and
+ * what is collapsed
+ * 
+ * @implements OnInit
+ * @Class
+ */
 export class ChatWindowComponent implements OnInit{
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * The screen width
+   * 
+   * @access public
+   * @var {number} width
+   */
   public width:number;
+
+  /**
+   * The total of the unread messages
+   * 
+   * @access public
+   * @var {number} totalNewMessages
+   */
   public totalNewMessages:number = 0;
+
+  /**
+   * Checks if the user is logged in any 
+   * chat room
+   * 
+   * @access public
+   * @var {boolean} thereIsAnyChat
+   */
   public thereIsAnyChat:boolean = false;
+
+  /**
+   * The icon of a bell
+   * 
+   * @access public
+   * @var {IconModel} bell_icon
+   */
   public bell_icon:IconModel = Icons.BELL;
 
-  constructor(private authS:AuthenticationService, private userChat:ChatService, private sessionS:SessionService, private _alive:AliveService) { 
-    this.userChat.newMsgs.subscribe(allGroupNotReadMsgs=>{
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T U R C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Gets the the unread messages count.
+   * Manage the chat log requests.
+   * Checks if the user is authenticated
+   * 
+   * @constructor
+   * @param {AuthenticationService} authS To check if the user is authenticated 
+   * @param {ChatService} _chatS To get the unread messages
+   * @param {SessionService} sessionS To get the user groups
+   * @param {AliveService} _alive To do the log chat request 
+   */
+  constructor(private authS:AuthenticationService, private _chatS:ChatService, 
+              private sessionS:SessionService, private _alive:AliveService) { 
+    this._chatS.newMsgs.subscribe(allGroupNotReadMsgs=>{
       this.totalNewMessages = 0;
       allGroupNotReadMsgs.forEach(c=>this.totalNewMessages += c[1]);
     });
@@ -26,9 +86,10 @@ export class ChatWindowComponent implements OnInit{
       try{
         this.thereIsAnyChat = u.groups.length > 0;
         u.groups.forEach((g, index)=>{
-          if(!this.userChat.alreadyLogged(g.name)){
-              this.userChat.startLoading(g.name);
-              this._alive.logChat(g.name).subscribe((info:any)=>this.userChat.addNewGroup(g.name, info, index == 0));            
+          if(!this._chatS.alreadyLogged(g.name)){
+              this._chatS.startLoading(g.name);
+              this._alive.logChat(g.name).subscribe(
+                (info:any)=>this._chatS.addNewGroup(g.name, info, index == 0));            
           }
         });
       }
@@ -36,25 +97,46 @@ export class ChatWindowComponent implements OnInit{
     });
   }
 
+  /**
+   * Gets the innerWidth window
+   * 
+   * @OnInit
+   */
   ngOnInit(){
     this.width = window.innerWidth;
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+  
   /**
    * Function to know the actual screen width
+   * 
    * @param {any} event The event of resizing the screen
    */
   @HostListener('window:resize', ['$event']) onResize(event) {
     this.width = window.innerWidth;
   }
 
+  /**
+   * Open a chat room
+   * 
+   * @access public
+   */
   public openChat(){
-    this.userChat.downThemAll();
+    this._chatS.downThemAll();
   }
 
+  /**
+   * Says if the user is authenticated
+   * 
+   * @access public
+   */
   public isAuthenticated(){
     return this.authS.IsAuthenticated();
   }
-
-
 }

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 /**
- * Service to do the chat requests & communicate with the chat socket
+ * Service to do the http requests to the sockets functions 
  * 
  * @class
  * @extends Rest
@@ -37,9 +37,8 @@ export class AliveService extends Rest{
   
   /**
    * @constructor
-   * @param {HttpClient} http For the RestService constructor 
-   * @param {LoadingService} loading For the RestService constructor
-   * @param {ChatMessagesService} userChat For the visual messages in the chat
+   * @param {HttpClient} http For the Rest constructor 
+   * @param {LoadingService} loading For the Rest constructor
    */
   constructor(http: HttpClient, loading: LoadingService) {
     super(http, loading);
@@ -53,12 +52,11 @@ export class AliveService extends Rest{
   //
   
   /**
-   * Log to an specific group chat, subscribes to 
-   * the response and get the public Id and initializes
-   * a new group and its messages on the userChat service
+   * Log to an specific group chat
    * 
    * @access public
    * @param {string} groupName The name of the group
+   * @returns {Observable} The result of the request
    */
   public logChat(groupName:string){
     return this.getRequest(this.__alivePath+"ChatLogin",

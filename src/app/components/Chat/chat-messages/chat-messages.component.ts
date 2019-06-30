@@ -9,21 +9,163 @@ import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
   templateUrl: './chat-messages.component.html',
   styles: []
 })
+/**
+ * Class to manage the chat messages view
+ * 
+ * @Class
+ * @implements OnInit
+ */
 export class ChatMessagesComponent implements OnInit{
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * The name of the group
+   * 
+   * @Input
+   * @access public
+   * @var {string} groupName
+   */
   @Input() groupName:string ="";
-  public messages:ChatMessage[] = [];
-  public sendChatMessageForm:FormGroup;
-  private timerReset = null;
 
-  constructor(private userChat:ChatService) { 
+  /**
+   * The messages of the actual chat room
+   * 
+   * @access public
+   * @var {ChatMessage[]} messages
+   */
+  public messages:ChatMessage[] = [];
+
+  /**
+   * The form to enter a message
+   * 
+   * @access public
+   * @var {FormGroup} sendChatMessageForm
+   */
+  public sendChatMessageForm:FormGroup;
+
+  /**
+   * The var which contains the reset unread messages count intervar
+   * 
+   * @access private
+   * @var {any} timerReset
+   */
+  private timerReset:any = null;
+
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {ChatService} _chatS To get the chat room info 
+   */
+  constructor(private _chatS:ChatService) { 
     this.initializeForm();
   }
 
+  /**
+   * Calls the function to start the info subscription
+   * 
+   * @OnInit
+   */
   ngOnInit(){
     this.userChatSub();
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Sends a message to the chat socket
+   * 
+   * @access public
+   */
+  public send(){
+    if(this.sendChatMessageForm.valid){
+      this._chatS.sendMessage({
+        "group": this.groupName,
+        "message": this.sendChatMessageForm.controls["message"].value,
+        "username": "",
+        "publicUserId": "",
+        "role": "",
+        "time": new Date()
+      })
+      
+      this.sendChatMessageForm.reset({"message" : ""});
+    }
+  }
+  
+  /**
+   * Checks if the messages if a message of the
+   * logged user or not
+   * 
+   * @access public
+   * @param {number} index The index of the message 
+   * @return {boolean} True if the message is from the
+   * logged user, false otherwise
+   */
+  public isOtherUser(index:number){
+    if(index == 0) return true;
+    let nowMsg = this.messages[index];
+    let lastMsg = this.messages[index-1];
+
+    return !(nowMsg.publicUserId == lastMsg.publicUserId && lastMsg.username != "");
+  }
+
+  /**
+   * Starts the interval of reseting the
+   * unread chat messages count
+   * 
+   * @access public
+   */
+  public startReseting(){
+    this.timerReset = setInterval(_=>this._chatS.readMessagesGroup(this.groupName), 50);
+  }
+
+  /**
+   * Clears the interval of reseting the
+   * unread messages count
+   * 
+   * @access public
+   */
+  public stopReseting(){
+    clearInterval(this.timerReset);
+  }
+
+  /**
+   * Gets the public user id of the logged user
+   * 
+   * @access public
+   * @returns {string} The public user id
+   */
+  public getPublicUserid(){
+    return this._chatS.getPublicUserId();
+  }
+
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Initializes the form
+   * 
+   * @access private
+   */
   private initializeForm(){
     this.sendChatMessageForm = new FormGroup({
       'message': new FormControl(
@@ -37,69 +179,31 @@ export class ChatMessagesComponent implements OnInit{
     })
   }
 
-  public send(){
-    if(this.sendChatMessageForm.valid){
-      this.userChat.sendMessage({
-        "group": this.groupName,
-        "message": this.sendChatMessageForm.controls["message"].value,
-        "username": "",
-        "publicUserId": "",
-        "role": "",
-        "time": new Date()
-      })
-      // this._aliveS.sendMessageToChat({
-      //   "group": this.groupName,
-      //   "message": this.sendChatMessageForm.controls["message"].value,
-      //   "username": "",
-      //   "publicUserId": this.publicUserId,
-      //   "role": "",
-      //   "time": new Date()
-      // });
-      
-      this.sendChatMessageForm.reset({
-        "message" : ""
-      });
-    }
-  }
-
+  /**
+   * Scrolls down the messages screen
+   * 
+   * @access private
+   */
   private scrollDown(){
     let div = (document.querySelector("#chatScroll") as HTMLElement);
     setTimeout(_=> div.scrollTop = div.scrollHeight, 20); 
   }
 
+  /**
+   * Subscribes to the chat messages info and
+   * to the scroll down trigger
+   * 
+   * @access private
+   */
   private userChatSub(){
-    this.userChat.room.subscribe(msgs=>{
-      // this.publicUserId = this._aliveS.getUserPublicId();
+    this._chatS.room.subscribe(msgs=>{
       this.messages = msgs;
       this.scrollDown();
     });
-    this.userChat.reDown.subscribe((down:[string,boolean])=>{
+    this._chatS.reDown.subscribe((down:[string,boolean])=>{
       if(down[0] == this.groupName && down[1] == true){
         this.scrollDown();
       }
     });
-  }
-  
-  public isOtherUser(index:number){
-    if(index == 0) return true;
-    let nowMsg = this.messages[index];
-    let lastMsg = this.messages[index-1];
-
-    if(nowMsg.publicUserId == lastMsg.publicUserId && lastMsg.username != ""){
-      return false;
-    }
-
-    return true;
-  }
-
-  public startReseting(){
-    this.timerReset = setInterval(_=>this.userChat.readMessagesGroup(this.groupName), 50);
-  }
-  public stopReseting(){
-    clearInterval(this.timerReset);
-  }
-
-  public getPublicUserid(){
-    return this.userChat.getPublicUserId();
   }
 }

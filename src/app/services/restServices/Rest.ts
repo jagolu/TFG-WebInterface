@@ -6,7 +6,6 @@ import { URL } from 'src/environments/secret';
  * Class to define the basic request
  * 
  * @class 
- * @abstract
  */
 export class Rest {
 

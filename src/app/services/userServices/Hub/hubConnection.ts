@@ -1,10 +1,10 @@
-
 import * as signalR from "@aspnet/signalr";
 import { URL } from 'src/environments/secret';
 
 /**
  * Class to define the basics socket function
  * 
+ * @abstract
  * @class
  */
 export abstract class hubConnection{
@@ -15,64 +15,99 @@ export abstract class hubConnection{
   // ──────────────────────────────────────────────────────────────────────
   //
 
-  private urlConnection:string;
+  /**
+   * The connection path to the socket
+   * 
+   * @access private
+   * @var {string} __urlConnection
+   */
+  private __urlConnection:string;
 
-  private hubConnection: signalR.HubConnection;
+  /**
+   * The hub connection to the socket
+   * 
+   * @access private 
+   * @var {signalR.HubConnection} __hubConnection
+   */
+  private __hubConnection: signalR.HubConnection;
 
-  private broadcastFunction:string;
+  /**
+   * The function name where send the messages in the backend
+   * 
+   * @access private
+   * @var {string} __broadcastFunction
+   */
+  private __broadcastFunction:string;
 
   //
   // ──────────────────────────────────────────────────────────────────────────
   //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────
   //
-  
+
   /**
    * @constructor
-   * @param {string} hubConnection Socket url path
-   * @param {string} broadCastFunction The name of backend
-   * socket function at which send the messages
+   * @param {string} hubConnection The path to the socket connection
+   * @param {string} broadCastFunction The name of the socket function
    */
   constructor(hubConnection:string, broadCastFunction:string) {
-      this.urlConnection = URL.baseURL+hubConnection;
-      this.broadcastFunction = broadCastFunction;
+      this.__urlConnection = URL.baseURL+hubConnection;
+      this.__broadcastFunction = broadCastFunction;
       this.startConnection();
   }
 
 
   //
-  // ────────────────────────────────────────────────────────────────────────────────────────
-  //   :::::: P R O T E C T E D   F U N C T I O N S : :  :   :    :     :        :          :
-  // ────────────────────────────────────────────────────────────────────────────────────────
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
   //
 
   /**
    * Sends a message to an specific backend socket function
    * 
-   * @access protected
+   * @access public
    * @param {any} message The message to send to the 
    * backend function 
    */
-  protected sendMessageToSocket(message:any):void{
-    this.hubConnection.invoke(this.broadcastFunction, message);
+  public sendMessageToSocket(message:any):void{
+    this.__hubConnection.invoke(this.__broadcastFunction, message);
   }
-
-  abstract subscribeHub(event:string);
 
   /**
    * Unsubscribe to a specific socket channel
    * 
-   * @access protected
+   * @access public
    * @param {string} event The name of the event
    * to which we gonna unsubscribe 
    */
-  protected setConnectionOff(event:string):void{
-    this.hubConnection.off(event);
+  public setConnectionOff(event:string):void{
+    this.__hubConnection.off(event);
   }
 
+  /**
+   * Gets the signalR.HubConnection connection
+   * 
+   * @access public
+   * @return {signalR.HubConnection} The hub connection to
+   * the socket
+   */
   public getConnection(){
-    return this.hubConnection;
+    return this.__hubConnection;
   }
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: A B S T R A C T   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Function to subscribe to the socket channel
+   * 
+   * @param {string} event The name of the event 
+   */
+  abstract subscribeHub(event:string);
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────
@@ -86,10 +121,10 @@ export abstract class hubConnection{
    * @access private
    */
   private startConnection () {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-                        .withUrl(this.urlConnection)
+    this.__hubConnection = new signalR.HubConnectionBuilder()
+                        .withUrl(this.__urlConnection)
                         .build();
 
-    this.hubConnection.start();
+    this.__hubConnection.start();
   }
 }
