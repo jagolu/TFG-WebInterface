@@ -37,3 +37,4 @@ export { OtherUserBets } from  './Bets/OtherUserBets';
 export { BetsManager } from  './Bets/BetsManager';
 export { ChatMessage } from  './Chat/ChatMessage';
 export { LogChatRoom } from  './Chat/LogChatRoom';
+export { LogChatter } from  './Chat/LogChatter';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupUserJoinedAt, IconModel, Icons } from 'src/app/models/models';
 import { SessionService } from 'src/app/services/userServices/session.service';
-import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
+import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
 
 @Component({
   selector: 'app-chat-collapse',
@@ -19,11 +19,12 @@ export class ChatCollapseComponent implements OnInit {
   public icon_paper:IconModel = Icons.PAPER;
   public bell_icon:IconModel = Icons.BELL;
 
-  constructor(private sessionS:SessionService, private userChat:ChatMessagesService) { }
+  constructor(private sessionS:SessionService, private userChat:ChatService) { }
 
   ngOnInit() {
     this.sessionS.User.subscribe(u => {
       if(u!=null){
+        this.checkAuxGroups(u.groups);
         this.groups = u.groups;
         this.setGroup(this.groups); 
       }
@@ -57,6 +58,14 @@ export class ChatCollapseComponent implements OnInit {
     this.groupType = type;
     this.userChat.setGroupMessages(name);
     this.userChat.readMessagesGroup(name);
+  }
+
+  private checkAuxGroups(newGroups:GroupUserJoinedAt[]){
+    this.groups.forEach(g=>{
+      if(!newGroups.some(ng=> ng.name == g.name)) {
+        this.userChat.exitChat(g.name);
+      }
+    });
   }
 
 }

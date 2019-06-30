@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChatMessage } from 'src/app/models/models';
-import { AliveService } from 'src/app/services/restServices/alive.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChatMessagesService } from 'src/app/services/userServices/chat-messages.service';
+import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
 
 
 @Component({
@@ -14,11 +13,10 @@ export class ChatMessagesComponent implements OnInit{
 
   @Input() groupName:string ="";
   public messages:ChatMessage[] = [];
-  private publicUserId:string ="";
   public sendChatMessageForm:FormGroup;
   private timerReset = null;
 
-  constructor(private _aliveS:AliveService, private userChat:ChatMessagesService) { 
+  constructor(private userChat:ChatService) { 
     this.initializeForm();
   }
 
@@ -41,14 +39,22 @@ export class ChatMessagesComponent implements OnInit{
 
   public send(){
     if(this.sendChatMessageForm.valid){
-      this._aliveS.sendMessageToChat({
+      this.userChat.sendMessage({
         "group": this.groupName,
         "message": this.sendChatMessageForm.controls["message"].value,
         "username": "",
-        "publicUserId": this.publicUserId,
+        "publicUserId": "",
         "role": "",
         "time": new Date()
-      });
+      })
+      // this._aliveS.sendMessageToChat({
+      //   "group": this.groupName,
+      //   "message": this.sendChatMessageForm.controls["message"].value,
+      //   "username": "",
+      //   "publicUserId": this.publicUserId,
+      //   "role": "",
+      //   "time": new Date()
+      // });
       
       this.sendChatMessageForm.reset({
         "message" : ""
@@ -63,7 +69,7 @@ export class ChatMessagesComponent implements OnInit{
 
   private userChatSub(){
     this.userChat.room.subscribe(msgs=>{
-      this.publicUserId = this._aliveS.getUserPublicId();
+      // this.publicUserId = this._aliveS.getUserPublicId();
       this.messages = msgs;
       this.scrollDown();
     });
@@ -91,5 +97,9 @@ export class ChatMessagesComponent implements OnInit{
   }
   public stopReseting(){
     clearInterval(this.timerReset);
+  }
+
+  public getPublicUserid(){
+    return this.userChat.getPublicUserId();
   }
 }
