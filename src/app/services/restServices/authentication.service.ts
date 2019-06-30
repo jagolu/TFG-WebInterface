@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GroupInfoService } from '../userServices/group-info.service';
 import { UserInfoService } from '../userServices/user-info.service';
+import { ChatService } from '../userServices/Hub/chat.service';
 
 
 @Injectable({
@@ -52,9 +53,12 @@ export class AuthenticationService extends Rest {
    * @param {AuthService} _authS For log the user with social media 
    * @param {SessionService} _sessionS For set and remove the session
    * @param {Router} _router For when the user logs out, redirect him to index
+   * @param {GroupInfoService} _groupInfoS To reset the service info on logout
+   * @param {UserInfoService} _userInfoS To reset the service info on logout
+   * @param {ChatService} _chatS To reset the service info on logout
    */
-  constructor(_http:HttpClient,  _loading:LoadingService, private groupInfoS:GroupInfoService, private userInfoS:UserInfoService,
-              private _authS:AuthService, private _sessionS:SessionService, private _router:Router){
+  constructor(_http:HttpClient,  _loading:LoadingService, private _authS:AuthService, private _sessionS:SessionService, private _router:Router, 
+              private _groupInfoS:GroupInfoService, private _userInfoS:UserInfoService, private _chatS:ChatService){
     super(_http, _loading);
   }
 
@@ -93,9 +97,10 @@ export class AuthenticationService extends Rest {
   public logOut(){
     this._authS.signOut().catch(Error);
     this._sessionS.removeSession();
-    this.groupInfoS.removeInfo();
-    this.userInfoS.removeInfo();
+    this._groupInfoS.removeInfo();
+    this._userInfoS.removeInfo();
     this._router.navigate(['']);
+    this._chatS.reset();
   }
 
   /**
