@@ -7,6 +7,8 @@ import { NgModule } from '@angular/core';
 
 // Pipes
 import { OnlyDatePipe } from './pipes/only-date.pipe';
+import { ChatTimePipe } from './pipes/chat-time.pipe';
+import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
 
 // Services
@@ -37,7 +39,6 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { Base64ImagePipe } from './pipes/base64-image.pipe';
 import { ChartsModule } from 'ng2-charts';
 
 
@@ -128,7 +129,8 @@ import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-mess
     ManageFootballBetComponent,
     ChatWindowComponent,
     ChatCollapseComponent,
-    ChatMessagesComponent
+    ChatMessagesComponent,
+    ChatTimePipe,
   ],
   imports: [
     BrowserModule,

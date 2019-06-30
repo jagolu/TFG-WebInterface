@@ -1,7 +1,7 @@
 <div class="w-100"  *ngIf="!loading">
   <div *ngFor="let userMessage of messages; let i = index" class="d-block" >
     <div *ngIf="userMessage.username!=''" [ngStyle]="{'height': calculateHeight(i)}">
-      <div class="card mb-2 w-50" [ngClass]="{'float-right': userMessage.publicUserId == getPublicUserid()}">
+      <div class="card mb-2 w-75" [ngClass]="{'float-right': userMessage.publicUserId == getPublicUserid()}">
         <div class="card-body p-1">
           <div class="card-title mb-1" [ngClass]="{'text-right': userMessage.publicUserId == getPublicUserid()}">
             <span class="badge"
@@ -9,7 +9,10 @@
                   'badge-success': getPublicUserid()!=userMessage.publicUserId}">{{userMessage.username}}</span>
           </div>
           <div class="card-text" [ngClass]="{'text-right': userMessage.publicUserId == getPublicUserid()}">
-            <div *ngFor="let mssg of userMessage.messages">{{mssg.message}}</div>
+            <div *ngFor="let mssg of userMessage.messages" class="row">
+              <div class="col-8">{{mssg.message}}</div>
+              <div class="col-4"><small style="font-size:10px">{{mssg.time | chatTime}}</small></div>
+            </div>
           </div>
         </div>
       </div>
