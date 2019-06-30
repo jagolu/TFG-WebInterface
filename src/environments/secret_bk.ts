@@ -22,6 +22,8 @@ export function provideConfig(){
   return authConfig;
 }
 
+export const GROUP_SOCKET_ID = "chatgroupscoketid";
+
 export const URL = {
   baseURL: "local_backend_url"
   // baseURL: "cloud_backend_url"

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LogChatRoom, ChatMessage, LogChatter } from 'src/app/models/models';
 import { hubConnection } from './hubConnection';
+import { GROUP_SOCKET_ID } from 'src/environments/secret';
 
 @Injectable({
   providedIn: 'root'
@@ -111,7 +112,7 @@ export class ChatService extends hubConnection{
    * @constructor
    */
   constructor() { 
-      super("chatter", "BroadcastChartData");
+      super("chatter", "BroadcastChartData", GROUP_SOCKET_ID);
   }
 
 
@@ -261,7 +262,7 @@ export class ChatService extends hubConnection{
    * @param {string} event The name of the event (The group name) 
    */
   public subscribeHub(event:string){
-    this.getConnection().on(event, (message:any)=> this.addMessage(event, message));
+    this.getConnection().on(GROUP_SOCKET_ID+event, (message:any)=> this.addMessage(event, message));
   }
 
 

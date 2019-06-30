@@ -39,6 +39,14 @@ export abstract class hubConnection{
    */
   private __broadcastFunction:string;
 
+  /**
+   * The id of the sub socket channel
+   * 
+   * @access private
+   * @var {string} __socketId
+   */
+  private __socketId:string;
+
   //
   // ──────────────────────────────────────────────────────────────────────────
   //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
@@ -49,10 +57,12 @@ export abstract class hubConnection{
    * @constructor
    * @param {string} hubConnection The path to the socket connection
    * @param {string} broadCastFunction The name of the socket function
+   * @param {string} socketId The subId of the socket id
    */
-  constructor(hubConnection:string, broadCastFunction:string) {
+  constructor(hubConnection:string, broadCastFunction:string, socketId:string) {
       this.__urlConnection = URL.baseURL+hubConnection;
       this.__broadcastFunction = broadCastFunction;
+      this.__socketId = socketId;
       this.startConnection();
   }
 
@@ -82,7 +92,7 @@ export abstract class hubConnection{
    * to which we gonna unsubscribe 
    */
   public setConnectionOff(event:string):void{
-    this.__hubConnection.off(event);
+    this.__hubConnection.off(this.__socketId+event);
   }
 
   /**
