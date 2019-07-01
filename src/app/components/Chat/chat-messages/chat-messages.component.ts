@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
-import { ChatUserMessages } from 'src/app/models/models';
+import { ChatUserMessages, IconModel, Icons } from 'src/app/models/models';
 import { ChatTimePipe } from 'src/app/pipes/chat-time.pipe';
 
 
@@ -64,6 +64,22 @@ export class ChatMessagesComponent implements OnInit{
    * @var {ChatTimePipe} chatTimePipe
    */
   private chatTimePipe = new ChatTimePipe();
+  
+  /**
+   * The icon of a a crown
+   * 
+   * @access public
+   * @var {IconModel} icon_crown
+   */
+  public icon_crown:IconModel = Icons.CROWN;
+  
+  /**
+   * The icon of a wizard hat
+   * 
+   * @access public
+   * @var {IconModel} icon_wizard
+   */
+  public icon_wizard:IconModel = Icons.WIZARD;
 
 
   //

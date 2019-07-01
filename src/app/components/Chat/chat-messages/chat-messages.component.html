@@ -8,9 +8,21 @@
           'd-none': userMessage.username=='' && userMessage.publicUserId==getPublicUserid()}">
     <div class="card-body p-1" *ngIf="userMessage.username!=''">
       <div class="card-title mb-1">
-        <span class="badge"
+          <app-icon [Icon]="icon_crown" 
+                    *ngIf="userMessage.role=='GROUP_MAKER' && userMessage.publicUserId != getPublicUserid()">
+          </app-icon>
+          <app-icon [Icon]="icon_wizard" 
+                    *ngIf="userMessage.role=='GROUP_ADMIN' && userMessage.publicUserId != getPublicUserid()">
+          </app-icon>
+        <span class="badge m-1"
               [ngClass]="{'badge-primary': getPublicUserid() == userMessage.publicUserId,
               'badge-success': getPublicUserid()!=userMessage.publicUserId}">{{userMessage.username}}</span>
+        <app-icon [Icon]="icon_crown" 
+                  *ngIf="userMessage.role=='GROUP_MAKER' && userMessage.publicUserId == getPublicUserid()">
+        </app-icon>
+        <app-icon [Icon]="icon_wizard" 
+                  *ngIf="userMessage.role=='GROUP_ADMIN' && userMessage.publicUserId == getPublicUserid()">
+        </app-icon>
       </div>
       <div class="card-text" [ngClass]="{'text-right': userMessage.publicUserId == getPublicUserid()}">
         <div *ngFor="let mssg of userMessage.messages; let j = index" class="row m-0">
