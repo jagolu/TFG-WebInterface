@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
 import { ChatUserMessages } from 'src/app/models/models';
+import { ChatTimePipe } from 'src/app/pipes/chat-time.pipe';
 
 
 @Component({
@@ -55,6 +56,14 @@ export class ChatMessagesComponent implements OnInit{
    * @var {any} timerReset
    */
   private timerReset:any = null;
+
+  /**
+   * To do the time transformation
+   * 
+   * @access private
+   * @var {ChatTimePipe} chatTimePipe
+   */
+  private chatTimePipe = new ChatTimePipe();
 
 
   //
@@ -135,6 +144,27 @@ export class ChatMessagesComponent implements OnInit{
    */
   public getPublicUserid(){
     return this._chatS.getPublicUserId();
+  }
+
+  /**
+   * Gets the chat time to show in the chat window
+   * 
+   * @access public
+   * @param {ChatUserMessages} userMessages The cluster of messages of 
+   * for an specific user
+   * @param {number} index The index of the message to get the time
+   * 
+   * @returns {string} If the next message of that user was at the same
+   * time that this one returns an empty string, else returns the
+   * time date of the message
+   */
+  public showTime(userMessages:ChatUserMessages, index:number):string{
+    let size:number = userMessages.messages.length;
+    let nowDate = this.chatTimePipe.transform(userMessages.messages[index].time.toString());
+    if(index == size-1) return nowDate;
+
+    let nextDate = this.chatTimePipe.transform(userMessages.messages[index+1].time.toString());
+    return nowDate == nextDate ? "" : nowDate;
   }
 
 

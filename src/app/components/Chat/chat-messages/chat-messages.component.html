@@ -13,13 +13,13 @@
               'badge-success': getPublicUserid()!=userMessage.publicUserId}">{{userMessage.username}}</span>
       </div>
       <div class="card-text" [ngClass]="{'text-right': userMessage.publicUserId == getPublicUserid()}">
-        <div *ngFor="let mssg of userMessage.messages" class="row m-0">
+        <div *ngFor="let mssg of userMessage.messages; let j = index" class="row m-0">
           <div class="col-4 pl-1 text-left" *ngIf="userMessage.publicUserId == getPublicUserid()">
-            <small style="font-size:10px;">{{mssg.time | chatTime}}</small>
+            <small style="font-size:10px;">{{showTime(userMessage, j)}}</small>
           </div>
           <div class="col-8">{{mssg.message}}</div>              
           <div class="col-4 pr-1 text-right" *ngIf="userMessage.publicUserId != getPublicUserid()">
-            <small style="font-size:10px;">{{mssg.time | chatTime}}</small>
+            <small style="font-size:10px;">{{showTime(userMessage, j)}}</small>
           </div>
         </div>
       </div>
