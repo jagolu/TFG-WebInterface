@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RestService } from './rest.service';
+import { Rest } from './Rest';
 import { LoadingService } from '../visualServices/loading.service';
 import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser, GroupPage, ManagePassword, RemoveGroup } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
@@ -14,9 +14,9 @@ import { GroupInfoService } from '../userServices/group-info.service';
  * Service to do the group requests
  * 
  * @class
- * @extends RestService
+ * @extends Rest
  */
-export class GroupService extends RestService{
+export class GroupService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────

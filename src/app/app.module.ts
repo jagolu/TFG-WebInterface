@@ -7,6 +7,8 @@ import { NgModule } from '@angular/core';
 
 // Pipes
 import { OnlyDatePipe } from './pipes/only-date.pipe';
+import { ChatTimePipe } from './pipes/chat-time.pipe';
+import { Base64ImagePipe } from './pipes/base64-image.pipe';
 
 
 // Services
@@ -18,6 +20,7 @@ import { SessionService } from './services/userServices/session.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { ShopService } from './services/restServices/shop.service';
+import { AliveService } from './services/restServices/alive.service';
 
 
 // Interceptors
@@ -36,7 +39,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { Base64ImagePipe } from './pipes/base64-image.pipe';
+import { ChartsModule } from 'ng2-charts';
 
 
 // Components
@@ -77,6 +80,9 @@ import { FootballBetCardInfoComponent } from './components/footballBet/card-info
 import { CancellUserFootballBetComponent } from './components/shared/alert/cancell-user-football-bet/cancell-user-football-bet.component';
 import { UserFootballBetCardInfoComponent } from './components/footballBet/card-info/user-football-bet-card-info/user-football-bet-card-info.component';
 import { ManageFootballBetComponent } from './components/footballBet/manageBetTab/manage-football-bet/manage-football-bet.component';
+import { ChatWindowComponent } from './components/Chat/chat-window/chat-window.component';
+import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-collapse.component';
+import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-messages.component';
 
 
 
@@ -120,7 +126,11 @@ import { ManageFootballBetComponent } from './components/footballBet/manageBetTa
     FootballBetCardInfoComponent,
     CancellUserFootballBetComponent,
     UserFootballBetCardInfoComponent,
-    ManageFootballBetComponent
+    ManageFootballBetComponent,
+    ChatWindowComponent,
+    ChatCollapseComponent,
+    ChatMessagesComponent,
+    ChatTimePipe,
   ],
   imports: [
     BrowserModule,
@@ -128,7 +138,8 @@ import { ManageFootballBetComponent } from './components/footballBet/manageBetTa
     AppRoutingModule,
     SocialLoginModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ChartsModule
   ],
   providers: [
     {
@@ -157,7 +168,8 @@ import { ManageFootballBetComponent } from './components/footballBet/manageBetTa
     SessionService,
     AuthGuardService,
     GroupService,
-    ShopService
+    ShopService,
+    AliveService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestService } from './rest.service';
+import { Rest } from './Rest';
 import { LoadingService } from '../visualServices/loading.service';
 import { HttpClient } from '@angular/common/http';
 import { LaunchFootballBet, UserFootballBet, GroupPage, CancelUserFootballBet } from 'src/app/models/models';
@@ -12,9 +12,9 @@ import { GroupInfoService } from '../userServices/group-info.service';
  * Service to do the bet requests
  * 
  * @class
- * @extends RestService
+ * @extends Rest
  */
-export class BetService extends RestService{
+export class BetService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────

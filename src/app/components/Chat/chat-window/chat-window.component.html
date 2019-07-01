@@ -1,0 +1,22 @@
+<div id="mainChatWindowId">
+    <div class="fixed-bottom mb-3" *ngIf="isAuthenticated()" [ngClass]="{'mr-2': width>991}">
+        <div class="float-right col-lg-3 col-md-6 col-sm-8 col-12">
+            <div [ngClass]="{'d-none': !thereIsAnyChat, 'collapse': thereIsAnyChat}" id="chatWindowCollapse">
+                <app-chat-collapse></app-chat-collapse>
+            </div>
+            <button class="btn btn-info w-100" (click)="openChat()" data-toggle="collapse" *ngIf="thereIsAnyChat"
+                    data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse">
+                <table class="w-100">
+                    <tr>
+                        <td align="middle" *ngIf="totalNewMessages == 0">Chat</td>
+                        <td align="right" *ngIf="totalNewMessages > 0">Chat</td>
+                        <td align="middle" *ngIf="totalNewMessages > 0">
+                            <app-icon [Icon]="bell_icon"></app-icon> {{totalNewMessages}}
+                        </td>
+                    </tr>    
+                </table>
+            </button>
+            <button class="btn btn-info w-100" *ngIf="!thereIsAnyChat">You are not in any group!</button>
+        </div>
+    </div>
+</div>

@@ -33,12 +33,20 @@ export class LoadingService{
   private navbar:HTMLElement;
 
   /**
-   * Var to save the the HTML associatedto the router-outlet tag
+   * Var to save the the HTML associated to the router-outlet tag
    * 
    * @access private
    * @var {HTMLElement} outlet
    */
   private outlet:HTMLElement;
+
+  /**
+   * Var to save the the HTML associated to the chat tag
+   * 
+   * @access private
+   * @var {HTMLElement} chat
+   */
+  private chat:HTMLElement;
 
   /**
    * Var to save if loading animation is visible or not
@@ -78,6 +86,7 @@ export class LoadingService{
     if(this.isLoading) return;
     this.loading = (document.querySelector("#loading") as HTMLElement);
     this.navbar = (document.querySelector("#navbarId") as HTMLElement);
+    this.chat = (document.querySelector("#mainChatWindowId") as HTMLElement);
     this.outlet = (document.querySelector(".main") as HTMLElement);
     this.resize(true);
     this.isLoading = true;
@@ -110,6 +119,7 @@ export class LoadingService{
   private resize(hide:boolean){
     this.navbar.style.display = hide ? "none" : "flex";
     this.outlet.style.display = hide ? "none" : "block";
+    this.chat.style.display = hide ? "none" : "block";
     this.loading.style.display = hide ? "block" : "none";
     this.loading.style.marginTop = hide ? "17%" : "0"; 
   }

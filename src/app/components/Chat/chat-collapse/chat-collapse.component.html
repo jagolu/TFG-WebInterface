@@ -1,0 +1,48 @@
+<div class="card">
+  <nav class="navbar navbar-expand navbar-light bg-light" >
+    <a class="navbar-brand">{{groupName}} 
+      <app-icon [Icon]="icon_ball" *ngIf="groupType == false"></app-icon>
+      <app-icon [Icon]="icon_paper" *ngIf="groupType == true"></app-icon>  
+    </a>
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+
+      <ul class="navbar-nav form-inline">
+        <li class="nav-item dropdown">
+          <div class="btn btn-outline-dark"
+              id="chatGroupsDropdown"
+              role="button"
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="false"
+              style="cursor:pointer">
+            Groups
+          </div>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="chatGroupsDropdown">
+            <a class="dropdown-item text-center" style="cursor:default;" 
+                *ngFor="let group of groups" (click)="changeGroupChat(group.name, group.type)">
+              <div class="row">
+                <div class="p-0" 
+                    [ngClass]="{'col-9 text-left': getCountMsgs(group.name)>0, 'col-12 text-center': getCountMsgs(group.name)==0}">
+                  {{group.name}}
+                  <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
+                  <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon> 
+                </div>
+                <div class="col-3 p-0" *ngIf="getCountMsgs(group.name)>0">
+                  {{getCountMsgs(group.name)}}  
+                  <app-icon [Icon]="bell_icon"></app-icon> 
+                </div>
+              </div>
+            </a>
+          </div>
+        </li>
+      </ul>           
+    </div>
+  </nav>
+      
+  <div class="card-body overflow-auto p-0 pl-2 pr-2" style="max-height: 300px" id="chatScroll">
+    <app-chat-messages [groupName]="groupName"></app-chat-messages>
+  </div>
+</div>

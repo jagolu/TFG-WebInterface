@@ -166,4 +166,18 @@ export class Icons{
         "firstColor": "#DAA520",
         "secondColor": null
     };
+
+    /**
+     * Icon of a bell
+     * Light grey color
+     * 
+     * @static
+     */
+    static BELL: IconModel = {
+        "base": "fas",
+        "firstIcon": "fa-bell",
+        "secondIcon": null,
+        "firstColor": "#696464",
+        "secondColor": null
+    };
 }

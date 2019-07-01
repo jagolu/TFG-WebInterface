@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
-import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
-import { BuyInfo } from 'src/app/models/models';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 /**
- * Service to do the shop requests
+ * Service to do the http requests to the sockets functions 
  * 
  * @class
  * @extends Rest
  */
-export class ShopService extends Rest{
+export class AliveService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────
   //
-  
+
   /**
-   * The path to the shop requests
+   * The path to the alive http requests
    * 
    * @access private
-   * @readonly
-   * @var {string} _shopPath
+   * @var {string} __alivePath
    */
-  private readonly _shopPath : string = "Shop/";
+  private __alivePath:string = "Alive/";
 
 
   //
@@ -39,14 +37,14 @@ export class ShopService extends Rest{
   
   /**
    * @constructor
-   * @param {HttpClient} http For RestService constructor 
-   * @param {LoadingService} loading For RestService constructor 
+   * @param {HttpClient} http For the Rest constructor 
+   * @param {LoadingService} loading For the Rest constructor
    */
-  constructor(http:HttpClient, loading:LoadingService) { 
+  constructor(http: HttpClient, loading: LoadingService) {
     super(http, loading);
   }
 
-  
+
   //
   // ──────────────────────────────────────────────────────────────────────────────────
   //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
@@ -54,23 +52,17 @@ export class ShopService extends Rest{
   //
   
   /**
-   * Function to do a buy
+   * Log to an specific group chat
    * 
    * @access public
-   * @param {BuyInfo} item The info of the item to buy
-   * @return {Observable} The result of the request 
+   * @param {string} groupName The name of the group
+   * @returns {Observable} The result of the request
    */
-  public doABuy(item:BuyInfo){
-    return this.postRequest(item, this._shopPath+"Buy");
-  }
-
-  /**
-   * Function to get all the offers which exists
-   * 
-   * @access public
-   * @return {Observable} The result of the request
-   */
-  public getAllOffers(){
-    return this.getRequest(this._shopPath+"GetAllOffers");
+  public logChat(groupName:string){
+    return this.getRequest(this.__alivePath+"ChatLogin",
+    [{
+        param: "groupName",
+        value: groupName
+    }], true);
   }
 }

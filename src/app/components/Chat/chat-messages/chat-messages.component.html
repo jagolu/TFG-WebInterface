@@ -1,0 +1,49 @@
+<div class="w-100"  *ngIf="!loading">
+  <div *ngFor="let userMessage of messages; let i = index" class="mb-2 " 
+        [ngClass]="{
+          'card w-75': userMessage.username!='', 
+          'text-right float-right': userMessage.publicUserId == getPublicUserid() && userMessage.username!='',
+          'text-left float-left': userMessage.publicUserId != getPublicUserid() && userMessage.username!='',
+          'text-center w-100': userMessage.username=='' && userMessage.publicUserId!=getPublicUserid(),
+          'd-none': userMessage.username=='' && userMessage.publicUserId==getPublicUserid()}">
+    <div class="card-body p-1" *ngIf="userMessage.username!=''">
+      <div class="card-title mb-1">
+          <app-icon [Icon]="icon_crown" 
+                    *ngIf="userMessage.role=='GROUP_MAKER' && userMessage.publicUserId != getPublicUserid()">
+          </app-icon>
+          <app-icon [Icon]="icon_wizard" 
+                    *ngIf="userMessage.role=='GROUP_ADMIN' && userMessage.publicUserId != getPublicUserid()">
+          </app-icon>
+        <span class="badge m-1"
+              [ngClass]="{'badge-primary': getPublicUserid() == userMessage.publicUserId,
+              'badge-success': getPublicUserid()!=userMessage.publicUserId}">{{userMessage.username}}</span>
+        <app-icon [Icon]="icon_crown" 
+                  *ngIf="userMessage.role=='GROUP_MAKER' && userMessage.publicUserId == getPublicUserid()">
+        </app-icon>
+        <app-icon [Icon]="icon_wizard" 
+                  *ngIf="userMessage.role=='GROUP_ADMIN' && userMessage.publicUserId == getPublicUserid()">
+        </app-icon>
+      </div>
+      <div class="card-text" [ngClass]="{'text-right': userMessage.publicUserId == getPublicUserid()}">
+        <div *ngFor="let mssg of userMessage.messages; let j = index" class="row m-0">
+          <div class="col-4 pl-1 text-left" *ngIf="userMessage.publicUserId == getPublicUserid()">
+            <small style="font-size:10px;">{{showTime(userMessage, j)}}</small>
+          </div>
+          <div class="col-8">{{mssg.message}}</div>              
+          <div class="col-4 pr-1 text-right" *ngIf="userMessage.publicUserId != getPublicUserid()">
+            <small style="font-size:10px;">{{showTime(userMessage, j)}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 w-100" *ngIf="userMessage.username=='' && userMessage.publicUserId!=getPublicUserid()">
+      <div class="col-12"><small>{{userMessage.messages[0].message}}</small></div>
+    </div>
+  </div>
+  <form [formGroup]="sendChatMessageForm" class="sticky-bottom form-group" (ngSubmit)="send()">
+    <input class="form-control" style="font-size:14px" formControlName="message" (focus)="startReseting()" (focusout)="stopReseting()">
+  </form>
+</div>
+<div *ngIf="loading" style="height:105px" class="text-center">
+  <i class="fa fa-cog fa-spin fa-5x fa-fw align-middle"></i>
+</div>
