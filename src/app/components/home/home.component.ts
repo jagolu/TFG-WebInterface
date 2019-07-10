@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HomeService } from 'src/app/services/restServices/home.service';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 import { NewMessage } from 'src/app/models/models';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
+  template: `<app-home-viewer [news]="news"></app-home-viewer>`,
   styleUrls: []
 })
 export class HomeComponent{

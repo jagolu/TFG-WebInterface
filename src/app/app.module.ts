@@ -83,6 +83,7 @@ import { ManageFootballBetComponent } from './components/footballBet/manageBetTa
 import { ChatWindowComponent } from './components/Chat/chat-window/chat-window.component';
 import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-collapse.component';
 import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-messages.component';
+import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.component';
 
 
 
@@ -131,6 +132,7 @@ import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-mess
     ChatCollapseComponent,
     ChatMessagesComponent,
     ChatTimePipe,
+    HomeViewerComponent,
   ],
   imports: [
     BrowserModule,
