@@ -1,33 +1,32 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { GroupPage } from 'src/app/models/models';
+import { Rest } from './Rest';
+import { HttpClient } from '@angular/common/http';
+import { LoadingService } from '../visualServices/loading.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GroupInfoService {
+/**
+* Service to do the http requests to the home functions
+* 
+* @class
+* @extends Rest
+*/
+export class HomeService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────
   //
-  
-  /**
-   * The behaviour of the group info
-   * 
-   * @access private
-   * @var {BehaviorSubject<UserInfo>} information
-   */
-  private information = new BehaviorSubject<GroupPage>(null);
 
   /**
-   * The info at which the other components will subscribe at
+   * The path to the home http requests
    * 
-   * @access public
-   * @var {Observable} info
+   * @access private
+   * @var {string} __homePath
    */
-  public info = this.information.asObservable();
+  private __homePath:string = "Home/";
 
 
   //
@@ -38,48 +37,29 @@ export class GroupInfoService {
   
   /**
    * @constructor
+   * @param {HttpClient} http For the Rest constructor 
+   * @param {LoadingService} loading For the Rest constructor
    */
-  constructor() { }
+  constructor(http: HttpClient, loading: LoadingService) {
+    super(http, loading);
+  }
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────────────
   //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────────────
   //
-
+  
   /**
-   * Update the group info of the service
+   * Get the news
    * 
    * @access public
-   * @param {GroupPage} info The info to update
+   * @param {Boolean} auth To know if the user is logged or not
+   * @returns {Observable} The result of the request
    */
-  public updateInfo(info:GroupPage){
-    //Update the group page info which is at info var
-    this.information.next(info);
-  }
-
-  /**
-   * Cleans the info of the observable
-   * 
-   * @access public
-   */
-  public removeInfo(){
-    this.information.next({
-      "actualCapacity": 0,
-      "myBets":[],
-      "manageBets":[],
-      "betsHistory": [],
-      "bets":[],
-      "canPutPassword": false,
-      "createDate": "",
-      "dateJoin": "",
-      "dateRole": "",
-      "hasPassword": false,
-      "maxCapacity": 0,
-      "members": [],
-      "name": "",
-      "type": true,
-      "news" : []
-    });
+  public getNews(auth:Boolean){
+    let path = auth ? "AuthHome" : "StandHome";
+    return this.getRequest(this.__homePath+path, null, true);
   }
 }

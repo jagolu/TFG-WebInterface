@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IconModel, Icons } from 'src/app/models/models';
+import { IconModel, Icons, NewMessage } from 'src/app/models/models';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { GroupService } from 'src/app/services/restServices/group.service';
 
@@ -13,6 +13,7 @@ export class GroupComponent {
 
   public groupName:string = null;
   public groupType:boolean;
+  public news:NewMessage[] = [];
   public role:string;
   public coins?:number;
 
@@ -37,6 +38,7 @@ export class GroupComponent {
         this.groupName = page.name;
         this.groupType = page.type;
         this.coins = page.members ? page.members[page.members.length-1].coins : 0;
+        this.news = page.news;
       }
       catch(Error){}
     });

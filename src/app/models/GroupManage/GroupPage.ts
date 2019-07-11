@@ -2,6 +2,7 @@ import { GroupBet } from '../Bets/GroupBet';
 import { GroupUser } from './GroupUser';
 import { EndedFootballBet } from '../models';
 import { BetsManager } from '../Bets/BetsManager';
+import { NewMessage } from '../News/NewMessage';
 
 export interface GroupPage{
     name:string;
@@ -18,4 +19,5 @@ export interface GroupPage{
     myBets:EndedFootballBet[];
     betsHistory:EndedFootballBet[];
     members:GroupUser[];
+    news:NewMessage[];
 }
