@@ -17,12 +17,13 @@ import { UserService } from './services/restServices/user.service';
 import { AlertService } from './services/visualServices/alert.service';
 import { LoadingService } from './services/visualServices/loading.service';
 import { SessionService } from './services/userServices/session.service';
-import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { ShopService } from './services/restServices/shop.service';
 import { AliveService } from './services/restServices/alive.service';
 import { HomeService } from './services/restServices/home.service';
 import { AdminService } from './services/restServices/admin.service';
+import { AuthGuardService } from './services/canActivate/AuthGuard.service';
+import { AdminGuardService } from './services/canActivate/admin-guard.service';
 
 
 // Interceptors
@@ -175,7 +176,8 @@ import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.c
     ShopService,
     AliveService,
     HomeService,
-    AdminService
+    AdminService,
+    AdminGuardService
   ],
   bootstrap: [AppComponent]
 })

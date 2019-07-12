@@ -16,6 +16,7 @@ import { SearchGroupComponent } from './components/search-group/search-group.com
 import { ShopComponent } from './components/shop/shop.component';
 import { RememberPasswordFormComponent } from './components/logSign/rememberPassword/remember-password-form/remember-password-form.component';
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
+import { AdminGuardService } from './services/canActivate/admin-guard.service';
 
 
 
@@ -26,12 +27,11 @@ const ROUTES: Routes = [
   { path: 'rememberPassword', component: RememberPasswordFormComponent, canActivate: [AuthGuardService]},
   { path: 'changePassword/:token', component: ResetPasswordFormComponent, canActivate: [AuthGuardService]},
   { path: 'emailVerification/:token', component: EmailVerificationComponent, canActivate: [AuthGuardService]},
-  { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService]},
-  { path: 'group/:group', component: GroupComponent, canActivate: [AuthGuardService]},
-  { path: 'searchGroup', component: SearchGroupComponent, canActivate: [AuthGuardService]},
-  { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService]},
-  { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService]},
-  { path: 'prueba', component: ViewUserComponent},
+  { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'group/:group', component: GroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'searchGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 
