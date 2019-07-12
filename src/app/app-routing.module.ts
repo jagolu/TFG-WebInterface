@@ -17,6 +17,7 @@ import { ShopComponent } from './components/shop/shop.component';
 import { RememberPasswordFormComponent } from './components/logSign/rememberPassword/remember-password-form/remember-password-form.component';
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 import { AdminGuardService } from './services/canActivate/admin-guard.service';
+import { SearchUserComponent } from './components/search-user/search-user.component';
 
 
 
@@ -30,6 +31,7 @@ const ROUTES: Routes = [
   { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'group/:group', component: GroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'searchGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'searchUser', component: SearchUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },

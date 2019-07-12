@@ -1,0 +1,30 @@
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th class="text-center">Search a user</th>
+        <th ></th>
+        <th >
+            <input  class="form-control form-control-sm" 
+                    type="search" 
+                    placeholder="Search a user" 
+                    #username 
+                    (keyup)="search(username.value)">
+        </th>
+      </tr>
+    </thead>
+  </table>
+  <table class="table table-hover">
+    <tbody>
+      <tr *ngFor="let user of users">
+          <td class="text-center">{{ user.email }}</td>
+          <td class="text-center">{{ user.username }}</td>
+          <td class="text-center">{{ user.dateSignUp | onlyDatePipe }}</td>
+          <td class="text-center">
+            <button class="btn btn-danger w-100"
+                  *ngIf="user.open">Bloquear</button>
+            <button class="btn btn-danger w-100"
+                  *ngIf="!user.open">Desbloquear</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>

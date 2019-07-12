@@ -87,6 +87,7 @@ import { ChatWindowComponent } from './components/Chat/chat-window/chat-window.c
 import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-collapse.component';
 import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-messages.component';
 import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.component';
+import { SearchUserComponent } from './components/search-user/search-user.component';
 
 
 
@@ -136,6 +137,7 @@ import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.c
     ChatMessagesComponent,
     ChatTimePipe,
     HomeViewerComponent,
+    SearchUserComponent,
   ],
   imports: [
     BrowserModule,

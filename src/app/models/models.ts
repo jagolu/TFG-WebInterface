@@ -40,3 +40,4 @@ export { ChatUserMessages, newChatUserMessages } from  './Chat/ChatUserMessages'
 export { SingleUserChatMessage, newSingleUserChatMessage } from  './Chat/SingleUserChatMessage';
 export { ChatRoomInfo } from  './Chat/ChatRoomInfo';
 export { NewMessage } from  './News/NewMessage';
+export { SearchUserInfo } from  './Admin/SearchUserInfo';
