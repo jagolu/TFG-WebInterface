@@ -6,39 +6,43 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h4 class="card-title">{{username}}</h4>
+        <div class="row">
+          <div class="col-8"><h4 class="card-title">{{username}}</h4></div>
+          <div class="col-4 text-right" *ngIf="isAdmin()"><h5>ADMIN</h5></div>
+        </div>
         <p class="card-text">{{email}}</p>
         <small class="text-muted">Since {{joinTime | onlyDatePipe}} </small>
-        <hr class="">
+        <hr>
 
         <div class="row " id="UserInfo">
-          <div class="col-6">
-            <span class="btn btn-outline-secondary w-100"
-                  id="headingOne" 
-                  data-toggle="collapse" 
-                  data-target="#collapseOne" 
-                  aria-expanded="true" 
-                  aria-controls="collapseOne"
-            >Groups</span>
-          </div>
-          <div class="col-6">
+          <div [ngClass]="{'col-12': isAdmin(), 'col-6': !isAdmin()}">
             <span class="btn btn-outline-secondary w-100"
                   id="headingTwo"
                   data-toggle="collapse"
                   data-target="#collapseTwo"
-                  aria-expanded="false"
+                  aria-expanded="true"
                   aria-controls="collapseTwo"
             >Info</span>
           </div>
+          <div class="col-6" *ngIf="!isAdmin()">
+            <span class="btn btn-outline-secondary w-100"
+                  id="headingOne" 
+                  data-toggle="collapse" 
+                  data-target="#collapseOne" 
+                  aria-expanded="false" 
+                  aria-controls="collapseOne"
+            >Groups</span>
+          </div>
           <div class="col-12 pt-4">
-            <app-user-groups 
-                [id]="'collapseOne'"
-                [labelled]="'headingOne'">
-            </app-user-groups>
             <app-user-info-form
                 [id]="'collapseTwo'"
                 [labelled]="'headingTwo'">
             </app-user-info-form>
+            <app-user-groups 
+                [id]="'collapseOne'"
+                [labelled]="'headingOne'"
+                *ngIf="!isAdmin()">
+            </app-user-groups>
           </div>
         </div>
       </div>

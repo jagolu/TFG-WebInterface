@@ -10,6 +10,12 @@ export enum AlertInfoType{
     LOSTCONNECTIONERROR = "LOSTCONNECTIONERROR",
   
     /**
+     * @summary When a user tries to access to a functionality
+     * not available to its role
+     */
+    NOTVALIDROLE = "NOTVALIDROLE",
+  
+    /**
      * @summary Request state 500 (Internal Server Error)
      */
     SERVERERROR = "SERVERERROR",

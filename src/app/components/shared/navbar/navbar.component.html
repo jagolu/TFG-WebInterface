@@ -14,14 +14,9 @@
       <li class="nav-item">
         <a class="nav-link disabled" 
           [routerLink]="['index']" 
-        >Apuestas </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" 
-          [routerLink]="['index']" 
         >Partidos </a>
       </li>
-      <li class="nav-item dropdown" *ngIf="isAuthenticated()" style="cursor:pointer">
+      <li class="nav-item dropdown" *ngIf="isAuthenticated() && notAdmin()" style="cursor:pointer">
         <a class="nav-link" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{actualGroup}}
         </a>

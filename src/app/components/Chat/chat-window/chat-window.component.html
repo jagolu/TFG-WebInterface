@@ -1,5 +1,5 @@
 <div id="mainChatWindowId">
-    <div class="fixed-bottom mb-3" *ngIf="isAuthenticated()" [ngClass]="{'mr-2': width>991}">
+    <div class="fixed-bottom mb-3" *ngIf="isAuthenticated() && notAdmin()" [ngClass]="{'mr-2': width>991}">
         <div class="float-right col-lg-3 col-md-6 col-sm-8 col-12">
             <div [ngClass]="{'d-none': !thereIsAnyChat, 'collapse': thereIsAnyChat}" id="chatWindowCollapse">
                 <app-chat-collapse></app-chat-collapse>

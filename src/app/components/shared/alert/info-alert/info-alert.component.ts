@@ -91,6 +91,13 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.NOTVALIDROLE:{
+        msg = [
+          "No estas autorizado para acceder a esa funcionalidad.", 
+          "", ""
+        ];
+        break;
+      }
       case AlertInfoType.SERVERERROR:{
         msg = [
           "Ha habido interno del servidor, vuelva a intentarlo más tarde.", 

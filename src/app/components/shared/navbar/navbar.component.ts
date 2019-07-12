@@ -55,6 +55,10 @@ export class NavbarComponent implements OnInit{
     
   }
 
+  public notAdmin(){
+    return !this.sessionS.isAdmin();
+  }
+
   logOut(){
     this.authS.logOut();
   }

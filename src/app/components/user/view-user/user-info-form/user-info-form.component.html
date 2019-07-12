@@ -16,6 +16,7 @@
                     class="form-control text-center"
                     placeholder="Your username"
                     formControlName="nickname"
+                    [readonly]="isAdmin()"
                     [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && nicknameForm.controls['nickname'].errors}">
             </div>
         </div>
@@ -129,15 +130,15 @@
         <div class="row justify-content-center mt-3">
             <div class="col-12">
                     <button class="btn btn-outline-dark mb-2 w-100" 
-                    [disabled]="!imageForm.valid">Change profile image</button>
+                    [disabled]="!imageForm.valid || isAdmin()">Change profile image</button>
             </div> 
         </div>
     </form>
 
     <!-- Delete account -->
     <hr class="b-4">
-    <div class="btn btn-outline-danger w-100" (click)="openAlert()">
+    <button class="btn btn-outline-danger w-100" (click)="openAlert()" [disabled]="isAdmin()">
         Delete account
-    </div>
+    </button>
     
 </div>

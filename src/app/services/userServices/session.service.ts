@@ -221,6 +221,15 @@ export class SessionService {
   // ─────────────────────────────────────────────────── USERSESSION MANAGEMENT ─────
   //  
 
+  /**
+   * Says if the actual user is an admin or not
+   * 
+   * @returns {Boolean} True if the user is an admin,
+   * false otherwise.
+   */
+  public isAdmin():Boolean{
+    return this.getRole() == "ADMIN";
+  }
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

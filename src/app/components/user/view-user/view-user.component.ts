@@ -41,4 +41,8 @@ export class ViewUserComponent implements OnInit{
       this._user = info
     });
   }
+
+  public isAdmin(){
+    return this.sessionS.isAdmin();
+  }
 }

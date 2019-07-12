@@ -102,6 +102,10 @@ export class UserInfoFormComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
 
+  public isAdmin(){
+    return this.sessionS.isAdmin();
+  }
+
   private initializePasswordForm(){
     let passValidators = [
       Validators.required,

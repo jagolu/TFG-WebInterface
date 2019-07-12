@@ -41,7 +41,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     private showErrorAlert(err:HttpErrorResponse){
         if(err.status == 400 && err.error){
-            if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlertInfo(AlertInfoType.EMAILTAKENERROR);
+            if(err.error == "notAllowed") this.alert.openAlertInfo(AlertInfoType.NOTVALIDROLE);
+            else if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlertInfo(AlertInfoType.EMAILTAKENERROR);
             else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlertInfo(AlertInfoType.WRONGEMAILORPASSWORD);
             else if(err.error["error"] == "NotValidatedYet") this.alert.openAlertInfo(AlertInfoType.NOTVALIDATEDYET);
             else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlertInfo(AlertInfoType.SOCIALERROR);
@@ -78,7 +79,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         if(err.url.includes("Authorization/Validate") || err.url.includes("Authorization/checkPasswordToken")) {
             this._router.navigate(['']);
         }
-        if(err.status == 400 && !err.error){
+        if(err.status == 400 && (!err.error || err.error=="notAllowed")){
+            console.log()
             this._authS.logOut();
             this._router.navigate(['../logIn']);
         }

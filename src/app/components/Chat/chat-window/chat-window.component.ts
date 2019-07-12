@@ -135,8 +135,20 @@ export class ChatWindowComponent implements OnInit{
    * Says if the user is authenticated
    * 
    * @access public
+   * @returns {Boolean} True if the user is authenticated,
+   * false otherwise
    */
   public isAuthenticated(){
     return this.authS.IsAuthenticated();
+  }
+
+  /**
+   * Says if the user has the "Admin" role
+   * 
+   * @returns {Boolean} True if the user has not 
+   * the "Admin" role, false otherwise
+   */
+  public notAdmin(){
+    return !this.sessionS.isAdmin();
   }
 }
