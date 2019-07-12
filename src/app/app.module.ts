@@ -21,6 +21,8 @@ import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { ShopService } from './services/restServices/shop.service';
 import { AliveService } from './services/restServices/alive.service';
+import { HomeService } from './services/restServices/home.service';
+import { AdminService } from './services/restServices/admin.service';
 
 
 // Interceptors
@@ -171,7 +173,9 @@ import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.c
     AuthGuardService,
     GroupService,
     ShopService,
-    AliveService
+    AliveService,
+    HomeService,
+    AdminService
   ],
   bootstrap: [AppComponent]
 })
