@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { SearchUserInfo } from 'src/app/models/models';
 import { AdminService } from 'src/app/services/restServices/admin.service';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
@@ -23,6 +23,14 @@ export class SearchUserComponent {
    * @var {SearchUserInfo[]} users
    */
   public users:SearchUserInfo[];
+
+  /**
+   * The last find that the user did
+   * 
+   * @access private
+   * @var {string} lastFind
+   */
+  private lastFind:string = "";
 
 
   //
@@ -55,6 +63,7 @@ export class SearchUserComponent {
    * @
    */
   public search(toFind:string){
+    this.lastFind = toFind;
     if(toFind.length == 0 || toFind == null){
       this.getAllUsers();
     }
@@ -70,6 +79,19 @@ export class SearchUserComponent {
    */
   public seeGroups(user:SearchUserInfo){
     this.alertS.seeUserGroups(user.groups, user.username);
+  }
+
+  /**
+   * Ban or unban an user and after that redo the search
+   * 
+   * @param {string} publicUserId The public id of the user 
+   * @param {Boolean} ban True for ban the user, false to unban him 
+   */
+  public banUser(publicUserId:string, ban:Boolean){
+    this.adminS.banUser({
+      "publicUserId": publicUserId,
+      "ban": ban
+    }).subscribe(_=> this.search(this.lastFind));
   }
 
 

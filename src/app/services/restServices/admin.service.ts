@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
+import { BanUser } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,17 @@ export class AdminService extends Rest{
    */
   public publishNew(message:string){
     return this.postRequest({"message": message}, this.__adminPath+"LaunchNew");
+  }
+  
+  /**
+   * Ban or unban an user
+   * 
+   * @access public
+   * @param {BanUser} ban The order to ban
+   * @returns {Observable} The result of the request
+   */
+  public banUser(ban:BanUser){
+    return this.postRequest(ban, this.__adminPath+"BanUser");
   }
   
   /**

@@ -1,4 +1,5 @@
 export interface SearchUserInfo{
+    publicUserid:string;
     email:string;
     username:string;
     open:Boolean;

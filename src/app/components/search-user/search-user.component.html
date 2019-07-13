@@ -24,10 +24,10 @@
                     (click)="seeGroups(user)">Grupos</button>
           </td>
           <td class="text-center">
-            <button class="btn btn-danger w-100"
-                  *ngIf="user.open">Bloquear</button>
-            <button class="btn btn-danger w-100"
-                  *ngIf="!user.open">Desbloquear</button>
+            <button class="btn btn-danger w-100" *ngIf="user.open"
+                (click)="banUser(user.publicUserId, true)">Bloquear</button>
+            <button class="btn btn-outline-danger w-100" *ngIf="!user.open"
+                (click)="banUser(user.publicUserId, false)">Desbloquear</button>
           </td>
       </tr>
     </tbody>
