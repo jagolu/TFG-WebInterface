@@ -67,7 +67,8 @@ export class AdminGuardService implements CanActivate{
     let url = next.url.toString();
     let isAdmin = this.sessionS.isAdmin();
      if(url.includes("group/")) return !isAdmin;
-     if(url.includes("searchGroup")) return !isAdmin;
+     if(url.includes("searchGroup")) return isAdmin;
+     if(url.includes("searchUser")) return isAdmin;
      if(url.includes("joinNewGroup")) return !isAdmin;
 
 
