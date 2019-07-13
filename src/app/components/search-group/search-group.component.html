@@ -18,11 +18,15 @@
   <div *ngFor="let group of groups">
     <li class="list-group-item" *ngIf="!isJoinedInGroup(group.name)">
       <div class="row">
-        <div class="col-lg-4 col-5 text-center mb-2">{{ group.name }}</div>
+        <div class="col-5 text-center mb-2" [ngClass]="{'col-lg-4': !isAdmin(), 'col-lg-3': isAdmin()}">
+          {{ group.name }}
+        </div>
         <div class="col-lg-1 col-2 text-center mb-2">
           <app-icon [Icon]="icon_key" *ngIf="group.password"></app-icon>
         </div>
-        <div class="col-lg-2 col-5 text-center">{{ group.placesOcupped }}/{{ group.totalPlaces }}</div>
+        <div class="col-5 text-center" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}">
+          {{ group.placesOcupped }}/{{ group.totalPlaces }}
+        </div>
         <div class="col-lg-2 col-12 text-center mb-2">{{ group.dateCreate | onlyDatePipe }}</div>
         <div class="col-lg-3 col-12 mb-2">
             <button class="btn btn-primary w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
@@ -31,6 +35,12 @@
                 disabled>Full!</button>
             <button class="btn btn-primary w-100" *ngIf="!joinGroups"
                     (click)="watchUsers(group.members, group.name)">See users</button>
+        </div>
+        <div class="col-lg-2 col-12 mb-2" *ngIf="isAdmin()">
+            <button class="btn btn-danger w-100" *ngIf="group.open"
+                (click)="banGroup(group.name, true)">Bloquear</button>
+            <button class="btn btn-outline-danger w-100" *ngIf="!group.open"
+                (click)="banGroup(group.name, false)">Desbloquear</button>
         </div>
       </div>
     </li>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
-import { BanUser } from 'src/app/models/models';
+import { BanUser, BanGroup } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +72,17 @@ export class AdminService extends Rest{
    */
   public banUser(ban:BanUser){
     return this.postRequest(ban, this.__adminPath+"BanUser");
+  }
+  
+  /**
+   * Ban or unban a group
+   * 
+   * @access public
+   * @param {BanGroup} ban The order to ban
+   * @returns {Observable} The result of the request
+   */
+  public banGroup(ban:BanGroup){
+    return this.postRequest(ban, this.__adminPath+"BanGroup");
   }
   
   /**
