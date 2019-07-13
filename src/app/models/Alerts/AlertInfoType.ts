@@ -219,5 +219,11 @@ export enum AlertInfoType{
      * @summary Success message when a user cancels 
      * succesfully a user football bet
      */
-    SUCCESFULLCANCELFOOTBALLBET = "SUCCESFULLCANCELFOOTBALLBET"
+    SUCCESFULLCANCELFOOTBALLBET = "SUCCESFULLCANCELFOOTBALLBET",
+
+    /**
+     * @summary Error message when an user tries to log in the app
+     * but he is banned
+     */
+    YOUREBANNED = "YOUREBANNED"
   }

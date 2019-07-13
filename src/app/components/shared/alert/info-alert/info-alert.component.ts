@@ -112,6 +112,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.YOUREBANNED:{
+        msg = [
+          "No puedes utilizar la plataforma porque estás baneado.", 
+          "Deberías tener una notificación en tu correo.", 
+          ""
+        ];
+        break;
+      }
       case AlertInfoType.EMAILTAKENERROR:{
         msg = [
           "El email con el que intenta registrarse ya está registrado", 
