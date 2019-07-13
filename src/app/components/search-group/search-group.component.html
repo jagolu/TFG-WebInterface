@@ -13,18 +13,25 @@
     </tr>
   </thead>
 </table>
-<table class="table table-hover">
-  <tbody>
-    <tr *ngFor="let group of groups">
-          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.name }}</td>
-          <td class="text-center" *ngIf="!isJoinedInGroup(group.name)">{{ group.placesOcupped }}/{{ group.totalPlaces }}</td>
-          <td *ngIf="!isJoinedInGroup(group.name)">
-            <button class="btn btn-outline-primary w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
+<!-- RESPONSE -->
+<ul class="list-group">
+  <div *ngFor="let group of groups">
+    <li class="list-group-item" *ngIf="!isJoinedInGroup(group.name)">
+      <div class="row">
+        <div class="col-lg-4 col-5 text-center mb-2">{{ group.name }}</div>
+        <div class="col-lg-1 col-2 text-center mb-2">
+          <app-icon [Icon]="icon_key" *ngIf="group.password"></app-icon>
+        </div>
+        <div class="col-lg-2 col-5 text-center">{{ group.placesOcupped }}/{{ group.totalPlaces }}</div>
+        <div class="col-lg-2 col-12 text-center mb-2">{{ group.dateCreate | onlyDatePipe }}</div>
+        <div class="col-lg-3 col-12 mb-2">
+            <button class="btn btn-primary w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
                   (click)="joinGroup(group.name, group.password)">Join!</button>
             <button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped>=group.totalPlaces" 
                 disabled>Full!</button>
-            <button class="btn btn-outline-primary w-100" *ngIf="!joinGroups">See</button>
-          </td>
-    </tr>
-  </tbody>
-</table>
+            <button class="btn btn-primary w-100" *ngIf="!joinGroups">See</button>
+        </div>
+      </div>
+    </li>
+  </div>
+</ul>

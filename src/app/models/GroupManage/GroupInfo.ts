@@ -4,4 +4,5 @@ export interface GroupInfo{
     password:boolean;
     placesOcupped:number;
     totalPlaces:number;
+    dateCreate:Date;
 }
