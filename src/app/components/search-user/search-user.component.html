@@ -20,6 +20,10 @@
           <td class="text-center">{{ user.username }}</td>
           <td class="text-center">{{ user.dateSignUp | onlyDatePipe }}</td>
           <td class="text-center">
+            <button class="btn btn-outline-warning w-100"
+                    (click)="seeGroups(user)">Grupos</button>
+          </td>
+          <td class="text-center">
             <button class="btn btn-danger w-100"
                   *ngIf="user.open">Bloquear</button>
             <button class="btn btn-danger w-100"

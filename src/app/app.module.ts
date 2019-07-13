@@ -88,6 +88,7 @@ import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-coll
 import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-messages.component';
 import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.component';
 import { SearchUserComponent } from './components/search-user/search-user.component';
+import { SeeUserGroupsADMINComponent } from './components/shared/alert/see-user-groups-admin/see-user-groups-admin.component';
 
 
 
@@ -138,6 +139,7 @@ import { SearchUserComponent } from './components/search-user/search-user.compon
     ChatTimePipe,
     HomeViewerComponent,
     SearchUserComponent,
+    SeeUserGroupsADMINComponent,
   ],
   imports: [
     BrowserModule,

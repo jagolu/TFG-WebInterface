@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { SearchUserInfo } from 'src/app/models/models';
 import { AdminService } from 'src/app/services/restServices/admin.service';
+import { AlertService } from 'src/app/services/visualServices/alert.service';
 
 @Component({
   selector: 'app-search-user',
@@ -34,7 +35,7 @@ export class SearchUserComponent {
    * @constructor
    * @param {AdminService} adminS The service to get the users and block/unblock them
    */
-  constructor(private adminS:AdminService) { 
+  constructor(private adminS:AdminService, private alertS:AlertService) { 
     this.getAllUsers();
   }
 
@@ -60,6 +61,15 @@ export class SearchUserComponent {
     else{
       this.getUsersBy(toFind);
     }
+  }
+
+  /**
+   * Launch an alert with the info of the groups of the user
+   * 
+   * @param {SearchUserInfo} user The info of the user 
+   */
+  public seeGroups(user:SearchUserInfo){
+    this.alertS.seeUserGroups(user.groups, user.username);
   }
 
 

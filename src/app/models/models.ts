@@ -41,3 +41,4 @@ export { SingleUserChatMessage, newSingleUserChatMessage } from  './Chat/SingleU
 export { ChatRoomInfo } from  './Chat/ChatRoomInfo';
 export { NewMessage } from  './News/NewMessage';
 export { SearchUserInfo } from  './Admin/SearchUserInfo';
+export { UserInGroupSearch } from  './Admin/SearchUserInfo';

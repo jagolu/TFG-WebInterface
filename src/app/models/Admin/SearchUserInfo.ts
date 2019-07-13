@@ -3,4 +3,13 @@ export interface SearchUserInfo{
     username:string;
     open:Boolean;
     dateSignUp:Date;
+    groups:UserInGroupSearch[];
+}
+
+export interface UserInGroupSearch{
+    groupName:string;
+    role:string;
+    blocked:Boolean;
+    joinTime:Date;
+    roleTime:Date;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AlertMode, AlertInfoType, DoAFootballBet, GroupBet } from 'src/app/models/models';
+import { AlertMode, AlertInfoType, GroupBet, UserInGroupSearch } from 'src/app/models/models';
 
 
 @Injectable({
@@ -277,6 +277,20 @@ export class AlertService {
       "userCoins": user_coins
     });
     this.setTarget(userFootballBet);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the groups of an
+   * user and their info
+   * 
+   * @param {UserInGroupSearch[]} groups The info of the groups
+   * @param {username} string The username of the user
+   */
+  public seeUserGroups(groups:UserInGroupSearch[], username:string){
+    this.setTitle(`${username} groups`);
+    this.changeAlertMode(AlertMode.SEEUSERGROUPS_ADMIN);
+    this.objectInfo.next(groups);
     this.openAlert();
   }
   
