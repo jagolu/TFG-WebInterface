@@ -29,7 +29,8 @@
                   (click)="joinGroup(group.name, group.password)">Join!</button>
             <button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped>=group.totalPlaces" 
                 disabled>Full!</button>
-            <button class="btn btn-primary w-100" *ngIf="!joinGroups">See</button>
+            <button class="btn btn-primary w-100" *ngIf="!joinGroups"
+                    (click)="watchUsers(group.members, group.name)">See users</button>
         </div>
       </div>
     </li>

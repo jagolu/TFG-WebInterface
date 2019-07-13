@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AlertMode, AlertInfoType, GroupBet, UserInGroupSearch } from 'src/app/models/models';
+import { AlertMode, AlertInfoType, GroupBet, UserInGroupSearch, GroupMemberAdmin } from 'src/app/models/models';
 
 
 @Injectable({
@@ -291,6 +291,20 @@ export class AlertService {
     this.setTitle(`${username} groups`);
     this.changeAlertMode(AlertMode.SEEUSERGROUPS_ADMIN);
     this.objectInfo.next(groups);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the members of an
+   * group and their info
+   * 
+   * @param {GroupMemberAdmin[]} members The info of the members
+   * @param {groupName} string The name of the group
+   */
+  public seeGroupMembers(members:GroupMemberAdmin[], groupName:string){
+    this.setTitle(`${groupName} members`);
+    this.changeAlertMode(AlertMode.SEEGROUPMEMBERS_ADMIN);
+    this.objectInfo.next(members);
     this.openAlert();
   }
   

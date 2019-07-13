@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons, GroupUserJoinedAt } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons, GroupUserJoinedAt, GroupMemberAdmin } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
@@ -149,6 +149,16 @@ export class SearchGroupComponent{
       if(group.name == groupName) isIn = true;
     });
     return isIn;
+  }
+
+  /**
+   * Launch an alert to see the group members
+   * 
+   * @param {GroupMemberAdmin[]} members The members of the group
+   * @param {string} name The name of the group
+   */
+  public watchUsers(members:GroupMemberAdmin[], name:string){
+    this.alertS.seeGroupMembers(members, name);
   }
 
 
