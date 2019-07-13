@@ -119,21 +119,21 @@ export class AlertService {
   public reset = this.resetForm.asObservable();
   
   /**
-   * The behaviour to fill the alert to do a football alert
+   * The behaviour to fill the alert with an object info
    * 
    * @access private
-   * @var {BehaviorSubject<DoAFootballBet>} footballBet
+   * @var {BehaviorSubject<DoAFootballBet>} objectInfo
    */
-  private footballBet = new BehaviorSubject<DoAFootballBet>(null);
+  private objectInfo = new BehaviorSubject<any>(null);
 
   /**
-   * The data to fill the alerts when a user tries to do a new football bet
+   * The data to fill the alerts when they need extra info
    * at which the other components will subscribe at
    * 
    * @access public
    * @var {Observable} reset
    */
-  public fBet = this.footballBet.asObservable();
+  public oInfo = this.objectInfo.asObservable();
   
 
   //
@@ -254,7 +254,7 @@ export class AlertService {
   public doAFootballBet(bet:GroupBet, coins:number){
     this.setTitle(bet.betName);
     this.changeAlertMode(AlertMode.FOOTBALLBET);
-    this.footballBet.next({
+    this.objectInfo.next({
       "bet":bet,
       "userCoins": coins
     });
@@ -272,7 +272,7 @@ export class AlertService {
   public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBet:string){
     this.setTitle("You are going to cancel your bet!");
     this.changeAlertMode(AlertMode.CANCELUSERFOOTBALLBET);
-    this.footballBet.next({
+    this.objectInfo.next({
       "bet":bet,
       "userCoins": user_coins
     });

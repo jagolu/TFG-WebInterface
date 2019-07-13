@@ -171,7 +171,7 @@ export class DoFootballBetComponent{
    * @param {UserService} _userS To do the user requests
    */
   constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
-    this._alertS.fBet.subscribe(bet=>{
+    this._alertS.oInfo.subscribe(bet=>{
       this.info_winner_msg = "";
       //Check if the bet is about the match winner 
       this.show1X2 = bet.bet.typeBet.name.includes("WINNER");
