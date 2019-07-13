@@ -51,16 +51,16 @@ export class DoFootballBetComponent{
   /**
    * To know the actual jackpot
    * 
-   * @access private
+   * @access public
    * @var {number} jackpot
    */
-  private jackpot:number = 0;
+  public jackpot:number = 0;
 
   /**
    * To know the actual time
    * (first time, second time, full match)
    * 
-   * @access private
+   * @access public
    * @var {string} timeMessage
    */
   public timeMessage:string = "";
