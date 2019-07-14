@@ -225,5 +225,11 @@ export enum AlertInfoType{
      * @summary Error message when an user tries to log in the app
      * but he is banned
      */
-    YOUREBANNED = "YOUREBANNED"
+    YOUREBANNED = "YOUREBANNED",
+
+    /**
+     * @summary Error message when an user tries to do a 
+     * group request, but the group is banned
+     */
+    GROUPBANNED = "GROUPBANNED"
   }

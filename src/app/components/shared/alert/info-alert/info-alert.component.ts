@@ -120,6 +120,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.GROUPBANNED:{
+        msg = [
+          "No puedes utilizar las funciones de este grupo, ha sido bloqueado.", 
+          "Si crees que es un error con contacta con los administradores de la plataforma.", 
+          ""
+        ];
+        break;
+      }
       case AlertInfoType.EMAILTAKENERROR:{
         msg = [
           "El email con el que intenta registrarse ya está registrado", 
