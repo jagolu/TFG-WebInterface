@@ -281,7 +281,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
           this.userCoins = page.members[page.members.length-1].coins;
           let role = page.members ? page.members[page.members.length-1].role : "";
           //Only football matches and for the group maker
-          if(!page.type && role == "GROUP_MAKER") this.getPageGroup(this.groupName);  
+          if(role == "GROUP_MAKER") this.getPageGroup(this.groupName);  
         }
       }
       catch(Error){}

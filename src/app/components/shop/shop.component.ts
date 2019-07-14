@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupUserJoinedAt } from 'src/app/models/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { ShopOffer } from 'src/app/models/models';
@@ -44,9 +43,9 @@ export class ShopComponent implements OnInit{
    * The groups of the user
    * 
    * @access public
-   * @var {Group[]} groups
+   * @var {string[]} groups
    */
-  public groups:GroupUserJoinedAt[];
+  public groups:string[];
 
   /**
    * To filter the type of offers to show in the view
@@ -175,6 +174,6 @@ export class ShopComponent implements OnInit{
    */
   private getGroupFromTag(tagId?:string){
     let index = (document.querySelector("#"+tagId) as HTMLSelectElement).selectedIndex;
-    return this.groups[index].name;
+    return this.groups[index];
   }
 }

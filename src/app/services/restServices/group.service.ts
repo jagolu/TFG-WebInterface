@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateGroup, JoinGroup, GroupUserJoinedAt, MakeUnmake_admin_block, KickUser, GroupPage, ManagePassword, RemoveGroup } from 'src/app/models/models';
+import { JoinGroup, MakeUnmake_admin_block, KickUser, GroupPage, ManagePassword, RemoveGroup } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 import { GroupInfoService } from '../userServices/group-info.service';
 
@@ -65,8 +65,11 @@ export class GroupService extends Rest{
    * @param {CreateGroup} group The new group to create 
    * @return {Observable} The result of the request
    */
-  public createGroup(group:CreateGroup){
-    return this.postRequest(group, this._groupPath+"CreateGroup").subscribe(
+  public createGroup(group:string){
+    return this.getRequest(this._groupPath+"CreateGroup",[{
+      param: "groupName",
+      value: group
+    }]).subscribe(
       _=> this.reloadGroups()
     );
   }
@@ -234,7 +237,7 @@ export class GroupService extends Rest{
    */
   private reloadGroups(){
     this.getRequest(this._groupPath+"ReloadUserGroups", null, true).subscribe(
-      (groups:GroupUserJoinedAt[])=>{
+      (groups:string[])=>{
         this.sessionS.updateGroups(groups);
       }
     );

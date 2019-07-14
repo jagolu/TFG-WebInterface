@@ -7,10 +7,9 @@
         class="card mb-3 w-100">
         <div class="card-header" 
             style="cursor:pointer"
-            [routerLink]="['/group', group.name]"> 
-            <h4 class="text-center">{{group.name}}
-                <app-icon [Icon]="icon_ball" *ngIf="group.type == false"></app-icon>
-                <app-icon [Icon]="icon_paper" *ngIf="group.type == true"></app-icon>
+            [routerLink]="['/group', group]"> 
+            <h4 class="text-center">{{group}}
+                <app-icon [Icon]="icon_ball"></app-icon>
             </h4>
         </div>
     </div>

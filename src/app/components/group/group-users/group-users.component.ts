@@ -18,7 +18,6 @@ export class GroupUsersComponent implements OnInit{
   public icon_coin:IconModel = Icons.COIN;
   public members:GroupUser[] = [];
   public user_role:string;
-  public group_type:boolean;
   private groupName:string;
   
 
@@ -27,7 +26,6 @@ export class GroupUsersComponent implements OnInit{
   ngOnInit(){
     this.groupPage.info.subscribe(page=>{
       try{
-        this.group_type = page.type;
         this.groupName = page.name;
         this.members = page.members;
         this.user_role = page.members ? page.members[page.members.length-1].role : "";

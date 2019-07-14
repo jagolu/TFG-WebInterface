@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons, GroupUserJoinedAt, GroupMemberAdmin } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons, GroupMemberAdmin } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
@@ -50,14 +50,6 @@ export class SearchGroupComponent{
   public icon_ball:IconModel = Icons.BALL;
 
   /**
-   * Var to get the paper icon
-   * 
-   * @access public
-   * @var {IconModel} icon_paper
-   */
-  public icon_paper:IconModel = Icons.PAPER;
-
-  /**
    * Var to get the key icon
    * 
    * @access public
@@ -68,9 +60,9 @@ export class SearchGroupComponent{
   /**
    * The groups which the user is joined at
    * 
-   * @var {Group[]} userGroups
+   * @var {string[]} userGroups
    */
-  private userGroups:GroupUserJoinedAt[];
+  private userGroups:string[];
 
   /**
    * To know what was the last find
@@ -158,7 +150,7 @@ export class SearchGroupComponent{
   public isJoinedInGroup(groupName:string):boolean{
     let isIn = false;
     this.userGroups.forEach(group=>{
-      if(group.name == groupName) isIn = true;
+      if(group == groupName) isIn = true;
     });
     return isIn;
   }
