@@ -96,12 +96,6 @@ export class CreateGroupAlertComponent{
           Validators.maxLength(20)
         ],
         [this.validateNameNotTaken.bind(this)]
-      ),
-      'groupType': new FormControl(
-        '',
-        [
-          Validators.required
-        ]
       )
     });
   }
@@ -126,8 +120,7 @@ export class CreateGroupAlertComponent{
    */
   private resetForm(){
     this.createGroupForm.reset({
-      'name': "",
-      'groupType': ""
+      'name': ""
     })
   }
   
@@ -137,9 +130,6 @@ export class CreateGroupAlertComponent{
    * @access private
    */
   private create(){
-    this.groupS.createGroup({
-      "name": this.createGroupForm.controls["name"].value,
-      "type": this.createGroupForm.controls["groupType"].value == "true"
-    });
+    this.groupS.createGroup(this.createGroupForm.controls["name"].value);
   }
 }

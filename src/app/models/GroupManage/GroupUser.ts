@@ -7,5 +7,5 @@ export interface GroupUser{
     img: string;
     blocked : boolean;
     blockedBy : string;
-    coins ?: number;
+    coins: number;
 }

@@ -36,21 +36,6 @@ export class Icons{
     };
 
     /**
-     * Paper icon
-     * For offial groups
-     * Blue color
-     * 
-     * @static
-     */
-    static PAPER: IconModel = {
-        "base": "fas",
-        "firstIcon": "fa-file-invoice",
-        "secondIcon": null,
-        "firstColor": "#00008B",
-        "secondColor": null
-    };
-
-    /**
      * Ball icon
      * For virtual groups
      * Green color

@@ -78,7 +78,6 @@ export class GroupInfoService {
       "maxCapacity": 0,
       "members": [],
       "name": "",
-      "type": true,
       "news" : []
     });
   }

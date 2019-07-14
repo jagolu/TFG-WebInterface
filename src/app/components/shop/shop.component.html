@@ -31,7 +31,7 @@
                     <div class="col-12 mb-1">
                       <select   class="custom-select w-100" 
                                 [attr.id]="'selectgroup'+i">
-                        <option *ngFor="let group of groups" [attr.value]="group.name">{{ group.name }}</option>
+                        <option *ngFor="let group of groups" [attr.value]="group">{{ group }}</option>
                       </select>
                     </div>
                     <div class="col-12">

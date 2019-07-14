@@ -6,7 +6,6 @@ import { NewMessage } from '../News/NewMessage';
 
 export interface GroupPage{
     name:string;
-    type:boolean;
     dateJoin:string;
     dateRole:string;
     canPutPassword : boolean;

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupUserJoinedAt, IconModel, Icons } from 'src/app/models/models';
+import { IconModel, Icons } from 'src/app/models/models';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
-import { Session } from 'protractor';
 
 @Component({
   selector: 'app-chat-collapse',
@@ -27,9 +26,9 @@ export class ChatCollapseComponent implements OnInit {
    * The user groups
    * 
    * @access public
-   * @var {GroupUserJoinedAt[]} groups
+   * @var {string[]} groups
    */
-  public groups:GroupUserJoinedAt[] = [];
+  public groups:string[] = [];
 
   /**
    * The unread messages in each group
@@ -48,28 +47,12 @@ export class ChatCollapseComponent implements OnInit {
   public groupName:string = "";
 
   /**
-   * The type of the group
-   * 
-   * @access public
-   * @var {boolean} groupType
-   */
-  public groupType:boolean = false;
-
-  /**
    * The icon of a ball
    * 
    * @access public
    * @var {IconModel} icon_ball
    */
   public icon_ball:IconModel = Icons.BALL;
-
-  /**
-   * The icon of a paper
-   * 
-   * @access public
-   * @var {IconModel} icon_paper
-   */
-  public icon_paper:IconModel = Icons.PAPER;
 
   /**
    * The icon of a bell
@@ -139,12 +122,10 @@ export class ChatCollapseComponent implements OnInit {
    * 
    * @access public
    * @param {string} name The name of the group
-   * @param {string} type The type of the group 
    */
-  public changeGroupChat(name:string, type:boolean){
-    if(!this.groups.some(g=> g.name == name)) return;
+  public changeGroupChat(name:string){
+    if(!this.groups.some(g=> g == name)) return;
     this.groupName = name;
-    this.groupType = type;
     this._chatS.setGroupMessages(name);
     this._chatS.readMessagesGroup(name);
   }
@@ -160,21 +141,18 @@ export class ChatCollapseComponent implements OnInit {
    * Set the html info to the chat room info
    * 
    * @access private
-   * @param {GroupUserJoinedAt[]} newGroups The new groups in the session
+   * @param {string[]} newGroups The new groups in the session
    */
-  private setGroup(newGroups:GroupUserJoinedAt[]){
+  private setGroup(newGroups:string[]){
     //If the actual group isn't in the new groups (means that the user has left the group)
     //Or the user isn't joined in any group ===> return
-    if(newGroups.some(g => g.name == this.groupName) || newGroups.length == 0) return;
-    // this.groupType = newGroups.length >= 1 && this.groupName== "" ? newGroups[0].type :  this.groupType;
-    // this.groupName = newGroups.length >= 1 && this.groupName== "" ? newGroups[0].name : this.groupName;
+    if(newGroups.some(g => g == this.groupName) || newGroups.length == 0) return;
 
     //If the actual group isn't in the new groups (means that the user has left the group)
     //And at least there is one group
     // Change the room to that group chats
-      this.groupName = newGroups[0].name;
-      this.groupType = newGroups[0].type;
-      this.changeGroupChat(this.groupName, this.groupType);
+      this.groupName = newGroups[0];
+      this.changeGroupChat(this.groupName);
   }
 
   /**
@@ -186,10 +164,10 @@ export class ChatCollapseComponent implements OnInit {
    * @param {GroupUserJoinedAt[]} newGroups The new groups in 
    * the user session
    */
-  private checkAuxGroups(newGroups:GroupUserJoinedAt[]){
+  private checkAuxGroups(newGroups:string[]){
     this.groups.forEach(g=>{
-      if(!newGroups.some(ng=> ng.name == g.name)) {
-        this._chatS.exitChat(g.name);
+      if(!newGroups.some(ng=> ng == g)) {
+        this._chatS.exitChat(g);
       }
     });
   }
