@@ -100,7 +100,7 @@ export class CancellUserFootballBetComponent{
    */
   constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
     this._alertS.target.subscribe(ubId=> this.userFootballBetId = ubId);
-    this._alertS.fBet.subscribe(bet=>{
+    this._alertS.oInfo.subscribe(bet=>{
       //Check if the bet is a group bet or a solo bet
       this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
       //The coins that the user did bet at the begining

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AlertMode, AlertInfoType, DoAFootballBet, GroupBet } from 'src/app/models/models';
+import { AlertMode, AlertInfoType, GroupBet, UserInGroupSearch, GroupMemberAdmin } from 'src/app/models/models';
 
 
 @Injectable({
@@ -119,21 +119,21 @@ export class AlertService {
   public reset = this.resetForm.asObservable();
   
   /**
-   * The behaviour to fill the alert to do a football alert
+   * The behaviour to fill the alert with an object info
    * 
    * @access private
-   * @var {BehaviorSubject<DoAFootballBet>} footballBet
+   * @var {BehaviorSubject<DoAFootballBet>} objectInfo
    */
-  private footballBet = new BehaviorSubject<DoAFootballBet>(null);
+  private objectInfo = new BehaviorSubject<any>(null);
 
   /**
-   * The data to fill the alerts when a user tries to do a new football bet
+   * The data to fill the alerts when they need extra info
    * at which the other components will subscribe at
    * 
    * @access public
    * @var {Observable} reset
    */
-  public fBet = this.footballBet.asObservable();
+  public oInfo = this.objectInfo.asObservable();
   
 
   //
@@ -254,7 +254,7 @@ export class AlertService {
   public doAFootballBet(bet:GroupBet, coins:number){
     this.setTitle(bet.betName);
     this.changeAlertMode(AlertMode.FOOTBALLBET);
-    this.footballBet.next({
+    this.objectInfo.next({
       "bet":bet,
       "userCoins": coins
     });
@@ -272,11 +272,39 @@ export class AlertService {
   public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBet:string){
     this.setTitle("You are going to cancel your bet!");
     this.changeAlertMode(AlertMode.CANCELUSERFOOTBALLBET);
-    this.footballBet.next({
+    this.objectInfo.next({
       "bet":bet,
       "userCoins": user_coins
     });
     this.setTarget(userFootballBet);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the groups of an
+   * user and their info
+   * 
+   * @param {UserInGroupSearch[]} groups The info of the groups
+   * @param {username} string The username of the user
+   */
+  public seeUserGroups(groups:UserInGroupSearch[], username:string){
+    this.setTitle(`${username} groups`);
+    this.changeAlertMode(AlertMode.SEEUSERGROUPS_ADMIN);
+    this.objectInfo.next(groups);
+    this.openAlert();
+  }
+
+  /**
+   * Open the alert showing the members of an
+   * group and their info
+   * 
+   * @param {GroupMemberAdmin[]} members The info of the members
+   * @param {groupName} string The name of the group
+   */
+  public seeGroupMembers(members:GroupMemberAdmin[], groupName:string){
+    this.setTitle(`${groupName} members`);
+    this.changeAlertMode(AlertMode.SEEGROUPMEMBERS_ADMIN);
+    this.objectInfo.next(members);
     this.openAlert();
   }
   

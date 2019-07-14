@@ -17,10 +17,13 @@ import { UserService } from './services/restServices/user.service';
 import { AlertService } from './services/visualServices/alert.service';
 import { LoadingService } from './services/visualServices/loading.service';
 import { SessionService } from './services/userServices/session.service';
-import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { GroupService } from './services/restServices/group.service';
 import { ShopService } from './services/restServices/shop.service';
 import { AliveService } from './services/restServices/alive.service';
+import { HomeService } from './services/restServices/home.service';
+import { AdminService } from './services/restServices/admin.service';
+import { AuthGuardService } from './services/canActivate/AuthGuard.service';
+import { AdminGuardService } from './services/canActivate/admin-guard.service';
 
 
 // Interceptors
@@ -84,6 +87,9 @@ import { ChatWindowComponent } from './components/Chat/chat-window/chat-window.c
 import { ChatCollapseComponent } from './components/Chat/chat-collapse/chat-collapse.component';
 import { ChatMessagesComponent } from './components/Chat/chat-messages/chat-messages.component';
 import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.component';
+import { SearchUserComponent } from './components/search-user/search-user.component';
+import { SeeUserGroupsADMINComponent } from './components/shared/alert/see-user-groups-admin/see-user-groups-admin.component';
+import { SeeGroupMembersAdminComponent } from './components/shared/alert/see-group-members-admin/see-group-members-admin.component';
 
 
 
@@ -133,6 +139,9 @@ import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.c
     ChatMessagesComponent,
     ChatTimePipe,
     HomeViewerComponent,
+    SearchUserComponent,
+    SeeUserGroupsADMINComponent,
+    SeeGroupMembersAdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -171,7 +180,10 @@ import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.c
     AuthGuardService,
     GroupService,
     ShopService,
-    AliveService
+    AliveService,
+    HomeService,
+    AdminService,
+    AdminGuardService
   ],
   bootstrap: [AppComponent]
 })

@@ -44,5 +44,17 @@ export enum AlertMode{
     /**
      * @summary Alerts to cancel a user football bet
      */
-    CANCELUSERFOOTBALLBET = "CANCELUSERFOOTBALLBET"
+    CANCELUSERFOOTBALLBET = "CANCELUSERFOOTBALLBET",
+
+    /**
+     * @summary Alerts to see the groups of an user and
+     * their info
+     */
+    SEEUSERGROUPS_ADMIN = "SEEUSERGROUPS_ADMIN",
+
+    /**
+     * @summary Alerts to see the members of a group and
+     * their info
+     */
+    SEEGROUPMEMBERS_ADMIN = "SEEGROUPMEMBERS_ADMIN"
 }

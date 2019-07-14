@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { AuthenticationService } from '../restServices/authentication.service';
+import { SessionService } from '../userServices/session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ import { AuthenticationService } from '../restServices/authentication.service';
  * 
  * @class 
  */
-export class AuthGuardService implements CanActivate{
-  
+export class AdminGuardService implements CanActivate{
+
   //
   // ──────────────────────────────────────────────────────────────────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
@@ -44,9 +44,10 @@ export class AuthGuardService implements CanActivate{
 
   /**
    * @constructor
-   * @param {AuthenticationService} authService 
+   * @param {Router} router 
+   * @param {SessionService} sessionS
    */
-  constructor(private authService:AuthenticationService) { }
+  constructor(private sessionS:SessionService) { }
 
 
   //
@@ -60,17 +61,17 @@ export class AuthGuardService implements CanActivate{
    * 
    * @access public
    * @param {ActivatedRouteSnapshot} next The url the user is trying to access
-   * @return {Boolean} True if the user is authenticated, false otherwise
+   * @return {Boolean} True if the user can access to the path, false otherwise
    */
   public canActivate(next:ActivatedRouteSnapshot){
     let url = next.url.toString();
-    let isAuth = this.authService.IsAuthenticated();
-    if(url.includes("signUp")) return !isAuth;
-    if(url.includes("logIn")) return !isAuth;
-    if(url.includes("emailVerification")) return !isAuth;
-    if(url.includes("rememberPassword")) return !isAuth;
-    if(url.includes("changePassword")) return !isAuth;
+    let isAdmin = this.sessionS.isAdmin();
+     if(url.includes("group/")) return !isAdmin;
+     if(url.includes("searchGroup")) return isAdmin;
+     if(url.includes("searchUser")) return isAdmin;
+     if(url.includes("joinNewGroup")) return !isAdmin;
 
-    return this.authService.IsAuthenticated();
+
+    return true;
   }
 }

@@ -46,6 +46,16 @@
             [routerLink]="['index']" 
         >Help </a>
       </li>
+      <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
+        <a  class="nav-link" 
+        [routerLink]="['searchGroup']" 
+        >Grupos </a>
+      </li>      
+      <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
+        <a  class="nav-link" 
+            [routerLink]="['searchUser']" 
+        >Usuarios </a>
+      </li>
     </ul>
     <!-- Authentication Buttons -->
     <!-- LogIn & SignUp Buttons -->

@@ -18,6 +18,7 @@ export { Icons } from './Icons/Icon';
 export { IconModel } from './Icons/IconModel';
 export { JoinGroup } from './GroupManage/JoinGroup';
 export { MakeUnmake_admin_block } from './GroupManage/MakeUnmake_admin_block';
+export { GroupMemberAdmin } from './GroupManage/GroupMemberAdmin';
 export { GroupBet } from './Bets/GroupBet';
 export { GroupPage } from './GroupManage/GroupPage';
 export { KickUser } from './GroupManage/KickUser';
@@ -40,3 +41,7 @@ export { ChatUserMessages, newChatUserMessages } from  './Chat/ChatUserMessages'
 export { SingleUserChatMessage, newSingleUserChatMessage } from  './Chat/SingleUserChatMessage';
 export { ChatRoomInfo } from  './Chat/ChatRoomInfo';
 export { NewMessage } from  './News/NewMessage';
+export { SearchUserInfo } from  './Admin/SearchUserInfo';
+export { UserInGroupSearch } from  './Admin/SearchUserInfo';
+export { BanUser } from  './Admin/BanUser';
+export { BanGroup } from  './Admin/BanGroup';

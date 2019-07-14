@@ -62,6 +62,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "CancelBetCancelled") this.alert.openAlertInfo(AlertInfoType.CANCELBETCANCELLED);
             else if(err.error["error"] == "CancelBetEnded") this.alert.openAlertInfo(AlertInfoType.CANCELBETENDED);
             else if(err.error["error"] == "CancelBetLastBetPassed") this.alert.openAlertInfo(AlertInfoType.CANCELBETLASTBETPASSED);
+            else if(err.error["error"] == "YoureBanned") this.alert.openAlertInfo(AlertInfoType.YOUREBANNED);
+            else if(err.error["error"] == "GroupBanned") this.alert.openAlertInfo(AlertInfoType.GROUPBANNED);
         }
         else if(err.status == 400 && !err.error) this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);
@@ -79,8 +81,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         if(err.url.includes("Authorization/Validate") || err.url.includes("Authorization/checkPasswordToken")) {
             this._router.navigate(['']);
         }
-        if(err.status == 400 && (!err.error || err.error=="notAllowed")){
-            console.log()
+        if(err.status == 400 && 
+            (!err.error || err.error=="notAllowed" || err.error["error"]=="YoureBanned" || err.error["error"]=="GroupBanned")){
             this._authS.logOut();
             this._router.navigate(['../logIn']);
         }

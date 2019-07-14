@@ -1,0 +1,35 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th class="text-center">Search a user</th>
+      <th ></th>
+      <th >
+          <input  class="form-control form-control-sm" 
+                  type="search" 
+                  placeholder="Search a user" 
+                  #username 
+                  (keyup)="search(username.value)">
+      </th>
+    </tr>
+  </thead>
+</table>
+<!-- RESPONSE -->
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let user of users">
+    <div class="row">
+      <div class="col-lg-5 col-6 text-center mb-2">{{ user.email }}</div>
+      <div class="col-lg-2 col-6 text-center">{{ user.username }}</div>
+      <div class="col-lg-1 col-12 text-center mb-2">{{ user.dateSignUp | onlyDatePipe }}</div>
+      <div class="col-lg-2 col-12 mb-2">
+        <button class="btn btn-outline-warning w-100"
+                (click)="seeGroups(user)">Grupos</button>
+      </div>
+      <div class="col-lg-2 col-12 mb-2">
+          <button class="btn btn-danger w-100" *ngIf="user.open"
+              (click)="banUser(user.publicUserId, true)">Bloquear</button>
+          <button class="btn btn-outline-danger w-100" *ngIf="!user.open"
+              (click)="banUser(user.publicUserId, false)">Desbloquear</button>
+      </div>
+    </div>
+  </li>
+</ul>

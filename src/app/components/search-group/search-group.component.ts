@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons, GroupUserJoinedAt } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons, GroupUserJoinedAt, GroupMemberAdmin } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
+import { AdminService } from 'src/app/services/restServices/admin.service';
 
 
 @Component({
@@ -71,6 +72,14 @@ export class SearchGroupComponent{
    */
   private userGroups:GroupUserJoinedAt[];
 
+  /**
+   * To know what was the last find
+   * 
+   * @access private
+   * @var {string} lastFind
+   */
+  private lastFind:string = "";
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -85,9 +94,11 @@ export class SearchGroupComponent{
    * @param {AlertService} alertS The service to manage the alerts
    * @param {SessionService} session_s The service to get the groups
    * at which the user is already joined
+   * @param {AdminService} adminS To ban unban the groups
    */
   constructor(private groupS:GroupService, private route:Router, 
-              private alertS:AlertService, private session_s:SessionService) { 
+              private alertS:AlertService, private session_s:SessionService,
+              private adminS:AdminService) { 
     this.getAllGroups();
     this.joinGroups = this.route.url.includes("joinNewGroup");
     this.session_s.User.subscribe(
@@ -114,6 +125,7 @@ export class SearchGroupComponent{
    * @
    */
   public search(name:string){
+    this.lastFind = name;
     if(name.length == 0 || name == null){
       this.getAllGroups();
     }
@@ -149,6 +161,36 @@ export class SearchGroupComponent{
       if(group.name == groupName) isIn = true;
     });
     return isIn;
+  }
+
+  /**
+   * Launch an alert to see the group members
+   * 
+   * @param {GroupMemberAdmin[]} members The members of the group
+   * @param {string} name The name of the group
+   */
+  public watchUsers(members:GroupMemberAdmin[], name:string){
+    this.alertS.seeGroupMembers(members, name);
+  }
+
+  /**
+   * Bans a group
+   * 
+   * @param {string} name The name of the group
+   * @param {Boolean} ban True to ban the group, false to unban  it
+   */
+  public banGroup(name:string, ban:Boolean){
+    this.adminS.banGroup({
+      "groupName": name,
+      "ban": ban
+    }).subscribe(_=> this.search(this.lastFind));
+  }
+
+  /**
+   * Says if the current user is an admin or not
+   */
+  public isAdmin():Boolean{
+    return this.session_s.isAdmin();
   }
 
 

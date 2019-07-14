@@ -1,7 +1,11 @@
+import { GroupMemberAdmin } from './GroupMemberAdmin';
+
 export interface GroupInfo{
     name:string;
     type:boolean;
     password:boolean;
     placesOcupped:number;
     totalPlaces:number;
+    dateCreate:Date;
+    members?:GroupMemberAdmin[];
 }

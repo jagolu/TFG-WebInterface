@@ -1,0 +1,24 @@
+<table class="table" *ngIf="groups.length > 0">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center">Nombre</th>
+      <th scope="col" class="text-center">Rol y fecha</th>
+      <th scope="col" class="text-center">Fecha de unión</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let group of groups">
+      <td class="text-center">{{group.groupName}}</td>
+      <td class="text-center">
+        <app-icon [Icon]="icon_user" *ngIf="group.role == 'GROUP_NORMAL'"></app-icon>
+        <app-icon [Icon]="icon_crown" *ngIf="group.role=='GROUP_MAKER'"></app-icon>
+        <app-icon [Icon]="icon_wizard" *ngIf="group.role=='GROUP_ADMIN'"></app-icon>
+        &nbsp;&nbsp;{{group.roleTime | onlyDatePipe}}
+      </td>
+      <td class="text-center">{{group.joinTime | onlyDatePipe}}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="groups.length == 0">
+  <p>El usuario no esta en ningún grupo</p>
+</div>

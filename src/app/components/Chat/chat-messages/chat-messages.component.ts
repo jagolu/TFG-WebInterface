@@ -215,7 +215,7 @@ export class ChatMessagesComponent implements OnInit{
    */
   private scrollDown(){
     let div = (document.querySelector("#chatScroll") as HTMLElement);
-    setTimeout(_=> div.scrollTop = div.scrollHeight, 20); 
+    if(div!=null) setTimeout(_=> div.scrollTop = div.scrollHeight, 20); 
   }
 
   /**

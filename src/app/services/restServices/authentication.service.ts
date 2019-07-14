@@ -95,7 +95,7 @@ export class AuthenticationService extends Rest {
    * @access public
    */
   public logOut(){
-    this._authS.signOut().catch(Error);
+    if(this.IsAuthenticated()) this._authS.signOut().catch(Error);
     this._sessionS.removeSession();
     this._groupInfoS.removeInfo();
     this._userInfoS.removeInfo();
