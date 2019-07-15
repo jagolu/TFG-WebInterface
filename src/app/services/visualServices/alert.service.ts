@@ -281,6 +281,19 @@ export class AlertService {
   }
 
   /**
+   * Open the alert showing the message when a user wants to
+   * cancel a football bet
+   * 
+   * @param {string} betId The id of the football bet
+   */
+  public cancelFootballBet(betId:string){
+    this.setTitle("Estas a punto de cancelar el evento de apuesta!");
+    this.changeAlertMode(AlertMode.CANCELFOOTBALLBET);
+    this.setTarget(betId);
+    this.openAlert();
+  }
+
+  /**
    * Open the alert showing the groups of an
    * user and their info
    * 

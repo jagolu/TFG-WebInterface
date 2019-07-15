@@ -90,6 +90,7 @@ import { HomeViewerComponent } from './components/home/home-viewer/home-viewer.c
 import { SearchUserComponent } from './components/search-user/search-user.component';
 import { SeeUserGroupsADMINComponent } from './components/shared/alert/see-user-groups-admin/see-user-groups-admin.component';
 import { SeeGroupMembersAdminComponent } from './components/shared/alert/see-group-members-admin/see-group-members-admin.component';
+import { CancelFootballBetComponent } from './components/shared/alert/cancel-football-bet/cancel-football-bet.component';
 
 
 
@@ -142,6 +143,7 @@ import { SeeGroupMembersAdminComponent } from './components/shared/alert/see-gro
     SearchUserComponent,
     SeeUserGroupsADMINComponent,
     SeeGroupMembersAdminComponent,
+    CancelFootballBetComponent,
   ],
   imports: [
     BrowserModule,
