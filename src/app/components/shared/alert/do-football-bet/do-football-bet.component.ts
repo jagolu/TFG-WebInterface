@@ -172,30 +172,39 @@ export class DoFootballBetComponent{
    */
   constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
     this._alertS.oInfo.subscribe(bet=>{
-      this.info_winner_msg = "";
-      //Check if the bet is about the match winner 
-      this.show1X2 = bet.bet.typeBet.name.includes("WINNER");
-      //Get the winrate of the bet
-      this.win_rate = bet.bet.typeBet.winRate+bet.bet.typePay.winRate;
-      //Check if the bet is a group bet or a solo bet
-      this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
-      //The min of the bet (No user can reach this point if his actual coins
-      // are less than the min of the bet)
-      this.min = bet.bet.minBet;
-      //The max of the bet
-      this.max = bet.bet.maxBet;
-      // If it is a group bet, it calculate the jackpot
-      this.jackpot = this.jackpotBet ? bet.bet.usersJoined * this.min : 0;
-      //The actual user coins (If is a group bet, the actual user coins would be 
-      // the actual 'user_coins-min_bet', else the actual user coins)
-      this.user_coins = this.jackpotBet ? bet.userCoins-this.min : bet.userCoins;
-      //The max what user can bet (the min value of the maxBet and the actual user coins)
-      this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
-      //The id of the bet
-      this.bet = bet.bet.bet;
-      //The message to correct time
-      this.timeMessage = this.correctPart(bet.bet.typeBet.name);
-      this.initializeForm();
+      try{
+        this.info_winner_msg = "";
+        //Check if the bet is about the match winner 
+        this.show1X2 = bet.bet.typeBet.name.includes("WINNER");
+        //Get the winrate of the bet
+        this.win_rate = bet.bet.typeBet.winRate+bet.bet.typePay.winRate;
+        //Check if the bet is a group bet or a solo bet
+        this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
+        //The min of the bet (No user can reach this point if his actual coins
+        // are less than the min of the bet)
+        this.min = bet.bet.minBet;
+        //The max of the bet
+        this.max = bet.bet.maxBet;
+        // If it is a group bet, it calculate the jackpot
+        this.jackpot = this.jackpotBet ? bet.bet.usersJoined * this.min : 0;
+        //The actual user coins (If is a group bet, the actual user coins would be 
+        // the actual 'user_coins-min_bet', else the actual user coins)
+        this.user_coins = this.jackpotBet ? bet.userCoins-this.min : bet.userCoins;
+        //The max what user can bet (the min value of the maxBet and the actual user coins)
+        this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
+        //The id of the bet
+        this.bet = bet.bet.bet;
+        //The message to correct time
+        this.timeMessage = this.correctPart(bet.bet.typeBet.name);
+        this.initializeForm();        
+      }catch(Error){
+        this.info_winner_msg = this.timeMessage = "";
+        this.show1X2 = this.jackpotBet = false;
+        this.win_rate = this.min = this.max = 0;
+        this.jackpot = this.user_coins = this.max_user = 0;
+        this.bet = null;
+      }
+
     });
     this.groupInfo.info.subscribe(group=>this.groupName = group.name);
     this._alertS.reset.subscribe(

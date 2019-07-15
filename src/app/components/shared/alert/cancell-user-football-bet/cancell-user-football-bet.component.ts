@@ -101,14 +101,20 @@ export class CancellUserFootballBetComponent{
   constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
     this._alertS.target.subscribe(ubId=> this.userFootballBetId = ubId);
     this._alertS.oInfo.subscribe(bet=>{
-      //Check if the bet is a group bet or a solo bet
-      this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
-      //The coins that the user did bet at the begining
-      this.coins_bet = bet.userCoins;
-      //The id of the bet
-      this.footballBetId = bet.bet.bet;
-      //The coins that the user will get back
-      this.coins_return = MoneyBack.getMoneyBack(bet.bet.typeBet.cancelRate, bet.bet.typePay.cancelRate, this.coins_bet);
+      try{
+        //Check if the bet is a group bet or a solo bet
+        this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
+        //The coins that the user did bet at the begining
+        this.coins_bet = bet.userCoins;
+        //The id of the bet
+        this.footballBetId = bet.bet.bet;
+        //The coins that the user will get back
+        this.coins_return = MoneyBack.getMoneyBack(bet.bet.typeBet.cancelRate, bet.bet.typePay.cancelRate, this.coins_bet);        
+      }catch(Error){
+        this.jackpotBet = false;
+        this.coins_bet = this.coins_return = 0;
+        this.footballBetId = "";
+      }
     });
     this.groupInfo.info.subscribe(group=>this.groupName = group.name);
   }

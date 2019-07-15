@@ -93,7 +93,7 @@ export class ChatWindowComponent implements OnInit{
           }
         });
       }
-      catch(Exception){this.thereIsAnyChat = false}
+      catch(Error){this.thereIsAnyChat = false}
     });
   }
 

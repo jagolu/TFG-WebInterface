@@ -66,7 +66,8 @@ export class SeeUserGroupsADMINComponent {
    */
   constructor(private alertS:AlertService) { 
     this.alertS.oInfo.subscribe(groups=>{
-      this.groups = groups;
+      try{this.groups = groups;}
+      catch(Error){this.groups = null}
     });
   }
 }
