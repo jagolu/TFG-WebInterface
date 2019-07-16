@@ -70,6 +70,8 @@ export class AdminGuardService implements CanActivate{
      if(url.includes("searchGroup")) return isAdmin;
      if(url.includes("searchUser")) return isAdmin;
      if(url.includes("joinNewGroup")) return !isAdmin;
+     if(url.includes("directMessagesUser")) return !isAdmin;
+     if(url.includes("directMessagesAdmin")) return isAdmin;
 
 
     return true;

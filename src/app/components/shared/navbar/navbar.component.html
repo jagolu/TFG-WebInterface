@@ -39,6 +39,18 @@
             [routerLink]="['shop', 'All']" 
             *ngIf="isAuthenticated()" 
         >Shop </a>
+      </li>      
+      <li class="nav-item">
+        <a  class="nav-link" 
+            [routerLink]="['directMessagesUser']" 
+            *ngIf="isAuthenticated() && notAdmin()" 
+        >Reportar error</a>
+      </li>
+      <li class="nav-item">
+        <a  class="nav-link" 
+            [routerLink]="['directMessagesAdmin']" 
+            *ngIf="isAuthenticated() && !notAdmin()" 
+        >Mensajes de usuarios</a>
       </li>
       <li class="nav-item">
         <a  class="nav-link disabled" 
