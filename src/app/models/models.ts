@@ -46,3 +46,5 @@ export { BanUser } from  './Admin/BanUser';
 export { BanGroup } from  './Admin/BanGroup';
 export { DMTitles } from  './DirectMessages/DMTitles'
 export { CreateDMTitle } from  './DirectMessages/CreateDMTitle'
+export { DMMessage } from  './DirectMessages/DMMessage'
+export { SendDMMessage } from  './DirectMessages/SendDMMessage'

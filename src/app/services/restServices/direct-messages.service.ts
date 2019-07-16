@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
-import { CreateDMTitle } from 'src/app/models/models';
+import { CreateDMTitle, SendDMMessage } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -57,13 +57,38 @@ export class DirectMessagesService extends Rest{
   }
   
   /**
-   * Get the direct messages titles
+   * Get the direct messages
    * 
    * @access public
-   * @param {CreateDMTitle} order The order to launch the new DM
+   * @param {string} id The id of the conversation
+   * @returns {Observable} The result of the request
+   */
+  public loadDMMessages(id:string){
+    return this.getRequest(this.__dmPath+"LoadDMMessages", [{
+      param: "dmId",
+      value: id
+    }], true);
+  }
+  
+  /**
+   * Launch a direct message title
+   * 
+   * @access public
+   * @param {CreateDMTitle} order The order to launch the new DM title
    * @returns {Observable} The result of the request
    */
   public launchDMTitle(order:CreateDMTitle){
     return this.postRequest(order, this.__dmPath+"CreateDMTitle");
+  }
+  
+  /**
+   * Launch a direct message
+   * 
+   * @access public
+   * @param {SendDMMessage} order The order to launch the new DM
+   * @returns {Observable} The result of the request
+   */
+  public launchDMMessage(order:SendDMMessage){
+    return this.postRequest(order, this.__dmPath+"SendDMMessage");
   }
 }
