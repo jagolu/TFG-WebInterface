@@ -35,8 +35,7 @@ const ROUTES: Routes = [
   { path: 'searchUser', component: SearchUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService, AdminGuardService]},
-  { path: 'directMessagesUser', component: DirectMessagesComponent, canActivate: [AuthGuardService, AdminGuardService]},
-  { path: 'directMessagesAdmin', component: DirectMessagesComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'directMessages', component: DirectMessagesComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 
