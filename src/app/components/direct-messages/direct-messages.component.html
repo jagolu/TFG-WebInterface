@@ -1,9 +1,28 @@
+<form [formGroup]="createDMForm">
+  <div class="row justify-content-center mb-2">
+      <input *ngIf="isAdmin()" type="text" class="col-lg-6 col-12 form-control" (change)="findDM()" (keyup)="findDM()"
+          placeholder="Nombre de usuario o email" id="findUserDMId">
+  </div>
+  <div class="row justify-content-center mb-2">
+      <select class="custom-select col-lg-6 col-12" id="selectSuggsUserIdDMSearch" (change)="changeInputSelect()">
+        <option selected value="invalid"></option>
+        <option *ngFor="let sug of suggestions; let i = index" value="{{sug.email}}">{{sug.username}}&nbsp;&nbsp;{{sug.email}}</option>
+      </select>
+  </div>
+  <div class="row justify-content-center mb-2">
+    <input type="text" class="col-lg-6 col-12 form-control" placeholder="Titulo para la disputa" formControlName="title">
+  </div>
+  <div class="row justify-content-center mb-5">
+      <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="createDMTitle()" 
+        [disabled]="!createDMForm.valid || !validSelect">Crear disputa</button>
+  </div>
+</form >
 <ul class="list-group" *ngIf="dmTitles.length > 0">
   <li class="list-group-item" *ngFor="let dm of dmTitles">
     <div class="row">      
       <div class="col-6 "><h3>{{dm.receiver}}</h3></div>
-      <div class="col-4">{{dm.emailReceiver}}</div>
-      <div class="col-2 text-right"><small>{{dm.openDate | onlyDatePipe}}</small></div>
+      <div class="col-lg-4 col-6">{{dm.emailReceiver}}</div>
+      <div class="col-lg-2 col-12 text-right"><small>{{dm.openDate | onlyDatePipe}}</small></div>
     </div>
     <hr class="mt-0">
     <div class="row">
@@ -13,15 +32,8 @@
       <div class="mt-2" [ngClass]="{'col-11': dm.unreadMessages != 0, 'col-12': dm.unreadMessages == 0}">{{dm.title}}</div>
       
     </div>
-    <button class="float-right mt-4 btn btn-outline-primary w-25">Ver</button>
+    <div class="row justify-content-end">
+      <button class="float-right mt-4 btn btn-outline-primary col-lg-4 col-12">Ver</button>
+    </div>
   </li>
 </ul>
-<form [formGroup]="createDMForm" class="mt-5">
-  <div class="row justify-content-center">
-    <input type="text" class="col-lg-6 col-12 form-control" placeholder="Titulo para la disputa" formControlName="title">
-  </div>
-  <div class="row justify-content-center mt-2">
-      <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="createDMTitle(null)"
-        [disabled]="!createDMForm.valid">Crear disputa</button>
-  </div>
-</form >

@@ -108,4 +108,18 @@ export class AdminService extends Rest{
       value: toFind
     }], true);
   }
+
+  /**
+   * Get the users with similar username or email
+   * 
+   * @access public
+   * @param {string} toFind The key word to find
+   * @returns {Observable} The result of the request
+   */
+  public searchUserDM(toFind:string){
+    return this.getRequest(this.__adminPath+"SearchForDM", [{
+      param: "findTo",
+      value: toFind
+    }], true);
+  }
 }
