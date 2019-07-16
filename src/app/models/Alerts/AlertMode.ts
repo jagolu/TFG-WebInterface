@@ -56,5 +56,11 @@ export enum AlertMode{
      * @summary Alerts to see the members of a group and
      * their info
      */
-    SEEGROUPMEMBERS_ADMIN = "SEEGROUPMEMBERS_ADMIN"
+    SEEGROUPMEMBERS_ADMIN = "SEEGROUPMEMBERS_ADMIN",
+
+    /**
+     * @summary Alerts when the admin of a group want
+     * to cancell a user bet
+     */
+    CANCELFOOTBALLBET = "CANCELFOOTBALLBET"
 }

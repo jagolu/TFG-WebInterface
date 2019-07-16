@@ -106,4 +106,19 @@ export class BetService extends Rest{
       (page:GroupPage)=> this.groupPageS.updateInfo(page)
     );
   }
+
+  /**
+   * Cancel a football bet
+   * 
+   * @access public
+   * @param {string} betId The id of the bet to cancel
+   */
+  public cancelFootballBet(betId:string){
+    this.getRequest(this._betPath+"CancelFootballBet",[{
+      param: "betId",
+      value: betId
+    }]).subscribe(
+      (page:GroupPage)=> this.groupPageS.updateInfo(page)
+    );
+  }
 }
