@@ -6,16 +6,15 @@ import { SessionService } from 'src/app/services/userServices/session.service';
 import { AdminService } from 'src/app/services/restServices/admin.service';
 
 @Component({
-  selector: 'app-direct-messages',
-  templateUrl: './direct-messages.component.html',
+  selector: 'app-all-conversations',
+  templateUrl: './all-conversations.component.html',
   styles: []
 })
-export class DirectMessagesComponent {
-
+export class AllConversationsComponent  {
   public dmTitles:DMTitles[] = [];
   public suggestions:SearchUserDM[] = [];
-  private createDMForm:FormGroup;
   public validSelect:boolean = false;
+  private createDMForm:FormGroup;
 
   constructor(private _dmS:DirectMessagesService, private sessionS:SessionService, private adminS:AdminService) { 
     this._dmS.loadDMTitles().subscribe((dmS:DMTitles[])=> this.dmTitles = dmS);
@@ -53,6 +52,10 @@ export class DirectMessagesComponent {
     this.changeSelectIndex(0);
     let find = (document.querySelector("#findUserDMId") as HTMLInputElement).value;
     this.adminS.searchUserDM(find).subscribe((suggs:SearchUserDM[])=>this.suggestions = suggs);
+  }
+
+  public seeDM(id:string){
+    console.log(id);
   }
 
   private initializeForm(){

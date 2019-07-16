@@ -92,7 +92,7 @@ import { SearchUserComponent } from './components/search-user/search-user.compon
 import { SeeUserGroupsADMINComponent } from './components/shared/alert/see-user-groups-admin/see-user-groups-admin.component';
 import { SeeGroupMembersAdminComponent } from './components/shared/alert/see-group-members-admin/see-group-members-admin.component';
 import { CancelFootballBetComponent } from './components/shared/alert/cancel-football-bet/cancel-football-bet.component';
-import { DirectMessagesComponent } from './components/direct-messages/direct-messages.component';
+import { AllConversationsComponent } from './components/direct-messages/all-conversations/all-conversations.component';
 
 
 
@@ -146,7 +146,7 @@ import { DirectMessagesComponent } from './components/direct-messages/direct-mes
     SeeUserGroupsADMINComponent,
     SeeGroupMembersAdminComponent,
     CancelFootballBetComponent,
-    DirectMessagesComponent,
+    AllConversationsComponent,
   ],
   imports: [
     BrowserModule,
