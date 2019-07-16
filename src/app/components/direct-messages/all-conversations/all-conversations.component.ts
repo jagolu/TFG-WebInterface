@@ -39,11 +39,6 @@ export class AllConversationsComponent  {
     this.changeSelectIndex(index);
   }
 
-  public changeSelectIndex(index:number){
-    (document.querySelector("#selectSuggsUserIdDMSearch") as HTMLSelectElement).selectedIndex = index;
-    this.validSelect = index!=0;
-  }
-
   public isAdmin(){
     return this.sessionS.isAdmin();
   }
@@ -52,10 +47,6 @@ export class AllConversationsComponent  {
     this.changeSelectIndex(0);
     let find = (document.querySelector("#findUserDMId") as HTMLInputElement).value;
     this.adminS.searchUserDM(find).subscribe((suggs:SearchUserDM[])=>this.suggestions = suggs);
-  }
-
-  public seeDM(id:string){
-    console.log(id);
   }
 
   private initializeForm(){
@@ -76,5 +67,10 @@ export class AllConversationsComponent  {
     (document.querySelector("#findUserDMId") as HTMLInputElement).value = "";
     this.changeSelectIndex(0);
     this.suggestions = [];
+  }
+
+  private changeSelectIndex(index:number){
+    (document.querySelector("#selectSuggsUserIdDMSearch") as HTMLSelectElement).selectedIndex = index;
+    this.validSelect = index!=0;
   }
 }
