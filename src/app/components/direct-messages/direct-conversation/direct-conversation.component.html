@@ -1,0 +1,9 @@
+<form [formGroup]="sendDMMessageForm">
+  <div class="row justify-content-center mb-2">
+    <input type="text" class="col-lg-6 col-12 form-control" placeholder="Mensaje" formControlName="message">
+  </div>
+  <div class="row justify-content-center mb-5">
+      <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="sendMessage()" 
+        [disabled]="!sendDMMessageForm.valid">Enviar mensaje</button>
+  </div>
+</form >
