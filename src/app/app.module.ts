@@ -24,6 +24,7 @@ import { HomeService } from './services/restServices/home.service';
 import { AdminService } from './services/restServices/admin.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { AdminGuardService } from './services/canActivate/admin-guard.service';
+import { DirectMessagesService } from './services/restServices/direct-messages.service';
 
 
 // Interceptors
@@ -187,7 +188,8 @@ import { DirectMessagesComponent } from './components/direct-messages/direct-mes
     AliveService,
     HomeService,
     AdminService,
-    AdminGuardService
+    AdminGuardService,
+    DirectMessagesService
   ],
   bootstrap: [AppComponent]
 })
