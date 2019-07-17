@@ -21,8 +21,10 @@
       <div class="col-lg-2 col-6 text-center">{{ user.username }}</div>
       <div class="col-lg-1 col-12 text-center mb-2">{{ user.dateSignUp | onlyDatePipe }}</div>
       <div class="col-lg-2 col-12 mb-2">
-        <button class="btn btn-outline-warning w-100"
+        <button class="btn btn-outline-warning w-100" *ngIf="user.groups.length>0"
                 (click)="seeGroups(user)">Grupos</button>
+        <button class="btn btn-outline-warning w-100" *ngIf="user.groups.length==0"
+                disabled>Sin grupos</button>
       </div>
       <div class="col-lg-2 col-12 mb-2">
           <button class="btn btn-danger w-100" *ngIf="user.open"
