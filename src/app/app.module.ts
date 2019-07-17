@@ -44,6 +44,7 @@ import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
 
 // Components
@@ -157,7 +158,8 @@ import { DirectConversationComponent } from './components/direct-messages/direct
     SocialLoginModule,
     HttpClientModule,
     RouterModule,
-    ChartsModule
+    ChartsModule,
+    ScrollDispatchModule
   ],
   providers: [
     {
