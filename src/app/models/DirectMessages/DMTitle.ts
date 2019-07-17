@@ -2,7 +2,7 @@ export interface DMTitle{
     id:string;
     receiver:string;
     emailReceiver?:string;
-    openDate:Date;
+    lastUpdate:Date;
     closed:Boolean;
     unreadMessages:number;
     title:string;

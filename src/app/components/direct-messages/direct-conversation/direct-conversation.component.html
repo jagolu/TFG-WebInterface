@@ -4,7 +4,6 @@
       <div class="col-12"><h3>{{room.title}}</h3></div>
       <div class="col-lg-6 col-12"><h5>{{room.receiver}}</h5></div>
       <div class="col-lg-6 col-12 text-right" *ngIf="room.emailReceiver!=null"><h6>{{room.emailReceiver}}</h6></div>
-      <div class="col-12 text-right"><small>{{room.openDate | onlyDatePipe}}</small></div>
     </div>
   </div>
   <div class="card-body overflow-auto" style="max-height: 550px" id="DMMessagesScroll">
