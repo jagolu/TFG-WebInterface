@@ -51,19 +51,24 @@ export class SuccessInterceptor implements HttpInterceptor {
     private showSuccessAlert(ok){
         if(ok.body && ok.body.success){
             if(ok.body.success == "PassChanged") this.alert.openAlertInfo(AlertInfoType.PASSWORDCHANGED);
-            if(ok.body.success == "SuccesfullBuy") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLBUY);
-            if(ok.body.success == "EnabledGroupPassword") this.alert.openAlertInfo(AlertInfoType.ENABLEDGROUPPASSWORD);
-            if(ok.body.success == "SuccesfullJoinGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLJOINGROUP);
-            if(ok.body.success == "SuccesfullCreatedGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCREATEDGROUP);
-            if(ok.body.success == "SucessFullPasswordEmail") this.alert.openAlertInfo(AlertInfoType.SUCCESSPASSWORDEMAIL);
-            if(ok.body.success == "SuccesfullGroupRemoved") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPREMOVED);
-            if(ok.body.success == "SuccesfullGroupLeave") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPLEAVE);
+            else if(ok.body.success == "SuccesfullBuy") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLBUY);
+            else if(ok.body.success == "EnabledGroupPassword") this.alert.openAlertInfo(AlertInfoType.ENABLEDGROUPPASSWORD);
+            else if(ok.body.success == "SuccesfullJoinGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLJOINGROUP);
+            else if(ok.body.success == "SuccesfullCreatedGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCREATEDGROUP);
+            else if(ok.body.success == "SucessFullPasswordEmail") this.alert.openAlertInfo(AlertInfoType.SUCCESSPASSWORDEMAIL);
+            else if(ok.body.success == "SuccesfullGroupRemoved") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPREMOVED);
+            else if(ok.body.success == "SuccesfullGroupLeave") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPLEAVE);
+            else if(ok.body.success == "SuccessfullUserBan") this.alert.openAlertInfo(AlertInfoType.USERSUCCESFULLYBANNED);
+            else if(ok.body.success == "SuccessfullUserUnban") this.alert.openAlertInfo(AlertInfoType.USERSUCCESFULLYUNBANNED);
+            else if(ok.body.success == "SuccessfullGroupBan") this.alert.openAlertInfo(AlertInfoType.GROUPSUCCESFULLYBANNED);
+            else if(ok.body.success == "SuccessfullGroupUnban") this.alert.openAlertInfo(AlertInfoType.GROUPSUCCESFULLYUNBANNED);
         }
         else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlertInfo(AlertInfoType.VERIFICATIONSENT);
         else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlertInfo(AlertInfoType.DELETEDACCOUNT);
         else if(ok.url.includes("Bet/LaunchFootBallBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLFOOTBALLBET);
         else if(ok.url.includes("Bet/DoFootballBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLDOFOOTBALLBET);
         else if(ok.url.includes("Bet/CancelUserFootballBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCANCELFOOTBALLBET);
+        else if(ok.url.includes("DirectMessages/CreateDMTitle")) this.alert.openAlertInfo(AlertInfoType.DMCREATED);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */
