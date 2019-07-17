@@ -7,8 +7,7 @@
       <div class="col-12 text-right"><small>{{room.openDate | onlyDatePipe}}</small></div>
     </div>
   </div>
-  <div class="card-body">
-    <div class="w-100">
+  <div class="card-body overflow-auto" style="max-height: 550px" id="DMMessagesScroll">
           <div *ngFor="let cluster of clusters; let i = index" class="card w-75 mb-2"
                 [ngClass]="{
                   'text-right float-right': cluster.isAdmin==thisIsAdmin,
@@ -28,7 +27,6 @@
                 </div>
               </div>
           </div>
-    </div>
   </div>
 </div>
 <div class="card" *ngIf="clusters.length == 0">

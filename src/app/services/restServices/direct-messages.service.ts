@@ -67,7 +67,7 @@ export class DirectMessagesService extends Rest{
     return this.getRequest(this.__dmPath+"LoadDMMessages", [{
       param: "dmId",
       value: id
-    }], true);
+    }]);
   }
   
   /**

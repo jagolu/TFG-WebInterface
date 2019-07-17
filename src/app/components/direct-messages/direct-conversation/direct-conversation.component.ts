@@ -61,7 +61,13 @@ export class DirectConversationComponent implements AfterViewChecked {
   private setData(dmr:DMRoom){
     try{
       this.room = dmr.title;
-      this.clusters = dmr.clusters;      
+      this.clusters = dmr.clusters;   
+      this.scrollDown();   
     }catch(Error){this.clusters = []}
+  }
+
+  private scrollDown(){
+    let div = (document.querySelector("#DMMessagesScroll") as HTMLElement);
+    if(div!=null) setTimeout(_=> div.scrollTop = div.scrollHeight, 20); 
   }
 }
