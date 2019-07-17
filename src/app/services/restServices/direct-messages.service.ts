@@ -91,4 +91,26 @@ export class DirectMessagesService extends Rest{
   public launchDMMessage(order:SendDMMessage){
     return this.postRequest(order, this.__dmPath+"SendDMMessage");
   }
+    
+  /**
+   * Closes a DM Conversation
+   * 
+   * @access public
+   * @param {string} id The id of the conversation
+   * @param {Boolean} openOrder True to open the conversation, false to close it
+   * @returns {Observable} The result of the request
+   */
+  public openCloseConversation(id:string, openOrder:Boolean){
+    let open = openOrder ?  "1" : "0";
+    return this.getRequest(this.__dmPath+"CloseDM", [
+      {
+      param: "id",
+      value: id
+      },
+      {
+        param: "openOrder",
+        value: open
+      }
+    ]);
+  }
 }

@@ -8,7 +8,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-direct-conversation',
   templateUrl: './direct-conversation.component.html',
-  styles: []
+  styles: [`
+    .closedConv{background-color:#F2F2F2}
+    .closedMsg{background-color:#F7F6F6}
+  `]
 })
 export class DirectConversationComponent implements AfterViewChecked {
 
@@ -23,12 +26,14 @@ export class DirectConversationComponent implements AfterViewChecked {
   constructor(private aR:ActivatedRoute, private dmS:DirectMessagesService, private sessionS:SessionService) { 
     this.id = this.aR.snapshot.paramMap.get('id');
     this.thisIsAdmin = this.sessionS.isAdmin();
-    this.initializeForm();
 }
 
   ngAfterViewChecked() {
     if(!this.loading){
-      this.dmS.loadDMMessages(this.id).subscribe((dmr:DMRoom)=>this.setData(dmr));
+      this.dmS.loadDMMessages(this.id).subscribe((dmr:DMRoom)=>{
+        this.setData(dmr);
+        if(!this.room.closed) this.initializeForm();
+      });
     }
     this.loading = true;
   }
@@ -38,6 +43,16 @@ export class DirectConversationComponent implements AfterViewChecked {
       "dmId": this.id,
       "message": this.sendDMMessageForm.controls["message"].value
     }).subscribe((dmr:DMRoom)=>this.setData(dmr));
+    this.resetForm();
+  }
+
+  public closeConversation(){
+    this.dmS.openCloseConversation(this.room.id, false).subscribe((dmr:DMRoom)=>this.setData(dmr));
+    this.resetForm();
+  }
+
+  public openConversation(){
+    this.dmS.openCloseConversation(this.room.id, true).subscribe((dmr:DMRoom)=>this.setData(dmr));
     this.resetForm();
   }
 
