@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DirectMessagesService } from 'src/app/services/restServices/direct-messages.service';
-import { DMTitles, SearchUserDM } from 'src/app/models/models';
+import { DMTitle, SearchUserDM } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { AdminService } from 'src/app/services/restServices/admin.service';
@@ -11,13 +11,13 @@ import { AdminService } from 'src/app/services/restServices/admin.service';
   styles: []
 })
 export class AllConversationsComponent  {
-  public dmTitles:DMTitles[] = [];
+  public dmTitles:DMTitle[] = [];
   public suggestions:SearchUserDM[] = [];
   public validSelect:boolean = false;
   private createDMForm:FormGroup;
 
   constructor(private _dmS:DirectMessagesService, private sessionS:SessionService, private adminS:AdminService) { 
-    this._dmS.loadDMTitles().subscribe((dmS:DMTitles[])=> this.dmTitles = dmS);
+    this._dmS.loadDMTitles().subscribe((dmS:DMTitle[])=> this.dmTitles = dmS);
     this.initializeForm();
     this.validSelect = this.isAdmin() ? false : true;
   }
@@ -28,7 +28,7 @@ export class AllConversationsComponent  {
     this._dmS.launchDMTitle({
       "title": title,
       "emailReceiver": receiver
-    }).subscribe((dmS:DMTitles[])=>{
+    }).subscribe((dmS:DMTitle[])=>{
       this.dmTitles = dmS;
       this.resetForm();
     });

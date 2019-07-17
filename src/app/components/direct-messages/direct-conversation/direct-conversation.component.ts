@@ -1,7 +1,7 @@
 import { Component, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DirectMessagesService } from 'src/app/services/restServices/direct-messages.service';
-import { DMMessage } from 'src/app/models/models';
+import { DMRoom, DMTitle, DMMessageCluster } from 'src/app/models/models';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -14,9 +14,11 @@ export class DirectConversationComponent implements AfterViewChecked {
 
   private id:string = "";
   private loading :boolean = false;
-  private messages :DMMessage[] = [];
-  private thisIsAdmin :Boolean = false;
   private sendDMMessageForm: FormGroup;
+
+  public room:DMTitle;
+  public clusters:DMMessageCluster[] = [];
+  public thisIsAdmin :Boolean = false;
 
   constructor(private aR:ActivatedRoute, private dmS:DirectMessagesService, private sessionS:SessionService) { 
     this.id = this.aR.snapshot.paramMap.get('id');
@@ -26,7 +28,7 @@ export class DirectConversationComponent implements AfterViewChecked {
 
   ngAfterViewChecked() {
     if(!this.loading){
-      this.dmS.loadDMMessages(this.id).subscribe((msgs:DMMessage[])=>this.messages = msgs);
+      this.dmS.loadDMMessages(this.id).subscribe((dmr:DMRoom)=>this.setData(dmr));
     }
     this.loading = true;
   }
@@ -35,7 +37,7 @@ export class DirectConversationComponent implements AfterViewChecked {
     this.dmS.launchDMMessage({
       "dmId": this.id,
       "message": this.sendDMMessageForm.controls["message"].value
-    }).subscribe(x=>console.log(x));
+    }).subscribe((dmr:DMRoom)=>this.setData(dmr));
     this.resetForm();
   }
 
@@ -54,5 +56,12 @@ export class DirectConversationComponent implements AfterViewChecked {
 
   private resetForm(){
     this.sendDMMessageForm.reset({"message": ""});
+  }
+
+  private setData(dmr:DMRoom){
+    try{
+      this.room = dmr.title;
+      this.clusters = dmr.clusters;      
+    }catch(Error){this.clusters = []}
   }
 }

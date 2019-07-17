@@ -1,4 +1,4 @@
-export interface DMTitles{
+export interface DMTitle{
     id:string;
     receiver:string;
     emailReceiver?:string;
