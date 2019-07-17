@@ -231,5 +231,35 @@ export enum AlertInfoType{
      * @summary Error message when an user tries to do a 
      * group request, but the group is banned
      */
-    GROUPBANNED = "GROUPBANNED"
+    GROUPBANNED = "GROUPBANNED",
+
+    /**
+     * @summary Success message when a user creates a
+     * direct message conversation
+     */
+    DMCREATED = "DMCREATED",
+
+    /**
+     * @summary Success message when an admin bans
+     * a user
+     */
+    USERSUCCESFULLYBANNED = "USERSUCCESFULLYBANNED",
+
+    /**
+     * @summary Success message when an admin UNbans
+     * a user
+     */
+    USERSUCCESFULLYUNBANNED = "USERSUCCESFULLYUNBANNED",
+
+    /**
+     * @summary Success message when an admin bans 
+     * a group
+     */
+    GROUPSUCCESFULLYBANNED = "GROUPSUCCESFULLYBANNED",
+
+    /**
+     * @summary Success message when an admin UNbans 
+     * a group
+     */
+    GROUPSUCCESFULLYUNBANNED = "GROUPSUCCESFULLYUNBANNED"
   }

@@ -24,6 +24,7 @@ import { HomeService } from './services/restServices/home.service';
 import { AdminService } from './services/restServices/admin.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { AdminGuardService } from './services/canActivate/admin-guard.service';
+import { DirectMessagesService } from './services/restServices/direct-messages.service';
 
 
 // Interceptors
@@ -43,6 +44,7 @@ import { provideConfig } from 'src/environments/secret';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
 
 // Components
@@ -91,6 +93,8 @@ import { SearchUserComponent } from './components/search-user/search-user.compon
 import { SeeUserGroupsADMINComponent } from './components/shared/alert/see-user-groups-admin/see-user-groups-admin.component';
 import { SeeGroupMembersAdminComponent } from './components/shared/alert/see-group-members-admin/see-group-members-admin.component';
 import { CancelFootballBetComponent } from './components/shared/alert/cancel-football-bet/cancel-football-bet.component';
+import { AllConversationsComponent } from './components/direct-messages/all-conversations/all-conversations.component';
+import { DirectConversationComponent } from './components/direct-messages/direct-conversation/direct-conversation.component';
 
 
 
@@ -144,6 +148,8 @@ import { CancelFootballBetComponent } from './components/shared/alert/cancel-foo
     SeeUserGroupsADMINComponent,
     SeeGroupMembersAdminComponent,
     CancelFootballBetComponent,
+    AllConversationsComponent,
+    DirectConversationComponent,
   ],
   imports: [
     BrowserModule,
@@ -152,7 +158,8 @@ import { CancelFootballBetComponent } from './components/shared/alert/cancel-foo
     SocialLoginModule,
     HttpClientModule,
     RouterModule,
-    ChartsModule
+    ChartsModule,
+    ScrollDispatchModule
   ],
   providers: [
     {
@@ -185,7 +192,8 @@ import { CancelFootballBetComponent } from './components/shared/alert/cancel-foo
     AliveService,
     HomeService,
     AdminService,
-    AdminGuardService
+    AdminGuardService,
+    DirectMessagesService
   ],
   bootstrap: [AppComponent]
 })

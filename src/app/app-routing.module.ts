@@ -18,6 +18,8 @@ import { RememberPasswordFormComponent } from './components/logSign/rememberPass
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 import { AdminGuardService } from './services/canActivate/admin-guard.service';
 import { SearchUserComponent } from './components/search-user/search-user.component';
+import { AllConversationsComponent } from './components/direct-messages/all-conversations/all-conversations.component';
+import { DirectConversationComponent } from './components/direct-messages/direct-conversation/direct-conversation.component';
 
 
 
@@ -34,6 +36,8 @@ const ROUTES: Routes = [
   { path: 'searchUser', component: SearchUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'directMessages', component: AllConversationsComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'directConversation/:id', component: DirectConversationComponent, canActivate: [AuthGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 

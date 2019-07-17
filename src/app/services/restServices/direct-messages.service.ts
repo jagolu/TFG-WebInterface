@@ -2,18 +2,12 @@ import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../visualServices/loading.service';
-import { BanUser, BanGroup } from 'src/app/models/models';
+import { CreateDMTitle, SendDMMessage } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
 })
-/**
- * Service to do the http requests to the admin functions 
- * 
- * @class
- * @extends Rest
- */
-export class AdminService extends Rest{
+export class DirectMessagesService extends Rest{
 
   //
   // ──────────────────────────────────────────────────────────────────────
@@ -25,9 +19,9 @@ export class AdminService extends Rest{
    * The path to the home http requests
    * 
    * @access private
-   * @var {string} __adminPath
+   * @var {string} __dmPath
    */
-  private __adminPath:string = "Admin/";
+  private __dmPath:string = "DirectMessages/";
 
 
   //
@@ -45,7 +39,7 @@ export class AdminService extends Rest{
     super(http, loading);
   }
 
-
+  
   //
   // ──────────────────────────────────────────────────────────────────────────────────
   //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
@@ -53,73 +47,70 @@ export class AdminService extends Rest{
   //
   
   /**
-   * Get the news
+   * Get the direct messages titles
    * 
    * @access public
-   * @param {string} message The message to publish
    * @returns {Observable} The result of the request
    */
-  public publishNew(message:string){
-    return this.postRequest({"message": message}, this.__adminPath+"LaunchNew");
+  public loadDMTitles(){
+    return this.getRequest(this.__dmPath+"LoadDMTitles", null);
   }
   
   /**
-   * Ban or unban an user
+   * Get the direct messages
    * 
    * @access public
-   * @param {BanUser} ban The order to ban
+   * @param {string} id The id of the conversation
    * @returns {Observable} The result of the request
    */
-  public banUser(ban:BanUser){
-    return this.postRequest(ban, this.__adminPath+"BanUser");
+  public loadDMMessages(id:string){
+    return this.getRequest(this.__dmPath+"LoadDMMessages", [{
+      param: "dmId",
+      value: id
+    }]);
   }
   
   /**
-   * Ban or unban a group
+   * Launch a direct message title
    * 
    * @access public
-   * @param {BanGroup} ban The order to ban
+   * @param {CreateDMTitle} order The order to launch the new DM title
    * @returns {Observable} The result of the request
    */
-  public banGroup(ban:BanGroup){
-    return this.postRequest(ban, this.__adminPath+"BanGroup");
+  public launchDMTitle(order:CreateDMTitle){
+    return this.postRequest(order, this.__dmPath+"CreateDMTitle");
   }
   
   /**
-   * Get all the users
+   * Launch a direct message
    * 
    * @access public
+   * @param {SendDMMessage} order The order to launch the new DM
    * @returns {Observable} The result of the request
    */
-  public getAllUsers(){
-    return this.getRequest(this.__adminPath+"GetAllUsers", null);
+  public launchDMMessage(order:SendDMMessage){
+    return this.postRequest(order, this.__dmPath+"SendDMMessage");
   }
-
+    
   /**
-   * Get the users with similar username or email
+   * Closes a DM Conversation
    * 
    * @access public
-   * @param {string} toFind The key word to find
+   * @param {string} id The id of the conversation
+   * @param {Boolean} openOrder True to open the conversation, false to close it
    * @returns {Observable} The result of the request
    */
-  public getUser(toFind:string){
-    return this.getRequest(this.__adminPath+"SearchUser", [{
-      param: "toFind",
-      value: toFind
-    }], true);
-  }
-
-  /**
-   * Get the users with similar username or email
-   * 
-   * @access public
-   * @param {string} toFind The key word to find
-   * @returns {Observable} The result of the request
-   */
-  public searchUserDM(toFind:string){
-    return this.getRequest(this.__adminPath+"SearchForDM", [{
-      param: "findTo",
-      value: toFind
-    }], true);
+  public openCloseConversation(id:string, openOrder:Boolean){
+    let open = openOrder ?  "1" : "0";
+    return this.getRequest(this.__dmPath+"CloseDM", [
+      {
+      param: "id",
+      value: id
+      },
+      {
+        param: "openOrder",
+        value: open
+      }
+    ]);
   }
 }

@@ -402,6 +402,41 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.DMCREATED:{
+        msg = [
+          "Conversación de mensajes directos creada, no olvide cerrarla al terminarla.",
+          "",""
+        ];
+        break;
+      }
+      case AlertInfoType.USERSUCCESFULLYBANNED:{
+        msg = [
+          "Cuenta de usuario bloqueada con exito.",
+          "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.USERSUCCESFULLYUNBANNED:{
+        msg = [
+          "Cuenta de usuario desbloqueada con exito.",
+          "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.GROUPSUCCESFULLYBANNED:{
+        msg = [
+          "Grupo bloqueado con exito.",
+          "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.GROUPSUCCESFULLYUNBANNED:{
+        msg = [
+          "Grupo desbloqueado con exito.",
+          "", ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

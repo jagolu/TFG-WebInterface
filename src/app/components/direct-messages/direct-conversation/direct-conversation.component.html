@@ -1,0 +1,52 @@
+<div class="card" *ngIf="clusters.length > 0" [ngClass]="{'closedConv': room.closed}">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-12"><h3>{{room.title}}</h3></div>
+      <div class="col-lg-9 col-12 mt-2"><h5>{{room.receiver}} <small *ngIf="room.emailReceiver!=null">({{room.emailReceiver}})</small></h5></div>
+      <div class="col-lg-3 col-12 mt-2" *ngIf="!room.closed && thisIsAdmin">
+        <button class="btn btn-outline-danger w-100" (click)="closeConversation()">Cerrar conversación</button>
+      </div>
+      <div class="col-lg-3 col-12 mt-2" *ngIf="room.closed && thisIsAdmin">
+        <button class="btn btn-danger w-100" (click)="openConversation()">Abrir conversación</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body overflow-auto" style="max-height: 550px" id="DMMessagesScroll" >
+          <div *ngFor="let cluster of clusters; let i = index" class="card w-75 mb-2"
+                [ngClass]="{
+                  'text-right float-right': cluster.isAdmin==thisIsAdmin,
+                  'text-left float-left': cluster.isAdmin!=thisIsAdmin}">
+              
+              <div class="card-body p-1"  [ngClass]="{'closedMsg': room.closed}">
+                <div class="card-text">
+                  <div class="row" *ngFor="let msg of cluster.messages">
+                    <div class="col-12">{{msg.message}}</div>
+                    <div class="col-12" [ngClass]="{'text-left float-right': cluster.isAdmin==thisIsAdmin,
+                                                    'text-right float-left': cluster.isAdmin!=thisIsAdmin}">
+                      <small style="font-size: 60%">
+                        {{msg.time | chatTime}}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+  </div>
+</div>
+<div class="card" *ngIf="clusters.length == 0">
+  <div class="row">
+    <div class="col-lg-9 col-12"><h4 class="text-center">No hay mensajes en esta conversación</h4></div>  
+    <div class="col-lg-3 col-12" *ngIf="thisIsAdmin">
+      <button class="btn btn-outline-danger w-100" (click)="closeConversation()">Cerrar conversación</button>
+    </div>
+  </div>
+</div>
+<form [formGroup]="sendDMMessageForm" class="mt-3" *ngIf="room!=null && !room.closed">
+  <div class="row justify-content-center mb-2">
+    <input type="text" class="col-lg-6 col-12 form-control" placeholder="Mensaje" formControlName="message">
+  </div>
+  <div class="row justify-content-center mb-5">
+      <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="sendMessage()" 
+        [disabled]="!sendDMMessageForm.valid">Enviar mensaje</button>
+  </div>
+</form >

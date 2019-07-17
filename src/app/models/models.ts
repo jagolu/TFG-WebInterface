@@ -41,5 +41,12 @@ export { ChatRoomInfo } from  './Chat/ChatRoomInfo';
 export { NewMessage } from  './News/NewMessage';
 export { SearchUserInfo } from  './Admin/SearchUserInfo';
 export { UserInGroupSearch } from  './Admin/SearchUserInfo';
+export { SearchUserDM } from  './Admin/SearchUserDM';
 export { BanUser } from  './Admin/BanUser';
 export { BanGroup } from  './Admin/BanGroup';
+export { DMTitle } from  './DirectMessages/DMTitle'
+export { CreateDMTitle } from  './DirectMessages/CreateDMTitle'
+export { DMMessage } from  './DirectMessages/DMMessage'
+export { SendDMMessage } from  './DirectMessages/SendDMMessage'
+export { DMRoom } from  './DirectMessages/DMRoom'
+export { DMMessageCluster } from  './DirectMessages/DMMessageCluster'
