@@ -8,7 +8,7 @@ import { AdminService } from 'src/app/services/restServices/admin.service';
 @Component({
   selector: 'app-all-conversations',
   templateUrl: './all-conversations.component.html',
-  styles: []
+  styles: [`.closedConv{background-color:#F2F2F2}`]
 })
 export class AllConversationsComponent  {
   public dmTitles:DMTitle[] = [];
