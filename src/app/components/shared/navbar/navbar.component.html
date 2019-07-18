@@ -3,7 +3,7 @@
     <img src="/assets/imgs/VirtualBet.png" width="30" height="30" class="d-inline-block align-top">
     VirtualBet
   </a>
-  <app-notifications-head [alwaysShow]=false *ngIf="width<992"></app-notifications-head>
+  <app-notifications-head [alwaysShow]=false *ngIf="width<992 && isAuthenticated()"></app-notifications-head>
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
         aria-expanded="false" aria-label="Toggle navigation" id="navHamburgerButton">
