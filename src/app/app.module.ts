@@ -95,7 +95,8 @@ import { SeeGroupMembersAdminComponent } from './components/shared/alert/see-gro
 import { CancelFootballBetComponent } from './components/shared/alert/cancel-football-bet/cancel-football-bet.component';
 import { AllConversationsComponent } from './components/direct-messages/all-conversations/all-conversations.component';
 import { DirectConversationComponent } from './components/direct-messages/direct-conversation/direct-conversation.component';
-import { NotificationsNavComponent } from './components/shared/navbar/notifications-nav/notifications-nav.component';
+import { NotificationsNavComponent } from './components/shared/navbar/Notifications/notifications-nav/notifications-nav.component';
+import { NotificationsHeadComponent } from './components/shared/navbar/Notifications/notifications-head/notifications-head.component';
 
 
 
@@ -152,6 +153,7 @@ import { NotificationsNavComponent } from './components/shared/navbar/notificati
     AllConversationsComponent,
     DirectConversationComponent,
     NotificationsNavComponent,
+    NotificationsHeadComponent,
   ],
   imports: [
     BrowserModule,
