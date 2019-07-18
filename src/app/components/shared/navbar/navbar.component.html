@@ -82,6 +82,9 @@
 
     <!-- UserButtons -->
     <ul class="navbar-nav" *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown mr-2">
+        <app-notifications-nav></app-notifications-nav>
+      </li>
       <li class="nav-item dropdown">
         <div  class="btn btn-outline-secondary w-100" 
               id="groupsDropdown" 

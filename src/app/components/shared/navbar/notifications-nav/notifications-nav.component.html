@@ -1,0 +1,18 @@
+<!-- <button class="btn mr-2"><app-icon [Icon]="icon_bell"></app-icon></button> -->
+<div  class="btn w-100" 
+      id="notificationsNavDropdown" 
+      role="button" 
+      data-toggle="dropdown" 
+      aria-haspopup="true" 
+      aria-expanded="false"
+      style="cursor:pointer">
+      <div class="badge badge-warning" *ngIf="notifications.length>0">{{notifications.length}}</div>
+      <app-icon [Icon]="icon_bell"></app-icon>
+</div>
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationsNavDropdown">
+  <div class="dropdown-item text-center" style="cursor:pointer" 
+            *ngFor="let not of notifications"
+            (click)="watchNotification(not)">{{not.message}}</div>
+  <div class="dropdown-item text-center" style="cursor:context-menu"
+        *ngIf="notifications.length==0">Sin notificationes</div>
+</div>
