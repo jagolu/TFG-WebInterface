@@ -3,6 +3,7 @@
     <img src="/assets/imgs/VirtualBet.png" width="30" height="30" class="d-inline-block align-top">
     VirtualBet
   </a>
+  <app-notifications-head [alwaysShow]=false *ngIf="width<992 && isAuthenticated()"></app-notifications-head>
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
         aria-expanded="false" aria-label="Toggle navigation" id="navHamburgerButton">
@@ -82,6 +83,9 @@
 
     <!-- UserButtons -->
     <ul class="navbar-nav" *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown mr-2">
+        <app-notifications-nav></app-notifications-nav>
+      </li>
       <li class="nav-item dropdown">
         <div  class="btn btn-outline-secondary w-100" 
               id="groupsDropdown" 

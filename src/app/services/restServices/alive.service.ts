@@ -65,4 +65,28 @@ export class AliveService extends Rest{
         value: groupName
     }], true);
   }
+  
+  /**
+   * Get the notifications of the user
+   * 
+   * @access public
+   * @returns {Observable} The result of the request
+   */
+  public getNotifications(){
+    return this.getRequest(this.__alivePath+"NotificationsLogin", null, true);
+  }
+  
+  /**
+   * Reads a notification
+   * 
+   * @access public
+   * @param {string} notId The id of the notification
+   * @returns {Observable} The result of the request
+   */
+  public readNotification(notId:string){
+    return this.getRequest(this.__alivePath+"WatchNotification", [{
+      param: "id",
+      value: notId
+    }], true);
+  }
 }
