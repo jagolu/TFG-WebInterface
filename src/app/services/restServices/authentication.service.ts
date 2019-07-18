@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { GroupInfoService } from '../userServices/group-info.service';
 import { UserInfoService } from '../userServices/user-info.service';
 import { ChatService } from '../userServices/Hub/chat.service';
+import { NotificationsService } from '../userServices/Hub/notifications.service';
 
 
 @Injectable({
@@ -56,9 +57,10 @@ export class AuthenticationService extends Rest {
    * @param {GroupInfoService} _groupInfoS To reset the service info on logout
    * @param {UserInfoService} _userInfoS To reset the service info on logout
    * @param {ChatService} _chatS To reset the service info on logout
+   * @param {NotificationsService} _notS To reset the service info on logout
    */
   constructor(_http:HttpClient,  _loading:LoadingService, private _authS:AuthService, private _sessionS:SessionService, private _router:Router, 
-              private _groupInfoS:GroupInfoService, private _userInfoS:UserInfoService, private _chatS:ChatService){
+              private _groupInfoS:GroupInfoService, private _userInfoS:UserInfoService, private _chatS:ChatService, private _notS:NotificationsService){
     super(_http, _loading);
   }
 
@@ -101,6 +103,7 @@ export class AuthenticationService extends Rest {
     this._userInfoS.removeInfo();
     this._router.navigate(['']);
     this._chatS.reset();
+    this._notS.reset();
   }
 
   /**
