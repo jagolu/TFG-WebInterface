@@ -2,10 +2,10 @@
       <div class="col-xl-6 mx-auto ">
             <div class="card">
                   <div class="card-body">
-                        <h6 class="card-title text-center">Sign up</h6>
+                        <h6 class="card-title text-center">Registro</h6>
                         <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
                               <div class="form-group">
-                                    <label>Email address</label>
+                                    <label>Correo electrónico</label>
                                     <input type="email" 
                                           class="form-control" 
                                           placeholder="Enter email"
@@ -17,15 +17,15 @@
                                           *ngIf="signUpForm.controls['email'].errors && 
                                                 !signUpForm.controls['email'].pristine && 
                                                 signUpForm.controls['email'].errors.required"
-                                    >The email is required</small>
+                                    >Campo obligatorio</small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['email'].errors && 
                                           !signUpForm.controls['email'].pristine && 
                                           signUpForm.controls['email'].errors.email"
-                                    >This is not supported email</small>
+                                    >Email no valido</small>
                               </div>
                               <div class="form-group">
-                                    <label>Username</label>
+                                    <label>Nombre de usuario</label>
                                     <input type="text" 
                                           class="form-control" 
                                           placeholder="Enter your username"
@@ -37,20 +37,20 @@
                                           *ngIf="signUpForm.controls['username'].errors && 
                                                 !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.required"
-                                    >The username is required</small>
+                                    >Campo obligatorio</small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['username'].errors && 
                                                 !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.minlength"
-                                    >The username need to have at least 4 characters</small>
+                                    >Mínimo de 4 caracteres.</small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['username'].errors && 
                                                 !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.maxlength"
-                                    >The username need to have less than 20 characters</small>
+                                    >Máximo de 20 caracteres.</small>
                               </div>
                               <div class="form-group">
-                                    <label>Password 
+                                    <label>Contraseña 
                                           <app-icon [Icon]="icon_eye" (click)="watchPassword()"></app-icon>
                                     </label>
                                     <input type="{{passwordType}}" 
@@ -73,25 +73,25 @@
                                           *ngIf="signUpForm.controls['password'].errors && 
                                                 !signUpForm.controls['password'].pristine && 
                                                 signUpForm.controls['password'].errors.minlength"
-                                    >The password need to have at least 8 characters<br></small>
+                                    >Mínimo 8 caracteres<br></small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['password'].errors && 
                                                 !signUpForm.controls['password'].pristine && 
                                                 signUpForm.controls['password'].errors.maxlength"
-                                    ><br>The password need to have less than 50 characters<br></small>
+                                    ><br>Máximo de 50 caracteres<br></small>
                                     <small class="text-danger"
                                           *ngIf="signUpForm.controls['password'].errors && 
                                                 !signUpForm.controls['password'].pristine && 
                                                 signUpForm.controls['password'].errors.pattern"
-                                    >The password must have lowercase, uppercase and a special character<br></small>
+                                    >La contraseña debe tener al menos una mayuscula, una minuscula y un número<br></small>
                                     <small class="text-danger"
                                           *ngIf=" !signUpForm.controls['password'].pristine && 
                                                 !passwordsAreEqual"
-                                    >Boths passwords must be equal</small>
+                                    >Las contraseñas no coinciden</small>
                               </div>
                               <div class="row justify-content-center mt-4">
                                     <div class="col-12">
-                                          <button type="submit" class="btn btn-outline-dark w-100" [disabled]="!signUpForm.valid || !passwordsAreEqual">SignUp</button>
+                                          <button type="submit" class="btn btn-outline-dark w-100" [disabled]="!signUpForm.valid || !passwordsAreEqual">Registrarse</button>
                                     </div> 
                               </div>
                         </form>
