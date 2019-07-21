@@ -80,7 +80,7 @@ export class InfoAlertComponent {
    * @param {AlertInfoType} type The type of the alert-info 
    */
   private getText(type:AlertInfoType){
-    let msg;
+    let msg:string[];
 
     switch(type){
       case AlertInfoType.LOSTCONNECTIONERROR:{

@@ -162,7 +162,7 @@ export class AlertService {
    * the info alert to show the correct message
    */
   public openAlertInfo(AlertType:AlertInfoType){
-    this.setTitle("Attention!");
+    this.setTitle("Atención!");
     this.changeAlertMode(AlertMode.ALERTINFO);
     this.infoAlertType.next(AlertType);
     this.openAlert();
