@@ -16,7 +16,6 @@ import { NotificationsService } from '../userServices/Hub/notifications.service'
 @Injectable({
   providedIn: 'root'
 })
-
 /**
  * Service to do the authentication requests
  * 

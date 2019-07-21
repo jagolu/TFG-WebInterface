@@ -5,6 +5,12 @@ import { GroupPage } from 'src/app/models/models';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service to view the group info in all the components
+ * like an observable
+ * 
+ * @class
+ */
 export class GroupInfoService {
 
   //

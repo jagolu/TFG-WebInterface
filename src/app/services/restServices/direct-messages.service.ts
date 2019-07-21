@@ -7,6 +7,12 @@ import { CreateDMTitle, SendDMMessage } from 'src/app/models/models';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service to manage the direct messages request
+ * 
+ * @class
+ * @extends Rest
+ */
 export class DirectMessagesService extends Rest{
 
   //
