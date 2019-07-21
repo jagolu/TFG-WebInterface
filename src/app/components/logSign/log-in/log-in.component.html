@@ -2,10 +2,10 @@
       <div class="col-xl-6 mx-auto ">
             <div class="card">
                   <div class="card-body">
-                        <h6 class="card-title text-center">Log In</h6>
+                        <h6 class="card-title text-center">Iniciar sesión</h6>
                         <form [formGroup]="logInForm" (ngSubmit)="logIn()">
                               <div class="form-group">
-                                    <label>Email address</label>
+                                    <label>Correo electrónico</label>
                                     <input type="email" 
                                           class="form-control" 
                                           placeholder="Enter email"
@@ -17,15 +17,15 @@
                                           *ngIf="logInForm.controls['email'].errors && 
                                                 !logInForm.controls['email'].pristine && 
                                                 logInForm.controls['email'].errors.required"
-                                    >The email is required</small>
+                                    >Campo obligatorio</small>
                                     <small class="text-danger"
                                           *ngIf="logInForm.controls['email'].errors && 
                                           !logInForm.controls['email'].pristine && 
                                           logInForm.controls['email'].errors.email"
-                                    >This is not supported email</small>
+                                    >Email no valido</small>
                               </div>
                               <div class="form-group">
-                                    <label>Password 
+                                    <label>Contraseña 
                                           <app-icon [Icon]="eye_icon"
                                                     (click)="watchPassword()">
                                           </app-icon>
@@ -41,21 +41,21 @@
                                           *ngIf="logInForm.controls['password'].errors && 
                                                 !logInForm.controls['password'].pristine && 
                                                 logInForm.controls['password'].errors.minlength"
-                                    >The password need to have at least 8 characters<br></small>
+                                    >Mínimo 8 caracteres<br></small>
                                     <small class="text-danger"
                                           *ngIf="logInForm.controls['password'].errors && 
                                                 !logInForm.controls['password'].pristine && 
                                                 logInForm.controls['password'].errors.maxlength"
-                                    ><br>The password need to have less than 50 characters<br></small>
+                                    ><br>Máximo de 50 caracteres<br></small>
                                     <small class="text-danger"
                                           *ngIf="logInForm.controls['password'].errors && 
                                                 !logInForm.controls['password'].pristine && 
                                                 logInForm.controls['password'].errors.pattern"
-                                    >The password must have lowercase, uppercase and a special character<br></small>
+                                    >La contraseña debe tener al menos una mayuscula, una minuscula y un número<br></small>
                               </div>
                               <div class="row justify-content-center mt-4">
                                     <div class="col-12">
-                                          <button type="submit" class="btn btn-outline-dark w-100" [disabled]="!logInForm.valid">LogIn</button>
+                                          <button type="submit" class="btn btn-outline-dark w-100" [disabled]="!logInForm.valid">Iniciar sesión</button>
                                     </div> 
                               </div>
                         </form>
@@ -63,7 +63,7 @@
                         <app-social-button></app-social-button>
                         <hr>
                         <p class="text-center">
-                              <a [routerLink]="['/rememberPassword']" >Did you forget your password?</a>                        
+                              <a [routerLink]="['/rememberPassword']" >¿Has olvidado la contraseña?</a>                        
                         </p>
                   </div>
             </div>
