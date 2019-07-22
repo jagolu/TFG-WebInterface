@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FacebookLoginProvider, GoogleLoginProvider, AuthService } from 'angularx-social-login';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
-import { ActivatedRoute } from '@angular/router';
 import { AlertInfoType, SocialType } from 'src/app/models/models';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
 
@@ -26,11 +25,12 @@ export class SocialButtonComponent{
   //
   
   /**
-   * To know if we are in the signUp or LogIn Form
+   * To know if is a button to signup or login
    * 
-   * @var {string} path
+   * @access public
+   * @var {Boolean} log
    */
-  private path:string;
+  @Input() log:Boolean = false;
 
 
   //
@@ -44,12 +44,9 @@ export class SocialButtonComponent{
    * @param {AlertService} _alert To launch the social password alert if it is necessary
    * @param {AuthenticationService} _authenticationS To do the request to set the password 
    * @param {AuthService} _authS To do the request to Google or Facebook
-   * @param {ActivatedRoute} aR To know if we are in the LogIn or SignUp Form
    */
-  constructor(private _alert:AlertService, private aR:ActivatedRoute,
-        private _authS:AuthService, private _authenticationS:AuthenticationService) { 
-    this.path = this.aR.snapshot.url[0].path;
-  }
+  constructor(private _alert:AlertService,
+        private _authS:AuthService, private _authenticationS:AuthenticationService) { }
 
 
   //
@@ -68,7 +65,7 @@ export class SocialButtonComponent{
     let providerId = type == SocialType.FACEBOOK ?
       FacebookLoginProvider.PROVIDER_ID : GoogleLoginProvider.PROVIDER_ID;
       
-    if(this.path == "signUp"){
+    if(!this.log){
       this._alert.socialPasswordForm(providerId);
     }
     else{
