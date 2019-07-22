@@ -11,29 +11,94 @@ import { AdminService } from 'src/app/services/restServices/admin.service';
   templateUrl: './home.component.html',
   styleUrls: []
 })
-export class HomeComponent{
+export class HomeComponent {
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * The News to show
+   * 
+   * @access public
+   * @var {NewMessage[]} news
+   */
   public news: NewMessage[] = [];
+
+  /**
+   * The form to launch a New
+   * 
+   * @access public
+   * @var {FormGroup} publishNewForm
+   */
   public publishNewForm :FormGroup;
 
-  constructor(private homeS:HomeService, private authS:AuthenticationService, 
-              private sessionS:SessionService, private adminS: AdminService) {
-    let isAuth = this.authS.IsAuthenticated();
-    let isAdmin = this.sessionS.isAdmin();
-    this.homeS.getNews(isAuth && !isAdmin).subscribe((news:any)=> this.news = news);
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * @constructor
+   * @param {HomeService} __homeS To get the news
+   * @param {AuthenticationService} __authS To know if the user is authenticated
+   * @param {AdminService} __sessionS To know if the user is an admin
+   * @param {SessionService} __adminS To launch news
+   */
+  constructor(private __homeS:HomeService, private __authS:AuthenticationService, 
+              private __sessionS:SessionService, private __adminS: AdminService) {
+    let isAuth = this.__authS.IsAuthenticated();
+    let isAdmin = this.__sessionS.isAdmin();
+    this.__homeS.getNews(isAuth && !isAdmin).subscribe((news:any)=> this.news = news);
     this.initializeForm();
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Launchs a new New
+   * 
+   * @access public
+   */
   public launchNew(){
     let message = this.publishNewForm.controls["message"].value;
-    this.adminS.publishNew(message).subscribe((news:any)=>this.news = news);
+    this.__adminS.publishNew(message).subscribe((news:any)=>this.news = news);
     this.resetForm();
   }
 
-  public isAdmin(){
-    return this.sessionS.isAdmin();
+  /**
+   * Says if the actual user has
+   * the admin role or not
+   * 
+   * @access public
+   * @returns {Boolean} True if 
+   * the actual user is an admin, false
+   * otherwise
+   */
+  public isAdmin(): Boolean{
+    return this.__sessionS.isAdmin();
   }
 
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Initializes the form
+   * 
+   * @access private
+   */
   private initializeForm(){
     this.publishNewForm = new FormGroup({
       "message": new FormControl(
@@ -47,9 +112,12 @@ export class HomeComponent{
     });
   }
 
+  /**
+   * Resets the form
+   * 
+   * @access private
+   */
   private resetForm(){
-    this.publishNewForm.reset({
-      "message": ""
-    })
+    this.publishNewForm.reset({"message": ""});
   }
 }

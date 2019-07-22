@@ -6,7 +6,7 @@
                     formControlName="message" placeholder="Nueva noticia">
             </div>
             <div class="col-lg-2 col-12">
-                <button class="btn btn-outline-dark w-100">Publicar</button>
+                <button class="btn btn-outline-dark w-100" [disabled]="!publishNewForm.valid">Publicar</button>
             </div>
         </div>
     </form>
