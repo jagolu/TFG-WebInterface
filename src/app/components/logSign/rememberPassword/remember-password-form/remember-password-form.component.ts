@@ -69,10 +69,8 @@ export class RememberPasswordFormComponent{
    */
   public rememberPassword(){
     let email = this.rememberPasswordForm.controls["email" ].value;
+    this.rememberPasswordForm.reset({"email": ""});
     this._authS.rememberPassword(email);
-    this.rememberPasswordForm.reset({
-      "email": ""
-    });
   }
 
 }
