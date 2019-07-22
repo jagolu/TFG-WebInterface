@@ -65,7 +65,6 @@ export class DeleteGroupAlertComponent{
    * @access public
    */
   public deleteGroup(){
-    // this._alertS.hideAlert();
     this._alertS.hideAlert();
     
     //Bootstrap modal close on form submit. So, I have to
