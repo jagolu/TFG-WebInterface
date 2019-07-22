@@ -185,8 +185,6 @@ export class AlertService {
    * alert with or without the form
    * 
    * @access public
-   * @param {boolean} needPass Filter to show the
-   * form or not. 
    * @param {string} email The email of the account
    * to delete
    */
