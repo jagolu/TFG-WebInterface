@@ -1,8 +1,8 @@
 <div class="card mt-5" >
-  <div class="row no-gutters" *ngIf="_user">
+  <div class="row no-gutters" *ngIf="user">
     <div class="col-md-4">
-      <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="_user.image==null">
-      <img [src]="_user.image | base64Image" class="card-img p-1" *ngIf="_user.image!=null">
+      <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="user.image==null">
+      <img [src]="user.image | base64Image" class="card-img p-1" *ngIf="user.image!=null">
     </div>
     <div class="col-md-8">
       <div class="card-body">
