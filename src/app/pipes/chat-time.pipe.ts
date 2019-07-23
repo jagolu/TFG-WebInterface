@@ -21,7 +21,7 @@ export class ChatTimePipe implements PipeTransform {
       //Get the hours from the string
       let startIndex = fullDate.lastIndexOf("T")+1;
       let hours = fullDate.substring(startIndex, startIndex+2);
-      let min = fullDate.substring(startIndex, startIndex+2);
+      let min = fullDate.substring(startIndex+3, startIndex+5);
 
       return `${date} - ${hours}:${min}`;
     }catch(Error){return "";}
