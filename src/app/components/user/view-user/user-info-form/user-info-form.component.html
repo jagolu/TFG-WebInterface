@@ -5,18 +5,20 @@
     
     
     <!-- Nickname user form -->
-    <hr class="b-4">
+    <hr class="b-4" *ngIf="!isAdmin()">
     <form
         [formGroup]="nicknameForm" 
-        (ngSubmit)="changeNickname()">
+        (ngSubmit)="changeNickname()" *ngIf="!isAdmin()">
         <div class="form-group row">
             <label class="col-lg-4 col-form-label">Nombre de usuario</label>
+            <div class="col-lg-8">
                 <input type="text"
-                    class="form-control text-center col-lg-8"
+                    class="form-control text-center"
                     placeholder="Tu nuevo nombre de usuario"
                     formControlName="nickname"
                     [readonly]="isAdmin()"
                     [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && nicknameForm.controls['nickname'].errors}">
+                </div>
 
         </div>
         
@@ -112,10 +114,10 @@
 
 
     <!-- Profile img form -->
-    <hr class="b-4">
+    <hr class="b-4" *ngIf="!isAdmin()">
     <form class="custom-file"
         [formGroup]="imageForm" 
-        (ngSubmit)="changeImg()">
+        (ngSubmit)="changeImg()" *ngIf="!isAdmin()">
 
         <input type="file" 
             class="custom-file"
@@ -134,8 +136,8 @@
     </form>
 
     <!-- Delete account -->
-    <hr class="b-4">
-    <button class="btn btn-outline-danger w-100" (click)="openAlert()" [disabled]="isAdmin()">
+    <hr class="b-4" *ngIf="!isAdmin()">
+    <button class="btn btn-outline-danger w-100" (click)="openAlert()" [disabled]="isAdmin()" *ngIf="!isAdmin()">
         Eliminar cuenta
     </button>
     
