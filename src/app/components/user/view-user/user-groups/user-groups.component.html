@@ -3,15 +3,16 @@
     [attr.aria-labelledby]="labelled"
     data-parent="#UserInfo">
 
-    <div *ngFor="let group of groups" 
-        class="card mb-3 w-100">
-        <div class="card-header" 
-            style="cursor:pointer"
-            [routerLink]="['/group', group]"> 
-            <h4 class="text-center">{{group}}
-                <app-icon [Icon]="icon_ball"></app-icon>
-            </h4>
+    <div class="overflow-auto" style="max-height: 235px">
+        <div *ngFor="let group of groups" 
+            class="card mb-3 w-100">
+            <div class="card-header" 
+                style="cursor:pointer"
+                [routerLink]="['/group', group]"> 
+                <h4 class="text-center">{{group}}
+                    <app-icon [Icon]="icon_ball"></app-icon>
+                </h4>
+            </div>
         </div>
     </div>
-
 </div>
