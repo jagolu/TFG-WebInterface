@@ -8,7 +8,7 @@
                                     <label>Correo electrónico</label>
                                     <input type="email" 
                                           class="form-control" 
-                                          placeholder="Enter email"
+                                          placeholder="Tu correo electrónico"
                                           formControlName="email"
                                           autocomplete=on
                                           [ngClass]="{'is-invalid': !logInForm.controls['email'].pristine && 
@@ -32,7 +32,7 @@
                                     </label>
                                     <input type="{{passwordType}}" 
                                           class="form-control mb-2" 
-                                          placeholder="Password"
+                                          placeholder="Tu contraseña"
                                           formControlName="password"
                                           autocomplete=off
                                           [ngClass]="{'is-invalid': !logInForm.controls['password'].pristine && 
