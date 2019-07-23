@@ -13,19 +13,119 @@ import { IconModel, Icons } from 'src/app/models/models';
 })
 export class SignUpComponent{
 
-  signUpForm: FormGroup;
-  passwordType: string;
-  passwordsAreEqual: boolean;
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
 
+  /**
+   * The form to sign up
+   * 
+   * @access public
+   * @var {FormGroup} signUpForm
+   */
+  public signUpForm: FormGroup;
+
+  /**
+   * The type of password inputs
+   * 
+   * @access public
+   * @var {string} passwordType
+   */
+  public passwordType: string;
+
+  /**
+   * Says if both password are equal or not
+   * 
+   * @access public
+   * @var {Boolean} passwordsAreEqual
+   */
+  public passwordsAreEqual: Boolean;
+
+  /**
+   * An icon of an eye
+   * 
+   * @access public
+   * @var {IconModel}
+   */
   public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
 
-  constructor(private _authentication:AuthenticationService) {
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {AuthenticationService} __authenticationS To do the
+   * sign up request 
+   */
+  constructor(private __authenticationS:AuthenticationService) {
     this.passwordType = "password"
     this.passwordsAreEqual = false;
 
     this.initializeForm();
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Do the request to sign up the user
+   * 
+   * @access public
+   */
+  public signUp(){ 
+    this.__authenticationS.signUp({
+      'email' : this.signUpForm.controls['email'].value,
+      'username': this.signUpForm.controls['username'].value,
+      'password': this.signUpForm.controls['password'].value
+    }).subscribe(
+      _=> this.resetForm(true),
+      _=> this.resetForm(false)
+    );
+  }
+
+  /**
+   * Checks if both passwords are equal and save
+   * the result in the passwordAreEqual var
+   * 
+   * @access public
+   */
+  public equalPassword(){
+    let password = this.signUpForm.controls['password'].value;
+    let repeatPassword = this.signUpForm.controls['repeatPassword'].value;
+    this.passwordsAreEqual = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
+  }
+
+  /**
+   * Change the type of the password input
+   * 
+   * @access public
+   */
+  public watchPassword(){
+    this.passwordType = this.passwordType == "password" ? "text" : "password";
+  }
+  
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Initializes the form
+   * 
+   * @access private
+   */
   private initializeForm(){
     this.signUpForm = new FormGroup({
       'email': new FormControl(
@@ -64,33 +164,20 @@ export class SignUpComponent{
     })
   }
 
-  public signUp(){ 
-    this._authentication.signUp({
-      'email' : this.signUpForm.controls['email'].value,
-      'username': this.signUpForm.controls['username'].value,
-      'password': this.signUpForm.controls['password'].value
-    }).subscribe(
-      _=> this.resetForm(true),
-      _=> this.resetForm(false)
-    );
-  }
-
-  private resetForm(full:boolean){
+  /**
+   * Resets the form
+   * 
+   * @param {Boolean} full True to also resets the
+   * email and username, false to don't reset them
+   * 
+   * @access private
+   */
+  private resetForm(full:Boolean){
     this.signUpForm.reset({
       'email': full ? "": this.signUpForm.controls['email'].value,
       'username': full ? "": this.signUpForm.controls['username'].value,
       'password': '',
       'repeatPassword': ''
     })
-  }
-
-  public equalPassword(){
-    let password = this.signUpForm.controls['password'].value;
-    let repeatPassword = this.signUpForm.controls['repeatPassword'].value;
-    this.passwordsAreEqual = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
-  }
-
-  public watchPassword(){
-    this.passwordType = this.passwordType == "password" ? "text" : "password";
   }
 }

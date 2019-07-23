@@ -8,7 +8,7 @@
                                     <label>Correo electrónico</label>
                                     <input type="email" 
                                           class="form-control" 
-                                          placeholder="Enter email"
+                                          placeholder="Tu correo electrónico"
                                           formControlName="email"
                                           autocomplete=on
                                           [ngClass]="{'is-invalid': !signUpForm.controls['email'].pristine && 
@@ -28,7 +28,7 @@
                                     <label>Nombre de usuario</label>
                                     <input type="text" 
                                           class="form-control" 
-                                          placeholder="Enter your username"
+                                          placeholder="Tu nombre de usuario"
                                           formControlName="username"
                                           autocomplete=on
                                           [ngClass]="{'is-invalid': !signUpForm.controls['username'].pristine && 
@@ -56,7 +56,7 @@
                                     <input type="{{passwordType}}" 
                                           (keyup)="equalPassword()"
                                           class="form-control mb-2" 
-                                          placeholder="Password"
+                                          placeholder="Tu contraseña"
                                           formControlName="password"
                                           autocomplete=off
                                           [ngClass]="{'is-invalid': !signUpForm.controls['password'].pristine && 
@@ -64,7 +64,7 @@
                                     <input type="{{passwordType}}" 
                                           (keyup)="equalPassword()"
                                           class="form-control" 
-                                          placeholder="Repeat password"
+                                          placeholder="Repite la contraseña"
                                           formControlName="repeatPassword"
                                           autocomplete=off
                                           [ngClass]="{'is-invalid': !signUpForm.controls['password'].pristine && 
