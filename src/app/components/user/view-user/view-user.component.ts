@@ -49,6 +49,15 @@ export class ViewUserComponent implements OnInit{
    */
   public joinTime:string;
 
+  /**
+   * Says if the actual is joined in any
+   * group
+   * 
+   * @access public
+   * @var {Boolean} hasGroups
+   */
+  public hasGroups:Boolean = false;
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -79,8 +88,14 @@ export class ViewUserComponent implements OnInit{
    */
   ngOnInit(){
     this.__sessionS.User.subscribe(u=>{
-      try{this.username = u.username}
-      catch(Exception){this.username = ""}
+      try{
+        this.username = u.username;
+        this.hasGroups = u.groups.length > 0;
+      }
+      catch(Exception){
+        this.username = "";
+        this.hasGroups = false;
+      }
     });
 
     this.__userInfoS.info.subscribe(info => this.user = info);

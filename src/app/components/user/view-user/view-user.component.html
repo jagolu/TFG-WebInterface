@@ -15,7 +15,7 @@
         <hr>
 
         <div class="row " id="UserInfo">
-          <div [ngClass]="{'col-12': isAdmin(), 'col-6': !isAdmin()}">
+          <div [ngClass]="{'col-12': isAdmin() || !hasGroups, 'col-6': !isAdmin() && hasGroups}">
             <span class="btn btn-outline-secondary w-100"
                   id="headingTwo"
                   data-toggle="collapse"
@@ -24,7 +24,7 @@
                   aria-controls="collapseTwo"
             >Opciones</span>
           </div>
-          <div class="col-6" *ngIf="!isAdmin()">
+          <div class="col-6" *ngIf="!isAdmin() && hasGroups">
             <span class="btn btn-outline-secondary w-100"
                   id="headingOne" 
                   data-toggle="collapse" 
@@ -41,7 +41,7 @@
             <app-user-groups 
                 [id]="'collapseOne'"
                 [labelled]="'headingOne'"
-                *ngIf="!isAdmin()">
+                *ngIf="!isAdmin() && hasGroups">
             </app-user-groups>
           </div>
         </div>
