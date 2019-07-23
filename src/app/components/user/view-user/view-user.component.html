@@ -1,10 +1,10 @@
 <div class="card mt-5" >
   <div class="row no-gutters" *ngIf="user">
-    <div class="col-md-4">
+    <div class="col-lg-4">
       <img [src]="'assets/imgs/defaultUser.png'" class="card-img p-1" *ngIf="user.image==null">
       <img [src]="user.image | base64Image" class="card-img p-1" *ngIf="user.image!=null">
     </div>
-    <div class="col-md-8">
+    <div class="col-lg-8">
       <div class="card-body">
         <div class="row">
           <div class="col-8"><h4 class="card-title">{{username}}</h4></div>
