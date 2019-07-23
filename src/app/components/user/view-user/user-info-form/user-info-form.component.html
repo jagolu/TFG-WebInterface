@@ -123,7 +123,7 @@
             class="custom-file"
             formControlName="userImage"
             (change)="loadFile($event)"
-            value="Select a file"
+            value="Selecciona una imagen"
             id="newUserFileInput">
 
         <label class="custom-file-label" for="newUserFileInput">Selecciona una nueva foto de perfil</label>
@@ -137,7 +137,7 @@
 
     <!-- Delete account -->
     <hr class="b-4" *ngIf="!isAdmin()">
-    <button class="btn btn-outline-danger w-100" (click)="openAlert()" [disabled]="isAdmin()" *ngIf="!isAdmin()">
+    <button class="btn btn-danger w-100" (click)="openAlert()" [disabled]="isAdmin()" *ngIf="!isAdmin()">
         Eliminar cuenta
     </button>
     
