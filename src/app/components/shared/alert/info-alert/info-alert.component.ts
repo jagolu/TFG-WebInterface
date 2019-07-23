@@ -437,6 +437,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.DELETEREQUEST:{
+        msg = [
+          "Hace poco nos pediste eliminar la cuenta.",
+          "Como aun no se han borrado los datos completamente, puedes iniciar sesión con normalidad.", 
+          "Al hacerlo cancelaremos el proceso de eliminación de cuenta."
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
