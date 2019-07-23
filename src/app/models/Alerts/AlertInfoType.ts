@@ -261,5 +261,12 @@ export enum AlertInfoType{
      * @summary Success message when an admin UNbans 
      * a group
      */
-    GROUPSUCCESFULLYUNBANNED = "GROUPSUCCESFULLYUNBANNED"
+    GROUPSUCCESFULLYUNBANNED = "GROUPSUCCESFULLYUNBANNED",
+
+    /**
+     * @summary Info message when a user tries to sign up
+     * but he is already "register" but he had ask for
+     * a account delete
+     */
+    DELETEREQUEST = "DELETEREQUEST"
   }
