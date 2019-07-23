@@ -11,7 +11,7 @@
           <div class="col-4 text-right" *ngIf="isAdmin()"><h5>ADMIN</h5></div>
         </div>
         <p class="card-text">{{email}}</p>
-        <small class="text-muted">Since {{joinTime | onlyDatePipe}} </small>
+        <small class="text-muted">Desde {{joinTime | onlyDatePipe}} </small>
         <hr>
 
         <div class="row " id="UserInfo">
@@ -22,7 +22,7 @@
                   data-target="#collapseTwo"
                   aria-expanded="true"
                   aria-controls="collapseTwo"
-            >Info</span>
+            >Opciones</span>
           </div>
           <div class="col-6" *ngIf="!isAdmin()">
             <span class="btn btn-outline-secondary w-100"
@@ -31,7 +31,7 @@
                   data-target="#collapseOne" 
                   aria-expanded="false" 
                   aria-controls="collapseOne"
-            >Groups</span>
+            >Grupos</span>
           </div>
           <div class="col-12 pt-4">
             <app-user-info-form
