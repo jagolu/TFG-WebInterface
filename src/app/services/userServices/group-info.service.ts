@@ -23,9 +23,9 @@ export class GroupInfoService {
    * The behaviour of the group info
    * 
    * @access private
-   * @var {BehaviorSubject<UserInfo>} information
+   * @var {BehaviorSubject<UserInfo>} __information
    */
-  private information = new BehaviorSubject<GroupPage>(null);
+  private __information = new BehaviorSubject<GroupPage>(null);
 
   /**
    * The info at which the other components will subscribe at
@@ -33,7 +33,7 @@ export class GroupInfoService {
    * @access public
    * @var {Observable} info
    */
-  public info = this.information.asObservable();
+  public info = this.__information.asObservable();
 
 
   //
@@ -61,7 +61,7 @@ export class GroupInfoService {
    */
   public updateInfo(info:GroupPage){
     //Update the group page info which is at info var
-    this.information.next(info);
+    this.__information.next(info);
   }
 
   /**
@@ -70,7 +70,7 @@ export class GroupInfoService {
    * @access public
    */
   public removeInfo(){
-    this.information.next({
+    this.__information.next({
       "actualCapacity": 0,
       "myBets":[],
       "manageBets":[],

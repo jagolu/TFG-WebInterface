@@ -20,41 +20,41 @@ export class LoadingService{
    * Var to save the HTML associated to the icon tag
    * 
    * @access private
-   * @var {HTMLElement} loading
+   * @var {HTMLElement} __loading
    */
-  private loading:HTMLElement;
+  private __loading:HTMLElement;
 
   /**
    * Var to save the HTML associated to the navbar tag
    * 
    * @access private
-   * @var {HTMLElement} navbar
+   * @var {HTMLElement} __navbar
    */
-  private navbar:HTMLElement;
+  private __navbar:HTMLElement;
 
   /**
    * Var to save the the HTML associated to the router-outlet tag
    * 
    * @access private
-   * @var {HTMLElement} outlet
+   * @var {HTMLElement} __outlet
    */
-  private outlet:HTMLElement;
+  private __outlet:HTMLElement;
 
   /**
    * Var to save the the HTML associated to the chat tag
    * 
    * @access private
-   * @var {HTMLElement} chat
+   * @var {HTMLElement} __chat
    */
-  private chat:HTMLElement;
+  private __chat:HTMLElement;
 
   /**
    * Var to save if loading animation is visible or not
    * 
    * @access private
-   * @var {boolean} isLoading
+   * @var {boolean} __isLoading
    */
-  private isLoading:boolean;
+  private __isLoading:boolean;
 
 
   //
@@ -67,7 +67,7 @@ export class LoadingService{
    * @constructor
    */
   constructor() { 
-    this.isLoading = false;
+    this.__isLoading = false;
   }
 
 
@@ -83,13 +83,13 @@ export class LoadingService{
    * @access public
    */
   public startLoading(){
-    if(this.isLoading) return;
-    this.loading = (document.querySelector("#loading") as HTMLElement);
-    this.navbar = (document.querySelector("#navbarId") as HTMLElement);
-    this.chat = (document.querySelector("#mainChatWindowId") as HTMLElement);
-    this.outlet = (document.querySelector(".main") as HTMLElement);
+    if(this.__isLoading) return;
+    this.__loading = (document.querySelector("#loading") as HTMLElement);
+    this.__navbar = (document.querySelector("#navbarId") as HTMLElement);
+    this.__chat = (document.querySelector("#mainChatWindowId") as HTMLElement);
+    this.__outlet = (document.querySelector(".main") as HTMLElement);
     this.resize(true);
-    this.isLoading = true;
+    this.__isLoading = true;
   }
 
   /**
@@ -98,9 +98,9 @@ export class LoadingService{
    * @access public
    */
   public stopLoading(){
-    if(!this.isLoading) return;
+    if(!this.__isLoading) return;
     this.resize(false);
-    this.isLoading = false;
+    this.__isLoading = false;
   }
   
 
@@ -117,10 +117,10 @@ export class LoadingService{
    * @param {boolean} hide True to hide the elements, false to show them 
    */
   private resize(hide:boolean){
-    this.navbar.style.display = hide ? "none" : "flex";
-    this.outlet.style.display = hide ? "none" : "block";
-    this.chat.style.display = hide ? "none" : "block";
-    this.loading.style.display = hide ? "block" : "none";
-    this.loading.style.marginTop = hide ? "17%" : "0"; 
+    this.__navbar.style.display = hide ? "none" : "flex";
+    this.__outlet.style.display = hide ? "none" : "block";
+    this.__chat.style.display = hide ? "none" : "block";
+    this.__loading.style.display = hide ? "block" : "none";
+    this.__loading.style.marginTop = hide ? "17%" : "0"; 
   }
 }

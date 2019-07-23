@@ -29,9 +29,9 @@ export class GroupService extends Rest{
    * 
    * @access private
    * @readonly
-   * @var {string} _groupPath
+   * @var {string} __groupPath
    */
-  private readonly _groupPath : string = "Group/";
+  private readonly __groupPath : string = "Group/";
 
 
   //
@@ -44,10 +44,11 @@ export class GroupService extends Rest{
    * @constructor
    * @param {HttpClient} http For RestService constructor 
    * @param {LoadingService} loading For RestService constructor 
-   * @param {SessionService} sessionS To get the user groups
+   * @param {SessionService} __sessionS To get the user groups
+   * @param {GroupInfoService} __groupInfoS To get the saved info of the group
    */
   constructor(http: HttpClient, loading: LoadingService, 
-              private sessionS:SessionService, private groupInfoS:GroupInfoService) { 
+              private __sessionS:SessionService, private __groupInfoS:GroupInfoService) { 
     super(http, loading);
   }
 
@@ -66,7 +67,7 @@ export class GroupService extends Rest{
    * @return {Observable} The result of the request
    */
   public createGroup(group:string){
-    return this.getRequest(this._groupPath+"CreateGroup",[{
+    return this.getRequest(this.__groupPath+"CreateGroup",[{
       param: "groupName",
       value: group
     }]).subscribe(
@@ -82,7 +83,7 @@ export class GroupService extends Rest{
    * @return {Observable} The result of the request
    */
   public checkGroupName(name:string){
-    return this.getRequest(this._groupPath+"CheckGroupName",
+    return this.getRequest(this.__groupPath+"CheckGroupName",
     [
       {
         param: "name",
@@ -99,14 +100,14 @@ export class GroupService extends Rest{
    * @return {Observable} The result of the request
    */
   public getPageGroup(name:string){
-    this.getRequest(this._groupPath+"GroupPage", 
+    this.getRequest(this.__groupPath+"GroupPage", 
     [
       {
         param:"groupName",
         value: name
       }
     ]).subscribe(
-      (page:GroupPage)=> this.groupInfoS.updateInfo(page)
+      (page:GroupPage)=> this.__groupInfoS.updateInfo(page)
     );
   }
 
@@ -118,7 +119,7 @@ export class GroupService extends Rest{
    * @return {Observable} The result of the request
    */
   public getGroups(name:string){
-    return this.getRequest(this._groupPath+"SearchGroup", 
+    return this.getRequest(this.__groupPath+"SearchGroup", 
     [
       {
         param : "name",
@@ -134,7 +135,7 @@ export class GroupService extends Rest{
    * @return {Observable} The result of the request
    */
   public getAllGroups(){
-    return this.getRequest(this._groupPath+"GetAllGroups", null, true);
+    return this.getRequest(this.__groupPath+"GetAllGroups", null, true);
   }
   
   /**
@@ -145,7 +146,7 @@ export class GroupService extends Rest{
    * make the request 
    */
   public joinGroup(joinGroupInfo:JoinGroup){
-    this.postRequest(joinGroupInfo, this._groupPath+"JoinGroup", true).subscribe(
+    this.postRequest(joinGroupInfo, this.__groupPath+"JoinGroup", true).subscribe(
       _=> this.reloadGroups()
     );
   }
@@ -157,7 +158,7 @@ export class GroupService extends Rest{
    * @param {string} groupName The name of the group
    */
   public leaveGroup(groupName:string){
-    this.getRequest(this._groupPath+"LeaveGroup", 
+    this.getRequest(this.__groupPath+"LeaveGroup", 
     [
       {
         param: "groupName",
@@ -174,8 +175,8 @@ export class GroupService extends Rest{
    * @access public
    */
   public makeAdmin(order:MakeUnmake_admin_block){
-    this.postRequest(order, this._groupPath+"MakeAdmin").subscribe(
-      (page:GroupPage)=>this.groupInfoS.updateInfo(page)
+    this.postRequest(order, this.__groupPath+"MakeAdmin").subscribe(
+      (page:GroupPage)=>this.__groupInfoS.updateInfo(page)
     );
   }
 
@@ -185,8 +186,8 @@ export class GroupService extends Rest{
    * @access public
    */
   public kickUser(order:KickUser){
-    this.postRequest(order, this._groupPath+"RemoveUser").subscribe(
-      (page:GroupPage)=> this.groupInfoS.updateInfo(page)
+    this.postRequest(order, this.__groupPath+"RemoveUser").subscribe(
+      (page:GroupPage)=> this.__groupInfoS.updateInfo(page)
     );
   }
 
@@ -196,8 +197,8 @@ export class GroupService extends Rest{
    * @access public
    */
   public blockUser(order:MakeUnmake_admin_block){
-    this.postRequest(order, this._groupPath+"BlockUser").subscribe(
-      (page:GroupPage) => this.groupInfoS.updateInfo(page)
+    this.postRequest(order, this.__groupPath+"BlockUser").subscribe(
+      (page:GroupPage) => this.__groupInfoS.updateInfo(page)
     );
   }
 
@@ -207,8 +208,8 @@ export class GroupService extends Rest{
    * @access public
    */
   public managePassword(order:ManagePassword){
-    this.postRequest(order, this._groupPath+"ManagePassword").subscribe(
-      (page:GroupPage) => this.groupInfoS.updateInfo(page)
+    this.postRequest(order, this.__groupPath+"ManagePassword").subscribe(
+      (page:GroupPage) => this.__groupInfoS.updateInfo(page)
     );
   }
 
@@ -218,7 +219,7 @@ export class GroupService extends Rest{
    * @access public
    */
   public removeGroup(order:RemoveGroup){
-    this.postRequest(order, this._groupPath+"RemoveGroup").subscribe(
+    this.postRequest(order, this.__groupPath+"RemoveGroup").subscribe(
       _=> this.reloadGroups()
     );
   }
@@ -236,9 +237,9 @@ export class GroupService extends Rest{
    * @access private
    */
   private reloadGroups(){
-    this.getRequest(this._groupPath+"ReloadUserGroups", null, true).subscribe(
+    this.getRequest(this.__groupPath+"ReloadUserGroups", null, true).subscribe(
       (groups:string[])=>{
-        this.sessionS.updateGroups(groups);
+        this.__sessionS.updateGroups(groups);
       }
     );
   }

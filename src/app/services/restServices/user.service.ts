@@ -26,9 +26,9 @@ export class UserService extends Rest{
    * 
    * @access private
    * @readonly
-   * @var {string} _userPath
+   * @var {string} __userPath
    */
-  private readonly _userPath : string = "User/";
+  private readonly __userPath : string = "User/";
 
 
   //
@@ -60,7 +60,7 @@ export class UserService extends Rest{
    * @return {Observable} The result of the request
    */
   public getUserOptions(){
-    return this.getRequest(this._userPath+"UserInfo");
+    return this.getRequest(this.__userPath+"UserInfo");
   }
 
   /**
@@ -71,7 +71,7 @@ export class UserService extends Rest{
    * @return {Observable} The result of the request
    */
   public changeUserInfo(info:ChangeUserInfo){
-    return this.postRequest(info,this._userPath+"ChangeUserInfo");
+    return this.postRequest(info,this.__userPath+"ChangeUserInfo");
   }
 
   /**
@@ -82,6 +82,6 @@ export class UserService extends Rest{
    * @return {Observable} The result of the request
    */
   public deleteUser(user:DeleteUser){
-    return this.postRequest(user, this._userPath+"DeleteAccount");
+    return this.postRequest(user, this.__userPath+"DeleteAccount");
   }
 }

@@ -27,9 +27,9 @@ export class BetService extends Rest{
    * 
    * @access private
    * @readonly
-   * @var {string} _betPath
+   * @var {string} __betPath
    */
-  private readonly _betPath : string = "Bet/";
+  private readonly __betPath : string = "Bet/";
 
 
   //
@@ -42,9 +42,9 @@ export class BetService extends Rest{
    * @constructor
    * @param {HttpClient} http For RestService constructor
    * @param {LoadingService} loading For RestService constructor
-   * @param {GroupInfoService} groupPageS For update the group page info
+   * @param {GroupInfoService} __groupPageS For update the group page info
    */
-  constructor(http: HttpClient, loading: LoadingService, private groupPageS:GroupInfoService) { 
+  constructor(http: HttpClient, loading: LoadingService, private __groupPageS:GroupInfoService) { 
     super(http, loading);
   }
 
@@ -63,7 +63,7 @@ export class BetService extends Rest{
    * @return {Observable} The result of the request
    */
   public getLaunchFootballBet(name:string){
-    return this.getRequest(this._betPath+"FootBallBetPage", 
+    return this.getRequest(this.__betPath+"FootBallBetPage", 
     [
       {
         param: "groupName",
@@ -80,7 +80,7 @@ export class BetService extends Rest{
    * @return {Observable} The result of the request
    */
   public launchBet(order:LaunchFootballBet){
-    return this.postRequest(order, this._betPath+"LaunchFootBallBet");
+    return this.postRequest(order, this.__betPath+"LaunchFootBallBet");
   }
 
   /**
@@ -90,8 +90,8 @@ export class BetService extends Rest{
    * @param {UserFootballBet} order The details of the request
    */
   public doFootballBet(order:UserFootballBet){
-    this.postRequest(order, this._betPath+"DoFootballBet").subscribe(
-      (page:GroupPage)=> this.groupPageS.updateInfo(page)
+    this.postRequest(order, this.__betPath+"DoFootballBet").subscribe(
+      (page:GroupPage)=> this.__groupPageS.updateInfo(page)
     );
   }
 
@@ -102,8 +102,8 @@ export class BetService extends Rest{
    * @param {CancelUserFootballBet} order The details of the request
    */
   public cancelUserFootballBet(order:CancelUserFootballBet){
-    this.postRequest(order, this._betPath+"CancelUserFootballBet").subscribe(
-      (page:GroupPage)=> this.groupPageS.updateInfo(page)
+    this.postRequest(order, this.__betPath+"CancelUserFootballBet").subscribe(
+      (page:GroupPage)=> this.__groupPageS.updateInfo(page)
     );
   }
 
@@ -114,11 +114,11 @@ export class BetService extends Rest{
    * @param {string} betId The id of the bet to cancel
    */
   public cancelFootballBet(betId:string){
-    this.getRequest(this._betPath+"CancelFootballBet",[{
+    this.getRequest(this.__betPath+"CancelFootballBet",[{
       param: "betId",
       value: betId
     }]).subscribe(
-      (page:GroupPage)=> this.groupPageS.updateInfo(page)
+      (page:GroupPage)=> this.__groupPageS.updateInfo(page)
     );
   }
 }

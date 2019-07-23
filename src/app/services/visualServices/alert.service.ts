@@ -23,9 +23,9 @@ export class AlertService {
    * The behaviour of the alert mode
    * 
    * @access private
-   * @var {BehaviorSubject<AlertMode>} alertMode
+   * @var {BehaviorSubject<AlertMode>} __alertMode
    */
-  private alertMode = new BehaviorSubject<AlertMode>(null);
+  private __alertMode = new BehaviorSubject<AlertMode>(null);
 
   /**
    * The alert mode at which the other components will subscribe at
@@ -33,15 +33,15 @@ export class AlertService {
    * @access public
    * @var {Observable} mode
    */
-  public mode = this.alertMode.asObservable();
+  public mode = this.__alertMode.asObservable();
 
   /**
    * The behaviour of the info-alert type
    * 
    * @access private
-   * @var {BehaviorSubject<AlertInfoType>} infoAlertType
+   * @var {BehaviorSubject<AlertInfoType>} __infoAlertType
    */
-  private infoAlertType = new BehaviorSubject<AlertInfoType>(null);
+  private __infoAlertType = new BehaviorSubject<AlertInfoType>(null);
   
   /**
    * The info-alert type at which the other components will subscribe at
@@ -49,16 +49,16 @@ export class AlertService {
    * @access public
    * @var {Observable} alertType
    */
-  public alertType = this.infoAlertType.asObservable();
+  public alertType = this.__infoAlertType.asObservable();
 
   /**
    * The behaviour of the filter for alerts which needs or not
    * a form
    * 
    * @access private
-   * @var {BehaviorSubject<Boolean>} formNeeded
+   * @var {BehaviorSubject<Boolean>} __formNeeded
    */
-  private formNeeded = new BehaviorSubject<Boolean>(false);
+  private __formNeeded = new BehaviorSubject<Boolean>(false);
 
   /**
    * The filter at which the other components will subscribe at
@@ -66,16 +66,16 @@ export class AlertService {
    * @access public
    * @var {Observable} needForm
    */
-  public needForm = this.formNeeded.asObservable();
+  public needForm = this.__formNeeded.asObservable();
 
   /**
    * The behaviour of the target for alerts which needs
    * extra information like an email or group names
    * 
    * @access private
-   * @var {BehaviorSubject<string>} alertTarget
+   * @var {BehaviorSubject<string>} __alertTarget
    */
-  private alertTarget = new BehaviorSubject<string>(null);
+  private __alertTarget = new BehaviorSubject<string>(null);
 
   /**
    * The extra info at which the other components will subscribe at
@@ -83,15 +83,15 @@ export class AlertService {
    * @access public
    * @var {Observable} target
    */
-  public target = this.alertTarget.asObservable();
+  public target = this.__alertTarget.asObservable();
 
   /**
    * The behaviour of the title of the alert
    * 
    * @access private
-   * @var {BehaviorSubject<string>} alertTitle
+   * @var {BehaviorSubject<string>} __alertTitle
    */
-  private alertTitle = new BehaviorSubject<string>("");
+  private __alertTitle = new BehaviorSubject<string>("");
 
   /**
    * The alert title at which the other components will subscribe at
@@ -99,15 +99,15 @@ export class AlertService {
    * @access public
    * @var {Observable} title
    */
-  public title = this.alertTitle.asObservable();
+  public title = this.__alertTitle.asObservable();
   
   /**
    * The behaviour of the trigger to reset the form of the alerts
    * 
    * @access private
-   * @var {BehaviorSubject<boolean>} resetForm
+   * @var {BehaviorSubject<boolean>} __resetForm
    */
-  private resetForm = new BehaviorSubject<boolean>(false);
+  private __resetForm = new BehaviorSubject<boolean>(false);
 
   /**
    * The filter to reset the form of the alerts
@@ -116,15 +116,15 @@ export class AlertService {
    * @access public
    * @var {Observable} reset
    */
-  public reset = this.resetForm.asObservable();
+  public reset = this.__resetForm.asObservable();
   
   /**
    * The behaviour to fill the alert with an object info
    * 
    * @access private
-   * @var {BehaviorSubject<DoAFootballBet>} objectInfo
+   * @var {BehaviorSubject<DoAFootballBet>} __objectInfo
    */
-  private objectInfo = new BehaviorSubject<any>(null);
+  private __objectInfo = new BehaviorSubject<any>(null);
 
   /**
    * The data to fill the alerts when they need extra info
@@ -133,7 +133,7 @@ export class AlertService {
    * @access public
    * @var {Observable} reset
    */
-  public oInfo = this.objectInfo.asObservable();
+  public oInfo = this.__objectInfo.asObservable();
   
 
   //
@@ -164,7 +164,7 @@ export class AlertService {
   public openAlertInfo(AlertType:AlertInfoType){
     this.setTitle("Atención!");
     this.changeAlertMode(AlertMode.ALERTINFO);
-    this.infoAlertType.next(AlertType);
+    this.__infoAlertType.next(AlertType);
     this.openAlert();
   }
 
@@ -237,7 +237,7 @@ export class AlertService {
   public joinGroup(needPass:boolean, groupName:string){
     this.setTitle("You are going to join at the group "+groupName);
     this.changeAlertMode(AlertMode.JOINGROUP);
-    this.formNeeded.next(needPass);
+    this.__formNeeded.next(needPass);
     this.setTarget(groupName);
     this.openAlert();
   }
@@ -252,7 +252,7 @@ export class AlertService {
   public doAFootballBet(bet:GroupBet, coins:number){
     this.setTitle(bet.betName);
     this.changeAlertMode(AlertMode.FOOTBALLBET);
-    this.objectInfo.next({
+    this.__objectInfo.next({
       "bet":bet,
       "userCoins": coins
     });
@@ -270,7 +270,7 @@ export class AlertService {
   public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBet:string){
     this.setTitle("You are going to cancel your bet!");
     this.changeAlertMode(AlertMode.CANCELUSERFOOTBALLBET);
-    this.objectInfo.next({
+    this.__objectInfo.next({
       "bet":bet,
       "userCoins": user_coins
     });
@@ -301,7 +301,7 @@ export class AlertService {
   public seeUserGroups(groups:UserInGroupSearch[], username:string){
     this.setTitle(`${username} groups`);
     this.changeAlertMode(AlertMode.SEEUSERGROUPS_ADMIN);
-    this.objectInfo.next(groups);
+    this.__objectInfo.next(groups);
     this.openAlert();
   }
 
@@ -315,7 +315,7 @@ export class AlertService {
   public seeGroupMembers(members:GroupMemberAdmin[], groupName:string){
     this.setTitle(`${groupName} members`);
     this.changeAlertMode(AlertMode.SEEGROUPMEMBERS_ADMIN);
-    this.objectInfo.next(members);
+    this.__objectInfo.next(members);
     this.openAlert();
   }
   
@@ -341,7 +341,7 @@ export class AlertService {
    * @param {AlertMode} newMode The new alert mode 
    */
   private changeAlertMode(newMode:AlertMode){
-    this.alertMode.next(newMode);
+    this.__alertMode.next(newMode);
   }
 
   /**
@@ -363,7 +363,7 @@ export class AlertService {
    * in the var 
    */
   private setTarget(target:string){
-    this.alertTarget.next(target);
+    this.__alertTarget.next(target);
   }
 
   /**
@@ -372,7 +372,7 @@ export class AlertService {
    * @param {string} title The title of the alert 
    */
   private setTitle(title:string){
-    this.alertTitle.next(title);
+    this.__alertTitle.next(title);
   }
 
   /**
@@ -383,10 +383,10 @@ export class AlertService {
   private resetForms(){
     //First set true the rest form. The components which are
     //subscribed will catch the 'true' and will reset the form.
-    this.resetForm.next(true);
+    this.__resetForm.next(true);
 
     //When all the form will be reseted (aprox 0.5 seconds) change
     // the value to false for not being reseting all the time
-    setTimeout(()=>{ this.resetForm.next(false); }, 500);
+    setTimeout(()=>{ this.__resetForm.next(false); }, 500);
   }
 }
