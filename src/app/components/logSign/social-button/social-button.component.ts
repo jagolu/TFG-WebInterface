@@ -41,12 +41,12 @@ export class SocialButtonComponent{
   
   /**
    * @constructor
-   * @param {AlertService} _alert To launch the social password alert if it is necessary
-   * @param {AuthenticationService} _authenticationS To do the request to set the password 
-   * @param {AuthService} _authS To do the request to Google or Facebook
+   * @param {AlertService} __alert To launch the social password alert if it is necessary
+   * @param {AuthenticationService} __authenticationS To do the request to set the password 
+   * @param {AuthService} __authS To do the request to Google or Facebook
    */
-  constructor(private _alert:AlertService,
-        private _authS:AuthService, private _authenticationS:AuthenticationService) { }
+  constructor(private __alert:AlertService,
+        private __authS:AuthService, private __authenticationS:AuthenticationService) { }
 
 
   //
@@ -66,12 +66,12 @@ export class SocialButtonComponent{
       FacebookLoginProvider.PROVIDER_ID : GoogleLoginProvider.PROVIDER_ID;
       
     if(!this.log){
-      this._alert.socialPasswordForm(providerId);
+      this.__alert.socialPasswordForm(providerId);
     }
     else{
-      this._authS.signIn(providerId).then(user=>{
+      this.__authS.signIn(providerId).then(user=>{
       
-        this._authenticationS.logSocialMedia({
+        this.__authenticationS.logSocialMedia({
           "authToken": type==SocialType.FACEBOOK ? user.authToken : user.idToken,
           "email": user.email,
           "firstName": user.firstName,
@@ -80,7 +80,7 @@ export class SocialButtonComponent{
           "urlImage":user.photoUrl,
           "password": null
         });
-      }).catch(_=> this._alert.openAlertInfo(AlertInfoType.SOCIALERROR));
+      }).catch(_=> this.__alert.openAlertInfo(AlertInfoType.SOCIALERROR));
     }
   }
 }
