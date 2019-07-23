@@ -45,7 +45,9 @@ export class UserInfoService {
   /**
    * @constructor
    */
-  constructor() { }
+  constructor() { 
+    this.information.next({email: "",image: ""});
+  }
 
   //
   // ──────────────────────────────────────────────────────────────────────────────────
