@@ -203,7 +203,7 @@ export class AlertService {
    * @param {string} type The type of social log (Facebook or Google)
    */
   public socialPasswordForm(type:string){
-    this.setTitle("Choose a password");
+    this.setTitle("Elige una contraseña");
     this.changeAlertMode(AlertMode.SOCIALPASSWORD);
     this.setTarget(type);
     this.openAlert();
@@ -235,7 +235,7 @@ export class AlertService {
    * @param {string} groupName The name of the group to join in
    */
   public joinGroup(needPass:boolean, groupName:string){
-    this.setTitle("You are going to join at the group "+groupName);
+    this.setTitle(`Vas a unirte al grupo "${groupName}"`);
     this.changeAlertMode(AlertMode.JOINGROUP);
     this.__formNeeded.next(needPass);
     this.setTarget(groupName);
@@ -313,7 +313,7 @@ export class AlertService {
    * @param {groupName} string The name of the group
    */
   public seeGroupMembers(members:GroupMemberAdmin[], groupName:string){
-    this.setTitle(`${groupName} members`);
+    this.setTitle(`Miembros de "${groupName}"`);
     this.changeAlertMode(AlertMode.SEEGROUPMEMBERS_ADMIN);
     this.__objectInfo.next(members);
     this.openAlert();
