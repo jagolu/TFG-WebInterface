@@ -1,12 +1,12 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th class="text-center">Search a group</th>
+      <th class="text-center">Busca un grupo</th>
       <th ></th>
       <th >
           <input  class="form-control form-control-sm" 
                   type="search" 
-                  placeholder="Search group" 
+                  placeholder="Nombre del grupo" 
                   #groupname 
                   (keyup)="search(groupname.value)">
       </th>
@@ -15,26 +15,30 @@
 </table>
 <!-- RESPONSE -->
 <ul class="list-group">
+    <li class="list-group-item" *ngIf="groups!=null && groups.length>0">
+      <div class="row">
+        <div class="col-5 text-center" [ngClass]="{'col-lg-5': !isAdmin(), 'col-lg-4': isAdmin()}"><h6>Nombre</h6></div>
+        <div class="col-3 text-center" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}"><h6>Aforo</h6></div>
+        <div class="col-lg-2 col-4 text-center"><h6>Fecha de creación</h6></div>
+      </div>
+    </li>
   <div *ngFor="let group of groups">
     <li class="list-group-item" *ngIf="!isJoinedInGroup(group.name)">
       <div class="row">
-        <div class="col-5 text-center mb-2" [ngClass]="{'col-lg-4': !isAdmin(), 'col-lg-3': isAdmin()}">
-          {{ group.name }}
+        <div class="col-5 text-center mb-4" [ngClass]="{'col-lg-5': !isAdmin(), 'col-lg-4': isAdmin()}">
+            {{ group.name }}  <app-icon [Icon]="icon_key" *ngIf="group.password"></app-icon> 
         </div>
-        <div class="col-lg-1 col-2 text-center mb-2">
-          <app-icon [Icon]="icon_key" *ngIf="group.password"></app-icon>
-        </div>
-        <div class="col-5 text-center" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}">
+        <div class="col-3 text-center mb-4" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}">
           {{ group.placesOcupped }}/{{ group.totalPlaces }}
         </div>
-        <div class="col-lg-2 col-12 text-center mb-2">{{ group.dateCreate | onlyDatePipe }}</div>
+        <div class="col-lg-2 col-4 text-center mb-4">{{ group.dateCreate | onlyDatePipe }}</div>
         <div class="col-lg-3 col-12 mb-2">
-            <button class="btn btn-primary w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
-                  (click)="joinGroup(group.name, group.password)">Join!</button>
-            <button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped>=group.totalPlaces" 
-                disabled>Full!</button>
-            <button class="btn btn-primary w-100" *ngIf="!joinGroups"
-                    (click)="watchUsers(group.members, group.name)">See users</button>
+            <button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
+                  (click)="joinGroup(group.name, group.password)">Unirse</button>
+            <button class="btn btn-dark w-100" *ngIf="joinGroups && group.placesOcupped>=group.totalPlaces" 
+                disabled>Completo!</button>
+            <button class="btn btn-outline-dark w-100" *ngIf="!joinGroups"
+                    (click)="watchUsers(group.members, group.name)">Usuarios</button>
         </div>
         <div class="col-lg-2 col-12 mb-2" *ngIf="isAdmin()">
             <button class="btn btn-danger w-100" *ngIf="group.open"
