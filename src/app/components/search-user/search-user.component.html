@@ -15,15 +15,22 @@
 </table>
 <!-- RESPONSE -->
 <ul class="list-group">
+  <li class="list-group-item" *ngIf="users!=null && users.length>0">
+    <div class="row">
+      <div class="col-lg-4 col-6 text-center mb-2"><h6>Correo electrónico</h6></div>
+      <div class="col-lg-3 col-6 text-center"><h6>Nombre de usuario</h6></div>
+      <div class="col-lg-1 col-12 text-center mb-2"><h6>Registro</h6></div>
+    </div>
+  </li>
   <li class="list-group-item" *ngFor="let user of users">
     <div class="row">
-      <div class="col-lg-5 col-6 text-center mb-2">{{ user.email }}</div>
-      <div class="col-lg-2 col-6 text-center">{{ user.username }}</div>
+      <div class="col-lg-4 col-6 text-center mb-2">{{ user.email }}</div>
+      <div class="col-lg-3 col-6 text-center">{{ user.username }}</div>
       <div class="col-lg-1 col-12 text-center mb-2">{{ user.dateSignUp | onlyDatePipe }}</div>
       <div class="col-lg-2 col-12 mb-2">
-        <button class="btn btn-outline-warning w-100" *ngIf="user.groups.length>0"
+        <button class="btn btn-dark w-100" *ngIf="user.groups.length>0"
                 (click)="seeGroups(user)">Grupos</button>
-        <button class="btn btn-outline-warning w-100" *ngIf="user.groups.length==0"
+        <button class="btn btn-outline-dark w-100" *ngIf="user.groups.length==0"
                 disabled>Sin grupos</button>
       </div>
       <div class="col-lg-2 col-12 mb-2">

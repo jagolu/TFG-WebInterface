@@ -299,7 +299,7 @@ export class AlertService {
    * @param {username} string The username of the user
    */
   public seeUserGroups(groups:UserInGroupSearch[], username:string){
-    this.setTitle(`${username} groups`);
+    this.setTitle(`Grupos de "${username}"`);
     this.changeAlertMode(AlertMode.SEEUSERGROUPS_ADMIN);
     this.__objectInfo.next(groups);
     this.openAlert();

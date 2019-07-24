@@ -28,9 +28,9 @@ export class SearchUserComponent {
    * The last find that the user did
    * 
    * @access private
-   * @var {string} lastFind
+   * @var {string} __lastFind
    */
-  private lastFind:string = "";
+  private __lastFind:string = "";
 
 
   //
@@ -41,9 +41,10 @@ export class SearchUserComponent {
   
   /**
    * @constructor
-   * @param {AdminService} adminS The service to get the users and block/unblock them
+   * @param {AdminService} __adminS The service to get the users and block/unblock them
+   * @param {AlertService} __alertS To launch the alerts
    */
-  constructor(private adminS:AdminService, private alertS:AlertService) { 
+  constructor(private __adminS:AdminService, private __alertS:AlertService) { 
     this.getAllUsers();
   }
 
@@ -63,13 +64,9 @@ export class SearchUserComponent {
    * @
    */
   public search(toFind:string){
-    this.lastFind = toFind;
-    if(toFind.length == 0 || toFind == null){
-      this.getAllUsers();
-    }
-    else{
-      this.getUsersBy(toFind);
-    }
+    this.__lastFind = toFind;
+    if(toFind.length == 0 || toFind == null) this.getAllUsers();
+    else this.getUsersBy(toFind);
   }
 
   /**
@@ -78,7 +75,7 @@ export class SearchUserComponent {
    * @param {SearchUserInfo} user The info of the user 
    */
   public seeGroups(user:SearchUserInfo){
-    this.alertS.seeUserGroups(user.groups, user.username);
+    this.__alertS.seeUserGroups(user.groups, user.username);
   }
 
   /**
@@ -88,10 +85,10 @@ export class SearchUserComponent {
    * @param {Boolean} ban True for ban the user, false to unban him 
    */
   public banUser(publicUserId:string, ban:Boolean){
-    this.adminS.banUser({
+    this.__adminS.banUser({
       "publicUserId": publicUserId,
       "ban": ban
-    }).subscribe(_=> this.search(this.lastFind));
+    }).subscribe(_=> this.search(this.__lastFind));
   }
 
 
@@ -108,8 +105,8 @@ export class SearchUserComponent {
    * @access private
    */
   private getAllUsers(){
-    this.adminS.getAllUsers().subscribe(
-      (ok:any) =>  this.users = ok
+    this.__adminS.getAllUsers().subscribe(
+      (userRes:any) =>  this.users = userRes
     );
   }
 
@@ -121,8 +118,8 @@ export class SearchUserComponent {
    * @param {string} toFind The username or email
    */
   private getUsersBy(toFind:string){
-    this.adminS.getUser(toFind).subscribe(
-      (ok:any)=> this.users = ok
+    this.__adminS.getUser(toFind).subscribe(
+      (usersRes:any)=> this.users = usersRes
     );
   }
 }
