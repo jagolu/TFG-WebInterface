@@ -10,7 +10,7 @@
   <li class="list-group-item" *ngFor="let group of groups">
     <div class="row">
       <div class="col-12 text-left mb-2" *ngIf="group.blocked"><h5 class="text-danger">Bloqueado</h5></div>
-      <div class="col-lg-6 col-12 text-center"><p>{{group.groupName}}</p></div>
+      <div class="col-lg-6 col-12 text-center">{{group.groupName}}</div>
       <div class="col-lg-4 col-6 text-center">
           <app-icon [Icon]="icon_user" *ngIf="group.role == 'GROUP_NORMAL'"></app-icon>
           <app-icon [Icon]="icon_crown" *ngIf="group.role=='GROUP_MAKER'"></app-icon>

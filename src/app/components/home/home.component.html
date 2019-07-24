@@ -1,7 +1,7 @@
 <div *ngIf="isAdmin()" class="mb-3">
     <form [formGroup]="publishNewForm" (ngSubmit)="launchNew()">
         <div class="row">
-            <div class="col-lg-10 col-12">
+            <div class="col-lg-10 col-12 mb-2">
                 <input type="text" class="form-control" 
                     formControlName="message" placeholder="Nueva noticia">
             </div>
