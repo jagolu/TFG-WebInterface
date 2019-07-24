@@ -17,21 +17,21 @@
 <ul class="list-group">
     <li class="list-group-item" *ngIf="groups!=null && groups.length>0">
       <div class="row">
-        <div class="col-5 text-center" [ngClass]="{'col-lg-5': !isAdmin(), 'col-lg-4': isAdmin()}"><h6>Nombre</h6></div>
-        <div class="col-3 text-center" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}"><h6>Aforo</h6></div>
-        <div class="col-lg-2 col-4 text-center"><h6>Fecha de creación</h6></div>
+        <div class="col-12 text-center" [ngClass]="{'col-lg-5': !isAdmin(), 'col-lg-4': isAdmin()}"><h6>Nombre</h6></div>
+        <div class="col-6 text-center" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}"><h6>Aforo</h6></div>
+        <div class="col-lg-2 col-6 text-center"><h6>Creación</h6></div>
       </div>
     </li>
   <div *ngFor="let group of groups">
     <li class="list-group-item" *ngIf="!isJoinedInGroup(group.name)">
       <div class="row">
-        <div class="col-5 text-center mb-4" [ngClass]="{'col-lg-5': !isAdmin(), 'col-lg-4': isAdmin()}">
+        <div class="col-12 text-center mb-4" [ngClass]="{'col-lg-5': !isAdmin(), 'col-lg-4': isAdmin()}">
             {{ group.name }}  <app-icon [Icon]="icon_key" *ngIf="group.password"></app-icon> 
         </div>
-        <div class="col-3 text-center mb-4" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}">
+        <div class="col-6 text-center mb-4" [ngClass]="{'col-lg-1': isAdmin(), 'col-lg-2': !isAdmin()}">
           {{ group.placesOcupped }}/{{ group.totalPlaces }}
         </div>
-        <div class="col-lg-2 col-4 text-center mb-4">{{ group.dateCreate | onlyDatePipe }}</div>
+        <div class="col-lg-2 col-6 text-center mb-4">{{ group.dateCreate | onlyDatePipe }}</div>
         <div class="col-lg-3 col-12 mb-2">
             <button class="btn btn-outline-dark w-100" *ngIf="joinGroups && group.placesOcupped<group.totalPlaces" 
                   (click)="joinGroup(group.name, group.password)">Unirse</button>
