@@ -1,12 +1,12 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th class="text-center">Search a user</th>
+      <th class="text-center">Busca un usuario</th>
       <th ></th>
       <th >
           <input  class="form-control form-control-sm" 
                   type="search" 
-                  placeholder="Search a user" 
+                  placeholder="Busca un usuario" 
                   #username 
                   (keyup)="search(username.value)">
       </th>
@@ -17,16 +17,18 @@
 <ul class="list-group">
   <li class="list-group-item" *ngIf="users!=null && users.length>0">
     <div class="row">
-      <div class="col-lg-4 col-6 text-center mb-2"><h6>Correo electrónico</h6></div>
-      <div class="col-lg-3 col-6 text-center"><h6>Nombre de usuario</h6></div>
-      <div class="col-lg-1 col-12 text-center mb-2"><h6>Registro</h6></div>
+      <div class="col-lg-5 col-9 text-center mb-2">
+        <h4 class="d-inline-block">Nombre de usuario</h4>&nbsp;&nbsp;<small>(Correo electrónico)</small>
+      </div>
+      <div class="col-lg-3 col-3 text-center mb-2"><small>Registro</small></div>
     </div>
   </li>
   <li class="list-group-item" *ngFor="let user of users">
     <div class="row">
-      <div class="col-lg-4 col-6 text-center mb-2">{{ user.email }}</div>
-      <div class="col-lg-3 col-6 text-center">{{ user.username }}</div>
-      <div class="col-lg-1 col-12 text-center mb-2">{{ user.dateSignUp | onlyDatePipe }}</div>
+      <div class="col-lg-5 col-9 text-center mb-2">
+        <h5 class="d-inline-block">{{ user.username }}</h5>&nbsp;&nbsp;<small>({{ user.email }})</small>
+      </div>
+      <div class="col-lg-3 col-3 text-center mb-2"><small>{{ user.dateSignUp | onlyDatePipe }}</small></div>
       <div class="col-lg-2 col-12 mb-2">
         <button class="btn btn-dark w-100" *ngIf="user.groups.length>0"
                 (click)="seeGroups(user)">Grupos</button>
