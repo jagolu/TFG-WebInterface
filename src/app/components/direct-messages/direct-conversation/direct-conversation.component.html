@@ -1,8 +1,8 @@
 <div class="card" *ngIf="clusters.length > 0" [ngClass]="{'closedConv': room.closed}">
   <div class="card-header">
     <div class="row">
-      <div class="col-12"><h3>{{room.title}}</h3></div>
-      <div class="col-lg-9 col-12 mt-2"><h5>{{room.receiver}} <small *ngIf="room.emailReceiver!=null">({{room.emailReceiver}})</small></h5></div>
+      <div class="col-12"><h3>Conversación <i>{{room.title}}</i></h3></div>
+      <div class="col-lg-9 col-12 mt-2"><h5>Con <i>{{room.receiver}} <small *ngIf="room.emailReceiver!=null">({{room.emailReceiver}})</small></i></h5></div>
       <div class="col-lg-3 col-12 mt-2" *ngIf="!room.closed && thisIsAdmin">
         <button class="btn btn-outline-danger w-100" (click)="closeConversation()">Cerrar conversación</button>
       </div>

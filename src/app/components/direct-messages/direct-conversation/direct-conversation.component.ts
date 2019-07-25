@@ -15,47 +15,146 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class DirectConversationComponent implements AfterViewChecked {
 
-  private id:string = "";
-  private loading :boolean = false;
-  private sendDMMessageForm: FormGroup;
+  //
+  // ────────────────────────────────────────────────────────────  ──────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
 
+  /**
+   * The id of the conversation
+   * 
+   * @access private
+   * @var {string} _id
+   */
+  private _id:string = "";
+
+  /**
+   * Says if the request to get the conversations has begun
+   * or is finished
+   * 
+   * @access private
+   * @var {Boolean} _loading
+   */
+  private _loading :Boolean = false;
+
+  /**
+   * The form to send the direct message
+   * 
+   * @access public
+   * @var {FormGroup} sendDMMessageForm
+   */
+  public sendDMMessageForm: FormGroup;
+
+  /**
+   * The info of the direct conversation
+   * 
+   * @access public
+   * @var {DMTitle} room
+   */
   public room:DMTitle;
+
+  /**
+   * The clustered messages of the conversation
+   * 
+   * @access public
+   * @var {DMMessageCluster[]} clusters
+   */
   public clusters:DMMessageCluster[] = [];
+
+  /**
+   * Says if the actual user is an admin or not
+   * 
+   * @access public
+   * @var {Boolean} thisIsAdmin
+   */
   public thisIsAdmin :Boolean = false;
 
-  constructor(private aR:ActivatedRoute, private dmS:DirectMessagesService, private sessionS:SessionService) { 
-    this.id = this.aR.snapshot.paramMap.get('id');
-    this.thisIsAdmin = this.sessionS.isAdmin();
-}
 
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {ActivatedRoute} __aR To get the id param (id of the direct conversation)
+   * @param {DirectMessagesService} __dmS To do the DM requests
+   * @param {SessionService} __sessionS To know if the actual user is an admin or not
+   */
+  constructor(private __aR:ActivatedRoute, private __dmS:DirectMessagesService, private __sessionS:SessionService) { 
+    this._id = this.__aR.snapshot.paramMap.get('id');
+    this.thisIsAdmin = this.__sessionS.isAdmin();
+  }
+
+  /**
+   * Get the messages of the conversation from the backend
+   * 
+   * @AfterViewInit
+   */
   ngAfterViewChecked() {
-    if(!this.loading){
-      this.dmS.loadDMMessages(this.id).subscribe((dmr:DMRoom)=>{
-        this.setData(dmr);
+    if(!this._loading){
+      this.__dmS.loadDMMessages(this._id).subscribe((dmrRes:DMRoom)=>{
+        this.setData(dmrRes);
         if(!this.room.closed) this.initializeForm();
       });
     }
-    this.loading = true;
+    this._loading = true;
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+  
+  /**
+   * Sends a message to the conversation
+   * 
+   * @access public
+   */
   public sendMessage(){
-    this.dmS.launchDMMessage({
-      "dmId": this.id,
+    this.__dmS.launchDMMessage({
+      "dmId": this._id,
       "message": this.sendDMMessageForm.controls["message"].value
     }).subscribe((dmr:DMRoom)=>this.setData(dmr));
     this.resetForm();
   }
 
+  /**
+   * "Closes" the conversation if its open
+   * 
+   * @access public
+   */
   public closeConversation(){
-    this.dmS.openCloseConversation(this.room.id, false).subscribe((dmr:DMRoom)=>this.setData(dmr));
+    this.__dmS.openCloseConversation(this.room.id, false).subscribe((dmrRes:DMRoom)=>this.setData(dmrRes));
     this.resetForm();
   }
 
+  /**
+   * "Open" the conversation if its closed
+   * 
+   * @access public
+   */
   public openConversation(){
-    this.dmS.openCloseConversation(this.room.id, true).subscribe((dmr:DMRoom)=>this.setData(dmr));
+    this.__dmS.openCloseConversation(this.room.id, true).subscribe((dmrRes:DMRoom)=>this.setData(dmrRes));
     this.resetForm();
   }
 
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Initializes the form
+   * 
+   * @access private
+   */
   private initializeForm(){
     this.sendDMMessageForm = new FormGroup({
       "message": new FormControl(
@@ -69,18 +168,33 @@ export class DirectConversationComponent implements AfterViewChecked {
     })
   }
 
+  /**
+   * Resets the form
+   */
   private resetForm(){
     this.sendDMMessageForm.reset({"message": ""});
   }
 
+  /**
+   * Sets the data to the private
+   * vars scrolls down the window
+   * 
+   * @access private
+   * @param {DMRoom} dmr The info of the conversation 
+   */
   private setData(dmr:DMRoom){
     try{
       this.room = dmr.title;
       this.clusters = dmr.clusters;   
-      this.scrollDown();   
+      setTimeout(_ => this.scrollDown(), 200);   
     }catch(Error){this.clusters = []}
   }
 
+  /**
+   * Scrolls down the window
+   * 
+   * @access private
+   */
   private scrollDown(){
     let div = (document.querySelector("#DMMessagesScroll") as HTMLElement);
     if(div!=null) setTimeout(_=> div.scrollTop = div.scrollHeight, 20); 
