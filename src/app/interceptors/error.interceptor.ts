@@ -65,6 +65,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(err.error["error"] == "YoureBanned") this.alert.openAlertInfo(AlertInfoType.YOUREBANNED);
             else if(err.error["error"] == "GroupBanned") this.alert.openAlertInfo(AlertInfoType.GROUPBANNED);
             else if(err.error["error"] == "DeleteRequested") this.alert.openAlertInfo(AlertInfoType.DELETEREQUEST);
+            else if(err.error["error"] == "recvNotExist") this.alert.openAlertInfo(AlertInfoType.RECVNOTEXIST);
         }
         else if(err.status == 400 && !err.error) this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);

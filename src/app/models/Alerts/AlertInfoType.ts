@@ -268,5 +268,12 @@ export enum AlertInfoType{
      * but he is already "register" but he had ask for
      * a account delete
      */
-    DELETEREQUEST = "DELETEREQUEST"
+    DELETEREQUEST = "DELETEREQUEST",
+
+    /**
+     * @summary Info message when an admin tries to
+     * create direct conversation and the receiver user
+     * doesn't exist
+     */
+    RECVNOTEXIST = "RECVNOTEXIST"
   }

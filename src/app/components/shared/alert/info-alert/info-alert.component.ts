@@ -445,6 +445,13 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.RECVNOTEXIST:{
+        msg = [
+          "El usuario con el que intentas crear una conversación directa no existe.",
+          "", ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
