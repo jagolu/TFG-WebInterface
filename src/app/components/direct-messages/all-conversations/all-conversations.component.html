@@ -1,28 +1,24 @@
 <form [formGroup]="createDMForm">
   <div class="row justify-content-center mb-2">
       <input *ngIf="isAdmin()" type="text" class="col-lg-6 col-12 form-control" (change)="findDM()" (keyup)="findDM()"
-          placeholder="Nombre de usuario o email" id="findUserDMId">
-  </div>
-  <div class="row justify-content-center mb-2"  *ngIf="isAdmin()">
-      <select class="custom-select col-lg-6 col-12" id="selectSuggsUserIdDMSearch" (change)="changeInputSelect()">
-        <option selected value="invalid"></option>
-        <option *ngFor="let sug of suggestions; let i = index" value="{{sug.email}}">{{sug.username}}&nbsp;&nbsp;{{sug.email}}</option>
-      </select>
+          placeholder="Nombre de usuario o email" list="suggest" formControlName="receiver">
+      <datalist id="suggest">
+        <option [value]="sug.email" *ngFor="let sug of suggestions">{{sug.username}}----{{sug.email}}</option>
+      </datalist>
   </div>
   <div class="row justify-content-center mb-2">
     <input type="text" class="col-lg-6 col-12 form-control" placeholder="Titulo para la disputa" formControlName="title">
   </div>
   <div class="row justify-content-center mb-5">
       <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="createDMTitle()" 
-        [disabled]="!createDMForm.valid || !validSelect">Crear disputa</button>
+        [disabled]="!createDMForm.valid">Crear disputa</button>
   </div>
 </form >
 <ul class="list-group" *ngIf="dmTitles.length > 0" >
   <cdk-virtual-scroll-viewport itemSize="179px" style="height: 600px">
     <li class="list-group-item" *cdkVirtualFor="let dm of dmTitles" [ngClass]="{'closedConv': dm.closed}">
       <div class="row">      
-        <div class="col-6 "><h3>{{dm.receiver}}</h3></div>
-        <div class="col-lg-4 col-6">{{dm.emailReceiver}}</div>
+        <div class="col-12 col-lg-10 "><h3 class="d-inline-block">{{dm.receiver}}</h3>&nbsp;&nbsp;<small>{{dm.emailReceiver}}</small></div>
         <div class="col-lg-2 col-12 text-right"><small>{{dm.lastUpdate | chatTime}}</small></div>
       </div>
       <hr class="mt-0">
@@ -35,7 +31,7 @@
       </div>
       <div class="row justify-content-between">
         <div class="col-lg-4 col-12 mt-4 "><h4 *ngIf="dm.closed" style="color:red">Cerrada</h4></div>
-        <a class="float-right mt-4 btn btn-outline-primary col-lg-4 col-12" [routerLink]="['/directConversation/'+dm.id]">Ver</a>
+        <a class="float-right mt-4 btn btn-outline-dark col-lg-4 col-12" [routerLink]="['/directConversation/'+dm.id]">Ver</a>
       </div>  
     </li>
   </cdk-virtual-scroll-viewport>
