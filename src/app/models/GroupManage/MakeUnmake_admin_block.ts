@@ -1,5 +1,5 @@
 export interface MakeUnmake_admin_block{
     publicid:string;
     groupName:string;
-    make_unmake:boolean;
+    make_unmake:Boolean;
 }
