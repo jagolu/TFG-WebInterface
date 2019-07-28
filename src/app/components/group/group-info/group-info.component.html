@@ -2,9 +2,9 @@
   <div class="col-sm-6 col-12">
 
     <h4 class="card-title">{{groupName}}</h4> 
-    <i class="card-text">Capacity: {{actualCapacity}}/{{maxCapacity}}</i>
+    <i class="card-text">Aforo: {{actualCapacity}}/{{maxCapacity}}</i>
     <br>
-    <i class="card-text">Creation date: {{createDate | onlyDatePipe}}</i>
+    <i class="card-text">Creado: {{createDate | onlyDatePipe}}</i>
 
   </div>
 </div>
@@ -12,16 +12,20 @@
 <div class="row justify-content-center">
     <div class="col-sm-6 col-12">
   
-    <h4 class="card-title">You</h4>
-    <i class="card-text">Are joined here since {{dateJoin | onlyDatePipe}}</i>
+    <h4 class="card-title">Tu</h4>
+    <i class="card-text">Desde {{dateJoin | onlyDatePipe}}</i>
     <br>
-    <i class="card-text" *ngIf="dateJoin!=dateRole || role!='GROUP_NORMAL'"
-      >Are with your actual role since {{dateRole | onlyDatePipe}}</i>
+    <i class="card-text">
+      <app-icon [Icon]="icon_crown" *ngIf="role=='GROUP_MAKER'"></app-icon>
+      <app-icon [Icon]="icon_wizard" *ngIf="role=='GROUP_ADMIN'"></app-icon>
+      <app-icon [Icon]="icon_user" *ngIf="role=='GROUP_NORMAL'"></app-icon>
+      desde {{dateRole | onlyDatePipe}}
+    </i>
   </div>
 </div>
 <hr>
 <div class="row justify-content-center">
   <div class="col-sm-6 col-12">
-    <button class="btn btn-danger w-100" (click)="leaveGroup()">Leave group</button>
+    <button class="btn btn-danger w-100" (click)="leaveGroup()">Abandonar</button>
   </div>
 </div>
