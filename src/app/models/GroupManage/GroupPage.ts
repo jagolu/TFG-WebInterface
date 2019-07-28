@@ -8,7 +8,6 @@ export interface GroupPage{
     name:string;
     dateJoin:string;
     dateRole:string;
-    canPutPassword : boolean;
     hasPassword : boolean;
     maxCapacity : number;
     actualCapacity: number;

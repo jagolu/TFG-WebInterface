@@ -10,7 +10,6 @@ import { GroupService } from 'src/app/services/restServices/group.service';
 })
 export class PasswordFormComponent implements OnInit {
 
-  public canPutPassword:boolean;
   public hasPassword:boolean;
   public setFirstPasswordForm:FormGroup;
   public removePasswordForm:FormGroup;
@@ -27,11 +26,9 @@ export class PasswordFormComponent implements OnInit {
   ngOnInit() {
     this.groupPage.info.subscribe(page=>{
       try{
-        this.canPutPassword = page.canPutPassword;
         this.hasPassword = page.hasPassword;
         this.groupName = page.name;
       }catch(Error){
-        this.canPutPassword = false;
         this.hasPassword = false;
       }
     });

@@ -76,7 +76,6 @@ export class GroupInfoService {
       "manageBets":[],
       "betsHistory": [],
       "bets":[],
-      "canPutPassword": false,
       "createDate": "",
       "dateJoin": "",
       "dateRole": "",
