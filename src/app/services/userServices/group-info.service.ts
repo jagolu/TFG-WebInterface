@@ -76,6 +76,7 @@ export class GroupInfoService {
       "manageBets":[],
       "betsHistory": [],
       "bets":[],
+      "weeklyPay": 0,
       "createDate": "",
       "dateJoin": "",
       "dateRole": "",

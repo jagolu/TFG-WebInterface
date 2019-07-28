@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Rest } from './Rest';
 import { LoadingService } from '../visualServices/loading.service';
-import { JoinGroup, MakeUnmake_admin_block, KickUser, GroupPage, ManagePassword, RemoveGroup } from 'src/app/models/models';
+import { JoinGroup, MakeUnmake_admin_block, KickUser, GroupPage, ManagePassword, RemoveGroup, ManageWeeklyPay } from 'src/app/models/models';
 import { SessionService } from '../userServices/session.service';
 import { GroupInfoService } from '../userServices/group-info.service';
 
@@ -228,6 +228,19 @@ export class GroupService extends Rest{
    */
   public removeGroup(order:RemoveGroup){
     this.postRequest(order, this.__groupPath+"RemoveGroup").subscribe(
+      _=> this.reloadGroups()
+    );
+  }
+
+  /**
+   * Changes the group pay
+   * 
+   * @access public
+   * @param {ManageWeeklyPay} order The order to manage the 
+   * weekly pay
+   */
+  public changeWeekPay(order:ManageWeeklyPay){
+    this.postRequest(order, this.__groupPath+"ManageWeekPay").subscribe(
       _=> this.reloadGroups()
     );
   }

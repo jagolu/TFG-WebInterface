@@ -17,6 +17,7 @@ export { IconModel } from './Icons/IconModel';
 export { JoinGroup } from './GroupManage/JoinGroup';
 export { MakeUnmake_admin_block } from './GroupManage/MakeUnmake_admin_block';
 export { GroupMemberAdmin } from './GroupManage/GroupMemberAdmin';
+export { ManageWeeklyPay } from './GroupManage/ManageWeeklyPay';
 export { GroupBet } from './Bets/GroupBet';
 export { GroupPage } from './GroupManage/GroupPage';
 export { KickUser } from './GroupManage/KickUser';

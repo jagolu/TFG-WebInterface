@@ -97,6 +97,7 @@ import { AllConversationsComponent } from './components/direct-messages/all-conv
 import { DirectConversationComponent } from './components/direct-messages/direct-conversation/direct-conversation.component';
 import { NotificationsNavComponent } from './components/shared/navbar/Notifications/notifications-nav/notifications-nav.component';
 import { NotificationsHeadComponent } from './components/shared/navbar/Notifications/notifications-head/notifications-head.component';
+import { WeeklyPayFormComponent } from './components/group/group-settings/weekly-pay-form/weekly-pay-form.component';
 
 
 
@@ -154,6 +155,7 @@ import { NotificationsHeadComponent } from './components/shared/navbar/Notificat
     DirectConversationComponent,
     NotificationsNavComponent,
     NotificationsHeadComponent,
+    WeeklyPayFormComponent,
   ],
   imports: [
     BrowserModule,

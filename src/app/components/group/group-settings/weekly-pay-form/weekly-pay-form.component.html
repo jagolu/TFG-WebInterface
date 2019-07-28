@@ -1,0 +1,24 @@
+<form [formGroup]="changeWeeklyPayForm" (ngSubmit)="changeWeekPay()">
+  <div class="form-group row justify-content-md-center">
+    <label class="col-lg-4 col-form-label">Nuevo pago semanal</label>
+    <div class="col-lg-4 mt-1">
+      <input class="form-control text-center mb-2" type="number" formControlName="newPay" min=100 max=2000 value={{actualPay}}
+              [ngClass]="{'is-invalid': !changeWeeklyPayForm.controls['newPay'].pristine && changeWeeklyPayForm.controls['newPay'].errors}">
+    </div>
+    <div class="col-lg-4 col-12">
+      <button class="btn btn-outline-dark w-100" type="submit"
+      [disabled]="!changeWeeklyPayForm.valid">Cambiar pago</button>
+    </div>
+  </div>
+</form>
+<small class="text-danger text-center"
+        *ngIf="changeWeeklyPayForm.controls['newPay'].errors && 
+        !changeWeeklyPayForm.controls['newPay'].pristine && 
+        changeWeeklyPayForm.controls['newPay'].errors.min"
+>Mínimo de 100 monedas de pago<br></small>
+<small class="text-danger text-center"
+        *ngIf="changeWeeklyPayForm.controls['newPay'].errors && 
+        !changeWeeklyPayForm.controls['newPay'].pristine && 
+        changeWeeklyPayForm.controls['newPay'].errors.max"
+>Maximo de 2000 monedas de pago<br></small>
+<hr>

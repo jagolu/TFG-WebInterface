@@ -10,6 +10,7 @@ export interface GroupPage{
     dateRole:string;
     hasPassword : boolean;
     maxCapacity : number;
+    weeklyPay:number;
     actualCapacity: number;
     createDate:string;
     bets:GroupBet[];
