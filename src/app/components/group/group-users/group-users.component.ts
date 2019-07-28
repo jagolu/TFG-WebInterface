@@ -97,10 +97,10 @@ export class GroupUsersComponent implements OnInit{
 
   /**
    * @constructor
-   * @param {GroupService} groupS To the group http requests
-   * @param {GroupInfoService} groupPage To get the members of the group
+   * @param {GroupService} __groupS To the group http requests
+   * @param {GroupInfoService} __groupPage To get the members of the group
    */
-  constructor(private groupS:GroupService, private groupPage:GroupInfoService) { }
+  constructor(private __groupS:GroupService, private __groupPage:GroupInfoService) { }
 
   /**
    * Get the info of the group
@@ -108,7 +108,7 @@ export class GroupUsersComponent implements OnInit{
    * @OnInit
    */
   ngOnInit(){
-    this.groupPage.info.subscribe(page=>{
+    this.__groupPage.info.subscribe(page=>{
       try{
         this._groupName = page.name;
         this.members = page.members;
@@ -133,7 +133,7 @@ export class GroupUsersComponent implements OnInit{
    * @param {Boolean} make True to give the role, false to remove it
    */
   public manageAdmin(publicUserId:string, make:Boolean){
-    this.groupS.makeAdmin({
+    this.__groupS.makeAdmin({
       "publicid" : publicUserId,
       "groupName": this._groupName,
       "make_unmake": make
@@ -147,7 +147,7 @@ export class GroupUsersComponent implements OnInit{
    * @param {string} publicUserId The public id of the user
    */
   public kick(publicUserId:string){
-    this.groupS.kickUser({
+    this.__groupS.kickUser({
       "groupName": this._groupName,
       "publicId": publicUserId
     });
@@ -161,7 +161,7 @@ export class GroupUsersComponent implements OnInit{
    * @param {Boolean} block True to block the user, false to unblock him
    */
   public block(publicUserId:string, block:Boolean){
-    this.groupS.blockUser({
+    this.__groupS.blockUser({
       "groupName": this._groupName,
       "publicid": publicUserId,
       "make_unmake": block
