@@ -459,6 +459,13 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESSFULLMANAGEPASSWORD:{
+        msg = [
+          "Contraseña del grupo cambiada correctamente",
+          "", ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
