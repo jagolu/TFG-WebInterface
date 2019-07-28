@@ -452,6 +452,13 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.SUCCESSFULLWEEKLYPAYCHANGE:{
+        msg = [
+          "Pagos semanales cambiados correctamente.",
+          "", ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

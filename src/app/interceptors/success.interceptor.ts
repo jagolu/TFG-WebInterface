@@ -69,6 +69,7 @@ export class SuccessInterceptor implements HttpInterceptor {
         else if(ok.url.includes("Bet/DoFootballBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLDOFOOTBALLBET);
         else if(ok.url.includes("Bet/CancelUserFootballBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCANCELFOOTBALLBET);
         else if(ok.url.includes("DirectMessages/CreateDMTitle")) this.alert.openAlertInfo(AlertInfoType.DMCREATED);
+        else if(ok.url.includes("Group/ManageWeekPay")) this.alert.openAlertInfo(AlertInfoType.SUCCESSFULLWEEKLYPAYCHANGE);
     }
 
 /*------------------------------------ REDIRECT------------------------------ */

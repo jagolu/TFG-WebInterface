@@ -275,5 +275,11 @@ export enum AlertInfoType{
      * create direct conversation and the receiver user
      * doesn't exist
      */
-    RECVNOTEXIST = "RECVNOTEXIST"
+    RECVNOTEXIST = "RECVNOTEXIST",
+
+    /**
+     * @summary Info message when the group maker changes
+     * the weekly pay
+     */
+    SUCCESSFULLWEEKLYPAYCHANGE = "SUCCESSFULLWEEKLYPAYCHANGE"
   }
