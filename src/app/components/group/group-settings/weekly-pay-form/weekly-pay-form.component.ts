@@ -10,15 +10,57 @@ import { GroupService } from 'src/app/services/restServices/group.service';
 })
 export class WeeklyPayFormComponent implements OnInit {
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * The form to change the weekly pay
+   * 
+   * @access public
+   * @var {FormGroup} changeWeeklyPayForm
+   */
   public changeWeeklyPayForm:FormGroup;
 
+  /**
+   * The actual weekly pay of the group
+   * 
+   * @access private
+   * @var {number} _actualPay
+   */
   private _actualPay:number;
+
+  /**
+   * The name of the group
+   * 
+   * @access private
+   * @var {string}  _groupName
+   */
   private _groupName:string;
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {GroupInfoService} __groupInfoS To get the info of the group
+   * @param {GroupService} __groupS To do the group request
+   */
   constructor(private __groupInfoS:GroupInfoService, private __groupS:GroupService) { 
     this.initializeForm();
   }
 
+  /**
+   * Get the info of the group
+   * 
+   * @OnInit
+   */
   ngOnInit() {
     this.__groupInfoS.info.subscribe(page=>{
       try{
@@ -29,6 +71,18 @@ export class WeeklyPayFormComponent implements OnInit {
     });
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Change the weekly pay
+   * 
+   * @access public
+   */
   public changeWeekPay(){
     this.__groupS.changeWeekPay({
       groupName: this._groupName,
@@ -37,6 +91,18 @@ export class WeeklyPayFormComponent implements OnInit {
     this.resetForm();
   }
 
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Initializes the form
+   * 
+   * @access private
+   */
   private initializeForm(){
     this.changeWeeklyPayForm = new FormGroup({
       "newPay": new FormControl(
@@ -50,6 +116,11 @@ export class WeeklyPayFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Resets the form
+   * 
+   * @access private
+   */
   private resetForm(){
     this.changeWeeklyPayForm.reset({'newPay' : ""});
   }
