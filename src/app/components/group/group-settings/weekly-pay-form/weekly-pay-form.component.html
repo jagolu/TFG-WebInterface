@@ -2,7 +2,7 @@
   <div class="form-group row justify-content-md-center">
     <label class="col-lg-4 col-form-label">Nuevo pago semanal</label>
     <div class="col-lg-4 mt-1">
-      <input class="form-control text-center mb-2" type="number" formControlName="newPay" min=100 max=2000 value={{actualPay}}
+      <input class="form-control text-center mb-2" type="number" formControlName="newPay" min=100 max=2000 
               [ngClass]="{'is-invalid': !changeWeeklyPayForm.controls['newPay'].pristine && changeWeeklyPayForm.controls['newPay'].errors}">
     </div>
     <div class="col-lg-4 col-12">

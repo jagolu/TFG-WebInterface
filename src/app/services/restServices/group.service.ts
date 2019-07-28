@@ -241,7 +241,7 @@ export class GroupService extends Rest{
    */
   public changeWeekPay(order:ManageWeeklyPay){
     this.postRequest(order, this.__groupPath+"ManageWeekPay").subscribe(
-      _=> this.reloadGroups()
+      (page:GroupPage) => this.__groupInfoS.updateInfo(page)
     );
   }
 

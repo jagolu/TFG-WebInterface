@@ -10,9 +10,9 @@ import { GroupService } from 'src/app/services/restServices/group.service';
 })
 export class WeeklyPayFormComponent implements OnInit {
 
-  public actualPay:number = 0;
   public changeWeeklyPayForm:FormGroup;
 
+  private _actualPay:number;
   private _groupName:string;
 
   constructor(private __groupInfoS:GroupInfoService, private __groupS:GroupService) { 
@@ -22,10 +22,10 @@ export class WeeklyPayFormComponent implements OnInit {
   ngOnInit() {
     this.__groupInfoS.info.subscribe(page=>{
       try{
-        this.actualPay = page.weeklyPay;
+        this._actualPay = page.weeklyPay;
         this._groupName = page.name;
         this.initializeForm();
-      }catch(Error){ this.actualPay = 0; }
+      }catch(Error){ this._actualPay = 0; }
     });
   }
 
@@ -40,7 +40,7 @@ export class WeeklyPayFormComponent implements OnInit {
   private initializeForm(){
     this.changeWeeklyPayForm = new FormGroup({
       "newPay": new FormControl(
-        "",
+        this._actualPay,
         [
           Validators.required,
           Validators.min(100),
