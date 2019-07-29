@@ -11,6 +11,7 @@ export class FootballBetCardInfoComponent{
 
   @Input() bet: GroupBet;
   @Input() betId:string = "";
+  @Input() ended:Boolean = true;
 
   constructor(private alertS:AlertService) { }
 
