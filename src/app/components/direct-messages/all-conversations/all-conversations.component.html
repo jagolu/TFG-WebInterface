@@ -1,17 +1,23 @@
 <form [formGroup]="createDMForm">
   <div class="row justify-content-center mb-2">
-      <input *ngIf="isAdmin()" type="text" class="col-lg-6 col-12 form-control" (change)="findDM()" (keyup)="findDM()"
-          placeholder="Nombre de usuario o email" list="suggest" formControlName="receiver">
-      <datalist id="suggest">
-        <option [value]="sug.email" *ngFor="let sug of suggestions">{{sug.username}}----{{sug.email}}</option>
-      </datalist>
+      <div class="col-lg-6 col-12">
+        <input *ngIf="isAdmin()" type="text" class="form-control" (change)="findDM()" (keyup)="findDM()"
+            placeholder="Nombre de usuario o email" list="suggest" formControlName="receiver">
+        <datalist id="suggest">
+          <option [value]="sug.email" *ngFor="let sug of suggestions">{{sug.username}}----{{sug.email}}</option>
+        </datalist>
+      </div>
   </div>
   <div class="row justify-content-center mb-2">
-    <input type="text" class="col-lg-6 col-12 form-control" placeholder="Titulo para la disputa" formControlName="title">
+    <div class="col-lg-6 col-12">
+      <input type="text" class="form-control" placeholder="Titulo para la disputa" formControlName="title">
+    </div>
   </div>
   <div class="row justify-content-center mb-5">
-      <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="createDMTitle()" 
-        [disabled]="!createDMForm.valid">Crear disputa</button>
+    <div class="col-lg-6 col-12">
+      <button class="btn btn-outline-dark w-100" (click)="createDMTitle()" 
+        [disabled]="!createDMForm.valid">Crear disputa</button>      
+    </div>
   </div>
 </form >
 <ul class="list-group" *ngIf="dmTitles.length > 0" >
