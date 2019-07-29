@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GroupService } from 'src/app/services/restServices/group.service';
+import { IconModel, Icons } from 'src/app/models/models';
 
 @Component({
   selector: 'app-password-form',
@@ -57,6 +58,30 @@ export class PasswordFormComponent implements OnInit {
    * @var {Boolean} equalPasswords
    */
   public equalPasswords:Boolean;
+
+  /**
+   * The type of the password input
+   * 
+   * @access public
+   * @var {string} passwordType
+   */
+  public passwordType:string = "password";
+
+  /**
+   * The icon of an opened/closed eye
+   * 
+   * @access public
+   * @var {IconModel} icon_eye
+   */
+  public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
+
+  /**
+   * The tag of the eye icon
+   * 
+   * @access public
+   * @var {any} eye
+   */
+  @ViewChild('eyeIconChangeGroupPassword') eye;
 
   /**
    * The name of the group
@@ -126,7 +151,11 @@ export class PasswordFormComponent implements OnInit {
   public changePassword(){
     let newPass = this.rePasswordForm.controls["newPassword"].value;
     let oldPass = this.rePasswordForm.controls["oldPassword"].value;
-    this.setPassword(newPass, oldPass);
+    this.setPassword(newPass, oldPass);      
+    if(this.passwordType != "password"){
+      this.eye.eR.nativeElement.click();
+      this.eye.icon.style.color = "black"
+    }
     this.resetForm();
   }
 
@@ -152,6 +181,15 @@ export class PasswordFormComponent implements OnInit {
     let repeatPassword = !this.hasPassword ? this.setFirstPasswordForm.controls['repeatPassword'].value : 
                                               this.rePasswordForm.controls['repeatPassword'].value;
     this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
+  }
+
+  /**
+   * Changes the password input type
+   * 
+   * @access public
+   */
+  public watchPassword(){
+    this.passwordType = this.passwordType == "text" ? "password" : "text";
   }
 
 
@@ -212,6 +250,7 @@ export class PasswordFormComponent implements OnInit {
    * @access private
    */
   private resetForm(){
+    this.passwordType = "password";
     this.setFirstPasswordForm.reset({
       'newPassword' : "",
       'repeatPassword' : ""

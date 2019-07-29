@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/restServices/user.service';
 import { UserInfoService } from 'src/app/services/userServices/user-info.service';
-import { UserInfo } from 'src/app/models/models';
+import { UserInfo, IconModel, Icons } from 'src/app/models/models';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
 
@@ -83,6 +83,30 @@ export class UserInfoFormComponent implements OnInit {
    * @var {string} username
    */
   public username:string;
+
+  /**
+   * The type of the password input
+   * 
+   * @access public
+   * @var {string} passwordType
+   */
+  public passwordType:string="password";
+
+  /**
+   * A icon of a open & closed eye
+   * 
+   * @access public
+   * @var {IconModel} icon_eye
+   */
+  public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
+
+  /**
+   * The tag of the eye icon
+   * 
+   * @access public
+   * @var {any} eye
+   */
+  @ViewChild('changeUserPasswordEye') eye;
 
   /**
    * To know if there is any file selected, also
@@ -242,6 +266,15 @@ export class UserInfoFormComponent implements OnInit {
     return this.__sessionS.isAdmin();
   }
 
+  /**
+   * Changes the password input type
+   * 
+   * @access public
+   */
+  public watchPassword(){
+    this.passwordType = this.passwordType=="text" ? "password": "text";
+  }
+
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
@@ -319,6 +352,11 @@ export class UserInfoFormComponent implements OnInit {
    * @access private
    */
   private resetForm(){
+    if(this.passwordType != "password"){
+      this.eye.eR.nativeElement.click();
+      this.eye.icon.style.color = "black"
+    }
+    this.passwordType = "password";
     this.nicknameForm.reset({
       "nickname": this.username
     });
