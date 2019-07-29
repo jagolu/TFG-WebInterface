@@ -455,7 +455,8 @@ export class InfoAlertComponent {
       case AlertInfoType.SUCCESSFULLWEEKLYPAYCHANGE:{
         msg = [
           "Pagos semanales cambiados correctamente.",
-          "", ""
+          "Las monedas de los miembros del grupo se han ajustado al nuevo pago semanal.", 
+          ""
         ];
         break;
       }
