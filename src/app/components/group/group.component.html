@@ -2,7 +2,7 @@
 
 <ul class="nav justify-content-end">
     <li class="nav-item">
-        <a class="nav-link active">
+        <a class="nav-link active" [ngClass]="{'text-danger': coins<=0}">
             {{coins}}
             <app-icon [Icon]="icon_coin"></app-icon>
         </a>
