@@ -86,6 +86,7 @@
                                     >La contraseña debe tener al menos una mayuscula, una minuscula y un número<br></small>
                                     <small class="text-danger"
                                           *ngIf=" !signUpForm.controls['password'].pristine && 
+                                                !signUpForm.controls['repeatPassword'].pristine &&
                                                 !passwordsAreEqual"
                                     >Las contraseñas no coinciden</small>
                               </div>
