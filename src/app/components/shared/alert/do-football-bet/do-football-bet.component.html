@@ -30,7 +30,7 @@
 
   <!-- Home/Away goals -->
   <div *ngIf="!show1X2">
-      <div class="col-12 text-center mb-3"><h5>{{timeMessage}}</h5></div>
+    <div class="col-12 text-center mb-3"><h5>{{timeMessage}}</h5></div>
     <div class="row mb-2">
       <label class="col-5 col-form-label">Equipo local</label>
       <div class="col-7">    
@@ -78,5 +78,5 @@
 
   <!-- SUBMIT BUTTON -->
   <button class="btn btn-outline-dark w-100 mt-1" type="submit"
-          [disabled]="!doAFootballBetForm.valid">Do the bet</button>
+          [disabled]="!doAFootballBetForm.valid">Apostar</button>
 </form>

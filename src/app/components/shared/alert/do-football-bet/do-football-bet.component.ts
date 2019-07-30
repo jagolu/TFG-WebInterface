@@ -146,17 +146,17 @@ export class DoFootballBetComponent{
    * The name of the group
    * 
    * @access private
-   * @var {string} groupName 
+   * @var {string} _groupName 
    */
-  private groupName:string;
+  private _groupName:string;
 
   /**
    * The id of the bet
    * 
    * @access private
-   * @var {string} bet
+   * @var {string} _bet
    */
-  private bet:string;
+  private _bet:string;
 
 
   //
@@ -193,7 +193,7 @@ export class DoFootballBetComponent{
         //The max what user can bet (the min value of the maxBet and the actual user coins)
         this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
         //The id of the bet
-        this.bet = bet.bet.bet;
+        this._bet = bet.bet.bet;
         //The message to correct time
         this.timeMessage = this.correctPart(bet.bet.typeBet.name);
         this.initializeForm();        
@@ -202,11 +202,11 @@ export class DoFootballBetComponent{
         this.show1X2 = this.jackpotBet = false;
         this.win_rate = this.min = this.max = 0;
         this.jackpot = this.user_coins = this.max_user = 0;
-        this.bet = null;
+        this._bet = null;
       }
 
     });
-    this.groupInfo.info.subscribe(group=>this.groupName = group.name);
+    this.groupInfo.info.subscribe(group=>this._groupName = group.name);
     this._alertS.reset.subscribe(
       reset=>{ if(reset) this.resetForm(); }
     );
@@ -329,8 +329,8 @@ export class DoFootballBetComponent{
    */
   private betReq(){
     this._betS.doFootballBet({
-      "groupName": this.groupName,
-      "footballBet": this.bet,
+      "groupName": this._groupName,
+      "footballBet": this._bet,
       "bet": this.doAFootballBetForm.controls["coinsBet"].value,
       "homeGoals": this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["homeGoals"].value),
       "awayGoals": this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["awayGoals"].value),
