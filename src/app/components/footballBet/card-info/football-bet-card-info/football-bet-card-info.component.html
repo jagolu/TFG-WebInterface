@@ -19,7 +19,7 @@
 <div class="row">
   <div class="col-lg-6 col-12 mt-3">
     <div class="row mb-1">
-      <div class="col-lg-6 col-12" [ngClass]="{'col-lg-6 col-12': !isJackpotBet(bet.typePay.name), 'col-12': isJackpotBet(bet.typePay.name)}">
+      <div [ngClass]="{'col-lg-6 col-12': !isJackpotBet(bet.typePay.name), 'col-12': isJackpotBet(bet.typePay.name)}">
         <div class="row">
           <div class="col-12 mb-2">Máximo dia para apostar</div>
           <div class="col-12">
