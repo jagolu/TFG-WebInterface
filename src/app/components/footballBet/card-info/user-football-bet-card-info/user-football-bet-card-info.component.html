@@ -1,51 +1,44 @@
 <div class="card m-2" *ngFor="let bet of userBet" style="cursor:default">
   <div class="card-header">
     <div class="row">
-      <div class="col-lg-9 col-12">{{name}} bet</div>
+      <div class="col-lg-9 col-12">
+        <span *ngIf="isWinnerBet(footballBet.typeBet.name)">Ganador de{{correctPart(footballBet.typeBet.name)}}: {{getWinnerWord(bet.winner)}}</span>
+        <span *ngIf="!isWinnerBet(footballBet.typeBet.name)">Resultado de{{correctPart(footballBet.typeBet.name)}}: {{bet.homeGoals}}-{{bet.awayGoals}}</span>
+      </div>
       <div class="col-lg-3 col-12 text-right"><span *ngIf="!bet.valid"><h6 class="text-danger">INVALID</h6></span></div>
     </div>
   </div>
   <div class="card-body">
     <div class="row">
-        <div [ngClass]="{'col-lg-3': lg_3(bet.valid, footballBet.typePay.name), 'col-lg-4': !lg_3(bet.valid, footballBet.typePay.name)}"
-          class="col-12 text-center mb-2" *ngIf="isWinnerBet(footballBet.typeBet.name)">
-          {{correctPart(footballBet.typeBet.name)}} winner: {{getWinnerWord(bet.winner)}}
-        </div>
-        <div [ngClass]="{'col-lg-3': lg_3(bet.valid, footballBet.typePay.name), 'col-lg-4': !lg_3(bet.valid, footballBet.typePay.name)}"
-          class="col-12 text-center mb-2" *ngIf="!isWinnerBet(footballBet.typeBet.name)">
-          {{correctPart(footballBet.typeBet.name)}} result: {{bet.homeGoals}}-{{bet.awayGoals}}
-        </div>
-        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(footballBet.typePay.name)">
-          Bet: {{bet.bet}} <app-icon [Icon]="coin_icon"></app-icon>
+        <div class="col-12 text-center mb-2" *ngIf="!isJackpotBet(footballBet.typePay.name)"
+        [ngClass]="{'col-lg-3': bet.valid && !ended, 'col-lg-4': !bet.valid || ended}">
+          Apuesta: {{bet.bet}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
         <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!isJackpotBet(footballBet.typePay.name) && bet.valid && !ended">
-          Possible win: {{getWinRate(footballBet, bet)}} <app-icon [Icon]="coin_icon"></app-icon>
+          Ganancias posibles: {{getWinRate(footballBet, bet)}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
-        <div [ngClass]="{'col-lg-3': lg_3(bet.valid, footballBet.typePay.name), 'col-lg-4': !lg_3(bet.valid, footballBet.typePay.name)}"
-          class="col-12 text-center mb-2" *ngIf="isJackpotBet(footballBet.typePay.name)">
-          Jackpot: {{getJackpot(footballBet)}} <app-icon [Icon]="coin_icon"></app-icon>
+        <div class="col-lg-4 col-12 text-center mb-2" *ngIf="isJackpotBet(footballBet.typePay.name)">
+          Bote: {{getJackpot(footballBet)}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
-        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="ended && bet.valid">
-          Earnings: {{bet.earnings}} <app-icon [Icon]="coin_icon"></app-icon>
+        <div class="col-lg-4 col-12 text-center mb-2" *ngIf="ended && bet.valid">
+          Ganancias: {{bet.earnings}} <app-icon [Icon]="coin_icon"></app-icon>
         </div>
-        <div class="col-lg-3 col-12 text-center mb-2" *ngIf="!bet.valid">
-          Returned coins: {{howMuchMoneyBack(footballBet.typeBet.cancelRate, footballBet.typePay.cancelRate, bet.bet)}} 
+        <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!bet.valid">
+          Monedas devueltas: {{howMuchMoneyBack(footballBet.typeBet.cancelRate, footballBet.typePay.cancelRate, bet.bet)}} 
             <app-icon [Icon]="coin_icon"></app-icon>
         </div>
-        <div [ngClass]="{'col-lg-3': lg_3(bet.valid, footballBet.typePay.name), 'col-lg-4': !lg_3(bet.valid, footballBet.typePay.name)}"
+        <div [ngClass]="{'col-lg-3': !ended && !isJackpotBet(footballBet.typePay.name), 'col-lg-4': ended || isJackpotBet(footballBet.typePay.name)}"
             class="col-12 text-center mb-2" *ngIf="bet.valid">
-          Done since {{bet.dateDone|onlyDatePipe}}
+          Realizada: {{bet.dateDone|onlyDatePipe}}
         </div>
-        <div [ngClass]="{'col-lg-3': lg_3(bet.valid, footballBet.typePay.name), 'col-lg-4': !lg_3(bet.valid, footballBet.typePay.name)}"
-            class="col-12 text-center mb-2" *ngIf="!bet.valid">
-          Cancelled since {{bet.dateInvalid|onlyDatePipe}}
+        <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!bet.valid">
+          Cancelada: {{bet.dateInvalid|onlyDatePipe}}
         </div>
-    </div>
-    <div class="row justify-content-center mt-3" *ngIf="bet.valid && !ended">
-      <div class="col-lg-4 col-12">
+        <div class="col-lg-1 col-12" *ngIf="isJackpotBet(footballBet.typePay.name) && !ended && bet.valid"></div>
+        <div class="col-lg-3 col-12" *ngIf="bet.valid && !ended">
           <button class="btn btn-outline-danger w-100"
-            (click)="cancelUserFootballBet(footballBet, bet.bet, bet.userFootballBet)">Cancel bet</button>
-      </div>
+            (click)="cancelUserFootballBet(footballBet, bet.bet, bet.userFootballBet)">Cancelar apuesta</button>
+        </div>
     </div>
   </div>
 </div>

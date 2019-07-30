@@ -28,15 +28,15 @@ export class UserFootballBetCardInfoComponent{
   }
 
   public correctPart(type:string):string{
-    if(type.includes("FULLTIME")) return "Full match";
-    if(type.includes("FIRSTHALF")) return "First half";
-    if(type.includes("SECONDHALF")) return "Second half";
+    if(type.includes("FULLTIME")) return "l partido";
+    if(type.includes("FIRSTHALF")) return " la primera parte";
+    if(type.includes("SECONDHALF")) return " la segunda parte";
   }
 
   public getWinnerWord(winner:number){
-    if(winner==0) return "Draw (X)";
-    else if(winner==1) return "Home (1)";
-    else if(winner==2) return "Away (2)";
+    if(winner==0) return "Empate (X)";
+    else if(winner==1) return "Local (1)";
+    else if(winner==2) return "Visitante (2)";
   }
 
   public getJackpot(bet:GroupBet){
@@ -53,10 +53,5 @@ export class UserFootballBetCardInfoComponent{
 
   public cancelUserFootballBet(footballBet:GroupBet, coins:number, userFootballBet:string){
     this.alertS.cancelUserFootballBet(footballBet, coins, userFootballBet);
-  }
-
-  public lg_3(valid:boolean, type:string){
-    let part = valid && !this.isJackpotBet(type);
-    return !valid || part || this.ended;
   }
 }
