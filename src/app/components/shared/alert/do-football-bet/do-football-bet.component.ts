@@ -252,11 +252,16 @@ export class DoFootballBetComponent{
     else this.coins_bet = 0;
   }
 
+  /**
+   * Sets the message to the correct bet type
+   * 
+   * @access public
+   */
   public setMessage(){
     let winner:number = this.doAFootballBetForm.controls['winner'].value;
-    if(winner==1) this.info_winner_msg = "The home team will win";
-    else if(winner==2) this.info_winner_msg = "The away team will win";
-    else if(winner==0) this.info_winner_msg = "Both teams will draw";
+    if(winner==1) this.info_winner_msg = "El equipo local ganará";
+    else if(winner==2) this.info_winner_msg = "El equipo visitante ganará";
+    else if(winner==0) this.info_winner_msg = "Ambos equipos empatarán";
   }
 
 
@@ -272,6 +277,8 @@ export class DoFootballBetComponent{
    * @access private
    */
   private initializeForm(){
+    let coinsBetValue = this.jackpot ? {value: this.min, disabled: this.jackpotBet} : {value: ''};
+    
     this.doAFootballBetForm = new FormGroup({
       'winner': new FormControl(
         '',
@@ -296,7 +303,7 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        {value: this.min, disabled: this.jackpotBet},
+        coinsBetValue,
         [
           this.requiredNumber,
           Validators.min(this.min),
@@ -304,11 +311,10 @@ export class DoFootballBetComponent{
         ]
       )
     });
-    if(!this.show1X2) this.doAFootballBetForm.controls["coinsBet"].markAsDirty();
   }
 
   /**
-   * Reset the doAFootballBetForm
+   * Reset the coinsbet
    * 
    * @access private
    */
@@ -337,10 +343,10 @@ export class DoFootballBetComponent{
    * 
    * @access private
    * @param {FormControl} control The value of the input
-   * @return {[string]:boolean} The id of the error and the result if
+   * @returns {[string]:boolean} The id of the error and the result if
    * the input is empty, null otherwise
    */
-  private requiredNumber(control:FormControl):{[ret:string]:boolean}{
+  private requiredNumber(control:FormControl):{[ret:string]:Boolean}{
     let num = control.value;
     if(num == null || isNaN(num) || num%1 !== 0 || control.pristine) {
       return {"requiredNumber":true}
@@ -353,13 +359,12 @@ export class DoFootballBetComponent{
    * 
    * @access private
    * @param {string} type The type bet of the bet
-   * 
-   * @return {string} The correct message for the 
+   * @returns {string} The correct message for the 
    * correct part. 
    */
   private correctPart(type:string):string{
-    if(type.includes("FULLTIME")) return "Full match";
-    if(type.includes("FIRSTHALF")) return "First half";
-    if(type.includes("SECONDHALF")) return "Second half";
+    if(type.includes("FULLTIME")) return "Partido completo";
+    if(type.includes("FIRSTHALF")) return "Primera parte";
+    if(type.includes("SECONDHALF")) return "Segunda parte";
   }
 }
