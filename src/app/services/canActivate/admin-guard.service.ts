@@ -44,10 +44,9 @@ export class AdminGuardService implements CanActivate{
 
   /**
    * @constructor
-   * @param {Router} router 
-   * @param {SessionService} sessionS
+   * @param {SessionService} __sessionS To know if the user is an admin or not
    */
-  constructor(private sessionS:SessionService) { }
+  constructor(private __sessionS:SessionService) { }
 
 
   //
@@ -63,14 +62,13 @@ export class AdminGuardService implements CanActivate{
    * @param {ActivatedRouteSnapshot} next The url the user is trying to access
    * @return {Boolean} True if the user can access to the path, false otherwise
    */
-  public canActivate(next:ActivatedRouteSnapshot){
+  public canActivate(next:ActivatedRouteSnapshot): Boolean{
     let url = next.url.toString();
-    let isAdmin = this.sessionS.isAdmin();
+    let isAdmin = this.__sessionS.isAdmin();
      if(url.includes("group/")) return !isAdmin;
      if(url.includes("searchGroup")) return isAdmin;
      if(url.includes("searchUser")) return isAdmin;
      if(url.includes("joinNewGroup")) return !isAdmin;
-
 
     return true;
   }

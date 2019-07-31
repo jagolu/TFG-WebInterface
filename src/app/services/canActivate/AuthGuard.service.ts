@@ -44,9 +44,9 @@ export class AuthGuardService implements CanActivate{
 
   /**
    * @constructor
-   * @param {AuthenticationService} authService 
+   * @param {AuthenticationService} __authService To know if the user is already logged
    */
-  constructor(private authService:AuthenticationService) { }
+  constructor(private __authService:AuthenticationService) { }
 
 
   //
@@ -62,15 +62,15 @@ export class AuthGuardService implements CanActivate{
    * @param {ActivatedRouteSnapshot} next The url the user is trying to access
    * @return {Boolean} True if the user is authenticated, false otherwise
    */
-  public canActivate(next:ActivatedRouteSnapshot){
+  public canActivate(next:ActivatedRouteSnapshot):Boolean{
     let url = next.url.toString();
-    let isAuth = this.authService.IsAuthenticated();
+    let isAuth = this.__authService.IsAuthenticated();
     if(url.includes("signUp")) return !isAuth;
     if(url.includes("logIn")) return !isAuth;
     if(url.includes("emailVerification")) return !isAuth;
     if(url.includes("rememberPassword")) return !isAuth;
     if(url.includes("changePassword")) return !isAuth;
 
-    return this.authService.IsAuthenticated();
+    return this.__authService.IsAuthenticated();
   }
 }
