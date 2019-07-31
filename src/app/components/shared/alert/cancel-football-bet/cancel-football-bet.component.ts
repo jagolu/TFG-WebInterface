@@ -9,18 +9,51 @@ import { BetService } from 'src/app/services/restServices/bet.service';
 })
 export class CancelFootballBetComponent {
 
-  private betId:string = "";
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
 
-  constructor(private alertS:AlertService, private betS:BetService) { 
-    this.alertS.target.subscribe(id=> this.betId = id);
+  /**
+   * The id of the bet to cancel
+   * 
+   * @access private
+   * @var {string} _betId
+   */
+  private _betId:string = "";
+
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {AlertService} __alertS To close the alert
+   * @param {BetService} __betS To do the http request
+   */
+  constructor(private __alertS:AlertService, private __betS:BetService) { 
+    this.__alertS.target.subscribe(id=> this._betId = id);
   }
 
-  public close(){
-    this.alertS.hideAlert();
-  }
 
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+
+  /**
+   * Cancels the bet
+   * 
+   * @access public
+   */
   public cancel(){
-    this.alertS.hideAlert();
-    this.betS.cancelFootballBet(this.betId);
+    this.__alertS.hideAlert();
+    this.__betS.cancelFootballBet(this._betId);
   }
 }
