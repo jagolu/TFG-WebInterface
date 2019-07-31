@@ -9,14 +9,35 @@ import { BetsManager } from 'src/app/models/models';
 })
 export class ManageFootballBetComponent  {
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * The bets launched in the group
+   * 
+   * @access public
+   * @var {BetsManager[]} betsM
+   */
   public betsM:BetsManager[];
 
-  constructor(private groupPageS:GroupInfoService) { 
-    this.groupPageS.info.subscribe(page=>{
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {GroupInfoService} __groupInfoS To get the bets launched
+   */
+  constructor(private __groupInfoS:GroupInfoService) { 
+    this.__groupInfoS.info.subscribe(page=>{
       try{this.betsM = page.manageBets}
       catch(Error){this.betsM = []}
     });
   }
-
-  
 }
