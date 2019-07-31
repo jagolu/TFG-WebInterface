@@ -34,11 +34,14 @@
   </div>
 </div>
 <div class="card" *ngIf="clusters.length == 0">
-  <div class="row">
+  <div class="row" *ngIf="isAdmin()">
     <div class="col-lg-9 col-12"><h4 class="text-center">No hay mensajes en esta conversación</h4></div>  
     <div class="col-lg-3 col-12" *ngIf="thisIsAdmin">
       <button class="btn btn-outline-danger w-100" (click)="closeConversation()">Cerrar conversación</button>
     </div>
+  </div>
+  <div class="row" *ngIf="!isAdmin()">
+    <div class="col-12"><h4 class="text-center">No hay mensajes en esta conversación</h4></div>  
   </div>
 </div>
 <form [formGroup]="sendDMMessageForm" class="mt-3" *ngIf="room!=null && !room.closed">

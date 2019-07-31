@@ -4,6 +4,7 @@ import { DMTitle, SearchUserDM } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { AdminService } from 'src/app/services/restServices/admin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-conversations',
@@ -57,8 +58,10 @@ export class AllConversationsComponent {
    * @param {DirectMessagesService} __dmS To do the direct messages requests
    * @param {SessionService} __sessionS To know if the current user is an admin or not
    * @param {AdminService} __adminS To search the users
+   * @param {Router} __router To redirect the user after creating a new DM
    */
-  constructor(private __dmS:DirectMessagesService, private __sessionS:SessionService, private __adminS:AdminService) { 
+  constructor(private __dmS:DirectMessagesService, private __sessionS:SessionService, 
+              private __adminS:AdminService, private __router:Router) { 
     this.__dmS.loadDMTitles().subscribe((dmS:DMTitle[])=> this.dmTitles = dmS);
     this.initializeForm();
   }
@@ -81,8 +84,7 @@ export class AllConversationsComponent {
     this.__dmS.launchDMTitle({
       "title": title,
       "emailReceiver": receiver
-    }).subscribe((dmS:DMTitle[])=> this.dmTitles = dmS);
-    this.resetForm();
+    }).subscribe(dmId=>this.__router.navigate(['directConversation', dmId]));
   }
 
   /**
@@ -138,15 +140,5 @@ export class AllConversationsComponent {
         ]
       )
     });
-  }
-
-  /**
-   * Resets the form and the select input
-   * 
-   * @access private
-   */
-  private resetForm(){
-    this.createDMForm.reset({"title": "", "receiver": ""});
-    this.suggestions = [];
   }
 }

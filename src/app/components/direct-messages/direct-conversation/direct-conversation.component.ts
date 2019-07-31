@@ -143,6 +143,18 @@ export class DirectConversationComponent implements AfterViewChecked {
     this.resetForm();
   }
 
+  /**
+   * Says if the current user is
+   * an admin
+   * 
+   * @access public
+   * @returns {Boolean} True if the current user
+   * is an admin, false otherwise
+   */
+  public isAdmin():Boolean{
+    return this.__sessionS.isAdmin();
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────
