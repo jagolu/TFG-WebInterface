@@ -11,7 +11,7 @@
           <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
         </div>
         <div class="col-lg-3 col-12 text-right my-auto" *ngIf="!isValid(bet.ownBet)">
-          <h2 class="text-danger">INVALID</h2>
+          <h2 class="text-danger">INVALIDA</h2>
         </div>
       </div>
     </div>
@@ -29,5 +29,5 @@
 </div>
 
 <div *ngIf="bets.length == 0">
-  <p class="h3">You don't have active bets</p>
+  <p class="h3">No tienes apuestas activas</p>
 </div>
