@@ -122,7 +122,7 @@ export class AlertService {
    * The behaviour to fill the alert with an object info
    * 
    * @access private
-   * @var {BehaviorSubject<DoAFootballBet>} __objectInfo
+   * @var {BehaviorSubject<any>} __objectInfo
    */
   private __objectInfo = new BehaviorSubject<any>(null);
 
@@ -265,16 +265,16 @@ export class AlertService {
    * 
    * @param {GroupBet} bet The info of the bet
    * @param {number} user_coins The coins bet by the user
-   * @param {string} userFootballBet The id of the userFootballBet
+   * @param {string} userFootballBetId The id of the userFootballBet
    */
-  public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBet:string){
-    this.setTitle("You are going to cancel your bet!");
+  public cancelUserFootballBet(bet:GroupBet, user_coins:number, userFootballBetId:string){
+    this.setTitle("Vas a cancelar tu apuesta!!");
     this.changeAlertMode(AlertMode.CANCELUSERFOOTBALLBET);
     this.__objectInfo.next({
       "bet":bet,
       "userCoins": user_coins
     });
-    this.setTarget(userFootballBet);
+    this.setTarget(userFootballBetId);
     this.openAlert();
   }
 
