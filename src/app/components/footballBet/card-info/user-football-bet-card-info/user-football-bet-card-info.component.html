@@ -36,7 +36,7 @@
         </div>
         <div class="col-lg-1 col-12" *ngIf="isJackpotBet(footballBet.typePay.name) && !ended && bet.valid"></div>
         <div class="col-lg-3 col-12" *ngIf="bet.valid && !ended">
-          <button class="btn btn-outline-danger w-100"
+          <button class="btn btn-danger w-100"
             (click)="cancelUserFootballBet(footballBet, bet.bet, bet.userFootballBet)">Cancelar apuesta</button>
         </div>
     </div>
