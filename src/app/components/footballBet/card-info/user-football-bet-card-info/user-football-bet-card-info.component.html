@@ -5,7 +5,7 @@
         <span *ngIf="isWinnerBet(footballBet.typeBet.name)">Ganador de{{correctPart(footballBet.typeBet.name)}}: {{getWinnerWord(bet.winner)}}</span>
         <span *ngIf="!isWinnerBet(footballBet.typeBet.name)">Resultado de{{correctPart(footballBet.typeBet.name)}}: {{bet.homeGoals}}-{{bet.awayGoals}}</span>
       </div>
-      <div class="col-lg-3 col-12 text-right"><span *ngIf="!bet.valid"><h6 class="text-danger">INVALID</h6></span></div>
+      <div class="col-lg-3 col-12 text-right"><span *ngIf="!bet.valid"><h6 class="text-danger">INVALIDA</h6></span></div>
     </div>
   </div>
   <div class="card-body">

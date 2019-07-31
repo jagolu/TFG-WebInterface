@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EndedFootballBet, HistoryUserFootballBet, GroupBet, IconModel, Icons } from 'src/app/models/models';
+import { HistoryUserFootballBet, GroupBet, IconModel, Icons } from 'src/app/models/models';
 import { MoneyBack } from 'src/app/models/Bets/MoneyBack';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
@@ -20,9 +20,9 @@ export class UserFootballBetCardInfoComponent{
    * The user bet to see
    * 
    * @access public
-   * @var {EndedFootballBet[]} userBet
+   * @var {HistoryUserFootballBet[]} userBet
    */
-  @Input() userBet:EndedFootballBet[] = [];
+  @Input() userBet:HistoryUserFootballBet[] = [];
 
   /**
    * The footballbet event that the user bet
@@ -31,7 +31,7 @@ export class UserFootballBetCardInfoComponent{
    * @access public
    * @var {GroupBet[]} footballBet
    */
-  @Input() footballBet:GroupBet[] = [];
+  @Input() footballBet:GroupBet = null;
 
   /**
    * Says if the football bet has ended
