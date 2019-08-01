@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, HostListener, ɵConsole } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
-import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage } from 'src/app/models/models';
+import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage, LaunchFootballBetManager } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 
@@ -35,7 +35,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   public width:number;
 
     //
-    // ─── EXPLAANTION BET VARS ────────────────────────────────────────
+    // ─── EXPLANATION BET VARS ────────────────────────────────────────
     //
   /**
    * To show the explanation of the 
@@ -222,41 +222,61 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    * The name of the group
    * 
    * @access private
-   * @var {string} groupName
+   * @var {string} _groupName
    */
-  private groupName:string = null;
+  private _groupName:string = null;
 
   /**
    * The selected match for do the bet
    * 
    * @access private
-   * @var {FootballMatch} match
+   * @var {FootballMatch} _match
    */
-  private match:FootballMatch = null;
+  private _match:FootballMatch = null;
 
   /**
    * The bet type selected for do the bet
    * 
    * @access private
-   * @var {NameWinRate} betType
+   * @var {NameWinRate} _betType
    */
-  private betType:NameWinRate = null;
+  private _betType:NameWinRate = null;
 
   /**
    * The price type selected for do the bet
    * 
    * @access private
-   * @var {NameWinRate} priceType
+   * @var {NameWinRate} _priceType
    */
-  private priceType:NameWinRate = null;
+  private _priceType:NameWinRate = null;
   
   /**
    * The actual coins of the user
    * 
    * @access private
-   * @var {number} userCoins
+   * @var {number} _userCoins
    */
-  private userCoins:number = 0;
+  private _userCoins:number = 0;
+
+  //
+  // ──────────────────────────────────────────────────────────── ALL THE TYPES ─────
+  //
+
+  /**
+   * All the football bet types
+   * 
+   * @access private
+   * @var {NameWinRate[]} _typeFootballBets
+   */
+  private _typeFootballBets:NameWinRate[];
+
+  /**
+   * All the type pays
+   * 
+   * @access public
+   * @var {NameWinRate[]} typePays
+   */
+  public typePays:NameWinRate[];
 
 
   //
@@ -267,21 +287,21 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   
   /**
    * @constructor
-   * @param {GroupInfoService} groupPageS For get the available bets info
-   * @param {BetService} betS For launch de bet
-   * @param {AlertService} alertS For show the alert when a user tries to launch
+   * @param {GroupInfoService} __groupInfoS For get the available bets info
+   * @param {BetService} __betS For launch de bet
+   * @param {AlertService} __alertS For show the alert when a user tries to launch
    * a bet with higher minimum bet than his coins
    */
-  constructor(private groupPageS:GroupInfoService, private betS:BetService, private alertS:AlertService) { 
+  constructor(private __groupInfoS:GroupInfoService, private __betS:BetService, private __alertS:AlertService) { 
     this.initializeForm();  
-    this.groupPageS.info.subscribe(page=>{
+    this.__groupInfoS.info.subscribe(page=>{
       try{
-        if(this.groupName != page.name && page.name.length > 1){
-          this.groupName = page.name;
-          this.userCoins = page.members[page.members.length-1].coins;
+        if(this._groupName != page.name && page.name.length > 1){
+          this._groupName = page.name;
+          this._userCoins = page.members[page.members.length-1].coins;
           let role = page.members ? page.members[page.members.length-1].role : "";
           //Only football matches and for the group maker
-          if(role == "GROUP_MAKER") this.getPageGroup(this.groupName);  
+          if(role == "GROUP_MAKER") this.getPageGroup(this._groupName);  
         }
       }
       catch(Error){}
@@ -299,7 +319,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    * @OnDestroy
    */
   ngOnDestroy(){
-    this.groupPageS.removeInfo();
+    this.__groupInfoS.removeInfo();
   }
 
   /**
@@ -326,24 +346,24 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   public launchBet(){
     let date = (document.querySelector("#newBet_allowedDates_select") as HTMLSelectElement).value;
 
-    this.betS.launchBet({
-      "groupName": this.groupName,
-      "matchDay": this.match.matchday,
-      "typeBet": this.betType.name,
-      "typePay": this.priceType.name,
+    this.__betS.launchBet({
+      "groupName": this._groupName,
+      "matchDay": this._match.matchday,
+      "typeBet": this._betType.name,
+      "typePay": this._priceType.name,
       "minBet": !this.type_jackpot_bet ? this.betForm.controls["minBet"].value : this.betForm.controls["exactBet"].value,
       "maxBet": !this.type_jackpot_bet ? this.betForm.controls["maxBet"].value : this.betForm.controls["exactBet"].value,
       "lastBetTime": new Date(date)
     }).subscribe(
       (page:GroupPage)=>{
-        this.groupPageS.updateInfo(page);
+        this.__groupInfoS.updateInfo(page);
         this.resetForm();
-        this.getPageGroup(this.groupName);
+        this.getPageGroup(this._groupName);
         this.newBet_competitionMatches_launched = false;
         (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
         (document.querySelector("#launchFootBallBetButton") as HTMLElement).click();
         (document.querySelector("#newBet_competitionSelect") as HTMLSelectElement).selectedIndex = 0;
-        this.getPageGroup(this.groupName);
+        this.getPageGroup(this._groupName);
       }
     );
   }
@@ -377,9 +397,9 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     let matchday = (document.querySelector("#newBet_competitionMatches_select") as HTMLSelectElement).selectedIndex-1;
     if(this.selectedMatch) (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex = 0;
     this.resetForm();
-    this.match = this.matches[matchday];
-    this.setAllowedDays(this.match);
-    this.allowedBets = this.match.allowedTypeBets;
+    this._match = this.matches[matchday];
+    this.setAllowedDays(this._match);
+    this.allowedBets = this.getAllowedTypeBets(this._match.allowedTypeBets);
     this.selectedMatch = true;
   }
 
@@ -394,8 +414,8 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     let type:NameWinRate = this.allowedBets[typeid];
     this.selectedBet = true;
     this.explanationBetType = type.description;
-    this.betType = type;
-    this.winRate = this.selectedPrice ? type.winRate + this.priceType.winRate : type.winRate;
+    this._betType = type;
+    this.winRate = this.selectedPrice ? type.winRate + this._priceType.winRate : type.winRate;
     this.addAllPriceType(this.allowedBets[typeid].name);  
   }
 
@@ -406,14 +426,14 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    * 
    * @access public
    */
-  public setPriceType(){    
+  public setPriceType(){
     let typeid = (document.querySelector("#newBet_priceType_select") as HTMLSelectElement).selectedIndex-1;
     let type:NameWinRate = this.allowedPays[typeid];
     this.type_jackpot_bet = type.name.includes("JACKPOT");
     this.selectedPrice = true;
     this.explanationPriceType = type.description;
-    this.priceType = type;
-    this.winRate = this.selectedBet ? type.winRate + this.betType.winRate : type.winRate;
+    this._priceType = type;
+    this.winRate = this.selectedBet ? type.winRate + this._betType.winRate : type.winRate;
     this.initializeForm();
   }
 
@@ -432,7 +452,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
       this.maxs = Array(100-minOut+1).fill(0).map((x,i)=>(i+minOut)*100);
       this.betForm.controls["maxBet"].setValue(0);
     }
-    if(min>this.userCoins) this.alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
+    if(min>this._userCoins) this.__alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
   }
 
   /**
@@ -442,7 +462,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    */
   public setExactBet(){
     let minMax = parseInt(this.betForm.controls["exactBet"].value);
-    if(minMax>this.userCoins) this.alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
+    if(minMax>this._userCoins) this.__alertS.openAlertInfo(AlertInfoType.BETHIGHERTHANYOURCOINS);
   }
 
   /**
@@ -484,7 +504,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   private addAllPriceType(betType:string){
     this.allowedPays = [];
     let winner = betType.includes("WINNER");
-    this.bets[0].allowedTypePays.forEach(x=>{
+    this.typePays.forEach(x=>{
       if(!x.name.includes("CLOSER") || !winner) this.allowedPays.push(x);
     });
     if(this.selectedPrice){
@@ -502,19 +522,22 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    * @param {string} name The name of the group 
    */
   private getPageGroup(name:string){
-    this.betS.getLaunchFootballBet(name).subscribe(
-      (bets:AvailableBet[])=> {
-        if(bets.length == 1 && bets[0].competition=="MaximunWeekBetsReached"){
-          this.bets = [];
-          this.errorMessage = "Has alcanzado el cupo máximo de apuestas que puedes lanzar esta semana.";
+    this.__betS.getLaunchFootballBet(name).subscribe(
+      (bets:LaunchFootballBetManager)=> {
+        this._typeFootballBets = bets.typeBets;
+        this.typePays = bets.typePays;
+
+        if(bets.competitionMatches.length == 1 && bets.competitionMatches[0].competition == "MaximunWeekBetsReached"){
+            this.bets = [];
+            this.errorMessage = "Has alcanzado el cupo máximo de apuestas que puedes lanzar esta semana.";
         }
-        else if(bets.length == 0){
+        else if(bets.competitionMatches.length > 0){
+          this.bets = bets.competitionMatches;
+        }
+        else{
           this.bets = [];
           this.errorMessage = "No hay apuestas disponibles esta semana.";
         }
-        else if(bets.length>0){
-          this.bets = bets;
-        } 
       }
     );
   }
@@ -567,8 +590,8 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     this.selectedMatch = false;
     this.selectedMaxDay = false;
     this.type_jackpot_bet = false;
-    this.betType = null;
-    this.priceType = null;
+    this._betType = null;
+    this._priceType = null;
     this.initializeForm();
   }
 
@@ -598,5 +621,22 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
       else break;
     }
     this.allowedDates.push(endDate.toISOString());
+  }
+
+  /**
+   * Gets all the objects NameWinRate for all
+   * the ids getted
+   * 
+   * @access private
+   * @param {string[]} typeBets The ids of the allowed type bets
+   */
+  private getAllowedTypeBets(typeBets:string[]){
+    let retTypes:NameWinRate[] = [];
+
+    this._typeFootballBets.forEach(t=>{
+      if(typeBets.some(tt => tt == t.id)) retTypes.push(t);
+    });
+
+    return retTypes;
   }
 }

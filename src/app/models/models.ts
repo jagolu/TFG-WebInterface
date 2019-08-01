@@ -27,6 +27,7 @@ export { ResetPassword } from './Identity/ResetPassword';
 export { FootballMatch } from  './Bets/FootballMatch';
 export { AvailableBet } from  './Bets/AvailableBet';
 export { NameWinRate } from  './Bets/NameWinRate';
+export { LaunchFootballBetManager } from  './Bets/LaunchFootballBetManager';
 export { LaunchFootballBet } from  './Bets/LaunchFootballBet';
 export { DoAFootballBet } from  './Bets/DoAFootballBet';
 export { UserFootballBet } from  './Bets/UserFootballBet';
