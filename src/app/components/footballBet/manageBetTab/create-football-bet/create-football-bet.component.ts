@@ -273,10 +273,10 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   /**
    * All the type pays
    * 
-   * @access public
-   * @var {NameWinRate[]} typePays
+   * @access private
+   * @var {NameWinRate[]} _typePays
    */
-  public typePays:NameWinRate[];
+  private _typePays:NameWinRate[];
 
 
   //
@@ -413,6 +413,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     let typeid = (document.querySelector("#newBet_betType_select") as HTMLSelectElement).selectedIndex-1;
     let type:NameWinRate = this.allowedBets[typeid];
     this.selectedBet = true;
+    this.selectedMaxDay = false;
     this.explanationBetType = type.description;
     this._betType = type;
     this.winRate = this.selectedPrice ? type.winRate + this._priceType.winRate : type.winRate;
@@ -504,7 +505,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
   private addAllPriceType(betType:string){
     this.allowedPays = [];
     let winner = betType.includes("WINNER");
-    this.typePays.forEach(x=>{
+    this._typePays.forEach(x=>{
       if(!x.name.includes("CLOSER") || !winner) this.allowedPays.push(x);
     });
     if(this.selectedPrice){
@@ -525,7 +526,7 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     this.__betS.getLaunchFootballBet(name).subscribe(
       (bets:LaunchFootballBetManager)=> {
         this._typeFootballBets = bets.typeBets;
-        this.typePays = bets.typePays;
+        this._typePays = bets.typePays;
 
         if(bets.competitionMatches.length == 1 && bets.competitionMatches[0].competition == "MaximunWeekBetsReached"){
             this.bets = [];

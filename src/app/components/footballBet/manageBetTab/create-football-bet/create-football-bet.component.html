@@ -49,7 +49,7 @@
                       <select class="form-control" *ngIf="selectedBet" id="newBet_priceType_select" 
                               (change)="setPriceType()" [ngClass]="{'border border-warning': !selectedPrice}">
                           <option selected disabled value="">Tipo de premio</option>
-                          <option *ngFor="let typePay of typePays"
+                          <option *ngFor="let typePay of allowedPays"
                             >{{typePay.name}}</option>
                       </select>               
                     </div>
@@ -86,9 +86,9 @@
                 <form [formGroup]="betForm" (ngSubmit)="launchBet()" *ngIf="selectedMaxDay">
                   <!-- MIN & MAX IF TYPE_PRICE == 'GROUP BET' -->
                   <div class="form-group row" *ngIf="!type_jackpot_bet">
-                    <label class="col-form-label col-lg-4 col-12">Apuesta mínima y máxima</label>
+                    <label class="col-form-label col-lg-6 col-12">Apuesta mínima y máxima</label>
                     <!-- MIN BET -->
-                    <div class="col-lg-4 col-6">
+                    <div class="col-lg-3 col-6">
                       <select class="form-control" formControlName="minBet" id="minBet" 
                               (change)="setMaxBet()" [ngClass]="{'border border-warning': !betForm.controls.minBet.valid}">
                         <option selected disabled value="0" >Apuesta mínima</option>
@@ -96,7 +96,7 @@
                       </select>
                     </div>
                     <!-- MAX BET -->
-                    <div class="col-lg-4 col-6">
+                    <div class="col-lg-3 col-6">
                       <select class="form-control" formControlName="maxBet" id="maxBet" 
                               (change)="setMinBet()" [ngClass]="{'border border-warning': !betForm.controls.maxBet.valid}">
                         <option selected disabled value="0" >Apuesta máxima</option>
@@ -148,7 +148,7 @@
             <select class="form-control" *ngIf="selectedBet" id="newBet_priceType_select" 
                     (change)="setPriceType()" [ngClass]="{'border border-warning': !selectedPrice}">
                 <option selected disabled value="">Tipo de premio</option>
-                <option *ngFor="let typePay of typePays"
+                <option *ngFor="let typePay of allowedPays"
                   >{{typePay.name}}</option>
             </select>               
           </div>
