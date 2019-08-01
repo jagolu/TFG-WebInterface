@@ -18,7 +18,7 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
  * @implements OnInit
  */
 export class CreateFootballBetComponent implements OnDestroy, OnInit {
-  
+
   //
   // ────────────────────────────────────────────────────────────  ──────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
@@ -364,7 +364,6 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
         (document.querySelector("#newBet_competitionMatches_button") as HTMLElement).click();
         (document.querySelector("#launchFootBallBetButton") as HTMLElement).click();
         (document.querySelector("#newBet_competitionSelect") as HTMLSelectElement).selectedIndex = 0;
-        this.getPageGroup(this._groupName);
       }
     );
   }
