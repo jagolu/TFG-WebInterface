@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AliveService } from 'src/app/services/restServices/alive.service';
 import { NotificationsService } from 'src/app/services/userServices/Hub/notifications.service';
 import { NotificationMessage, LoginNotification } from 'src/app/models/models';
@@ -6,7 +6,7 @@ import { NotificationMessage, LoginNotification } from 'src/app/models/models';
 @Component({
   selector: 'app-notifications-nav',
   templateUrl: './notifications-nav.component.html',
-  styles: []
+  styles: [`.whiteS {white-space: normal;}`]
 })
 /**
  * Class to the dropdown of the notifications
@@ -29,6 +29,14 @@ export class NotificationsNavComponent {
      * @var {NotificationMessage[]} notifications
      */
     public notifications:NotificationMessage[] = [];
+    
+    /**
+     * The screen width
+     * 
+     * @access public
+     * @var {number} width
+     */
+    public width:number;
 
 
     //
@@ -54,6 +62,16 @@ export class NotificationsNavComponent {
     //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
     // ──────────────────────────────────────────────────────────────────────────────────
     //
+
+      
+   /**
+    * Function to know the actual screen width
+    * 
+    * @param {any} event The event of resizing the screen
+    */
+    @HostListener('window:resize', ['$event']) onResize(event) {
+        this.width = window.innerWidth;
+    }
 
     /**
      * Mark one notification as "Read" and delete it
