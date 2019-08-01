@@ -18,6 +18,7 @@ import { AlertService } from 'src/app/services/visualServices/alert.service';
  * @implements OnInit
  */
 export class CreateFootballBetComponent implements OnDestroy, OnInit {
+  
   //
   // ────────────────────────────────────────────────────────────  ──────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
