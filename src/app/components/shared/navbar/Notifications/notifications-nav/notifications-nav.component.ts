@@ -37,8 +37,8 @@ export class NotificationsNavComponent {
      * @var {number} width
      */
     public width:number;
-
-
+  
+  
     //
     // ──────────────────────────────────────────────────────────────────────────
     //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
@@ -47,22 +47,22 @@ export class NotificationsNavComponent {
     
     /**
      * @constructor
-     * @param {AliveService} aliveS To get the unread notifications of the user
-     * @param {NotificationsService} notS To get the new incoming notifications
+     * @param {AliveService} __aliveS To get the unread notifications of the user
+     * @param {NotificationsService} __notS To get the new incoming notifications
      */
-    constructor(private aliveS:AliveService, private notS:NotificationsService){
-        this.aliveS.getNotifications().subscribe((n:LoginNotification)=>
-            this.notS.initialize(n.publicUserid, n.messages));
-
-        this.notS.notifications.subscribe(msgs=>this.notifications = msgs);
+    constructor(private __aliveS:AliveService, private __notS:NotificationsService){
+        this.__aliveS.getNotifications().subscribe((n:LoginNotification)=>
+            this.__notS.initialize(n.publicUserid, n.messages));
+  
+        this.__notS.notifications.subscribe(msgs=>this.notifications = msgs);
     }
-
+  
     //
     // ──────────────────────────────────────────────────────────────────────────────────
     //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
     // ──────────────────────────────────────────────────────────────────────────────────
     //
-
+  
       
    /**
     * Function to know the actual screen width
@@ -72,7 +72,7 @@ export class NotificationsNavComponent {
     @HostListener('window:resize', ['$event']) onResize(event) {
         this.width = window.innerWidth;
     }
-
+  
     /**
      * Mark one notification as "Read" and delete it
      * 
@@ -80,9 +80,9 @@ export class NotificationsNavComponent {
      * @param {NotificationMessage} not The notification to read
      */
     public watchNotification(not:NotificationMessage){
-        this.aliveS.readNotification(not.id).subscribe(_=>{
+        this.__aliveS.readNotification(not.id).subscribe(_=>{
             let index = this.notifications.indexOf(not, 0);
             if(index>-1) this.notifications.splice(index, 1);
         });
     }
-}
+  }
