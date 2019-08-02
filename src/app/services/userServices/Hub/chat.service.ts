@@ -372,7 +372,7 @@ export class ChatService extends hubConnection{
       let sameUser:boolean = !isTheGroup ? false : this.isTheSameUserOfTheLastMessage(room.userMessages, msg);
 
       if(!canAdd) return;
-      if(sameUser) room.userMessages[room.userMessages.length-1].messages.push(newSingleUserChatMessage(msg));
+      if(sameUser && room.userMessages.length>1) room.userMessages[room.userMessages.length-1].messages.push(newSingleUserChatMessage(msg));
       else room.userMessages.push(newChatUserMessages(msg));
       if(msg.username != "") this.changeCount(groupName, false); 
     });

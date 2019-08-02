@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
 import { ChatUserMessages, IconModel, Icons } from 'src/app/models/models';
 import { ChatTimePipe } from 'src/app/pipes/chat-time.pipe';
+import { SessionService } from 'src/app/services/userServices/session.service';
 
 
 @Component({
@@ -81,6 +82,14 @@ export class ChatMessagesComponent implements OnInit{
    */
   public icon_wizard:IconModel = Icons.WIZARD;
 
+  /**
+   * The nickname of the current user
+   * 
+   * @access private
+   * @var {string} _username
+   */
+  private _username:string;
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -91,9 +100,14 @@ export class ChatMessagesComponent implements OnInit{
   /**
    * @constructor
    * @param {ChatService} _chatS To get the chat room info 
+   * @param {SessionService} __sessionS To get the nickname of the user
    */
-  constructor(private _chatS:ChatService) { 
+  constructor(private _chatS:ChatService, private __sessionS:SessionService) { 
     this.initializeForm();
+    this.__sessionS.User.subscribe(u=>{
+      try{this._username = u.username}
+      catch(Error){this._username = ""}
+    });
   }
 
   /**
@@ -122,7 +136,7 @@ export class ChatMessagesComponent implements OnInit{
       this._chatS.sendMessage({
         "group": this.groupName,
         "message": this.sendChatMessageForm.controls["message"].value,
-        "username": "",
+        "username": this._username,
         "publicUserId": "",
         "role": "",
         "time": new Date()
