@@ -39,6 +39,14 @@ export class ReloadService {
   // ──────────────────────────────────────────────────────────────────────────────────
   //
 
+  /**
+   * Send the event to reload the home page
+   * 
+   * @access public
+   */
+  public reloadHome(){
+    this.sendReload(ComponentID.HOME);
+  }
 
 
 
