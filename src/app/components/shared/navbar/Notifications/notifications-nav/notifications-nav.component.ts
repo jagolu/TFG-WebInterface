@@ -80,9 +80,8 @@ export class NotificationsNavComponent {
      * @param {NotificationMessage} not The notification to read
      */
     public watchNotification(not:NotificationMessage){
-        this.__aliveS.readNotification(not.id).subscribe(_=>{
-            let index = this.notifications.indexOf(not, 0);
-            if(index>-1) this.notifications.splice(index, 1);
-        });
+        let index = this.notifications.indexOf(not, 0);
+        if(index>-1) this.notifications.splice(index, 1);
+        this.__aliveS.readNotification(not.id);
     }
-  }
+}

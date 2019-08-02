@@ -81,12 +81,11 @@ export class AliveService extends Rest{
    * 
    * @access public
    * @param {string} notId The id of the notification
-   * @returns {Observable} The result of the request
    */
   public readNotification(notId:string){
     return this.getRequest(this.__alivePath+"WatchNotification", [{
       param: "id",
       value: notId
-    }], true);
+    }], true).subscribe();
   }
 }
