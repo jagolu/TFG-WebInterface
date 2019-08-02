@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IconModel, Icons, NewMessage } from 'src/app/models/models';
+import { IconModel, Icons, NewMessage, ComponentID } from 'src/app/models/models';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { GroupService } from 'src/app/services/restServices/group.service';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 @Component({
   selector: 'app-group',
@@ -77,13 +78,18 @@ export class GroupComponent {
    * @param {ActivatedRoute} __aR To get the name of group 
    * @param {GroupInfoService} __groupPageS To save and get the info of the group
    * @param {GroupService} __groupS To do the http request and get the group info
+   * @param {ReloadService} __reloadS To get the events to reload the group page
    */
-  constructor(private __aR:ActivatedRoute, private __groupPageS:GroupInfoService, private __groupS:GroupService) { 
-
+  constructor(
+    private __aR:ActivatedRoute, 
+    private __groupPageS:GroupInfoService, 
+    private __groupS:GroupService,
+    private __reloadS:ReloadService
+  ) { 
     this.__aR.params.subscribe(param=>{
       if(decodeURIComponent(param.group) != this.groupName){
         this.groupName = param.group; 
-        this.__groupS.getPageGroup(param.group);
+        this.loadGroup();
       }
     });
 
@@ -94,5 +100,24 @@ export class GroupComponent {
         this.news = page.news;
       }catch(Error){}
     });
+
+    this.__reloadS.reloadComponent.subscribe(r=>{
+      if(r == ComponentID.GROUP) this.loadGroup();
+    });
+  }
+
+  //
+  // ────────────────────────────────────────────────────────────────────────  ──────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Loads the group page
+   * 
+   * @access public
+   */
+  public loadGroup(){
+    this.__groupS.getPageGroup(this.groupName);
   }
 }

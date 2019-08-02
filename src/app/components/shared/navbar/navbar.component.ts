@@ -4,6 +4,7 @@ import { SessionService } from 'src/app/services/userServices/session.service';
 import { IconModel, Icons } from 'src/app/models/models';
 import { Router, NavigationEnd } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 
 @Component({
@@ -81,9 +82,15 @@ export class NavbarComponent implements OnInit{
    * @param {AlertService} __alertS To launch the create group alert
    * @param {SessionService} __sessionS To log out the ouser
    * @param {Router} __router To know the actual url and redirect in log out
+   * @param {ReloadService} __reloadS To send the events to reload the pages
    */
-  constructor(private __authS:AuthenticationService, private __alertS:AlertService, private __sessionS:SessionService, private __router:Router) { 
-
+  constructor(
+    private __authS:AuthenticationService, 
+    private __alertS:AlertService, 
+    private __sessionS:SessionService, 
+    private __router:Router,
+    private __reloadS:ReloadService
+  ) { 
     this.__router.events.subscribe( (activeRoute:any)=>{
       if(activeRoute instanceof NavigationEnd && activeRoute.urlAfterRedirects.includes("/group/")){
         this.actualGroup = decodeURIComponent(activeRoute.urlAfterRedirects.substring(7));
@@ -165,6 +172,72 @@ export class NavbarComponent implements OnInit{
     this.__alertS.openCreateGroup();
   }
 
+  /**
+   * Send event to reload the home page
+   * 
+   * @access public
+   */
+  public reloadHome(){
+    if(this.actualUrl.includes("/home") || this.actualUrl == "/"){
+      this.__reloadS.reloadHome();
+    }
+  }
+
+  /**
+   * Send event to reload the group page
+   * 
+   * @access public
+   */
+  public reloadGroup(name:string){
+    if(name == "Tus grupos") return;
+    
+    let param = decodeURIComponent(this.actualUrl).substr(7);
+    if(name == param) this.__reloadS.reloadGroup();
+  }
+
+  /**
+   * Send event to reload the search groups page
+   * 
+   * @access public
+   */
+  public reloadSearchGroups(){
+    if(this.actualUrl.includes("/searchGroup") || this.actualUrl.includes("/joinNewGroup")){
+      this.__reloadS.reloadSearchGroups();
+    }
+  }
+
+  /**
+   * Send event to reload the search users page
+   * 
+   * @access public
+   */
+  public reloadSearchUsers(){
+    if(this.actualUrl.includes("/searchUser")){
+      this.__reloadS.reloadSearchUsers();
+    }
+  }
+
+  /**
+   * Send event to reload the all DM page
+   * 
+   * @access public
+   */
+  public reloadAllDM(){
+    if(this.actualUrl.includes("/directMessages")){
+      this.__reloadS.reloadAllDMs();
+    }
+  }
+
+  /**
+   * Send event to reload the user info page
+   * 
+   * @access public
+   */
+  public reloadUserInfo(){
+    if(this.actualUrl.includes("/myUserInfo")){
+      this.__reloadS.reloadUserInfo();
+    }
+  }
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

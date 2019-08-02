@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { HomeService } from 'src/app/services/restServices/home.service';
 import { AuthenticationService } from 'src/app/services/restServices/authentication.service';
-import { NewMessage } from 'src/app/models/models';
+import { NewMessage, ComponentID } from 'src/app/models/models';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminService } from 'src/app/services/restServices/admin.service';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 @Component({
   selector: 'app-home',
@@ -47,13 +48,19 @@ export class HomeComponent {
    * @param {AuthenticationService} __authS To know if the user is authenticated
    * @param {AdminService} __sessionS To know if the user is an admin
    * @param {SessionService} __adminS To launch news
+   * @param {ReloadService} __reloadS To get the event to reload the page
    */
-  constructor(private __homeS:HomeService, private __authS:AuthenticationService, 
-              private __sessionS:SessionService, private __adminS: AdminService) {
-    let isAuth = this.__authS.IsAuthenticated();
-    let isAdmin = this.__sessionS.isAdmin();
-    this.__homeS.getNews(isAuth && !isAdmin).subscribe((news:any)=> this.news = news);
-    this.initializeForm();
+  constructor(
+    private __homeS:HomeService, 
+    private __authS:AuthenticationService, 
+    private __sessionS:SessionService,
+    private __adminS: AdminService, 
+    private __reloadS:ReloadService
+  ) {
+    this.__reloadS.reloadComponent.subscribe(r =>{
+      if(r === ComponentID.HOME) this.load();
+    });
+    this.load();
   }
 
 
@@ -93,6 +100,18 @@ export class HomeComponent {
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
   // ────────────────────────────────────────────────────────────────────────────────────
   //
+
+  /**
+   * Initializes all the component data
+   * 
+   * @access private
+   */
+  private load(){
+    let isAuth = this.__authS.IsAuthenticated();
+    let isAdmin = this.__sessionS.isAdmin();
+    this.__homeS.getNews(isAuth && !isAdmin).subscribe((news:any)=> this.news = news);
+    this.initializeForm();
+  }
 
   /**
    * Initializes the form
