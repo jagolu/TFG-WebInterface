@@ -85,6 +85,15 @@ export class ReloadService {
     this.sendReload(ComponentID.ALL_DM);
   }
 
+  /**
+   * Send the event to reload the page user info
+   * 
+   * @access public
+   */
+  public reloadUserInfo(){
+    this.sendReload(ComponentID.USER_OPTIONS);
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

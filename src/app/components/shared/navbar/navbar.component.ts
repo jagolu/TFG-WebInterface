@@ -228,6 +228,17 @@ export class NavbarComponent implements OnInit{
     }
   }
 
+  /**
+   * Send event to reload the user info page
+   * 
+   * @access public
+   */
+  public reloadUserInfo(){
+    if(this.actualUrl.includes("/myUserInfo")){
+      this.__reloadS.reloadUserInfo();
+    }
+  }
+
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :

@@ -4,4 +4,6 @@ export enum ComponentID{
     SEARCH_GROUP = "SEARCH_GROUP",
     SEARCH_USER = "SEARCH_USER",
     ALL_DM = "ALL_DM",
+    USER_OPTIONS = "USER_OPTIONS",
+    NONE = "NONE"
 }

@@ -76,7 +76,7 @@
         >{{username}}
         </div>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="groupsDropdown">
-          <a class="dropdown-item text-center" [routerLink]="['myUserInfo']">Opciones</a>
+          <a class="dropdown-item text-center" [routerLink]="['myUserInfo']" (click)="reloadUserInfo()">Opciones</a>
           <div class="dropdown-divider"></div>
           <button class="btn btn-outline-danger w-100 br-1 bl-1" (click)="logOut()">Cerrar sesión</button>
         </div>
