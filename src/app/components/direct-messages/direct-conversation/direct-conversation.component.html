@@ -46,10 +46,15 @@
 </div>
 <form [formGroup]="sendDMMessageForm" class="mt-3" *ngIf="room!=null && !room.closed">
   <div class="row justify-content-center mb-2">
-    <input type="text" class="col-lg-6 col-12 form-control" placeholder="Mensaje" formControlName="message">
+    <div class="col-lg-6 col-12">
+      <input type="text" class="form-control" placeholder="Mensaje" formControlName="message">      
+    </div>
   </div>
   <div class="row justify-content-center mb-5">
-      <button class="col-lg-6 col-12 btn btn-outline-dark w-100" (click)="sendMessage()" 
-        [disabled]="!sendDMMessageForm.valid">Enviar mensaje</button>
+    <div class="col-lg-6 col-12">
+      <button class="btn btn-outline-dark w-100" (click)="sendMessage()" 
+        [disabled]="!sendDMMessageForm.valid">Enviar mensaje</button>      
+    </div>
+
   </div>
 </form >
