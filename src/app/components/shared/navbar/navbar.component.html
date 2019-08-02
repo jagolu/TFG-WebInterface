@@ -42,7 +42,7 @@
         <a class="nav-link" (click)="reloadSearchUsers()" [routerLink]="['searchUser']">Gestionar usuarios</a>
       </li>  
       <li class="nav-item">
-        <a  class="nav-link" [routerLink]="['directMessages']" *ngIf="isAuthenticated()" >
+        <a  class="nav-link" [routerLink]="['directMessages']" *ngIf="isAuthenticated()" (click)="reloadAllDM()">
           <div *ngIf="notAdmin()">Reportar error</div>
           <div *ngIf="!notAdmin()">Mensajes de usuarios</div>
         </a>

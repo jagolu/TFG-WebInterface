@@ -75,6 +75,16 @@ export class ReloadService {
     this.sendReload(ComponentID.SEARCH_USER);
   }
 
+  /**
+   * Send the event to reload the page with
+   * all the DM
+   * 
+   * @access public
+   */
+  public reloadAllDMs(){
+    this.sendReload(ComponentID.ALL_DM);
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

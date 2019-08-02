@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { DirectMessagesService } from 'src/app/services/restServices/direct-messages.service';
-import { DMTitle, SearchUserDM } from 'src/app/models/models';
+import { DMTitle, SearchUserDM, ComponentID } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { AdminService } from 'src/app/services/restServices/admin.service';
 import { Router } from '@angular/router';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 @Component({
   selector: 'app-all-conversations',
@@ -59,11 +60,20 @@ export class AllConversationsComponent {
    * @param {SessionService} __sessionS To know if the current user is an admin or not
    * @param {AdminService} __adminS To search the users
    * @param {Router} __router To redirect the user after creating a new DM
+   * @param {ReloadService} __reloadS To get the events to reload the page
    */
-  constructor(private __dmS:DirectMessagesService, private __sessionS:SessionService, 
-              private __adminS:AdminService, private __router:Router) { 
-    this.__dmS.loadDMTitles().subscribe((dmS:DMTitle[])=> this.dmTitles = dmS);
+  constructor(
+    private __dmS:DirectMessagesService, 
+    private __sessionS:SessionService, 
+    private __adminS:AdminService, 
+    private __router:Router,
+    private __reloadS:ReloadService
+  ) { 
+    this.loadDMs();
     this.initializeForm();
+    this.__reloadS.reloadComponent.subscribe(r=>{
+      if(r == ComponentID.ALL_DM) this.loadDMs();
+    });
   }
 
 
@@ -115,6 +125,16 @@ export class AllConversationsComponent {
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
   // ────────────────────────────────────────────────────────────────────────────────────
   //
+
+  /**
+   * Do the http request to get all the dm which the
+   * current user has
+   * 
+   * @access private
+   */
+  private loadDMs(){
+    this.__dmS.loadDMTitles().subscribe((dmS:DMTitle[])=> this.dmTitles = dmS);
+  }
 
   /**
    * Initializes the form to create 

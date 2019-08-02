@@ -3,4 +3,5 @@ export enum ComponentID{
     GROUP = "GROUP",
     SEARCH_GROUP = "SEARCH_GROUP",
     SEARCH_USER = "SEARCH_USER",
+    ALL_DM = "ALL_DM",
 }

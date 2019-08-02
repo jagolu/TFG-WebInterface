@@ -217,6 +217,17 @@ export class NavbarComponent implements OnInit{
     }
   }
 
+  /**
+   * Send event to reload the all DM page
+   * 
+   * @access public
+   */
+  public reloadAllDM(){
+    if(this.actualUrl.includes("/directMessages")){
+      this.__reloadS.reloadAllDMs();
+    }
+  }
+
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
