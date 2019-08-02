@@ -54,3 +54,4 @@ export { DMRoom } from  './DirectMessages/DMRoom';
 export { DMMessageCluster } from  './DirectMessages/DMMessageCluster';
 export { NotificationMessage } from  './Notifications/NotificationMessage';
 export { LoginNotification } from  './Notifications/LoginNotification';
+export { ComponentID } from './Reload/ComponentID';
