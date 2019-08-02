@@ -83,9 +83,14 @@ export class DirectConversationComponent implements AfterViewChecked {
    * @param {DirectMessagesService} __dmS To do the DM requests
    * @param {SessionService} __sessionS To know if the actual user is an admin or not
    */
-  constructor(private __aR:ActivatedRoute, private __dmS:DirectMessagesService, private __sessionS:SessionService) { 
+  constructor(
+    private __aR:ActivatedRoute, 
+    private __dmS:DirectMessagesService, 
+    private __sessionS:SessionService
+  ) { 
     this._id = this.__aR.snapshot.paramMap.get('id');
     this.thisIsAdmin = this.__sessionS.isAdmin();
+    this._loading = false;
   }
 
   /**
@@ -94,12 +99,7 @@ export class DirectConversationComponent implements AfterViewChecked {
    * @AfterViewInit
    */
   ngAfterViewChecked() {
-    if(!this._loading){
-      this.__dmS.loadDMMessages(this._id).subscribe((dmrRes:DMRoom)=>{
-        this.setData(dmrRes);
-        if(!this.room.closed) this.initializeForm();
-      });
-    }
+    if(!this._loading) this.loadConversation();
     this._loading = true;
   }
 
@@ -153,6 +153,19 @@ export class DirectConversationComponent implements AfterViewChecked {
    */
   public isAdmin():Boolean{
     return this.__sessionS.isAdmin();
+  }
+
+  /**
+   * Do the http request to load the
+   * DM conversation
+   * 
+   * @access public
+   */
+  public loadConversation(){
+    this.__dmS.loadDMMessages(this._id).subscribe((dmrRes:DMRoom)=>{
+      this.setData(dmrRes);
+      if(!this.room.closed) this.initializeForm();
+    });
   }
 
 
