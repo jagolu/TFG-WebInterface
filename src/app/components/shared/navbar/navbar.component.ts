@@ -195,6 +195,17 @@ export class NavbarComponent implements OnInit{
     if(name == param) this.__reloadS.reloadGroup();
   }
 
+  /**
+   * Send event to reload the search groups page
+   * 
+   * @access public
+   */
+  public reloadSearchGroups(){
+    if(this.actualUrl.includes("/searchGroup") || this.actualUrl.includes("/joinNewGroup")){
+      this.__reloadS.reloadSearchGroups();
+    }
+  }
+
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :

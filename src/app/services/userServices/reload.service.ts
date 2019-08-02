@@ -57,6 +57,15 @@ export class ReloadService {
     this.sendReload(ComponentID.GROUP);
   }
 
+  /**
+   * Send the event to reload the search groups page
+   * 
+   * @access public
+   */
+  public reloadSearchGroups(){
+    this.sendReload(ComponentID.SEARCH_GROUP);
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────
@@ -73,5 +82,6 @@ export class ReloadService {
    */
   private sendReload(id:ComponentID){
     this.reloadComponent.emit(id);
+    setTimeout(_=> this.reloadComponent.emit(ComponentID.NONE), 10);
   }
 }

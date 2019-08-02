@@ -32,7 +32,7 @@
         >Crear grupo</a>
       </li>
       <li class="nav-item" *ngIf="isAuthenticated() && notAdmin()">
-        <a class="nav-link" 
+        <a class="nav-link" (click)="reloadSearchGroups()"
           [routerLink]="['joinNewGroup']" 
         >Unirse a un grupo</a>
       </li>
@@ -43,7 +43,7 @@
         >Shop </a>
       </li>     -->
       <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
-        <a  class="nav-link" 
+        <a  class="nav-link" (click)="reloadSearchGroups()"
         [routerLink]="['searchGroup']" 
         >Gestionar grupos</a>
       </li>      

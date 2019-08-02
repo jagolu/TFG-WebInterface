@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { GroupInfo, IconModel, Icons, GroupMemberAdmin } from 'src/app/models/models';
+import { GroupInfo, IconModel, Icons, GroupMemberAdmin, ComponentID } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { AdminService } from 'src/app/services/restServices/admin.service';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 
 @Component({
@@ -85,14 +86,23 @@ export class SearchGroupComponent{
    * @param {SessionService} __sessionS The service to get the groups
    * at which the user is already joined
    * @param {AdminService} __adminS To ban unban the groups
+   * @param {ReloadService} __reloadS To get the events to reload the page
    */
-  constructor(private __groupS:GroupService, private __adminS:AdminService, 
-              private __alertS:AlertService, private __sessionS:SessionService) { 
+  constructor(
+    private __groupS:GroupService, 
+    private __adminS:AdminService, 
+    private __alertS:AlertService, 
+    private __sessionS:SessionService,
+    private __reloadS:ReloadService
+  ) { 
     this.getAllGroups();
     this.joinGroups = !this.__sessionS.isAdmin();
     this.__sessionS.User.subscribe(u => {
         if(u != null) this.userGroups = u.groups;
         else this.userGroups = [];
+    });
+    this.__reloadS.reloadComponent.subscribe(r =>{
+      if(r == ComponentID.SEARCH_GROUP) this.getAllGroups();
     });
   }
 
