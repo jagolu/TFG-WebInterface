@@ -9,13 +9,42 @@ import { AuthenticationService } from 'src/app/services/restServices/authenticat
 })
 export class EmailVerificationComponent implements AfterViewInit{
 
-  private token:string;
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
 
-  constructor(private aR:ActivatedRoute, private _authS:AuthenticationService) { 
-      this.token = this.aR.snapshot.paramMap.get('token');
+  /**
+   * The token of verification
+   * 
+   * @access private
+   * @var {string} _token
+   */
+  private _token:string;
+
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {ActivatedRoute} __aR To get the url param
+   * @param {AuthenticationService} __authS To verify the token
+   */
+  constructor(private __aR:ActivatedRoute, private __authS:AuthenticationService) { 
+      this._token = this.__aR.snapshot.paramMap.get('token');
   }
 
+  /**
+   * Verifies the token
+   * 
+   * @OnInit
+   */
   ngAfterViewInit(){
-    this._authS.checkEmailValidation(this.token);
+    this.__authS.checkEmailValidation(this._token);
   }
 }
