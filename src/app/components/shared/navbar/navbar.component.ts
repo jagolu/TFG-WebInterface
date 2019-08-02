@@ -183,6 +183,18 @@ export class NavbarComponent implements OnInit{
     }
   }
 
+  /**
+   * Send event to reload the group page
+   * 
+   * @access public
+   */
+  public reloadGroup(name:string){
+    if(name == "Tus grupos") return;
+    
+    let param = decodeURIComponent(this.actualUrl).substr(7);
+    if(name == param) this.__reloadS.reloadGroup();
+  }
+
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :

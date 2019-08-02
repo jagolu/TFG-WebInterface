@@ -48,7 +48,14 @@ export class ReloadService {
     this.sendReload(ComponentID.HOME);
   }
 
-
+  /**
+   * Send the event to reload the group page
+   * 
+   * @access public
+   */
+  public reloadGroup(){
+    this.sendReload(ComponentID.GROUP);
+  }
 
 
   //
