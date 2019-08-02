@@ -25,6 +25,10 @@ import { AdminService } from './services/restServices/admin.service';
 import { AuthGuardService } from './services/canActivate/AuthGuard.service';
 import { AdminGuardService } from './services/canActivate/admin-guard.service';
 import { DirectMessagesService } from './services/restServices/direct-messages.service';
+import { GroupInfoService } from './services/userServices/group-info.service';
+import { UserInfoService } from './services/userServices/user-info.service';
+import { ChatService } from './services/userServices/Hub/chat.service';
+import { NotificationsService } from './services/userServices/Hub/notifications.service';
 
 
 // Interceptors
@@ -199,7 +203,11 @@ import { WeeklyPayFormComponent } from './components/group/group-settings/weekly
     HomeService,
     AdminService,
     AdminGuardService,
-    DirectMessagesService
+    DirectMessagesService,
+    GroupInfoService,
+    UserInfoService,
+    ChatService,
+    NotificationsService
   ],
   bootstrap: [AppComponent]
 })
