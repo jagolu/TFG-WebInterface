@@ -206,6 +206,17 @@ export class NavbarComponent implements OnInit{
     }
   }
 
+  /**
+   * Send event to reload the search users page
+   * 
+   * @access public
+   */
+  public reloadSearchUsers(){
+    if(this.actualUrl.includes("/searchUser")){
+      this.__reloadS.reloadSearchUsers();
+    }
+  }
+
   //
   // ────────────────────────────────────────────────────────────────────────────────────
   //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :

@@ -66,6 +66,15 @@ export class ReloadService {
     this.sendReload(ComponentID.SEARCH_GROUP);
   }
 
+  /**
+   * Send the event to reload the search users page
+   * 
+   * @access public
+   */
+  public reloadSearchUsers(){
+    this.sendReload(ComponentID.SEARCH_USER);
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

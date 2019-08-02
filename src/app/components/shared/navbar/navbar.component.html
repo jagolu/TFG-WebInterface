@@ -38,10 +38,8 @@
       <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
         <a  class="nav-link" (click)="reloadSearchGroups()" [routerLink]="['searchGroup']">Gestionar grupos</a>
       </li>      
-      <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
-        <a  class="nav-link" 
-            [routerLink]="['searchUser']" 
-        >Gestionar usuarios</a>
+      <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()" >
+        <a class="nav-link" (click)="reloadSearchUsers()" [routerLink]="['searchUser']">Gestionar usuarios</a>
       </li>  
       <li class="nav-item">
         <a  class="nav-link" [routerLink]="['directMessages']" *ngIf="isAuthenticated()" >

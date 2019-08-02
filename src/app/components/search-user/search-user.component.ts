@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { SearchUserInfo } from 'src/app/models/models';
+import { SearchUserInfo, ComponentID } from 'src/app/models/models';
 import { AdminService } from 'src/app/services/restServices/admin.service';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 @Component({
   selector: 'app-search-user',
@@ -43,9 +44,14 @@ export class SearchUserComponent {
    * @constructor
    * @param {AdminService} __adminS The service to get the users and block/unblock them
    * @param {AlertService} __alertS To launch the alerts
+   * @param {ReloadService} __reloadS To get the event to reload the page
    */
-  constructor(private __adminS:AdminService, private __alertS:AlertService) { 
+  constructor(private __adminS:AdminService, private __alertS:AlertService, private __reloadS:ReloadService) { 
     this.getAllUsers();
+
+    this.__reloadS.reloadComponent.subscribe(r =>{
+      if(r === ComponentID.SEARCH_USER) this.getAllUsers();
+    })
   }
 
 
