@@ -3,9 +3,11 @@
     <div class="card-header" id="headingHistoryBet{{i}}" 
         data-toggle="collapse" [attr.data-target]="'#collapseBetsHistory'+i" 
         aria-expanded="false" [attr.aria-controls]="'#collapseBetsHistory'+i">
-
-      <h3>{{bet.bet.betName}} <small>{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> 
-      <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+      <div class="row">
+        <div class="col-lg-10 col-12"><h3>{{bet.bet.betName}}</h3></div>
+        <div class="col-lg-2 col-12 text-right"><h3><small>{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> </div>
+        <div class="col-12"><small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small></div>
+      </div>
     </div>
 
     <div id="collapseBetsHistory{{i}}" class="collapse hide" 
@@ -22,13 +24,13 @@
                 [attr.aria-controls]="'#collapseBetsHistoryOtherUser_'+i+'_'+ii">
               <div class="row">
                 <div class="col-lg-9 col-12"><h5>{{otherUser.username}}</h5></div>
-                <div class="col-lg-3 col-12 text-right"> <span *ngIf="otherUser.winner"><h6 class="text-success">WINNER</h6></span></div>
+                <div class="col-lg-3 col-12 text-right"> <span *ngIf="otherUser.winner"><h6 class="text-success">GANADOR</h6></span></div>
               </div>
             </div>
             <div  id="collapseBetsHistoryOtherUser_{{i}}_{{ii}}" 
                   class="collapse hide" [attr.aria-labelledby]="'headingOtherUserBets_'+i+'_'+ii">
                 <div class="card card-body">
-                  <app-user-football-bet-card-info [userBet]="otherUser.bets" [ended]="true" [name]="otherUser.username"
+                  <app-user-football-bet-card-info [userBet]="otherUser.bets" [ended]="true"
                       [footballBet]="bet.bet"></app-user-football-bet-card-info>
                 </div>
             </div>
@@ -42,14 +44,14 @@
               aria-expanded="false" 
               [attr.aria-controls]="'#collapseOwnBetsHistory_'+i">
             <div class="row">
-              <div class="col-lg-9 col-6"><h5>You</h5></div>
-              <div class="col-lg-3 col-6 text-right"> <span *ngIf="bet.userWins"><h5 class="text-success">WINNER</h5></span></div>
+              <div class="col-lg-9 col-6"><h5>Tu</h5></div>
+              <div class="col-lg-3 col-6 text-right"> <span *ngIf="bet.userWins"><h5 class="text-success">GANADOR</h5></span></div>
             </div>
           </div>
           <div  id="collapseOwnBetsHistory_{{i}}" 
                 class="collapse hide" [attr.aria-labelledby]="'headingOwnUserBet_'+i">
             <div class="card card-body">
-              <app-user-football-bet-card-info [userBet]="bet.ownBet" [ended]="true" [name]="'Your'"
+              <app-user-football-bet-card-info [userBet]="bet.ownBet" [ended]="true"
                   [footballBet]="bet.bet"></app-user-football-bet-card-info>
             </div>
           </div>
@@ -60,5 +62,5 @@
 </div>
 
 <div *ngIf="betsHistory.length == 0">
-  <p class="h3">You haven't done any bet</p>
+  <p class="h3">No has realizado ninguna apuesta</p>
 </div>

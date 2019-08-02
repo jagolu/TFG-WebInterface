@@ -26,17 +26,17 @@ export class NotificationsService extends hubConnection{
    * The public user id of the logged user
    * 
    * @access private
-   * @var {string} __publicUserId
+   * @var {string} _publicUserId
    */
-  private __publicUserId:string ="";
+  private _publicUserId:string ="";
 
   /**
    * The notifications of the user
    * 
    * @access private
-   * @var {BehaviorSubject<NotificationMessage[]>} __notifications
+   * @var {BehaviorSubject<NotificationMessage[]>} _notifications
    */
-  private __notifications = new BehaviorSubject<NotificationMessage[]>([]);
+  private _notifications = new BehaviorSubject<NotificationMessage[]>([]);
 
   /**
    * The notifications which the other components will subscribe to
@@ -45,7 +45,7 @@ export class NotificationsService extends hubConnection{
    * @access public
    * @var {Observable} notifications
    */
-  public notifications = this.__notifications.asObservable();
+  public notifications = this._notifications.asObservable();
 
 
   //
@@ -77,8 +77,8 @@ export class NotificationsService extends hubConnection{
    * that user already have
    */
   public initialize(publicUserId:string, messages:NotificationMessage[]){
-    this.__publicUserId = publicUserId;
-    this.__notifications.next(messages);
+    this._publicUserId = publicUserId;
+    this._notifications.next(messages);
     this.subscribeHub();
   }
 
@@ -89,17 +89,17 @@ export class NotificationsService extends hubConnection{
    * @param {NotificationMessage} message The message to remove
    */
   public readNotification(message:NotificationMessage){
-    let index = this.__notifications.value.indexOf(message, 0);
-    if(index>-1) this.__notifications.value.splice(index, 1);
+    let index = this._notifications.value.indexOf(message, 0);
+    if(index>-1) this._notifications.value.splice(index, 1);
   }
 
   /**
    * Resets the private vars
    */
   public reset(){
-    this.setConnectionOff(this.__publicUserId);
-    this.__notifications.next([]);
-    this.__publicUserId = "";
+    this.setConnectionOff(this._publicUserId);
+    this._notifications.next([]);
+    this._publicUserId = "";
   }
 
 
@@ -117,7 +117,7 @@ export class NotificationsService extends hubConnection{
    * @access public
    */
   public subscribeHub(){
-    this.getConnection().on(NOTIFICATION_SOCKET_ID+this.__publicUserId, 
+    this.getConnection().on(NOTIFICATION_SOCKET_ID+this._publicUserId, 
       (message:any)=> this.addMessage(message));
   }
 
@@ -135,6 +135,6 @@ export class NotificationsService extends hubConnection{
    * @param {NotificationMessage} message The notification message
    */
   private addMessage(message:NotificationMessage){
-    this.__notifications.value.push(message);
+    this._notifications.value.push(message);
   }
 }

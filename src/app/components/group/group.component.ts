@@ -11,33 +11,88 @@ import { GroupService } from 'src/app/services/restServices/group.service';
 })
 export class GroupComponent {
 
-  public groupName:string = null;
-  public news:NewMessage[] = [];
-  public role:string;
-  public coins?:number;
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
 
+  /**
+   * The name of the group
+   * 
+   * @access public
+   * @var {string} groupName
+   */
+  public groupName:string = null;
+
+  /**
+   * The group news 
+   * 
+   * @access public
+   * @var {NewMessage[]} news
+   */
+  public news:NewMessage[] = [];
+
+  /**
+   * The role of the user
+   * 
+   * @access public
+   * @var {string} role
+   */
+  public role:string;
+
+  /**
+   * The coins of the user
+   * 
+   * @access public
+   * @var {number} coins
+   */
+  public coins:number;
+
+  /**
+   * A icon of a ball
+   * 
+   * @access public
+   * @var {IconModel} icon_ball
+   */
   public icon_ball:IconModel = Icons.BALL;
+
+  /**
+   * The icon of a coin
+   * 
+   * @access public
+   * @var {IconModel} icon_coin
+   */
   public icon_coin:IconModel = Icons.COIN;
 
 
-  constructor(private aR:ActivatedRoute, private groupPageS:GroupInfoService, private groupS:GroupService) { 
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
 
-    this.aR.params.subscribe(
-      param=>{
-        if(decodeURIComponent(param.group) != this.groupName){
-          this.groupS.getPageGroup(param.group);
-        }
+  /**
+   * @constructor
+   * @param {ActivatedRoute} __aR To get the name of group 
+   * @param {GroupInfoService} __groupPageS To save and get the info of the group
+   * @param {GroupService} __groupS To do the http request and get the group info
+   */
+  constructor(private __aR:ActivatedRoute, private __groupPageS:GroupInfoService, private __groupS:GroupService) { 
+
+    this.__aR.params.subscribe(param=>{
+      if(decodeURIComponent(param.group) != this.groupName){
+        this.groupName = param.group; 
+        this.__groupS.getPageGroup(param.group);
       }
-    );
+    });
 
-    this.groupPageS.info.subscribe(page=>{
+    this.__groupPageS.info.subscribe(page=>{
       try{
         this.role = page.members ? page.members[page.members.length-1].role : "";
-        this.groupName = page.name;
         this.coins = page.members ? page.members[page.members.length-1].coins : 0;
         this.news = page.news;
-      }
-      catch(Error){}
+      }catch(Error){}
     });
   }
 }

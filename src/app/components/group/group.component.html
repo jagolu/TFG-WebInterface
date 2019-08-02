@@ -2,7 +2,7 @@
 
 <ul class="nav justify-content-end">
     <li class="nav-item">
-        <a class="nav-link active">
+        <a class="nav-link active" [ngClass]="{'text-danger': coins<=0}">
             {{coins}}
             <app-icon [Icon]="icon_coin"></app-icon>
         </a>
@@ -18,28 +18,28 @@
         <a  class="nav-item nav-link" 
             id="nav_group_bets_tab" data-toggle="tab" 
             href="#nav_group_bets" role="tab" 
-            aria-controls="nav_group_bets" aria-selected="true">new Bets</a>
+            aria-controls="nav_group_bets" aria-selected="true">Nuevas apuestas</a>
         <a  class="nav-item nav-link" 
             id="nav_group_own_active_bets_tab" data-toggle="tab" 
             href="#nav_group_own_active_bets" role="tab" 
-            aria-controls="nav_group_own_active_bets" aria-selected="false">Active bets</a>
+            aria-controls="nav_group_own_active_bets" aria-selected="false">Apuestas activas</a>
         <a  class="nav-item nav-link" 
             id="nav_group_manage_bet_tab" data-toggle="tab" 
             href="#nav_group_manage_bet" role="tab"  *ngIf="role == 'GROUP_MAKER'"
-            aria-controls="nav_group_manage_bet" aria-selected="true">Manage bets</a>
+            aria-controls="nav_group_manage_bet" aria-selected="true">Gestionar apuestas</a>
         <a  class="nav-item nav-link" 
             id="nav_group_history_tab" data-toggle="tab" 
             href="#nav_group_history" role="tab" 
-            aria-controls="nav_group_history" aria-selected="true">History</a>
+            aria-controls="nav_group_history" aria-selected="true">Historial</a>
         <a  class="nav-item nav-link" 
             id="nav_group_members_tab" data-toggle="tab" 
             href="#nav_group_members" role="tab" 
-            aria-controls="nav_group_members" aria-selected="false">Members</a>
+            aria-controls="nav_group_members" aria-selected="false">Miembros</a>
         <a  class="nav-item nav-link" 
             id="nav_group_options_tab" data-toggle="tab" 
             href="#nav_group_options" role="tab" 
             aria-controls="nav_group_options" aria-selected="false"
-            *ngIf="role == 'GROUP_MAKER'">Options</a>
+            *ngIf="role == 'GROUP_MAKER'">Opciones</a>
         <a  class="nav-item nav-link" 
             id="nav_group_info_tab" data-toggle="tab" 
             href="#nav_group_info" role="tab" 

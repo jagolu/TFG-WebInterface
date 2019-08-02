@@ -1,60 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
+import { GroupService } from 'src/app/services/restServices/group.service';
 
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-weekly-pay-form',
+  templateUrl: './weekly-pay-form.component.html',
+  styles: []
 })
-/**
- * Service to manage the loading animation
- * 
- * @class
- */
-export class LoadingService{
+export class WeeklyPayFormComponent implements OnInit {
 
   //
   // ──────────────────────────────────────────────────────────────────────
   //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────
   //
-  
-  /**
-   * Var to save the HTML associated to the icon tag
-   * 
-   * @access private
-   * @var {HTMLElement} __loading
-   */
-  private __loading:HTMLElement;
 
   /**
-   * Var to save the HTML associated to the navbar tag
+   * The form to change the weekly pay
    * 
-   * @access private
-   * @var {HTMLElement} __navbar
+   * @access public
+   * @var {FormGroup} changeWeeklyPayForm
    */
-  private __navbar:HTMLElement;
+  public changeWeeklyPayForm:FormGroup;
 
   /**
-   * Var to save the the HTML associated to the router-outlet tag
+   * The actual weekly pay of the group
    * 
    * @access private
-   * @var {HTMLElement} __outlet
+   * @var {number} _actualPay
    */
-  private __outlet:HTMLElement;
+  private _actualPay:number;
 
   /**
-   * Var to save the the HTML associated to the chat tag
+   * The name of the group
    * 
    * @access private
-   * @var {HTMLElement} __chat
+   * @var {string}  _groupName
    */
-  private __chat:HTMLElement;
-
-  /**
-   * Var to save if loading animation is visible or not
-   * 
-   * @access private
-   * @var {boolean} __isLoading
-   */
-  private __isLoading:boolean;
+  private _groupName:string;
 
 
   //
@@ -62,12 +46,29 @@ export class LoadingService{
   //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────
   //
-  
+
   /**
    * @constructor
+   * @param {GroupInfoService} __groupInfoS To get the info of the group
+   * @param {GroupService} __groupS To do the group request
    */
-  constructor() { 
-    this.__isLoading = false;
+  constructor(private __groupInfoS:GroupInfoService, private __groupS:GroupService) { 
+    this.initializeForm();
+  }
+
+  /**
+   * Get the info of the group
+   * 
+   * @OnInit
+   */
+  ngOnInit() {
+    this.__groupInfoS.info.subscribe(page=>{
+      try{
+        this._actualPay = page.weeklyPay;
+        this._groupName = page.name;
+        this.initializeForm();
+      }catch(Error){ this._actualPay = 0; }
+    });
   }
 
 
@@ -76,33 +77,20 @@ export class LoadingService{
   //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────────────────────────
   //
-  
-  /**
-   * Start the loading animation
-   * 
-   * @access public
-   */
-  public startLoading(){
-    if(this.__isLoading) return;
-    this.__loading = (document.querySelector("#loading") as HTMLElement);
-    this.__navbar = (document.querySelector("#navbarId") as HTMLElement);
-    this.__chat = (document.querySelector("#mainChatWindowId") as HTMLElement);
-    this.__outlet = (document.querySelector(".main") as HTMLElement);
-    this.resize(true);
-    this.__isLoading = true;
-  }
 
   /**
-   * Stops the loading animation
+   * Change the weekly pay
    * 
    * @access public
    */
-  public stopLoading(){
-    if(!this.__isLoading) return;
-    this.resize(false);
-    this.__isLoading = false;
+  public changeWeekPay(){
+    this.__groupS.changeWeekPay({
+      groupName: this._groupName,
+      weeklyPay: this.changeWeeklyPayForm.controls["newPay"].value
+    });
+    this.resetForm();
   }
-  
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────
@@ -111,16 +99,29 @@ export class LoadingService{
   //
 
   /**
-   * Change the display attribute of the screen elements to hide them
+   * Initializes the form
    * 
    * @access private
-   * @param {boolean} hide True to hide the elements, false to show them 
    */
-  private resize(hide:boolean){
-    this.__navbar.style.display = hide ? "none" : "flex";
-    this.__outlet.style.display = hide ? "none" : "block";
-    this.__chat.style.display = hide ? "none" : "block";
-    this.__loading.style.display = hide ? "block" : "none";
-    this.__loading.style.marginTop = hide ? "17%" : "0"; 
+  private initializeForm(){
+    this.changeWeeklyPayForm = new FormGroup({
+      "newPay": new FormControl(
+        this._actualPay,
+        [
+          Validators.required,
+          Validators.min(100),
+          Validators.max(2000)
+        ]
+      )
+    });
+  }
+
+  /**
+   * Resets the form
+   * 
+   * @access private
+   */
+  private resetForm(){
+    this.changeWeeklyPayForm.reset({'newPay' : ""});
   }
 }

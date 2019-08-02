@@ -60,6 +60,6 @@ export class HomeService extends Rest{
    */
   public getNews(auth:Boolean){
     let path = auth ? "AuthHome" : "StandHome";
-    return this.getRequest(this.__homePath+path, null, true);
+    return this.getRequest(this.__homePath+path, null);
   }
 }

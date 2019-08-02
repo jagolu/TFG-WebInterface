@@ -12,12 +12,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link disabled" 
-          [routerLink]="['index']" 
-        >Partidos </a>
-      </li>
-      <li class="nav-item dropdown" *ngIf="isAuthenticated() && notAdmin()" style="cursor:pointer">
+      <li class="nav-item dropdown" *ngIf="isAuthenticated() && notAdmin() && groups.length>0" style="cursor:pointer">
         <a class="nav-link" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{actualGroup}}
         </a>
@@ -29,27 +24,33 @@
           >{{group}} 
               <app-icon [Icon]="icon_ball"></app-icon>
           </a>
-          <div class="dropdown-divider" *ngIf="groups.length>0"></div>
-          <a class="dropdown-item text-center" (click)="openCreateGroupAlert()">Create group</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-center" [routerLink]="['joinNewGroup']">Join group</a>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" style="cursor:pointer" *ngIf="isAuthenticated() && notAdmin()">
+        <a class="nav-link" 
+        (click)="openCreateGroupAlert()" 
+        >Crear grupo</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticated() && notAdmin()">
+        <a class="nav-link" 
+          [routerLink]="['joinNewGroup']" 
+        >Unirse a un grupo</a>
+      </li>
+      <!-- <li class="nav-item">
         <a  class="nav-link" 
             [routerLink]="['shop', 'All']" 
             *ngIf="isAuthenticated()" 
         >Shop </a>
-      </li>    
+      </li>     -->
       <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
         <a  class="nav-link" 
         [routerLink]="['searchGroup']" 
-        >Grupos </a>
+        >Gestionar grupos</a>
       </li>      
       <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
         <a  class="nav-link" 
             [routerLink]="['searchUser']" 
-        >Usuarios </a>
+        >Gestionar usuarios</a>
       </li>  
       <li class="nav-item">
         <a  class="nav-link" 
@@ -60,7 +61,7 @@
       <li class="nav-item" *ngIf="notAdmin()">
         <a  class="nav-link disabled" 
             [routerLink]="['index']" 
-        >Help </a>
+        >Ayuda</a>
       </li>
     </ul>
     <!-- Authentication Buttons -->
@@ -70,13 +71,13 @@
         <button class="btn btn-outline-success mr-2" 
           [routerLink]="['logIn']" 
           [ngClass]="{'w-45': width<992}"
-        >Log In</button>
+        >Iniciar sesión</button>
       </li>
       <li >
         <button class="btn btn-outline-info mr-2" 
           [routerLink]="['signUp']" 
           [ngClass]="{'w-45': width<992}"
-        >Sign Up</button>
+        >Registrarse</button>
       </li>
     </ul>
 
@@ -99,11 +100,11 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="groupsDropdown">
           <a class="dropdown-item text-center" 
             [routerLink]="['myUserInfo']" 
-          >Options</a>
+          >Opciones</a>
           <div class="dropdown-divider"></div>
           <button class="btn btn-outline-danger w-100 br-1 bl-1" 
               (click)="logOut()" 
-          >Log out</button>
+          >Cerrar sesión</button>
         </div>
       </li>
     </ul>

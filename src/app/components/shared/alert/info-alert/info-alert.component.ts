@@ -80,7 +80,7 @@ export class InfoAlertComponent {
    * @param {AlertInfoType} type The type of the alert-info 
    */
   private getText(type:AlertInfoType){
-    let msg;
+    let msg:string[];
 
     switch(type){
       case AlertInfoType.LOSTCONNECTIONERROR:{
@@ -433,6 +433,36 @@ export class InfoAlertComponent {
       case AlertInfoType.GROUPSUCCESFULLYUNBANNED:{
         msg = [
           "Grupo desbloqueado con exito.",
+          "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.DELETEREQUEST:{
+        msg = [
+          "Hace poco nos pediste eliminar la cuenta.",
+          "Como aun no se han borrado los datos completamente, puedes iniciar sesión con normalidad.", 
+          "Al hacerlo cancelaremos el proceso de eliminación de cuenta."
+        ];
+        break;
+      }
+      case AlertInfoType.RECVNOTEXIST:{
+        msg = [
+          "El usuario con el que intentas crear una conversación directa no existe.",
+          "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.SUCCESSFULLWEEKLYPAYCHANGE:{
+        msg = [
+          "Pagos semanales cambiados correctamente.",
+          "Las monedas de los miembros del grupo se han ajustado al nuevo pago semanal.", 
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.SUCCESSFULLMANAGEPASSWORD:{
+        msg = [
+          "Contraseña del grupo cambiada correctamente",
           "", ""
         ];
         break;

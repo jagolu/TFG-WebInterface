@@ -2,13 +2,19 @@
   <div class="col-md-6 mb-md-0 mb-2">
     <div id="googleButton" class="customGPlusSignIn" (click)="socialSignIn('GOOGLE')">
       <span class="googleIcon"></span>
-      <span class="googleText">Log in with Google</span>
+      <div class="centereado">
+          <span class="googleText" *ngIf="!log">Registro con Google</span>
+          <span class="googleText" *ngIf="log">Inicio de sesión con Google</span>
+      </div>
     </div>
   </div>
   <div class="col-md-6">
     <div id="facebookButton" class="customGPlusSignIn" (click)="socialSignIn('FACEBOOK')" >
       <span class="facebookIcon"></span>
-      <span class="facebookText">Log in with Facebook</span>
+      <div class="centereado">
+          <span class="facebookText" *ngIf="!log">Registro con Facebook</span>
+          <span class="facebookText" *ngIf="log">Inicio de sesión con Facebook</span>
+      </div>
     </div>
   </div>
 </div>

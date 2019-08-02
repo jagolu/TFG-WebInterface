@@ -9,19 +9,61 @@ import { EndedFootballBet, HistoryUserFootballBet  } from 'src/app/models/models
 })
 export class MyOwnFootballBetsComponent implements OnInit {
 
-  public bets:EndedFootballBet[];  
-  constructor(private groupPage:GroupInfoService) { }
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
 
+  /**
+   * The bets done by the user
+   * 
+   * @access public
+   * @var {EndedFootballBet[]} bets
+   */
+  public bets:EndedFootballBet[];  
+
+  
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {GroupInfoService} __groupInfoS To get the group active bets 
+   */
+  constructor(private __groupInfoS:GroupInfoService) { }
+
+  /**
+   * Get the bets
+   * 
+   * @OnInit
+   */
   ngOnInit() {
-    this.groupPage.info.subscribe(page=>{
+    this.__groupInfoS.info.subscribe(page=>{
       try{this.bets = page.myBets;}
       catch(Error){this.bets = []}
     });
   }
 
-  public isValid(myBets:HistoryUserFootballBet[]){
-    let valid = false;
-    myBets.forEach(b=> valid = b.valid ? true : valid);
-    return valid;
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Checks if a bet is valir or not
+   * 
+   * @param {HistoryUserFootballBet[]} myBets The bets done by
+   * the user in the football bet
+   * @returns {Boolean} True if the bet is valid, false
+   * otherwise
+   */
+  public isValid(myBets:HistoryUserFootballBet[]):Boolean{
+    return myBets.some(b => b.valid);
   }
 }

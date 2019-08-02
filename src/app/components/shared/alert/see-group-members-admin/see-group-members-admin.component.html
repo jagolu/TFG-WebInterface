@@ -1,9 +1,13 @@
-
-<ul class="list-group">
+<ul class="list-group">    
   <li class="list-group-item" *ngFor="let user of members">
     <div class="row">
-      <div class="col-4 text-left mb-2">{{user.username}}</div>
-      <div class="col-8 text-right">{{user.email}}</div>
+      <div class="col-12 text-left mb-2" *ngIf="user.blocked"><h5 class="text-danger">Bloqueado</h5></div>
+      <div class="col-12 mb-2">
+        <div class="row">
+          <div class="col-9 text-left"><h5 class="d-inline-block">{{user.username}}</h5>&nbsp;&nbsp;<small class="d-inline-block">{{user.email}}</small></div>
+          <div class="col-3 text-right"><small>{{user.coins}} <app-icon [Icon]="icon_coin"></app-icon></small></div>
+        </div>
+      </div>
       <div class="col-6 text-left mb-2">
           <app-icon [Icon]="icon_crown" *ngIf="user.role=='GROUP_MAKER'"></app-icon>
           <app-icon [Icon]="icon_wizard" *ngIf="user.role=='GROUP_ADMIN'"></app-icon>
@@ -11,8 +15,6 @@
           &nbsp;&nbsp;{{user.dateRole | onlyDatePipe}}
       </div>
       <div class="col-6 text-right">En el grupo desde {{user.dateJoin | onlyDatePipe}}</div>
-      <div class="col-6 text-left"><p *ngIf="user.blocked">Bloqueado</p></div>
-      <div class="col-6 text-right">{{user.coins}} <app-icon [Icon]="icon_coin"></app-icon></div>
     </div>
   </li>
 </ul>

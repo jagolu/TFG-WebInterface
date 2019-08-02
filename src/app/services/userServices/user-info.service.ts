@@ -23,9 +23,9 @@ export class UserInfoService {
    * The behaviour of the user info
    * 
    * @access private
-   * @var {BehaviorSubject<UserInfo>} information
+   * @var {BehaviorSubject<UserInfo>} __information
    */
-  private information = new BehaviorSubject<UserInfo>(null);
+  private __information = new BehaviorSubject<UserInfo>(null);
 
   /**
    * The info at which the other components will subscribe at
@@ -33,7 +33,7 @@ export class UserInfoService {
    * @access public
    * @var {Observable} info
    */
-  public info = this.information.asObservable();
+  public info = this.__information.asObservable();
 
 
   //
@@ -45,7 +45,9 @@ export class UserInfoService {
   /**
    * @constructor
    */
-  constructor() { }
+  constructor() { 
+    this.__information.next({email: "",image: ""});
+  }
 
   //
   // ──────────────────────────────────────────────────────────────────────────────────
@@ -61,7 +63,7 @@ export class UserInfoService {
    */
   public updateInfo(info:UserInfo){
     //Update the user info which is at info var
-    this.information.next(info);
+    this.__information.next(info);
   }
 
   /**
@@ -70,7 +72,7 @@ export class UserInfoService {
    * @access public
    */
   public removeInfo(){
-    this.information.next({
+    this.__information.next({
       "email": "",
       "image": ""
     });

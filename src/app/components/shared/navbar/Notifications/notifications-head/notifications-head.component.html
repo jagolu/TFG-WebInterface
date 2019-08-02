@@ -1,6 +1,4 @@
-<div class="badge badge-warning" 
-    *ngIf="notifications.length>0 || alwaysShow"
->{{notifications.length}}</div>
-<app-icon [Icon]="icon_bell"
-    *ngIf="notifications.length>0 || alwaysShow"
-></app-icon>
+<div class="badge badge-warning" *ngIf="notifications.length>0 || alwaysShow">
+    {{notifications.length}}
+</div>
+<app-icon [Icon]="icon_bell" *ngIf="notifications.length>0 || alwaysShow"></app-icon>

@@ -35,9 +35,9 @@ export class AuthenticationService extends Rest {
    * 
    * @access private
    * @readonly
-   * @var {string} _authPath 
+   * @var {string} __authPath 
    */
-  private readonly _authPath : string = "Authorization/";
+  private readonly __authPath : string = "Authorization/";
 
 
   //
@@ -48,19 +48,26 @@ export class AuthenticationService extends Rest {
   
   /**
    * @constructor 
-   * @param {HttpClient} _http For RestService constructor 
-   * @param {LoadingService} _loading For RestService constructor
-   * @param {AuthService} _authS For log the user with social media 
-   * @param {SessionService} _sessionS For set and remove the session
-   * @param {Router} _router For when the user logs out, redirect him to index
-   * @param {GroupInfoService} _groupInfoS To reset the service info on logout
-   * @param {UserInfoService} _userInfoS To reset the service info on logout
-   * @param {ChatService} _chatS To reset the service info on logout
-   * @param {NotificationsService} _notS To reset the service info on logout
+   * @param {HttpClient} http For RestService constructor 
+   * @param {LoadingService} loading For RestService constructor
+   * @param {AuthService} __authS For log the user with social media 
+   * @param {SessionService} __sessionS For set and remove the session
+   * @param {Router} __router For when the user logs out, redirect him to index
+   * @param {GroupInfoService} __groupInfoS To reset the service info on logout
+   * @param {UserInfoService} __userInfoS To reset the service info on logout
+   * @param {ChatService} __chatS To reset the service info on logout
+   * @param {NotificationsService} __notS To reset the service info on logout
    */
-  constructor(_http:HttpClient,  _loading:LoadingService, private _authS:AuthService, private _sessionS:SessionService, private _router:Router, 
-              private _groupInfoS:GroupInfoService, private _userInfoS:UserInfoService, private _chatS:ChatService, private _notS:NotificationsService){
-    super(_http, _loading);
+  constructor(http:HttpClient,  
+              loading:LoadingService, 
+              private __authS:AuthService, 
+              private __sessionS:SessionService, 
+              private __router:Router, 
+              private __groupInfoS:GroupInfoService, 
+              private __userInfoS:UserInfoService, 
+              private __chatS:ChatService, 
+              private __notS:NotificationsService){
+    super(http, loading);
   }
 
 
@@ -79,8 +86,8 @@ export class AuthenticationService extends Rest {
    */
   public IsAuthenticated():Boolean{
     try{
-      if(this._sessionS.getExpiresAt() <= this.getUTCNow()) {
-        this._sessionS.removeSession();
+      if(this.__sessionS.getExpiresAt() <= this.getUTCNow()) {
+        this.__sessionS.removeSession();
         return false;
       }
       return true;
@@ -96,13 +103,13 @@ export class AuthenticationService extends Rest {
    * @access public
    */
   public logOut(){
-    if(this.IsAuthenticated()) this._authS.signOut().catch(Error);
-    this._sessionS.removeSession();
-    this._groupInfoS.removeInfo();
-    this._userInfoS.removeInfo();
-    this._router.navigate(['']);
-    this._chatS.reset();
-    this._notS.reset();
+    if(this.IsAuthenticated()) this.__authS.signOut().catch(Error);
+    this.__sessionS.removeSession();
+    this.__groupInfoS.removeInfo();
+    this.__userInfoS.removeInfo();
+    this.__router.navigate(['']);
+    this.__chatS.reset();
+    this.__notS.reset();
   }
 
   /**
@@ -112,7 +119,7 @@ export class AuthenticationService extends Rest {
    * @param {SocialLog} user The user account on Facebook or Google
    */
   public logSocialMedia(user:SocialLog){
-    this.postRequest(user, this._authPath+"SocialLog").subscribe();
+    this.postRequest(user, this.__authPath+"SocialLog").subscribe();
   }
 
   /**
@@ -122,7 +129,7 @@ export class AuthenticationService extends Rest {
    * @param {string} token The token associated to the user and his email
    */
   public checkEmailValidation(token:string){
-    this.getRequest(this._authPath+"Validate",[
+    this.getRequest(this.__authPath+"Validate",[
       {
         param: "emailToken",
         value: token
@@ -137,7 +144,7 @@ export class AuthenticationService extends Rest {
    * @param {string} token The token associated to the user and his email
    */
   public checkPasswordToken(token:string){
-    this.getRequest(this._authPath+"checkPasswordToken",[
+    this.getRequest(this.__authPath+"checkPasswordToken",[
       {
         param: "passwordToken",
         value: token
@@ -153,7 +160,7 @@ export class AuthenticationService extends Rest {
    * @return {Observable} The result of the request 
    */
   public signUp(user:SignUser){
-    return this.postRequest(user, this._authPath+"SignUp");
+    return this.postRequest(user, this.__authPath+"SignUp");
   }
 
   /**
@@ -164,7 +171,7 @@ export class AuthenticationService extends Rest {
    * @return {Observable} The result of the request
    */
   public logIn(user:LogUser){
-    return this.postRequest(user, this._authPath+"LogIn");
+    return this.postRequest(user, this.__authPath+"LogIn");
   }
 
   /**
@@ -175,8 +182,8 @@ export class AuthenticationService extends Rest {
    */
   public refreshToken():Observable<any>{
     return this.postRequest({
-      "token": this._sessionS.getAPIToken()
-    }, this._authPath+"Refresh");
+      "token": this.__sessionS.getAPIToken()
+    }, this.__authPath+"Refresh");
   }
 
   /**
@@ -187,7 +194,7 @@ export class AuthenticationService extends Rest {
    * @param {string} email The email which password which be remembered
    */
   public rememberPassword(email:string){
-    this.postRequest({"email":email}, this._authPath+"RememberPassword").subscribe();
+    this.postRequest({"email":email}, this.__authPath+"RememberPassword").subscribe();
   }
 
   /**
@@ -197,7 +204,7 @@ export class AuthenticationService extends Rest {
    * @param {ResetPassword} newPass The password token & the new password
    */
   public resetPassword(newPass:ResetPassword){
-    this.postRequest(newPass, this._authPath+"ResetPassword").subscribe();
+    this.postRequest(newPass, this.__authPath+"ResetPassword").subscribe();
   }
   
   //

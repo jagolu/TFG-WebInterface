@@ -1,24 +1,23 @@
-<table class="table" *ngIf="groups.length > 0">
-  <thead>
-    <tr>
-      <th scope="col" class="text-center">Nombre</th>
-      <th scope="col" class="text-center">Rol y fecha</th>
-      <th scope="col" class="text-center">Fecha de unión</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let group of groups">
-      <td class="text-center">{{group.groupName}}</td>
-      <td class="text-center">
-        <app-icon [Icon]="icon_user" *ngIf="group.role == 'GROUP_NORMAL'"></app-icon>
-        <app-icon [Icon]="icon_crown" *ngIf="group.role=='GROUP_MAKER'"></app-icon>
-        <app-icon [Icon]="icon_wizard" *ngIf="group.role=='GROUP_ADMIN'"></app-icon>
-        &nbsp;&nbsp;{{group.roleTime | onlyDatePipe}}
-      </td>
-      <td class="text-center">{{group.joinTime | onlyDatePipe}}</td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="groups.length == 0">
-  <p>El usuario no esta en ningún grupo</p>
-</div>
+<ul class="list-group">   
+  <li class="list-group-item" *ngIf="groups.length==0">Sin grupos</li> 
+  <li class="list-group-item" *ngIf="groups.length>0">
+    <div class="row">
+      <div class="col-lg-6 col-12 text-center">Nombre</div>
+      <div class="col-lg-4 col-6 text-center">Rol y fecha</div>
+      <div class="col-lg-2 col-6 text-center">Unión</div>
+    </div>
+  </li>
+  <li class="list-group-item" *ngFor="let group of groups">
+    <div class="row">
+      <div class="col-12 text-left mb-2" *ngIf="group.blocked"><h5 class="text-danger">Bloqueado</h5></div>
+      <div class="col-lg-6 col-12 text-center">{{group.groupName}}</div>
+      <div class="col-lg-4 col-6 text-center">
+          <app-icon [Icon]="icon_user" *ngIf="group.role == 'GROUP_NORMAL'"></app-icon>
+          <app-icon [Icon]="icon_crown" *ngIf="group.role=='GROUP_MAKER'"></app-icon>
+          <app-icon [Icon]="icon_wizard" *ngIf="group.role=='GROUP_ADMIN'"></app-icon>
+          &nbsp;&nbsp;{{group.roleTime | onlyDatePipe}}
+      </div>
+      <div class="col-lg-2 col-6 text-center">{{group.joinTime | onlyDatePipe}}</div>
+    </div>
+  </li>
+</ul>

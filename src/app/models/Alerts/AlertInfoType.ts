@@ -261,5 +261,31 @@ export enum AlertInfoType{
      * @summary Success message when an admin UNbans 
      * a group
      */
-    GROUPSUCCESFULLYUNBANNED = "GROUPSUCCESFULLYUNBANNED"
+    GROUPSUCCESFULLYUNBANNED = "GROUPSUCCESFULLYUNBANNED",
+
+    /**
+     * @summary Info message when a user tries to sign up
+     * but he is already "register" but he had ask for
+     * a account delete
+     */
+    DELETEREQUEST = "DELETEREQUEST",
+
+    /**
+     * @summary Info message when an admin tries to
+     * create direct conversation and the receiver user
+     * doesn't exist
+     */
+    RECVNOTEXIST = "RECVNOTEXIST",
+
+    /**
+     * @summary Info message when the group maker changes
+     * the weekly pay
+     */
+    SUCCESSFULLWEEKLYPAYCHANGE = "SUCCESSFULLWEEKLYPAYCHANGE",
+
+    /**
+     * @summary Info message when the maker changes the password
+     * of the group
+     */
+    SUCCESSFULLMANAGEPASSWORD = "SUCCESSFULLMANAGEPASSWORD"
   }

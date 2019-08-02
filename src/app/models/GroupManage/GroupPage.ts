@@ -8,9 +8,9 @@ export interface GroupPage{
     name:string;
     dateJoin:string;
     dateRole:string;
-    canPutPassword : boolean;
     hasPassword : boolean;
     maxCapacity : number;
+    weeklyPay:number;
     actualCapacity: number;
     createDate:string;
     bets:GroupBet[];

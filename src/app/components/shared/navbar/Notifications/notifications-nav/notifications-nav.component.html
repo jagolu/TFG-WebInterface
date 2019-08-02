@@ -8,8 +8,8 @@
       <app-notifications-head [alwaysShow]=true></app-notifications-head>
 </div>
 <div class="dropdown-menu dropdown-menu-right mb-3" aria-labelledby="notificationsNavDropdown">
-  <div class="dropdown-item text-center" style="cursor:pointer" 
-            *ngFor="let not of notifications"
+  <div class="text-center" style="cursor:pointer" [ngClass]="{'border-top border-dark': i!=0}"
+            *ngFor="let not of notifications; let i = index" 
             (click)="watchNotification(not)">{{not.message}}</div>
   <div class="dropdown-item text-center" style="cursor:context-menu"
         *ngIf="notifications.length==0">Sin notificationes</div>

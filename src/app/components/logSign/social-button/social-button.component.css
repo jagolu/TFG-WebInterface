@@ -1,3 +1,10 @@
+/*************AMBOS********************************/
+.centereado{
+    text-align: center;
+    width:65%;
+    display:inline-block;
+}
+
 /* -------------------FACEBOOK BUTTON-------------- */
 #facebookButton{
     display: inline-block;

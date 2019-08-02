@@ -70,7 +70,6 @@ export class DeleteAccountAlertComponent{
    * @access public
    */
   public deleteAccount(){
-    // this._alertS.hideAlert();
     this._alertS.hideAlert();
     
     //Bootstrap modal close on form submit. So, I have to

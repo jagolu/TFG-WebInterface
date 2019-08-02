@@ -1,4 +1,5 @@
-<div class="w-100"  *ngIf="!loading">
+<div class="w-100"  >
+<!-- <div class="w-100"  *ngIf="!loading"> -->
   <div *ngFor="let userMessage of messages; let i = index" class="mb-2 " 
         [ngClass]="{
           'card w-75': userMessage.username!='', 
@@ -44,6 +45,6 @@
     <input class="form-control" style="font-size:14px" formControlName="message" (focus)="startReseting()" (focusout)="stopReseting()">
   </form>
 </div>
-<div *ngIf="loading" style="height:105px" class="text-center">
+<!-- <div *ngIf="loading" style="height:105px" class="text-center">
   <i class="fa fa-cog fa-spin fa-5x fa-fw align-middle"></i>
-</div>
+</div> -->

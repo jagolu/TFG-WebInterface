@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GroupService } from 'src/app/services/restServices/group.service';
+import { IconModel, Icons } from 'src/app/models/models';
 
 @Component({
   selector: 'app-password-form',
@@ -10,52 +11,170 @@ import { GroupService } from 'src/app/services/restServices/group.service';
 })
 export class PasswordFormComponent implements OnInit {
 
-  public canPutPassword:boolean;
-  public hasPassword:boolean;
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * The form to set a new passsword
+   * 
+   * @access public
+   * @var {FormGroup} setFirstPasswordForm
+   */
   public setFirstPasswordForm:FormGroup;
+
+  /**
+   * The form to remove the group password
+   * 
+   * @access public
+   * @var {FormGroup} removePasswordForm
+   */
   public removePasswordForm:FormGroup;
+
+  /**
+   * The form to change the group password
+   * 
+   * @access public
+   * @var {FormGroup} rePasswordForm
+   */
   public rePasswordForm:FormGroup;
-  public equalPasswords : boolean;
 
-  private groupName:string;
+  /**
+   * Says if the group has password
+   * or not
+   * 
+   * @access public
+   * @var {Boolean} hasPassword
+   */
+  public hasPassword:Boolean;
 
-  constructor(private groupPage:GroupInfoService, private groupS:GroupService) { 
+  /**
+   * Says if both password (in each form) 
+   * are equals
+   * 
+   * @access public
+   * @var {Boolean} equalPasswords
+   */
+  public equalPasswords:Boolean;
+
+  /**
+   * The type of the password input
+   * 
+   * @access public
+   * @var {string} passwordType
+   */
+  public passwordType:string = "password";
+
+  /**
+   * The icon of an opened/closed eye
+   * 
+   * @access public
+   * @var {IconModel} icon_eye
+   */
+  public icon_eye:IconModel = Icons.EYE_OPEN_CLOSE;
+
+  /**
+   * The tag of the eye icon
+   * 
+   * @access public
+   * @var {any} eye
+   */
+  @ViewChild('eyeIconChangeGroupPassword') eye;
+
+  /**
+   * The name of the group
+   * 
+   * @access private
+   * @var {string} _groupName
+   */
+  private _groupName:string;
+
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {GroupInfoService} __groupInfoS To get the info of the group
+   * @param {GroupService} __groupS To do the group requests
+   */
+  constructor(private __groupInfoS:GroupInfoService, private __groupS:GroupService) { 
     this.equalPasswords = false;
     this.initializeForm();
   }
 
+  /**
+   * Gets the group info
+   * 
+   * @OnInit
+   */
   ngOnInit() {
-    this.groupPage.info.subscribe(page=>{
+    this.__groupInfoS.info.subscribe(page=>{
       try{
-        this.canPutPassword = page.canPutPassword;
         this.hasPassword = page.hasPassword;
-        this.groupName = page.name;
+        this._groupName = page.name;
       }catch(Error){
-        this.canPutPassword = false;
         this.hasPassword = false;
       }
     });
   }
 
+
+  //
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Set a new password to a group
+   * when the group has no password
+   * 
+   * @access public
+   */
   public setFirstPassword(){
     let newPass = this.setFirstPasswordForm.controls["newPassword"].value;
     this.setPassword(newPass, null);
     this.resetForm();
   }
 
+  /**
+   * Changes the password of the group
+   * 
+   * @access public
+   */
   public changePassword(){
     let newPass = this.rePasswordForm.controls["newPassword"].value;
     let oldPass = this.rePasswordForm.controls["oldPassword"].value;
-    this.setPassword(newPass, oldPass);
+    this.setPassword(newPass, oldPass);      
+    if(this.passwordType != "password"){
+      this.eye.eR.nativeElement.click();
+      this.eye.icon.style.color = "black"
+    }
     this.resetForm();
   }
 
+  /**
+   * Removes the password of the group
+   * 
+   * @access public
+   */
   public removePassword(){
     let oldPass = this.removePasswordForm.controls["oldPassword"].value;
     this.setPassword(null, oldPass);
     this.resetForm();
   }
 
+  /**
+   * Says if both password are equals
+   * 
+   * @access public
+   */
   public equalPassword(){
     let password = !this.hasPassword ? this.setFirstPasswordForm.controls['newPassword'].value : 
                                         this.rePasswordForm.controls['newPassword'].value;
@@ -64,14 +183,43 @@ export class PasswordFormComponent implements OnInit {
     this.equalPasswords = ((password == repeatPassword) && password.length>0 && repeatPassword.length>0);
   }
 
+  /**
+   * Changes the password input type
+   * 
+   * @access public
+   */
+  public watchPassword(){
+    this.passwordType = this.passwordType == "text" ? "password" : "text";
+  }
+
+
+  //
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+  // ────────────────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Do the request to change the group password
+   * 
+   * @access private
+   * @param {string} newPassword The new password of the group
+   * @param {string} oldPassword The old password of the group (null
+   * if the group has no password)
+   */
   private setPassword(newPassword:string, oldPassword?:string){
-    this.groupS.managePassword({
-      "name": this.groupName,
+    this.__groupS.managePassword({
+      "name": this._groupName,
       "newPassword": newPassword,
       "oldPassword": oldPassword
     });
   }
 
+  /**
+   * Initializes all the forms
+   * 
+   * @access private
+   */
   private initializeForm(){
     let passValidators = [
       Validators.required,
@@ -96,7 +244,13 @@ export class PasswordFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Resets all the forms
+   * 
+   * @access private
+   */
   private resetForm(){
+    this.passwordType = "password";
     this.setFirstPasswordForm.reset({
       'newPassword' : "",
       'repeatPassword' : ""

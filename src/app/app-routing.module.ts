@@ -10,7 +10,7 @@ import { HomeComponent } from 'src/app/components/home/home.component';
 import { SignUpComponent } from 'src/app/components/logSign/sign-up/sign-up.component';
 import { LogInComponent } from 'src/app/components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from 'src/app/components/logSign/email-verification/email-verification.component';
-import { ViewUserComponent } from './components/user/view-user/view-user.component';
+import { ViewUserComponent } from './components/user/view-user.component';
 import { GroupComponent } from './components/group/group.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
 import { ShopComponent } from './components/shop/shop.component';
@@ -30,13 +30,13 @@ const ROUTES: Routes = [
   { path: 'rememberPassword', component: RememberPasswordFormComponent, canActivate: [AuthGuardService]},
   { path: 'changePassword/:token', component: ResetPasswordFormComponent, canActivate: [AuthGuardService]},
   { path: 'emailVerification/:token', component: EmailVerificationComponent, canActivate: [AuthGuardService]},
-  { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'myUserInfo', component: ViewUserComponent, canActivate: [AuthGuardService]},
   { path: 'group/:group', component: GroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'searchGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'searchUser', component: SearchUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService, AdminGuardService]},
-  { path: 'directMessages', component: AllConversationsComponent, canActivate: [AuthGuardService, AdminGuardService]},
+  { path: 'directMessages', component: AllConversationsComponent, canActivate: [AuthGuardService]},
   { path: 'directConversation/:id', component: DirectConversationComponent, canActivate: [AuthGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];

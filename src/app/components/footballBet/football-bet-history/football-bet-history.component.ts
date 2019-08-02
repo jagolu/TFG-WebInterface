@@ -9,12 +9,40 @@ import { EndedFootballBet } from 'src/app/models/models';
 })
 export class FootballBetHistoryComponent implements OnInit {
 
+  //
+  // ──────────────────────────────────────────────────────────────────────
+  //   :::::: C L A S S   V A R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * The history of bets of the user
+   * 
+   * @access public
+   * @var {EndedFootballBet[]} betsHistory
+   */
   public betsHistory:EndedFootballBet[];
 
-  constructor(private groupPage:GroupInfoService) { }
 
+  //
+  // ──────────────────────────────────────────────────────────────────────────
+  //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+  // ──────────────────────────────────────────────────────────────────────────
+  //
+
+  /**
+   * @constructor
+   * @param {GroupInfoService} __groupInfoS To get the history-bets
+   */
+  constructor(private __groupInfoS:GroupInfoService) { }
+
+  /**
+   * Gets the history-bets
+   * 
+   * @OnInit
+   */
   ngOnInit() {
-    this.groupPage.info.subscribe(page=>{
+    this.__groupInfoS.info.subscribe(page=>{
       try{ this.betsHistory = page.betsHistory;}
       catch(Error){this.betsHistory = []}
     });

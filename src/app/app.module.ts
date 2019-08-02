@@ -57,9 +57,9 @@ import { LogInComponent } from './components/logSign/log-in/log-in.component';
 import { EmailVerificationComponent } from './components/logSign/email-verification/email-verification.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SocialButtonComponent } from './components/logSign/social-button/social-button.component';
-import { ViewUserComponent } from './components/user/view-user/view-user.component';
-import { UserGroupsComponent } from './components/user/view-user/user-groups/user-groups.component';
-import { UserInfoFormComponent } from './components/user/view-user/user-info-form/user-info-form.component';
+import { ViewUserComponent } from './components/user/view-user.component';
+import { UserGroupsComponent } from './components/user/user-groups/user-groups.component';
+import { UserInfoFormComponent } from './components/user/user-info-form/user-info-form.component';
 import { CreateGroupAlertComponent } from './components/shared/alert/create-group-alert/create-group-alert.component';
 import { GroupComponent } from './components/group/group.component';
 import { LaunchedBetsComponent } from './components/footballBet/launched-bets/launched-bets.component';
@@ -97,6 +97,7 @@ import { AllConversationsComponent } from './components/direct-messages/all-conv
 import { DirectConversationComponent } from './components/direct-messages/direct-conversation/direct-conversation.component';
 import { NotificationsNavComponent } from './components/shared/navbar/Notifications/notifications-nav/notifications-nav.component';
 import { NotificationsHeadComponent } from './components/shared/navbar/Notifications/notifications-head/notifications-head.component';
+import { WeeklyPayFormComponent } from './components/group/group-settings/weekly-pay-form/weekly-pay-form.component';
 
 
 
@@ -154,6 +155,7 @@ import { NotificationsHeadComponent } from './components/shared/navbar/Notificat
     DirectConversationComponent,
     NotificationsNavComponent,
     NotificationsHeadComponent,
+    WeeklyPayFormComponent,
   ],
   imports: [
     BrowserModule,

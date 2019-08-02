@@ -34,9 +34,13 @@
               <div class="col-6">
                 <div class="card-body">
                   <h5 class="card-title">{{ member.userName }}</h5>
-                  <small class="text-muted">In the group since {{member.dateJoin | onlyDatePipe}}</small><br>
-                  <small class="text-muted" *ngIf="member.dateJoin != member.dateRole || member.role!='GROUP_NORMAL'"
-                      >Actual role since {{member.dateRole | onlyDatePipe}}</small>
+                  <small class="text-muted">En el grupo desde {{member.dateJoin | onlyDatePipe}}</small><br>
+                  <small class="text-muted">
+                      <app-icon [Icon]="icon_crown" *ngIf="member.role=='GROUP_MAKER'"></app-icon>
+                      <app-icon [Icon]="icon_wizard" *ngIf="member.role=='GROUP_ADMIN'"></app-icon>
+                      <app-icon [Icon]="icon_user" *ngIf="member.role=='GROUP_NORMAL'"></app-icon>
+                      desde {{member.dateRole | onlyDatePipe}}
+                  </small>
                 </div>
               </div>
             </div>
@@ -51,24 +55,25 @@
           (member.blocked && (user_role == 'GROUP_MAKER' || user_role == member.blockedBy))) &&  i != (members.length-1)">
       <div class="card card-body">
         <div class="row justify-content-center">
-          <div class="col-6">
+          <div class="col-lg-6 col-12">
             <button class="btn btn-info w-100 mb-2" *ngIf="member.role != 'GROUP_ADMIN' && user_role == 'GROUP_MAKER' && !member.blocked"
-                    (click)="manageAdmin(member.publicUserId, true)">Make admin</button>
+                    (click)="manageAdmin(member.publicUserId, true)">Dar admin</button>
             <button class="btn btn-outline-info w-100 mb-2" *ngIf="member.role == 'GROUP_ADMIN' && user_role == 'GROUP_MAKER' && !member.blocked"
-                    (click)="manageAdmin(member.publicUserId, false)">Unmake admin</button>
+                    (click)="manageAdmin(member.publicUserId, false)">Quitar admin</button>
           </div>
         </div>
         <div class="row justify-content-center">
-          <div class="col-6">
-            <button class="btn btn-danger w-100 mb-2" (click)="kick(member.publicUserId)" *ngIf="user_role == 'GROUP_MAKER' || user_role == 'GROUP_ADMIN'">Kick</button>
+          <div class="col-lg-6 col-12">
+            <button class="btn btn-danger w-100 mb-2" (click)="kick(member.publicUserId)" 
+                    *ngIf="user_role == 'GROUP_MAKER' || user_role == 'GROUP_ADMIN'">Echar</button>
           </div>
         </div>
         <div class="row justify-content-center">
-          <div class="col-6">
+          <div class="col-lg-6 col-12">
             <button class="btn btn-danger w-100" (click)="block(member.publicUserId, true)" 
-                    *ngIf="(user_role == 'GROUP_MAKER' || user_role == 'GROUP_ADMIN') && !member.blocked">Block</button>
+                    *ngIf="(user_role == 'GROUP_MAKER' || user_role == 'GROUP_ADMIN') && !member.blocked">Bloquear</button>
             <button class="btn btn-outline-danger w-100" (click)="block(member.publicUserId, false)" 
-                    *ngIf="(user_role == 'GROUP_MAKER' || user_role == 'GROUP_ADMIN') && member.blocked">Unblock</button>
+                    *ngIf="(user_role == 'GROUP_MAKER' || user_role == 'GROUP_ADMIN') && member.blocked">Desbloquear</button>
           </div>
         </div>
       </div>

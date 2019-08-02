@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { GroupInfo, IconModel, Icons, GroupMemberAdmin } from 'src/app/models/models';
 import { GroupService } from 'src/app/services/restServices/group.service';
-import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { AdminService } from 'src/app/services/restServices/admin.service';
@@ -68,9 +67,9 @@ export class SearchGroupComponent{
    * To know what was the last find
    * 
    * @access private
-   * @var {string} lastFind
+   * @var {string} _lastFind
    */
-  private lastFind:string = "";
+  private _lastFind:string = "";
 
 
   //
@@ -81,24 +80,20 @@ export class SearchGroupComponent{
   
   /**
    * @constructor
-   * @param {GroupService} groupS The service to get the groups
-   * @param {Router} route Service to know the actual url
-   * @param {AlertService} alertS The service to manage the alerts
-   * @param {SessionService} session_s The service to get the groups
+   * @param {GroupService} __groupS The service to get the groups
+   * @param {AlertService} __alertS The service to manage the alerts
+   * @param {SessionService} __sessionS The service to get the groups
    * at which the user is already joined
-   * @param {AdminService} adminS To ban unban the groups
+   * @param {AdminService} __adminS To ban unban the groups
    */
-  constructor(private groupS:GroupService, private route:Router, 
-              private alertS:AlertService, private session_s:SessionService,
-              private adminS:AdminService) { 
+  constructor(private __groupS:GroupService, private __adminS:AdminService, 
+              private __alertS:AlertService, private __sessionS:SessionService) { 
     this.getAllGroups();
-    this.joinGroups = this.route.url.includes("joinNewGroup");
-    this.session_s.User.subscribe(
-      u => {
-        if(u != null) this.userGroups = u.groups
-        else this.userGroups = []
-      }
-    );
+    this.joinGroups = !this.__sessionS.isAdmin();
+    this.__sessionS.User.subscribe(u => {
+        if(u != null) this.userGroups = u.groups;
+        else this.userGroups = [];
+    });
   }
 
 
@@ -117,13 +112,9 @@ export class SearchGroupComponent{
    * @
    */
   public search(name:string){
-    this.lastFind = name;
-    if(name.length == 0 || name == null){
-      this.getAllGroups();
-    }
-    else{
-      this.getGroupsByName(name);
-    }
+    this._lastFind = name;
+    if(name.length == 0 || name == null) this.getAllGroups();
+    else this.getGroupsByName(name);
   }
 
   /**
@@ -134,8 +125,8 @@ export class SearchGroupComponent{
    * @param {boolean} needPass A filter to show or not
    * the form 
    */
-  public joinGroup(name:string, needPass:boolean):void{
-    this.alertS.joinGroup(needPass, name);
+  public joinGroup(name:string, needPass:boolean){
+    this.__alertS.joinGroup(needPass, name);
   }
 
   /**
@@ -144,10 +135,10 @@ export class SearchGroupComponent{
    * 
    * @access public
    * @param {string} groupName The name of the group
-   * @return {boolean} True if the user is already joined
+   * @return {Boolean} True if the user is already joined
    * in the group, false otherwise
    */
-  public isJoinedInGroup(groupName:string):boolean{
+  public isJoinedInGroup(groupName:string):Boolean{
     let isIn = false;
     this.userGroups.forEach(group=>{
       if(group == groupName) isIn = true;
@@ -162,7 +153,7 @@ export class SearchGroupComponent{
    * @param {string} name The name of the group
    */
   public watchUsers(members:GroupMemberAdmin[], name:string){
-    this.alertS.seeGroupMembers(members, name);
+    this.__alertS.seeGroupMembers(members, name);
   }
 
   /**
@@ -172,17 +163,17 @@ export class SearchGroupComponent{
    * @param {Boolean} ban True to ban the group, false to unban  it
    */
   public banGroup(name:string, ban:Boolean){
-    this.adminS.banGroup({
+    this.__adminS.banGroup({
       "groupName": name,
       "ban": ban
-    }).subscribe(_=> this.search(this.lastFind));
+    }).subscribe(_=> this.search(this._lastFind));
   }
 
   /**
    * Says if the current user is an admin or not
    */
   public isAdmin():Boolean{
-    return this.session_s.isAdmin();
+    return this.__sessionS.isAdmin();
   }
 
 
@@ -199,8 +190,8 @@ export class SearchGroupComponent{
    * @access private
    */
   private getAllGroups(){
-    this.groupS.getAllGroups().subscribe(
-      (ok:any) =>  this.groups = ok
+    this.__groupS.getAllGroups().subscribe(
+      (groupsRes:any) =>  this.groups = groupsRes
     );
   }
 
@@ -212,8 +203,8 @@ export class SearchGroupComponent{
    * @param {string} name The name of the groups to find 
    */
   private getGroupsByName(name:string){
-    this.groupS.getGroups(name).subscribe(
-      (ok:any)=> this.groups = ok
+    this.__groupS.getGroups(name).subscribe(
+      (groupsRes:any)=> this.groups = groupsRes
     );
   }
 }

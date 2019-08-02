@@ -146,17 +146,17 @@ export class DoFootballBetComponent{
    * The name of the group
    * 
    * @access private
-   * @var {string} groupName 
+   * @var {string} _groupName 
    */
-  private groupName:string;
+  private _groupName:string;
 
   /**
    * The id of the bet
    * 
    * @access private
-   * @var {string} bet
+   * @var {string} _bet
    */
-  private bet:string;
+  private _bet:string;
 
 
   //
@@ -193,7 +193,7 @@ export class DoFootballBetComponent{
         //The max what user can bet (the min value of the maxBet and the actual user coins)
         this.max_user = Math.min(bet.bet.maxBet, bet.userCoins);
         //The id of the bet
-        this.bet = bet.bet.bet;
+        this._bet = bet.bet.bet;
         //The message to correct time
         this.timeMessage = this.correctPart(bet.bet.typeBet.name);
         this.initializeForm();        
@@ -202,11 +202,11 @@ export class DoFootballBetComponent{
         this.show1X2 = this.jackpotBet = false;
         this.win_rate = this.min = this.max = 0;
         this.jackpot = this.user_coins = this.max_user = 0;
-        this.bet = null;
+        this._bet = null;
       }
 
     });
-    this.groupInfo.info.subscribe(group=>this.groupName = group.name);
+    this.groupInfo.info.subscribe(group=>this._groupName = group.name);
     this._alertS.reset.subscribe(
       reset=>{ if(reset) this.resetForm(); }
     );
@@ -252,11 +252,16 @@ export class DoFootballBetComponent{
     else this.coins_bet = 0;
   }
 
+  /**
+   * Sets the message to the correct bet type
+   * 
+   * @access public
+   */
   public setMessage(){
     let winner:number = this.doAFootballBetForm.controls['winner'].value;
-    if(winner==1) this.info_winner_msg = "The home team will win";
-    else if(winner==2) this.info_winner_msg = "The away team will win";
-    else if(winner==0) this.info_winner_msg = "Both teams will draw";
+    if(winner==1) this.info_winner_msg = "El equipo local ganará";
+    else if(winner==2) this.info_winner_msg = "El equipo visitante ganará";
+    else if(winner==0) this.info_winner_msg = "Ambos equipos empatarán";
   }
 
 
@@ -272,6 +277,8 @@ export class DoFootballBetComponent{
    * @access private
    */
   private initializeForm(){
+    let coinsBetValue = this.jackpot ? {value: this.min, disabled: this.jackpotBet} : {value: ''};
+    
     this.doAFootballBetForm = new FormGroup({
       'winner': new FormControl(
         '',
@@ -296,7 +303,7 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        {value: this.min, disabled: this.jackpotBet},
+        coinsBetValue,
         [
           this.requiredNumber,
           Validators.min(this.min),
@@ -304,11 +311,10 @@ export class DoFootballBetComponent{
         ]
       )
     });
-    if(!this.show1X2) this.doAFootballBetForm.controls["coinsBet"].markAsDirty();
   }
 
   /**
-   * Reset the doAFootballBetForm
+   * Reset the coinsbet
    * 
    * @access private
    */
@@ -323,8 +329,8 @@ export class DoFootballBetComponent{
    */
   private betReq(){
     this._betS.doFootballBet({
-      "groupName": this.groupName,
-      "footballBet": this.bet,
+      "groupName": this._groupName,
+      "footballBet": this._bet,
       "bet": this.doAFootballBetForm.controls["coinsBet"].value,
       "homeGoals": this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["homeGoals"].value),
       "awayGoals": this.show1X2 ? null : parseInt(this.doAFootballBetForm.controls["awayGoals"].value),
@@ -337,10 +343,10 @@ export class DoFootballBetComponent{
    * 
    * @access private
    * @param {FormControl} control The value of the input
-   * @return {[string]:boolean} The id of the error and the result if
+   * @returns {[string]:boolean} The id of the error and the result if
    * the input is empty, null otherwise
    */
-  private requiredNumber(control:FormControl):{[ret:string]:boolean}{
+  private requiredNumber(control:FormControl):{[ret:string]:Boolean}{
     let num = control.value;
     if(num == null || isNaN(num) || num%1 !== 0 || control.pristine) {
       return {"requiredNumber":true}
@@ -353,13 +359,12 @@ export class DoFootballBetComponent{
    * 
    * @access private
    * @param {string} type The type bet of the bet
-   * 
-   * @return {string} The correct message for the 
+   * @returns {string} The correct message for the 
    * correct part. 
    */
   private correctPart(type:string):string{
-    if(type.includes("FULLTIME")) return "Full match";
-    if(type.includes("FIRSTHALF")) return "First half";
-    if(type.includes("SECONDHALF")) return "Second half";
+    if(type.includes("FULLTIME")) return "Partido completo";
+    if(type.includes("FIRSTHALF")) return "Primera parte";
+    if(type.includes("SECONDHALF")) return "Segunda parte";
   }
 }

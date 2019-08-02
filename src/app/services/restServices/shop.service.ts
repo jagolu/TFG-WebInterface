@@ -26,9 +26,9 @@ export class ShopService extends Rest{
    * 
    * @access private
    * @readonly
-   * @var {string} _shopPath
+   * @var {string} __shopPath
    */
-  private readonly _shopPath : string = "Shop/";
+  private readonly __shopPath : string = "Shop/";
 
 
   //
@@ -61,7 +61,7 @@ export class ShopService extends Rest{
    * @return {Observable} The result of the request 
    */
   public doABuy(item:BuyInfo){
-    return this.postRequest(item, this._shopPath+"Buy");
+    return this.postRequest(item, this.__shopPath+"Buy");
   }
 
   /**
@@ -71,6 +71,6 @@ export class ShopService extends Rest{
    * @return {Observable} The result of the request
    */
   public getAllOffers(){
-    return this.getRequest(this._shopPath+"GetAllOffers");
+    return this.getRequest(this.__shopPath+"GetAllOffers");
   }
 }

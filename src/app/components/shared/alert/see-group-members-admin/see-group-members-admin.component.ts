@@ -73,5 +73,4 @@ export class SeeGroupMembersAdminComponent{
       catch(Error){this.members = null}
     });
   }
-
 }

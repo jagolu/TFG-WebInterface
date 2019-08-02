@@ -1,9 +1,9 @@
 <form [formGroup]="createGroupForm">
   <div class="form-group">
-    <label>Group name</label>
+    <label>Nombre del grupo</label>
     <input type="text" 
           class="form-control"
-          placeholder="Your group name"
+          placeholder="El nombre del grupo"
           class="form-control"
           formControlName="name"
           autocomplete="off">
@@ -11,21 +11,21 @@
     *ngIf="createGroupForm.controls['name'].errors && 
           !createGroupForm.controls['name'].pristine && 
           createGroupForm.controls['name'].errors.required"
-    >The name is required</small>
+    >Campo obligatorio</small>
     <small class="text-danger"
           *ngIf="createGroupForm.controls['name'].errors && 
                 !createGroupForm.controls['name'].pristine && 
                 createGroupForm.controls['name'].errors.minlength"
-    >The name need to have at least 4 characters</small>
+    >Mínimo de 4 caracteres</small>
     <small class="text-danger"
           *ngIf="createGroupForm.controls['name'].errors && 
                 !createGroupForm.controls['name'].pristine && 
                 createGroupForm.controls['name'].errors.maxlength"
-    >The name need to have less than 20 characters</small>
+    >Máximo de 20 caracteres</small>
     <small class="text-danger"
           *ngIf="createGroupForm.controls['name'].errors &&
                 createGroupForm.controls['name'].errors.groupNameTaken"
-    >The group name isn't available</small>
+    >Nombre no disponible</small>
   </div> 
 
   <button class="btn btn-danger w-100 mt-2"

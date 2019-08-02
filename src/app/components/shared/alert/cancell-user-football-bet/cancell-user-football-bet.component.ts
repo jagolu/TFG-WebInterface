@@ -66,25 +66,25 @@ export class CancellUserFootballBetComponent{
    * The name of the group
    * 
    * @access private
-   * @var {string} groupName 
+   * @var {string} _groupName 
    */
-  private groupName:string;
+  private _groupName:string;
 
   /**
    * The id of the football bet
    * 
    * @access private
-   * @var {string} footballBetId
+   * @var {string} _footballBetId
    */
-  private footballBetId:string;
+  private _footballBetId:string;
 
   /**
    * The id of the user football bet
    * 
    * @access private
-   * @var {string} userFootballBetId
+   * @var {string} _userFootballBetId
    */
-  private userFootballBetId:string;
+  private _userFootballBetId:string;
 
 
   //
@@ -95,28 +95,29 @@ export class CancellUserFootballBetComponent{
   
   /**
    * @constructor
-   * @param {AlertService} _alertS To get the alert info
-   * @param {UserService} _userS To do the user requests
+   * @param {AlertService} __alertS To get the alert info
+   * @param {BetService} __betS To do the user requests
+   * @param {GroupInfoService} __groupInfoS To get the name of the group
    */
-  constructor(private _alertS:AlertService, private groupInfo:GroupInfoService, private _betS:BetService) { 
-    this._alertS.target.subscribe(ubId=> this.userFootballBetId = ubId);
-    this._alertS.oInfo.subscribe(bet=>{
+  constructor(private __alertS:AlertService, private __groupInfoS:GroupInfoService, private __betS:BetService) { 
+    this.__alertS.target.subscribe(ubId=> this._userFootballBetId = ubId);
+    this.__alertS.oInfo.subscribe(bet=>{
       try{
         //Check if the bet is a group bet or a solo bet
         this.jackpotBet = bet.bet.typePay.name.includes("JACKPOT");
         //The coins that the user did bet at the begining
         this.coins_bet = bet.userCoins;
         //The id of the bet
-        this.footballBetId = bet.bet.bet;
+        this._footballBetId = bet.bet.bet;
         //The coins that the user will get back
         this.coins_return = MoneyBack.getMoneyBack(bet.bet.typeBet.cancelRate, bet.bet.typePay.cancelRate, this.coins_bet);        
       }catch(Error){
         this.jackpotBet = false;
         this.coins_bet = this.coins_return = 0;
-        this.footballBetId = "";
+        this._footballBetId = "";
       }
     });
-    this.groupInfo.info.subscribe(group=>this.groupName = group.name);
+    this.__groupInfoS.info.subscribe(group=>this._groupName = group.name);
   }
 
 
@@ -133,7 +134,7 @@ export class CancellUserFootballBetComponent{
    * @access public
    */
   public cancelBet(){
-    this._alertS.hideAlert();
+    this.__alertS.hideAlert();
     //Bootstrap modal close on form submit. So, I have to
     //show 2 modals, so first hide that and in 0.35 seconds
     //send the petition and show the modal of the response
@@ -153,10 +154,10 @@ export class CancellUserFootballBetComponent{
    * @access private
    */
   private cancelBetReq(){
-    this._betS.cancelUserFootballBet({
-      "groupName": this.groupName,
-      "footballBet": this.footballBetId,
-      "userBet": this.userFootballBetId,
+    this.__betS.cancelUserFootballBet({
+      "groupName": this._groupName,
+      "footballBet": this._footballBetId,
+      "userBet": this._userFootballBetId,
     });
   }
 }

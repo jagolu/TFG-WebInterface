@@ -5,20 +5,21 @@
     
     
     <!-- Nickname user form -->
-    <hr class="b-4">
+    <hr class="b-4" *ngIf="!isAdmin()">
     <form
         [formGroup]="nicknameForm" 
-        (ngSubmit)="changeNickname()">
+        (ngSubmit)="changeNickname()" *ngIf="!isAdmin()">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Nickname</label>
-            <div class="col-sm-10">
+            <label class="col-lg-4 col-form-label">Nombre de usuario</label>
+            <div class="col-lg-8">
                 <input type="text"
                     class="form-control text-center"
-                    placeholder="Your username"
+                    placeholder="Tu nuevo nombre de usuario"
                     formControlName="nickname"
                     [readonly]="isAdmin()"
                     [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && nicknameForm.controls['nickname'].errors}">
-            </div>
+                </div>
+
         </div>
         
         <div class="row justify-content-center mt-3">
@@ -26,7 +27,7 @@
                 <button class="btn btn-outline-dark mb-2 w-100" 
                     type="submit" 
                     [disabled]="!nicknameForm.valid || nicknameForm.controls['nickname'].pristine"
-                >Change username</button>
+                >Cambiar nombre de usuario</button>
             </div> 
         </div>
     </form>
@@ -35,78 +36,80 @@
         *ngIf="nicknameForm.controls['nickname'].errors && 
         !nicknameForm.controls['nickname'].pristine && 
         nicknameForm.controls['nickname'].errors.required"
-    >The username is required</small>
+    >Campo obligatorio.</small>
     <small class="text-danger"
         *ngIf="nicknameForm.controls['nickname'].errors && 
         !nicknameForm.controls['nickname'].pristine && 
         nicknameForm.controls['nickname'].errors.minlength"
-    >The username need to have at least 4 characters</small>
+    >Mínimo de 4 caracteres.</small>
     <small class="text-danger"
         *ngIf="nicknameForm.controls['nickname'].errors && 
         !nicknameForm.controls['nickname'].pristine && 
         nicknameForm.controls['nickname'].errors.maxlength"
-    >The username need to have less than 20 characters</small>
+    >Máximo de 20 caracteres.</small>
 
     <!-- Password user form  -->
     <hr class="b-4">
     <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Old Password</label>
-            <div class="col-sm-10">
+            <label class="col-lg-4 col-form-label">Antigua contraseña</label>
+            <div class="col-lg-8">
                 <input type="password"
                     class="form-control mb-2"
-                    placeholder="Old password"
+                    placeholder="Antigua contraseña"
                     formControlName="oldPassword"
                     autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">New Password</label>
-            <div class="col-sm-10">
-                <input type="password"
+            <label class="col-lg-4 col-form-label">Nueva contraseña 
+                <app-icon [Icon]="icon_eye" (click)="watchPassword()" #changeUserPasswordEye></app-icon>
+            </label>
+            <div class="col-lg-8">
+                <input type="{{passwordType}}"
                     (keyup)="equalPassword()"
                     class="form-control mb-2"
-                    placeholder="New password"
+                    placeholder="Nueva contraseña"
                     formControlName="newPassword"
                     autocomplete="off">
                 <small class="text-danger"
                     *ngIf="passwordForm.controls['newPassword'].errors && 
                     !passwordForm.controls['newPassword'].pristine && 
                     passwordForm.controls['newPassword'].errors.minlength"
-                >The password need to have at least 8 characters<br></small>
+                >Mínimo de 8 caracteres.<br></small>
                 <small class="text-danger"
                     *ngIf="passwordForm.controls['newPassword'].errors && 
                     !passwordForm.controls['newPassword'].pristine && 
                     passwordForm.controls['newPassword'].errors.maxlength"
-                ><br>The password need to have less than 50 characters<br></small>
+                ><br>Máximo de 50 caracteres<br></small>
                 <small class="text-danger"
                     *ngIf="passwordForm.controls['newPassword'].errors && 
                     !passwordForm.controls['newPassword'].pristine && 
                     passwordForm.controls['newPassword'].errors.pattern"
-                >The password must have lowercase, uppercase and a special character<br></small>
+                >Debe tener almenos una mayúscula, una minúscula y un número.<br></small>
                 <small class="text-danger"
                     *ngIf=" !passwordForm.controls['newPassword'].pristine && 
-                    !equalPasswords"
-                >Boths passwords must be equal<br></small>
+                            !passwordForm.controls['repeatPassword'].pristine && 
+                            !equalPasswords"
+                >Las contraseñas no coinciden.<br></small>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Repeat new password</label>
-            <div class="col-sm-10">
-                <input type="password"
+            <label class="col-lg-4 col-form-label">Repetir contraseña</label>
+            <div class="col-lg-8">
+                <input type="{{passwordType}}"
                     (keyup)="equalPassword()"
                     class="form-control mb-2"
-                    placeholder="Repeat the new password"
+                    placeholder="Repite la contraseña"
                     formControlName="repeatPassword"
                     autocomplete="off">
             </div>
         </div>
         <div class="row justify-content-center mt-4">
             <div class="col-12">
-                <button class="btn btn-outline-dark mb-2 w-100" 
-                    type="submit" 
-                    [disabled]="!passwordForm.valid"
-                >Change password</button>
+                <button class="btn btn-outline-dark mb-2 w-100" type="submit" 
+                    [disabled]="!passwordForm.valid || !equalPasswords"
+                >Cambiar contraseña</button>
             </div> 
         </div>
     </form>
@@ -114,31 +117,31 @@
 
 
     <!-- Profile img form -->
-    <hr class="b-4">
+    <hr class="b-4" *ngIf="!isAdmin()">
     <form class="custom-file"
         [formGroup]="imageForm" 
-        (ngSubmit)="changeImg()">
+        (ngSubmit)="changeImg()" *ngIf="!isAdmin()">
 
         <input type="file" 
             class="custom-file"
             formControlName="userImage"
             (change)="loadFile($event)"
-            value="Select a file"
+            value="Selecciona una imagen"
             id="newUserFileInput">
 
-        <label class="custom-file-label" for="newUserFileInput">Choose a new profile picture...</label>
+        <label class="custom-file-label" for="newUserFileInput">Selecciona una nueva foto de perfil</label>
         <div class="row justify-content-center mt-3">
             <div class="col-12">
                     <button class="btn btn-outline-dark mb-2 w-100" 
-                    [disabled]="!imageForm.valid || isAdmin()">Change profile image</button>
+                    [disabled]="!imageForm.valid || isAdmin()">Cambiar foto de perfil</button>
             </div> 
         </div>
     </form>
 
     <!-- Delete account -->
-    <hr class="b-4">
-    <button class="btn btn-outline-danger w-100" (click)="openAlert()" [disabled]="isAdmin()">
-        Delete account
+    <hr class="b-4" *ngIf="!isAdmin()">
+    <button class="btn btn-danger w-100" (click)="openAlert()" [disabled]="isAdmin()" *ngIf="!isAdmin()">
+        Eliminar cuenta
     </button>
     
 </div>
