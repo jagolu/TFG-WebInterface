@@ -51,14 +51,6 @@ export class ChatMessagesComponent implements OnInit{
   public sendChatMessageForm:FormGroup;
 
   /**
-   * The var which contains the reset unread messages count intervar
-   * 
-   * @access private
-   * @var {any} timerReset
-   */
-  private timerReset:any = null;
-
-  /**
    * To do the time transformation
    * 
    * @access private
@@ -90,6 +82,14 @@ export class ChatMessagesComponent implements OnInit{
    */
   private _username:string;
 
+  /**
+   * The var which contains the reset unread messages count intervar
+   * 
+   * @access private
+   * @var {any} timerReset
+   */
+  private _timerReset:any = null;
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -99,10 +99,10 @@ export class ChatMessagesComponent implements OnInit{
 
   /**
    * @constructor
-   * @param {ChatService} _chatS To get the chat room info 
+   * @param {ChatService} __chatS To get the chat room info 
    * @param {SessionService} __sessionS To get the nickname of the user
    */
-  constructor(private _chatS:ChatService, private __sessionS:SessionService) { 
+  constructor(private __chatS:ChatService, private __sessionS:SessionService) { 
     this.initializeForm();
     this.__sessionS.User.subscribe(u=>{
       try{this._username = u.username}
@@ -133,7 +133,7 @@ export class ChatMessagesComponent implements OnInit{
    */
   public send(){
     if(this.sendChatMessageForm.valid){
-      this._chatS.sendMessage({
+      this.__chatS.sendMessage({
         "group": this.groupName,
         "message": this.sendChatMessageForm.controls["message"].value,
         "username": this._username,
@@ -153,7 +153,7 @@ export class ChatMessagesComponent implements OnInit{
    * @access public
    */
   public startReseting(){
-    this.timerReset = setInterval(_=>this._chatS.readMessagesGroup(this.groupName), 50);
+    this._timerReset = setInterval(_=>this.__chatS.readMessagesGroup(this.groupName), 50);
   }
 
   /**
@@ -163,7 +163,7 @@ export class ChatMessagesComponent implements OnInit{
    * @access public
    */
   public stopReseting(){
-    clearInterval(this.timerReset);
+    clearInterval(this._timerReset);
   }
 
   /**
@@ -172,8 +172,8 @@ export class ChatMessagesComponent implements OnInit{
    * @access public
    * @returns {string} The public user id
    */
-  public getPublicUserid(){
-    return this._chatS.getPublicUserId();
+  public getPublicUserid():string{
+    return this.__chatS.getPublicUserId();
   }
 
   /**
@@ -239,11 +239,11 @@ export class ChatMessagesComponent implements OnInit{
    * @access private
    */
   private userChatSub(){
-    this._chatS.room.subscribe(msgs=>{
+    this.__chatS.room.subscribe(msgs=>{
       this.messages = msgs;
       this.scrollDown();
     });
-    this._chatS.reDown.subscribe((down:[string,boolean])=>{
+    this.__chatS.reDown.subscribe((down:[string,boolean])=>{
       if(down[0] == this.groupName && down[1] == true){
         this.scrollDown();
       }
