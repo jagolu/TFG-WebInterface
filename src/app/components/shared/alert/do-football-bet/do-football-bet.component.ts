@@ -277,8 +277,6 @@ export class DoFootballBetComponent{
    * @access private
    */
   private initializeForm(){
-    let coinsBetValue = this.jackpot ? {value: this.min, disabled: this.jackpotBet} : {value: ''};
-    
     this.doAFootballBetForm = new FormGroup({
       'winner': new FormControl(
         '',
@@ -303,7 +301,7 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        coinsBetValue,
+        this.min,
         [
           this.requiredNumber,
           Validators.min(this.min),
