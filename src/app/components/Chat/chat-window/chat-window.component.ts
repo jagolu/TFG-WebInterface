@@ -46,9 +46,9 @@ export class ChatWindowComponent implements OnInit{
    * chat room
    * 
    * @access public
-   * @var {boolean} thereIsAnyChat
+   * @var {Boolean} thereIsAnyChat
    */
-  public thereIsAnyChat:boolean = false;
+  public thereIsAnyChat:Boolean = false;
 
   /**
    * The icon of a bell
@@ -71,29 +71,31 @@ export class ChatWindowComponent implements OnInit{
    * Checks if the user is authenticated
    * 
    * @constructor
-   * @param {AuthenticationService} authS To check if the user is authenticated 
-   * @param {ChatService} _chatS To get the unread messages
-   * @param {SessionService} sessionS To get the user groups
-   * @param {AliveService} _alive To do the log chat request 
+   * @param {AuthenticationService} __authS To check if the user is authenticated 
+   * @param {ChatService} __chatS To get the unread messages
+   * @param {SessionService} __sessionS To get the user groups
+   * @param {AliveService} __alive To do the log chat request 
    */
-  constructor(private authS:AuthenticationService, private _chatS:ChatService, 
-              private sessionS:SessionService, private _alive:AliveService) { 
-    this._chatS.newMsgs.subscribe(allGroupNotReadMsgs=>{
+  constructor(
+    private __authS:AuthenticationService, 
+    private __chatS:ChatService, 
+    private __sessionS:SessionService, 
+    private __alive:AliveService
+  ) { 
+    this.__chatS.newMsgs.subscribe(allGroupNotReadMsgs=>{
       this.totalNewMessages = 0;
       allGroupNotReadMsgs.forEach(c=>this.totalNewMessages += c[1]);
     });
-    this.sessionS.User.subscribe(u=> {
+    this.__sessionS.User.subscribe(u=> {
       try{
         this.thereIsAnyChat = u.groups.length > 0;
         u.groups.forEach((g, index)=>{
-          if(!this._chatS.alreadyLogged(g)){
-              this._chatS.startLoading(g);
-              this._alive.logChat(g).subscribe(
-                (info:ChatRoomInfo)=>this._chatS.addNewGroup(info, index == 0, u.username));            
+          if(!this.__chatS.alreadyLogged(g)){
+            this.__chatS.startLoading(g);
+            this.__alive.logChat(g).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, index == 0, u.username));            
           }
         });
-      }
-      catch(Error){this.thereIsAnyChat = false}
+      }catch(Error){this.thereIsAnyChat = false}
     });
   }
 
@@ -128,7 +130,7 @@ export class ChatWindowComponent implements OnInit{
    * @access public
    */
   public openChat(){
-    this._chatS.downThemAll();
+    this.__chatS.downThemAll();
   }
 
   /**
@@ -138,8 +140,8 @@ export class ChatWindowComponent implements OnInit{
    * @returns {Boolean} True if the user is authenticated,
    * false otherwise
    */
-  public isAuthenticated(){
-    return this.authS.IsAuthenticated();
+  public isAuthenticated():Boolean{
+    return this.__authS.IsAuthenticated();
   }
 
   /**
@@ -148,7 +150,7 @@ export class ChatWindowComponent implements OnInit{
    * @returns {Boolean} True if the user has not 
    * the "Admin" role, false otherwise
    */
-  public notAdmin(){
-    return !this.sessionS.isAdmin();
+  public notAdmin():Boolean{
+    return !this.__sessionS.isAdmin();
   }
 }
