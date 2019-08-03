@@ -86,13 +86,13 @@ export class ChatWindowComponent implements OnInit{
       this.totalNewMessages = 0;
       allGroupNotReadMsgs.forEach(c=>this.totalNewMessages += c[1]);
     });
-    this.__sessionS.User.subscribe(u=> {
+    this.__sessionS.User.subscribe(user=> {
       try{
-        this.thereIsAnyChat = u.groups.length > 0;
-        u.groups.forEach((g, index)=>{
-          if(!this.__chatS.alreadyLogged(g)){
-            this.__chatS.startLoading(g);
-            this.__alive.logChat(g).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, index == 0, u.username));            
+        this.thereIsAnyChat = user.groups.length > 0;
+        user.groups.forEach((group, index)=>{
+          if(!this.__chatS.alreadyLogged(group)){
+            this.__chatS.startLoading(group);
+            this.__alive.logChat(group).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, index == 0, user.username));            
           }
         });
       }catch(Error){this.thereIsAnyChat = false}
