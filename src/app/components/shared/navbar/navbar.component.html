@@ -29,12 +29,6 @@
       <li class="nav-item" *ngIf="isAuthenticated() && notAdmin()">
         <a class="nav-link" (click)="reloadSearchGroups()" [routerLink]="['joinNewGroup']">Unirse a un grupo</a>
       </li>
-      <!-- <li class="nav-item">
-        <a  class="nav-link" 
-            [routerLink]="['shop', 'All']" 
-            *ngIf="isAuthenticated()" 
-        >Shop </a>
-      </li>     -->
       <li class="nav-item" *ngIf="isAuthenticated() && !notAdmin()">
         <a  class="nav-link" (click)="reloadSearchGroups()" [routerLink]="['searchGroup']">Gestionar grupos</a>
       </li>      
