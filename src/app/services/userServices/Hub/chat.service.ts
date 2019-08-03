@@ -135,7 +135,7 @@ export class ChatService extends hubConnection{
    * @param {ChatRoomInfo} log The chat log info 
    * @param {boolean} addThis A filter to know if show this chat room messages
    */
-  public addNewGroup(log:ChatRoomInfo, addThis:boolean){
+  public addNewGroup(log:ChatRoomInfo, addThis:boolean, username:string){
     if(this.groupExists(log.group)) return;
     this._publicUserId = log.callerPublicId;
     this.subscribeHub(log.group);
@@ -144,6 +144,7 @@ export class ChatService extends hubConnection{
     this._newMessagesCount.value.push([log.group, 0]);
     this._newMessagesCount.next(this._newMessagesCount.value);
     this.stopLoading(log.group);
+    this.sendHelloMessage(log.group, username);
   }
 
   /**
@@ -419,5 +420,23 @@ export class ChatService extends hubConnection{
     let isSameUser:boolean = lastUser.publicUserId == newMessage.publicUserId;
     let notUserName:boolean = lastUser.username != "" && newMessage.username != "";
     return isSameUser && notUserName;
+  }
+
+  /**
+   * Sends a hello message to the group chat
+   * 
+   * @access private
+   * @param {string} groupName The name of the group
+   * @param {string} username The nickname of the user
+   */
+  private sendHelloMessage(groupName:string, username:string){
+    setTimeout(_=>this.sendMessage({
+      group: groupName,
+      role: "Conexión",
+      time: new Date(),
+      username : username,
+      publicUserId: this._publicUserId,
+      message: `${username} está conectado.`
+    }), 2000);
   }
 }

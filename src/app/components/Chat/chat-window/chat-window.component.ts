@@ -89,7 +89,7 @@ export class ChatWindowComponent implements OnInit{
           if(!this._chatS.alreadyLogged(g)){
               this._chatS.startLoading(g);
               this._alive.logChat(g).subscribe(
-                (info:ChatRoomInfo)=>this._chatS.addNewGroup(info, index == 0));            
+                (info:ChatRoomInfo)=>this._chatS.addNewGroup(info, index == 0, u.username));            
           }
         });
       }

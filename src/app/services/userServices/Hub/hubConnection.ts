@@ -81,7 +81,7 @@ export abstract class hubConnection{
    * backend function 
    */
   public sendMessageToSocket(message:any):void{
-    this.__hubConnection.invoke(this.__broadcastFunction, message);
+    this.__hubConnection.invoke(this.__broadcastFunction, message).catch(Error);
   }
 
   /**
