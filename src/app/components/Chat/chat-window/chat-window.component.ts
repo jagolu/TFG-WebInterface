@@ -92,7 +92,7 @@ export class ChatWindowComponent implements OnInit{
         user.groups.forEach((group, index)=>{
           if(!this.__chatS.alreadyLogged(group)){
             this.__chatS.startLoading(group);
-            this.__alive.logChat(group).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, index == 0, user.username));            
+            this.__alive.logChat(group).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, user.username));            
           }
         });
       }catch(Error){this.thereIsAnyChat = false}

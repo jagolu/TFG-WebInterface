@@ -70,6 +70,23 @@ export class ChatService extends hubConnection{
   public room = this._chatRoom.asObservable();
 
   /**
+   * The name of the actual chat room
+   * 
+   * @access private
+   * @var {BehaviorSubject<string>} _chatRoom
+   */
+  private _roomName = new BehaviorSubject<string>("");
+
+  /**
+   * The var at which other components will subscribe to
+   * get chat room name
+   * 
+   * @access public
+   * @var {Observable} name
+   */
+  public name = this._roomName.asObservable();
+
+  /**
    * The name of the group and a boolean indicating if has to 
    * scroll down the chat
    * 
@@ -133,18 +150,29 @@ export class ChatService extends hubConnection{
    * @access public
    * @param {string} groupName The name of the group
    * @param {ChatRoomInfo} log The chat log info 
-   * @param {boolean} addThis A filter to know if show this chat room messages
    */
-  public addNewGroup(log:ChatRoomInfo, addThis:boolean, username:string){
+  public addNewGroup(log:ChatRoomInfo, username:string){
     if(this.groupExists(log.group)) return;
-    this._publicUserId = log.callerPublicId;
-    this.subscribeHub(log.group);
-    this._allRooms.push(log);
-    if(addThis) this.setGroupMessages(log.group);
-    this._newMessagesCount.value.push([log.group, 0]);
+
+    //Save the public id of the user
+    this._publicUserId = log.callerPublicId; 
+    //Subscribe to the chat room hub
+    this.subscribeHub(log.group); 
+    //Save the chat room info on the var
+    this._allRooms.push(log); 
+    
+    //Add the unread messages from the new chat room
+    this._newMessagesCount.value.push([log.group, 0]); 
     this._newMessagesCount.next(this._newMessagesCount.value);
+
+    //Stops loading it
     this.stopLoading(log.group);
+
+    //Sends the hello message
     this.sendHelloMessage(log.group, username);
+    
+    //Change the actual chat room to it
+    this.changeRoom(log.group);
   }
 
   /**
@@ -159,18 +187,17 @@ export class ChatService extends hubConnection{
   }  
 
   /**
-   * Load in the chat messages observable
-   * the chat messages of the specific room
+   * Change the name of the actual room, set messages
+   * for the correct room and read it
    * 
    * @access public
-   * @param {string} groupName The name of the group 
+   * @param {string} groupName The name of the group
+   * to change the chat to its room
    */
-  public setGroupMessages(groupName:string){
-    this._allRooms.forEach(room=>{
-      if(room.group == groupName){
-        this._chatRoom.next(room.userMessages);
-      }
-    });
+  public changeRoom(groupName:string){
+    this._roomName.next(groupName);
+    this.setGroupMessages(groupName);
+    this.readMessagesGroup(groupName);
   }
 
   /**
@@ -195,6 +222,9 @@ export class ChatService extends hubConnection{
   public exitChat(groupName:string){
     this.removeGroup(groupName);
     this.setConnectionOff(groupName);
+
+    //load another available chat room
+    if(this._allRooms.length>0) this.changeRoom(this._allRooms[0].group);
   }
 
   /**
@@ -250,6 +280,7 @@ export class ChatService extends hubConnection{
     this._chatRoom.next([]);
     this._chatScrollDown.next(["", false]);
     this._newMessagesCount.next([]);
+    this._roomName.next("");
   }  
 
   //
@@ -278,15 +309,28 @@ export class ChatService extends hubConnection{
   //
 
   /**
+   * Load in the chat messages observable
+   * the chat messages of the specific room
+   * 
+   * @access private
+   * @param {string} groupName The name of the group 
+   */
+  private setGroupMessages(groupName:string){
+    this._allRooms.forEach(room=>{
+      if(room.group == groupName) this._chatRoom.next(room.userMessages);
+    });
+  }
+
+  /**
    * Checks if the group is in the service data
    * 
    * @access private
    * @param {string} groupName The name of the group
-   * @returns {boolean} True if the group is in the
+   * @returns {Boolean} True if the group is in the
    * service data, false otherwise
    */
-  private groupExists(groupName){
-    return this._allRooms.some(r => r.group == groupName);
+  private groupExists(groupName:string):Boolean{
+    return this._allRooms.some(room => room.group == groupName);
   }
   
   /**
@@ -331,11 +375,11 @@ export class ChatService extends hubConnection{
    * 
    * @access private
    * @param {string} groupName The name of the group
-   * @returns {boolean} True if the group process to logging in
+   * @returns {Boolean} True if the group process to logging in
    * is on, false otherwise
    */
-  private isLoading(groupName:string){
-    return this._loadingGroups.some(l => l == groupName);
+  private isLoading(groupName:string):Boolean{
+    return this._loadingGroups.some(loading => loading == groupName);
   }
 
   /**
@@ -368,9 +412,9 @@ export class ChatService extends hubConnection{
     if(!this.groupExists(groupName)) return;
     
     this._allRooms.forEach(room=>{
-      let isTheGroup:boolean = room.group == groupName;
-      let canAdd:boolean = !isTheGroup ? false : this.canAddMessage(room.userMessages, msg);
-      let sameUser:boolean = !isTheGroup ? false : this.isTheSameUserOfTheLastMessage(room.userMessages, msg);
+      let isTheGroup:Boolean = room.group == groupName;
+      let canAdd:Boolean = !isTheGroup ? false : this.canAddMessage(room.userMessages, msg);
+      let sameUser:Boolean = !isTheGroup ? false : this.isTheSameUserOfTheLastMessage(room.userMessages, msg);
 
       if(!canAdd) return;
       if(sameUser && room.userMessages.length>1) room.userMessages[room.userMessages.length-1].messages.push(newSingleUserChatMessage(msg));
@@ -387,20 +431,16 @@ export class ChatService extends hubConnection{
    * @access private
    * @param {ChatUserMessages[]} room The room messages
    * @param {ChatMessage} newMessage The new message to add
-   * @returns {boolean} True if we can add the new message, 
-   * false otherwise
+   * @returns {Boolean} True if we can add the new message, false otherwise
    */
-  private canAddMessage(room:ChatUserMessages[], newMessage:ChatMessage):boolean{
+  private canAddMessage(room:ChatUserMessages[], newMessage:ChatMessage):Boolean{
     let roomLength:boolean = room.length == 0;
     if(roomLength) return true;
 
     let lastUser:ChatUserMessages = room[room.length-1];
     let lastMsg:SingleUserChatMessage = lastUser.messages[lastUser.messages.length-1];
     
-    let isOnlineMessage:boolean = lastUser.username!="" || newMessage.username!="";
-    let notEqualMessage:boolean = lastMsg.message != newMessage.message;
-
-    return roomLength || isOnlineMessage || notEqualMessage;
+    return lastMsg.message != newMessage.message;
   }
 
   /**
@@ -410,10 +450,10 @@ export class ChatService extends hubConnection{
    * @access private
    * @param {ChatUserMessages[]} room The messages of the chat room
    * @param {ChatMessage} newMessage The new message to add
-   * @returns {boolean} True if the new message comes from the same user
+   * @returns {Boolean} True if the new message comes from the same user
    * than the last message, false otherwise
    */
-  private isTheSameUserOfTheLastMessage(room:ChatUserMessages[], newMessage:ChatMessage):boolean{
+  private isTheSameUserOfTheLastMessage(room:ChatUserMessages[], newMessage:ChatMessage):Boolean{
     if(room.length == 0) return true;
 
     let lastUser:ChatUserMessages = room[room.length-1];
