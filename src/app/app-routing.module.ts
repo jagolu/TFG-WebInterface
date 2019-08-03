@@ -13,7 +13,6 @@ import { EmailVerificationComponent } from 'src/app/components/logSign/email-ver
 import { ViewUserComponent } from './components/user/view-user.component';
 import { GroupComponent } from './components/group/group.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
-import { ShopComponent } from './components/shop/shop.component';
 import { RememberPasswordFormComponent } from './components/logSign/rememberPassword/remember-password-form/remember-password-form.component';
 import { ResetPasswordFormComponent } from './components/logSign/rememberPassword/reset-password-form/reset-password-form.component';
 import { AdminGuardService } from './services/canActivate/admin-guard.service';
@@ -35,7 +34,6 @@ const ROUTES: Routes = [
   { path: 'searchGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'searchUser', component: SearchUserComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
-  { path: 'shop/:type', component: ShopComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'directMessages', component: AllConversationsComponent, canActivate: [AuthGuardService]},
   { path: 'directConversation/:id', component: DirectConversationComponent, canActivate: [AuthGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },

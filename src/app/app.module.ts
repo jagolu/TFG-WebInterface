@@ -18,7 +18,6 @@ import { AlertService } from './services/visualServices/alert.service';
 import { LoadingService } from './services/visualServices/loading.service';
 import { SessionService } from './services/userServices/session.service';
 import { GroupService } from './services/restServices/group.service';
-import { ShopService } from './services/restServices/shop.service';
 import { AliveService } from './services/restServices/alive.service';
 import { HomeService } from './services/restServices/home.service';
 import { AdminService } from './services/restServices/admin.service';
@@ -70,7 +69,6 @@ import { GroupComponent } from './components/group/group.component';
 import { LaunchedBetsComponent } from './components/footballBet/launched-bets/launched-bets.component';
 import { GroupUsersComponent } from './components/group/group-users/group-users.component';
 import { SearchGroupComponent } from './components/search-group/search-group.component';
-import { ShopComponent } from './components/shop/shop.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { DeleteAccountAlertComponent } from './components/shared/alert/delete-account-alert/delete-account-alert.component';
 import { InfoAlertComponent } from './components/shared/alert/info-alert/info-alert.component';
@@ -127,7 +125,6 @@ import { WeeklyPayFormComponent } from './components/group/group-settings/weekly
     GroupUsersComponent,
     LaunchedBetsComponent,
     SearchGroupComponent,
-    ShopComponent,
     AlertComponent,
     DeleteAccountAlertComponent,
     InfoAlertComponent,
@@ -199,7 +196,6 @@ import { WeeklyPayFormComponent } from './components/group/group-settings/weekly
     SessionService,
     AuthGuardService,
     GroupService,
-    ShopService,
     AliveService,
     HomeService,
     AdminService,
