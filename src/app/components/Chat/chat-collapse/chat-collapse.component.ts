@@ -71,10 +71,10 @@ export class ChatCollapseComponent implements OnInit {
   
   /**
    * @constructor
-   * @param {SessionService} sessionS To know the actual user groups
-   * @param {ChatService} _chatS To know the unread messages
+   * @param {SessionService} __sessionS To know the actual user groups
+   * @param {ChatService} __chatS To know the unread messages
    */
-  constructor(private sessionS:SessionService, private _chatS:ChatService) { }
+  constructor(private __sessionS:SessionService, private __chatS:ChatService) { }
 
   /**
    * Set the correct chat room and
@@ -83,13 +83,14 @@ export class ChatCollapseComponent implements OnInit {
    * @OnInit
    */
   ngOnInit() {
-    this.sessionS.User.subscribe(u => {
-      if(u!=null){
-        this.checkAuxGroups(u.groups);
-        this.groups = u.groups;
+    this.__sessionS.User.subscribe(user => {
+      if(user!=null){
+        this.checkAuxGroups(user.groups);
+        this.groups = user.groups;
         this.setGroup(this.groups); 
       }
-      this._chatS.newMsgs.subscribe(newMsgs=> this.groupNewMessages =  newMsgs);
+      this.__chatS.newMsgs.subscribe(newMsgs=> this.groupNewMessages =  newMsgs);
+      this.__chatS.name.subscribe(name => this.groupName = name );
     });
   }
 
@@ -125,9 +126,7 @@ export class ChatCollapseComponent implements OnInit {
    */
   public changeGroupChat(name:string){
     if(!this.groups.some(g=> g == name)) return;
-    this.groupName = name;
-    this._chatS.setGroupMessages(name);
-    this._chatS.readMessagesGroup(name);
+    this.__chatS.changeRoom(name);
   }
 
 
@@ -151,8 +150,7 @@ export class ChatCollapseComponent implements OnInit {
     //If the actual group isn't in the new groups (means that the user has left the group)
     //And at least there is one group
     // Change the room to that group chats
-      this.groupName = newGroups[0];
-      this.changeGroupChat(this.groupName);
+    this.changeGroupChat(newGroups[0]);
   }
 
   /**
@@ -165,10 +163,8 @@ export class ChatCollapseComponent implements OnInit {
    * the user session
    */
   private checkAuxGroups(newGroups:string[]){
-    this.groups.forEach(g=>{
-      if(!newGroups.some(ng=> ng == g)) {
-        this._chatS.exitChat(g);
-      }
+    this.groups.forEach(savedGroup=>{
+      if(!newGroups.some(newGroup=> newGroup == savedGroup)) this.__chatS.exitChat(savedGroup);
     });
   }
 }
