@@ -94,6 +94,15 @@ export class NotificationsService extends hubConnection{
   }
 
   /**
+   * Remove all the notifications from the array of the notifications
+   * 
+   * @access public
+   */
+  public readAllNotifications(){
+    this._notifications.next([]);
+  }
+
+  /**
    * Resets the private vars
    */
   public reset(){

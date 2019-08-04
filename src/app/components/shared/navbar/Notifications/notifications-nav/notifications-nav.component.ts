@@ -84,4 +84,12 @@ export class NotificationsNavComponent {
         if(index>-1) this.notifications.splice(index, 1);
         this.__aliveS.readNotification(not.id);
     }
+
+    /**
+     * Reads all the notifications
+     */
+    public readThemAll(){
+        this.__aliveS.readAllNotifications();
+        this.__notS.readAllNotifications();
+    }
 }

@@ -88,4 +88,13 @@ export class AliveService extends Rest{
       value: notId
     }], true).subscribe();
   }
+  
+  /**
+   * Reads all the notifications that the user has
+   * 
+   * @access public
+   */
+  public readAllNotifications(){
+    return this.getRequest(this.__alivePath+"WatchAllNotifications", null, true).subscribe();
+  }
 }
