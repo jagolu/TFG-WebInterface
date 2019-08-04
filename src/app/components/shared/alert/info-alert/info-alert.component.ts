@@ -198,18 +198,18 @@ export class InfoAlertComponent {
         ];
         break;
       }
-      case AlertInfoType.LIMITATIONSPECIFICCREATEGROUP:{
+      case AlertInfoType.LIMITATIONTIMECREATEGROUP:{
         msg = [
-          "No puedes crear más grupos de este tipo.", 
-          "Si deseas crear más grupos de este tipo dirigete a la tienda.", 
+          "No puedes crear más grupos esta semana.", 
+          "Si deseas crear más grupos deberás esperar al menos 7 dias.", 
           ""
         ];
         break;
       }
       case AlertInfoType.LIMITATIONCREATEGROUP:{
         msg = [
-          "No puedes crear más grupos de ningún tipo.", 
-          "Si deseas crear más grupos dirigete a la tienda.", 
+          "No puedes crear más grupos.", 
+          "Solo permitimos que cada jugador este en un máximo de 10 grupos.", 
           ""
         ];
         break;
@@ -464,6 +464,22 @@ export class InfoAlertComponent {
         msg = [
           "Contraseña del grupo cambiada correctamente",
           "", ""
+        ];
+        break;
+      }
+      case AlertInfoType.YOUWEREKICKEDGROUP:{
+        msg = [
+          "Fuiste expulsado del grupo al que intentas acceder.",
+          "No podrás volver a unirte a el hasta pasados 7 dias", 
+          ""
+        ];
+        break;
+      }
+      case AlertInfoType.YOUHASLEAVEGROUP:{
+        msg = [
+          "Dejaste el grupo al que intentas unirte.",
+          "No podrás volver a unirte a el hasta pasados 7 dias", 
+          ""
         ];
         break;
       }
