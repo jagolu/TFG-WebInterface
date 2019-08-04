@@ -175,7 +175,7 @@ export class AlertService {
    * @access public
    */
   public openCreateGroup(){
-    this.setTitle("Create group");
+    this.setTitle("Crear grupo.");
     this.changeAlertMode(AlertMode.CREATEGROUP);
     this.openAlert();
   }
