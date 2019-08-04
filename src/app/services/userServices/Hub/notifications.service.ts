@@ -144,6 +144,18 @@ export class NotificationsService extends hubConnection{
    * @param {NotificationMessage} message The notification message
    */
   private addMessage(message:NotificationMessage){
+    if(!this.canAdd(message)) return;
     this._notifications.value.push(message);
+  }
+
+  /**
+   * Says if the new notifications can be added
+   * to the notifications array
+   * 
+   * @access public
+   * @param {NotificationMessage} message The new message to add
+   */
+  private canAdd(message:NotificationMessage):Boolean{
+    return (this._notifications.value.every(n => n.id != message.id));
   }
 }
