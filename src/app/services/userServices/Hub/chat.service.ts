@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { 
   ChatMessage, ChatRoomInfo, 
@@ -6,7 +6,7 @@ import {
   ChatUserMessages, newChatUserMessages 
 } from 'src/app/models/models';
 import { hubConnection } from './hubConnection';
-import { GROUP_SOCKET_ID } from 'src/environments/secret';
+import { GROUP_SOCKET_ID, NOTIFICATION_KICK_CHAT } from 'src/environments/secret';
 
 @Injectable({
   providedIn: 'root'
@@ -121,6 +121,15 @@ export class ChatService extends hubConnection{
    * @var {Observable} newMsgs
    */
   public newMsgs = this._newMessagesCount.asObservable();
+
+  /**
+   * Event emiter to sends the name of the group chat
+   * that the user has been kicked
+   * 
+   * @access public
+   * @var {EventEmitter<string>} groupKicked
+   */
+  @Output() groupKicked: EventEmitter<string> = new EventEmitter();
 
 
   //
@@ -410,6 +419,14 @@ export class ChatService extends hubConnection{
    */
   private addMessage(groupName:string, msg:ChatMessage){
     if(!this.groupExists(groupName)) return;
+
+    if(msg.message == NOTIFICATION_KICK_CHAT){
+      if(msg.publicUserId == this._publicUserId){
+        this.exitChat(groupName);
+        this.groupKicked.emit(groupName);
+      }
+      return;
+    }
     
     this._allRooms.forEach(room=>{
       let isTheGroup:Boolean = room.group == groupName;

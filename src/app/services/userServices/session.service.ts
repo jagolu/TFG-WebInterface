@@ -191,7 +191,7 @@ export class SessionService {
    * @access public
    * @param {string[]} groups ALL the groups of the user 
    */
-  public updateGroups(groups:string[]):void{
+  public updateGroups(groups:string[]){
     this.renewToken({
       "api_token": this.getAPIToken(),
       "role": this.getRole(),
@@ -199,6 +199,19 @@ export class SessionService {
       "expires_at": this.getExpiresAt(),
       "groups": groups
     });
+  }
+
+  /**
+   * Removes one group from the groups array
+   * 
+   * @access public
+   * @param {string} groupName The name of the group to remove
+   */
+  public removeOneGroup(groupName:string){
+    let groups:string[] = this.getGroups();
+    if(!groups.some(g => g == groupName)) return;
+    groups.splice(groups.indexOf(groupName), 1);
+    this.updateGroups(groups);
   }
 
   /**

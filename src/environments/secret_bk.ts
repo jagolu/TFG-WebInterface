@@ -24,6 +24,7 @@ export function provideConfig(){
 
 export const GROUP_SOCKET_ID = "chatgroupssoketid";
 export const NOTIFICATION_SOCKET_ID = "notificationsoketid";
+export const NOTIFICATION_KICK_CHAT = "GUID_KEY";
 
 export const URL = {
   baseURL: "local_backend_url"

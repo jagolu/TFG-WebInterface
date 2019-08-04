@@ -92,6 +92,10 @@ export class ChatCollapseComponent implements OnInit {
       this.__chatS.newMsgs.subscribe(newMsgs=> this.groupNewMessages =  newMsgs);
       this.__chatS.name.subscribe(name => this.groupName = name );
     });
+
+    this.__chatS.groupKicked.subscribe(group=>{
+      this.__sessionS.removeOneGroup(group);
+    });
   }
 
 
