@@ -64,6 +64,20 @@ export class AdminService extends Rest{
   }
   
   /**
+   * Remove a new
+   * 
+   * @access public
+   * @param {string} id The id of the new
+   * @returns {Observable} The result of the request
+   */
+  public removeNew(id:string){
+    return this.getRequest(this.__adminPath+"RemoveNew", [{
+      param: "id",
+      value: id
+    }]);
+  }
+  
+  /**
    * Ban or unban an user
    * 
    * @access public
