@@ -13,16 +13,48 @@ import { AlertInfoType } from '../models/models';
 @Injectable()
 export class SuccessInterceptor implements HttpInterceptor {
 
-    constructor(private alert:AlertService, private loading:LoadingService,
-                private _router:Router, private _sessionS:SessionService,
-                private _authS:AuthenticationService) { }
+    //
+    // ──────────────────────────────────────────────────────────────────────────
+    //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+    // ──────────────────────────────────────────────────────────────────────────
+    //
 
-    intercept( req: HttpRequest<any>, next: HttpHandler ):Observable<HttpEvent<any>> {
+    /**
+     * @constructor
+     * @param {AlertService} __alert To launch the alerts
+     * @param {LoadingService} __loading To start loading
+     * @param {Router} __router To redirect the user
+     * @param {SessionService} __sessionS To set the session info
+     * @param {AuthenticationService} __authS To log out the user if it is needed
+     */
+    constructor(
+        private __alert:AlertService, 
+        private __loading:LoadingService,
+        private __router:Router, 
+        private __sessionS:SessionService,
+        private __authS:AuthenticationService
+    ) { }
+
+
+    //
+    // ──────────────────────────────────────────────────────────────────────────────────
+    //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+    // ──────────────────────────────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Intercept every incoming http responses 
+     * 
+     * @access public
+     * @param {HttpRequest<any>} req The incoming request
+     * @param {HttpHandler} next The http handler
+     */
+    public intercept(req: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(tap(
             (ok)=>{
                 if(ok instanceof HttpResponse) {
                     this.showSuccessAlert(ok);
-                    this.loading.stopLoading();
+                    this.__loading.stopLoading();
                     this.handleAuthentication(ok);
                     this.successRedirect(ok.url);
                 }
@@ -30,11 +62,26 @@ export class SuccessInterceptor implements HttpInterceptor {
         ));
     }
 
-/*----------------------------AUTHENTICATION------------------------------- */
 
+    //
+    // ────────────────────────────────────────────────────────────────────────────────────
+    //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+    // ────────────────────────────────────────────────────────────────────────────────────
+    //
+
+    //
+    // ─── AUTHENTICATION ─────────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Manage a http response for authenticate
+     * 
+     * @access private
+     * @param {any} request The response response
+     */
     private handleAuthentication(request:any){
         if(request.body != null && request.body.api_token!=null){
-            this._sessionS.setSession({
+            this.__sessionS.setSession({
                 "api_token": request.body.api_token,
                 "username": request.body.username,
                 "role": request.body.role,
@@ -42,44 +89,60 @@ export class SuccessInterceptor implements HttpInterceptor {
             });
         }
         if((request.url.includes("DeleteAccount"))){
-            this._authS.logOut();
+            this.__authS.logOut();
         }
     }
 
-/*-----------------------------------------ALERTS----------------------------------- */
+    //
+    // ─── ALERTS ─────────────────────────────────────────────────────────────────────
+    //
 
-    private showSuccessAlert(ok){
-        if(ok.body && ok.body.success){
-            if(ok.body.success == "PassChanged") this.alert.openAlertInfo(AlertInfoType.PASSWORDCHANGED);
-            else if(ok.body.success == "SuccesfullBuy") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLBUY);
-            else if(ok.body.success == "EnabledGroupPassword") this.alert.openAlertInfo(AlertInfoType.ENABLEDGROUPPASSWORD);
-            else if(ok.body.success == "SuccesfullJoinGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLJOINGROUP);
-            else if(ok.body.success == "SuccesfullCreatedGroup") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCREATEDGROUP);
-            else if(ok.body.success == "SucessFullPasswordEmail") this.alert.openAlertInfo(AlertInfoType.SUCCESSPASSWORDEMAIL);
-            else if(ok.body.success == "SuccesfullGroupRemoved") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPREMOVED);
-            else if(ok.body.success == "SuccesfullGroupLeave") this.alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPLEAVE);
-            else if(ok.body.success == "SuccessfullUserBan") this.alert.openAlertInfo(AlertInfoType.USERSUCCESFULLYBANNED);
-            else if(ok.body.success == "SuccessfullUserUnban") this.alert.openAlertInfo(AlertInfoType.USERSUCCESFULLYUNBANNED);
-            else if(ok.body.success == "SuccessfullGroupBan") this.alert.openAlertInfo(AlertInfoType.GROUPSUCCESFULLYBANNED);
-            else if(ok.body.success == "SuccessfullGroupUnban") this.alert.openAlertInfo(AlertInfoType.GROUPSUCCESFULLYUNBANNED);
+    /**
+     * Show the correct alert for the correct response
+     * 
+     * @access private
+     * @param {any} successRes The success response of the request
+     */
+    private showSuccessAlert(successRes){
+        if(successRes.body && successRes.body.success){
+            if(successRes.body.success == "PassChanged") this.__alert.openAlertInfo(AlertInfoType.PASSWORDCHANGED);
+            else if(successRes.body.success == "SuccesfullBuy") this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLBUY);
+            else if(successRes.body.success == "EnabledGroupPassword") this.__alert.openAlertInfo(AlertInfoType.ENABLEDGROUPPASSWORD);
+            else if(successRes.body.success == "SuccesfullJoinGroup") this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLJOINGROUP);
+            else if(successRes.body.success == "SuccesfullCreatedGroup") this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLCREATEDGROUP);
+            else if(successRes.body.success == "SucessFullPasswordEmail") this.__alert.openAlertInfo(AlertInfoType.SUCCESSPASSWORDEMAIL);
+            else if(successRes.body.success == "SuccesfullGroupRemoved") this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPREMOVED);
+            else if(successRes.body.success == "SuccesfullGroupLeave") this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLGROUPLEAVE);
+            else if(successRes.body.success == "SuccessfullUserBan") this.__alert.openAlertInfo(AlertInfoType.USERSUCCESFULLYBANNED);
+            else if(successRes.body.success == "SuccessfullUserUnban") this.__alert.openAlertInfo(AlertInfoType.USERSUCCESFULLYUNBANNED);
+            else if(successRes.body.success == "SuccessfullGroupBan") this.__alert.openAlertInfo(AlertInfoType.GROUPSUCCESFULLYBANNED);
+            else if(successRes.body.success == "SuccessfullGroupUnban") this.__alert.openAlertInfo(AlertInfoType.GROUPSUCCESFULLYUNBANNED);
         }
-        else if(ok.url.includes("Authorization/SignUp")) this.alert.openAlertInfo(AlertInfoType.VERIFICATIONSENT);
-        else if(ok.url.includes("User/DeleteAccount")) this.alert.openAlertInfo(AlertInfoType.DELETEDACCOUNT);
-        else if(ok.url.includes("Bet/LaunchFootBallBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLFOOTBALLBET);
-        else if(ok.url.includes("Bet/DoFootballBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLDOFOOTBALLBET);
-        else if(ok.url.includes("Bet/CancelUserFootballBet")) this.alert.openAlertInfo(AlertInfoType.SUCCESFULLCANCELFOOTBALLBET);
-        else if(ok.url.includes("DirectMessages/CreateDMTitle")) this.alert.openAlertInfo(AlertInfoType.DMCREATED);
-        else if(ok.url.includes("Group/ManageWeekPay")) this.alert.openAlertInfo(AlertInfoType.SUCCESSFULLWEEKLYPAYCHANGE);
-        else if(ok.url.includes("Group/ManagePassword")) this.alert.openAlertInfo(AlertInfoType.SUCCESSFULLMANAGEPASSWORD);
+        else if(successRes.url.includes("Authorization/SignUp")) this.__alert.openAlertInfo(AlertInfoType.VERIFICATIONSENT);
+        else if(successRes.url.includes("User/DeleteAccount")) this.__alert.openAlertInfo(AlertInfoType.DELETEDACCOUNT);
+        else if(successRes.url.includes("Bet/LaunchFootBallBet")) this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLFOOTBALLBET);
+        else if(successRes.url.includes("Bet/DoFootballBet")) this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLDOFOOTBALLBET);
+        else if(successRes.url.includes("Bet/CancelUserFootballBet")) this.__alert.openAlertInfo(AlertInfoType.SUCCESFULLCANCELFOOTBALLBET);
+        else if(successRes.url.includes("DirectMessages/CreateDMTitle")) this.__alert.openAlertInfo(AlertInfoType.DMCREATED);
+        else if(successRes.url.includes("Group/ManageWeekPay")) this.__alert.openAlertInfo(AlertInfoType.SUCCESSFULLWEEKLYPAYCHANGE);
+        else if(successRes.url.includes("Group/ManagePassword")) this.__alert.openAlertInfo(AlertInfoType.SUCCESSFULLMANAGEPASSWORD);
     }
 
-/*------------------------------------ REDIRECT------------------------------ */
-    
+    //
+    // ─── REDIRECT ───────────────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Redirects the user to another page
+     * 
+     * @access private
+     * @param {string} url The url of the response
+     */
     private successRedirect(url:string){
-        if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this._router.navigate(['']);
-        else if(url.includes("User/DeleteAccount")) this._router.navigate(['']);
-        else if(url.includes("Authorization/ResetPassword")) this._router.navigate(['logIn']);
-        else if(url.includes("Group/RemoveGroup")) this._router.navigate(['']);
-        else if(url.includes("Group/LeaveGroup")) this._router.navigate(['']);
+        if(url.includes("Authorization/LogIn") || url.includes("Authorization/SocialLog")) this.__router.navigate(['']);
+        else if(url.includes("User/DeleteAccount")) this.__router.navigate(['']);
+        else if(url.includes("Authorization/ResetPassword")) this.__router.navigate(['logIn']);
+        else if(url.includes("Group/RemoveGroup")) this.__router.navigate(['']);
+        else if(url.includes("Group/LeaveGroup")) this.__router.navigate(['']);
     }
 }

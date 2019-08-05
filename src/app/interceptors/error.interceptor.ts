@@ -14,11 +14,43 @@ import { AlertInfoType } from '../models/models';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private alert:AlertService, private loading:LoadingService,
-                private _router:Router, private _sessionS:SessionService,
-                private _authS:AuthenticationService) { }
+    //
+    // ──────────────────────────────────────────────────────────────────────────
+    //   :::::: C O N S T R U C T O R S : :  :   :    :     :        :          :
+    // ──────────────────────────────────────────────────────────────────────────
+    //
 
-    intercept( req: HttpRequest<any>, next: HttpHandler ):Observable<HttpEvent<any>> {
+    /**
+     * @constructor
+     * @param {AlertService} __alert To launch the alerts
+     * @param {LoadingService} __loading To stop loading
+     * @param {Router} __router To redirect the user
+     * @param {SessionService} __sessionS To renew the token
+     * @param {AuthenticationService} __authS To log out the user if it is needed
+     */
+    constructor(
+        private __alert:AlertService, 
+        private __loading:LoadingService,
+        private __router:Router, 
+        private __sessionS:SessionService,
+        private __authS:AuthenticationService
+    ) { }
+
+
+    //
+    // ──────────────────────────────────────────────────────────────────────────────────
+    //   :::::: P U B L I C   F U N C T I O N S : :  :   :    :     :        :          :
+    // ──────────────────────────────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Intercept every incoming http responses
+     * 
+     * @access public
+     * @param {HttpRequest<any>} req The incoming request
+     * @param {HttpHandler} next The http handler
+     */
+    public intercept(req: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             catchError(err=>{
                 if(err instanceof HttpErrorResponse){
@@ -26,7 +58,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         return this.handleUnathorized(err, req, next);
                     } 
                     else{
-                        this.loading.stopLoading();
+                        this.__loading.stopLoading();
                         this.showErrorAlert(err);
                         this.errRedirect(err);
                         return EMPTY;
@@ -37,69 +69,112 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
 
-/*-----------------------------------------ALERTS----------------------------------- */
 
-    private showErrorAlert(err:HttpErrorResponse){
-        if(err.status == 400 && err.error){
-            if(err.error == "notAllowed") this.alert.openAlertInfo(AlertInfoType.NOTVALIDROLE);
-            else if(err.error["error"] == "EmailAlreadyExistsError") this.alert.openAlertInfo(AlertInfoType.EMAILTAKENERROR);
-            else if(err.error["error"] == "WrongEmailOrPassword") this.alert.openAlertInfo(AlertInfoType.WRONGEMAILORPASSWORD);
-            else if(err.error["error"] == "NotValidatedYet") this.alert.openAlertInfo(AlertInfoType.NOTVALIDATEDYET);
-            else if(err.error["error"] == "InvalidSocialToken") this.alert.openAlertInfo(AlertInfoType.SOCIALERROR);
-            else if(err.error["error"] == "CantDeleteAccount") this.alert.openAlertInfo(AlertInfoType.CANTDELETEACCOUNT);
-            else if(err.error["error"] == "LimitationTimeCreateGroup") this.alert.openAlertInfo(AlertInfoType.LIMITATIONTIMECREATEGROUP);
-            else if(err.error["error"] == "LimitationCreateGroup") this.alert.openAlertInfo(AlertInfoType.LIMITATIONCREATEGROUP);
-            else if(err.error["error"] == "IncorrectOldPassword") this.alert.openAlertInfo(AlertInfoType.INCORRECTOLDPASSWORD);
-            else if(err.error["error"] == "ErrorBuy") this.alert.openAlertInfo(AlertInfoType.ERRORBUY);
-            else if(err.error["error"] == "IncorrectPasswordJoiningGroup") this.alert.openAlertInfo(AlertInfoType.INCORRECTPASSWORDJOININGGROUP);
-            else if(err.error["error"] == "MaxGroupJoinsReached") this.alert.openAlertInfo(AlertInfoType.MAXGROUPJOINREACHED);
-            else if(err.error["error"] == "EmailDontExist") this.alert.openAlertInfo(AlertInfoType.EMAILDONTEXIST);
-            else if(err.error["error"] == "CantChangePasswordToday") this.alert.openAlertInfo(AlertInfoType.CANTCHANGEPASSTODAY);
-            else if(err.error["error"] == "NotSocialSignYet") this.alert.openAlertInfo(AlertInfoType.NOTSOCIALSIGNYET);
-            else if(err.error["error"] == "BetCancelled") this.alert.openAlertInfo(AlertInfoType.BETCANCELLED);
-            else if(err.error["error"] == "BetEnded") this.alert.openAlertInfo(AlertInfoType.BETENDED);
-            else if(err.error["error"] == "BetLastBetPassed") this.alert.openAlertInfo(AlertInfoType.BETLASTBETPASSED);
-            else if(err.error["error"] == "CancelBetCancelled") this.alert.openAlertInfo(AlertInfoType.CANCELBETCANCELLED);
-            else if(err.error["error"] == "CancelBetEnded") this.alert.openAlertInfo(AlertInfoType.CANCELBETENDED);
-            else if(err.error["error"] == "CancelBetLastBetPassed") this.alert.openAlertInfo(AlertInfoType.CANCELBETLASTBETPASSED);
-            else if(err.error["error"] == "YoureBanned") this.alert.openAlertInfo(AlertInfoType.YOUREBANNED);
-            else if(err.error["error"] == "GroupBanned") this.alert.openAlertInfo(AlertInfoType.GROUPBANNED);
-            else if(err.error["error"] == "DeleteRequested") this.alert.openAlertInfo(AlertInfoType.DELETEREQUEST);
-            else if(err.error["error"] == "recvNotExist") this.alert.openAlertInfo(AlertInfoType.RECVNOTEXIST);
-            else if(err.error["error"] == "YouwereKickedGroup") this.alert.openAlertInfo(AlertInfoType.YOUWEREKICKEDGROUP);
-            else if(err.error["error"] == "YouhasleavedGroup") this.alert.openAlertInfo(AlertInfoType.YOUHASLEAVEGROUP);
+    //
+    // ────────────────────────────────────────────────────────────────────────────────────
+    //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+    // ────────────────────────────────────────────────────────────────────────────────────
+    //
+
+
+    //
+    // ─── LAUNCH ALERTS ──────────────────────────────────────────────────────────────
+    //
+
+    
+    /**
+     * Launch an alert for the provided error response
+     * 
+     * @access private
+     * @param {HttpErrorResponse} errRes The response when
+     * the response is an error
+     */
+    private showErrorAlert(errRes:HttpErrorResponse){
+        if(errRes.status == 400 && errRes.error){
+            if(errRes.error == "notAllowed") this.__alert.openAlertInfo(AlertInfoType.NOTVALIDROLE);
+            else if(errRes.error["error"] == "EmailAlreadyExistsError") this.__alert.openAlertInfo(AlertInfoType.EMAILTAKENERROR);
+            else if(errRes.error["error"] == "WrongEmailOrPassword") this.__alert.openAlertInfo(AlertInfoType.WRONGEMAILORPASSWORD);
+            else if(errRes.error["error"] == "NotValidatedYet") this.__alert.openAlertInfo(AlertInfoType.NOTVALIDATEDYET);
+            else if(errRes.error["error"] == "InvalidSocialToken") this.__alert.openAlertInfo(AlertInfoType.SOCIALERROR);
+            else if(errRes.error["error"] == "CantDeleteAccount") this.__alert.openAlertInfo(AlertInfoType.CANTDELETEACCOUNT);
+            else if(errRes.error["error"] == "LimitationTimeCreateGroup") this.__alert.openAlertInfo(AlertInfoType.LIMITATIONTIMECREATEGROUP);
+            else if(errRes.error["error"] == "LimitationCreateGroup") this.__alert.openAlertInfo(AlertInfoType.LIMITATIONCREATEGROUP);
+            else if(errRes.error["error"] == "IncorrectOldPassword") this.__alert.openAlertInfo(AlertInfoType.INCORRECTOLDPASSWORD);
+            else if(errRes.error["error"] == "ErrorBuy") this.__alert.openAlertInfo(AlertInfoType.ERRORBUY);
+            else if(errRes.error["error"] == "IncorrectPasswordJoiningGroup") this.__alert.openAlertInfo(AlertInfoType.INCORRECTPASSWORDJOININGGROUP);
+            else if(errRes.error["error"] == "MaxGroupJoinsReached") this.__alert.openAlertInfo(AlertInfoType.MAXGROUPJOINREACHED);
+            else if(errRes.error["error"] == "EmailDontExist") this.__alert.openAlertInfo(AlertInfoType.EMAILDONTEXIST);
+            else if(errRes.error["error"] == "CantChangePasswordToday") this.__alert.openAlertInfo(AlertInfoType.CANTCHANGEPASSTODAY);
+            else if(errRes.error["error"] == "NotSocialSignYet") this.__alert.openAlertInfo(AlertInfoType.NOTSOCIALSIGNYET);
+            else if(errRes.error["error"] == "BetCancelled") this.__alert.openAlertInfo(AlertInfoType.BETCANCELLED);
+            else if(errRes.error["error"] == "BetEnded") this.__alert.openAlertInfo(AlertInfoType.BETENDED);
+            else if(errRes.error["error"] == "BetLastBetPassed") this.__alert.openAlertInfo(AlertInfoType.BETLASTBETPASSED);
+            else if(errRes.error["error"] == "CancelBetCancelled") this.__alert.openAlertInfo(AlertInfoType.CANCELBETCANCELLED);
+            else if(errRes.error["error"] == "CancelBetEnded") this.__alert.openAlertInfo(AlertInfoType.CANCELBETENDED);
+            else if(errRes.error["error"] == "CancelBetLastBetPassed") this.__alert.openAlertInfo(AlertInfoType.CANCELBETLASTBETPASSED);
+            else if(errRes.error["error"] == "YoureBanned") this.__alert.openAlertInfo(AlertInfoType.YOUREBANNED);
+            else if(errRes.error["error"] == "GroupBanned") this.__alert.openAlertInfo(AlertInfoType.GROUPBANNED);
+            else if(errRes.error["error"] == "DeleteRequested") this.__alert.openAlertInfo(AlertInfoType.DELETEREQUEST);
+            else if(errRes.error["error"] == "recvNotExist") this.__alert.openAlertInfo(AlertInfoType.RECVNOTEXIST);
+            else if(errRes.error["error"] == "YouwereKickedGroup") this.__alert.openAlertInfo(AlertInfoType.YOUWEREKICKEDGROUP);
+            else if(errRes.error["error"] == "YouhasleavedGroup") this.__alert.openAlertInfo(AlertInfoType.YOUHASLEAVEGROUP);
         }
-        else if(err.status == 400 && !err.error) this.alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
-        else if(err.status == 500) this.alert.openAlertInfo(AlertInfoType.SERVERERROR);
-        else if(err.status == 0) this.alert.openAlertInfo(AlertInfoType.LOSTCONNECTIONERROR);
-        else if(err.status == 401) this.alert.openAlertInfo(AlertInfoType.SESSIONEXPIRED);
+        else if(errRes.status == 400 && !errRes.error) this.__alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
+        else if(errRes.status == 500) this.__alert.openAlertInfo(AlertInfoType.SERVERERROR);
+        else if(errRes.status == 0) this.__alert.openAlertInfo(AlertInfoType.LOSTCONNECTIONERROR);
+        else if(errRes.status == 401) this.__alert.openAlertInfo(AlertInfoType.SESSIONEXPIRED);
     }
 
-/*------------------------------------ REDIRECT------------------------------ */
+
+    //
+    // ─── REDIRECT THE USER ──────────────────────────────────────────────────────────
+    //
     
-    private errRedirect(err:HttpErrorResponse){
-        if(err.status == 401){
-            this._authS.logOut();
-            this._router.navigate(['../logIn']);
+    /**
+     * Redirect the user depending on the response 
+     * provided
+     * 
+     * @access private
+     * @param {HttpErrorResponse} errRes The response when
+     * the response is an error
+     */
+    private errRedirect(errRes:HttpErrorResponse){
+        if(errRes.status == 401){
+            this.__authS.logOut();
+            this.__router.navigate(['../logIn']);
         }
-        if(err.url.includes("Authorization/Validate") || err.url.includes("Authorization/checkPasswordToken")) {
-            this._router.navigate(['']);
+        if(errRes.url.includes("Authorization/Validate") || errRes.url.includes("Authorization/checkPasswordToken")) {
+            this.__router.navigate(['']);
         }
-        if(err.status == 400 && 
-            (!err.error || err.error=="notAllowed" || err.error["error"]=="YoureBanned" || err.error["error"]=="GroupBanned")){
-            this._authS.logOut();
-            this._router.navigate(['../logIn']);
+        if(errRes.status == 400 && 
+            (!errRes.error || errRes.error=="notAllowed" || errRes.error["error"]=="YoureBanned" || errRes.error["error"]=="GroupBanned")){
+            this.__authS.logOut();
+            this.__router.navigate(['../logIn']);
         }
     }
 
-/**********************REFRESHTOKEN********************************/
-    
-    private handleUnathorized(res, req:HttpRequest<any>, next:HttpHandler):Observable<any>{
 
-        return this._authS.refreshToken().pipe(
+    //
+    // ─── REFRESH TOKEN FUNCTION ─────────────────────────────────────────────────────
+    //    
+        
+    /**
+     * Handle a 401 http response. First tries to refresh the token and redoo the 
+     * last response before the refresh request. If the refresh request fails,
+     * logs out the user.
+     * 
+     * @param {any} res The response of the request (The 401 request or the response
+     * of the refresh request)
+     * @param {HttpRequest<any>} req The request that has been done
+     * @param {HttpHandler} next The http handler
+     * @returns {Observable<any>} The new http event
+     */
+    private handleUnathorized(res:any, req:HttpRequest<any>, next:HttpHandler):Observable<any>{
+
+        return this.__authS.refreshToken().pipe(
             switchMap(newToken=>{
                 if(newToken){
-                    this._sessionS.renewToken({
+                    this.__sessionS.renewToken({
                         "api_token": newToken.api_token,
                         "username": newToken.username,
                         "role" : newToken.role,
@@ -108,14 +183,14 @@ export class ErrorInterceptor implements HttpInterceptor {
                     return next.handle(this.addToken(req, newToken.api_token));
                 }
 
-                this.loading.stopLoading();
+                this.__loading.stopLoading();
                 this.showErrorAlert(res);
                 this.errRedirect(res);
                 return EMPTY;
             })
             ,
             catchError(_=>{
-                this.loading.stopLoading();
+                this.__loading.stopLoading();
                 this.showErrorAlert(res);
                 this.errRedirect(res);
                 return EMPTY;
@@ -126,9 +201,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         );
     }
 
-    addToken(req:HttpRequest<any>, token:string){
-        return req.clone({
-            headers: req.headers.set('Authorization', "Bearer "+token)
-        });
+    /**
+     * Adds the new token to the next request
+     * 
+     * @access private
+     * @param {HttpRequest<any>} req The next request
+     * @param {string} token The new token
+     */
+    private addToken(req:HttpRequest<any>, token:string){
+        return req.clone({headers: req.headers.set('Authorization', "Bearer "+token)});
     }
 }
