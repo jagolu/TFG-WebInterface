@@ -113,7 +113,7 @@ export class ChatCollapseComponent implements OnInit {
    * @param {string} name The name of the group 
    * @return {number} The count of the unread messages
    */
-  public getCountMsgs(name:string){
+  public getCountMsgs(name:string):number{
     let number = 0;
     this.groupNewMessages.forEach(g=>{
       if(g[0] == name) number = g[1];

@@ -74,13 +74,13 @@ export class ChatWindowComponent implements OnInit{
    * @param {AuthenticationService} __authS To check if the user is authenticated 
    * @param {ChatService} __chatS To get the unread messages
    * @param {SessionService} __sessionS To get the user groups
-   * @param {AliveService} __alive To do the log chat request 
+   * @param {AliveService} __aliveS To do the log chat request 
    */
   constructor(
     private __authS:AuthenticationService, 
     private __chatS:ChatService, 
     private __sessionS:SessionService, 
-    private __alive:AliveService
+    private __aliveS:AliveService
   ) { 
     this.__chatS.newMsgs.subscribe(allGroupNotReadMsgs=>{
       this.totalNewMessages = 0;
@@ -89,10 +89,10 @@ export class ChatWindowComponent implements OnInit{
     this.__sessionS.User.subscribe(user=> {
       try{
         this.thereIsAnyChat = user.groups.length > 0;
-        user.groups.forEach((group, index)=>{
+        user.groups.forEach(group=>{
           if(!this.__chatS.alreadyLogged(group)){
             this.__chatS.startLoading(group);
-            this.__alive.logChat(group).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, user.username));            
+            this.__aliveS.logChat(group).subscribe((info:ChatRoomInfo)=>this.__chatS.addNewGroup(info, user.username));            
           }
         });
       }catch(Error){this.thereIsAnyChat = false}
