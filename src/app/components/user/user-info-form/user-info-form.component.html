@@ -47,6 +47,11 @@
         !nicknameForm.controls['nickname'].pristine && 
         nicknameForm.controls['nickname'].errors.maxlength"
     >Máximo de 20 caracteres.</small>
+    <small class="text-danger"
+          *ngIf="nicknameForm.controls['nickname'].errors && 
+                !nicknameForm.controls['nickname'].pristine && 
+                nicknameForm.controls['nickname'].errors.pattern"
+    >El nombre de usuario solo permite letras, números, barra baja y guión.<br></small>
 
     <!-- Password user form  -->
     <hr class="b-4">

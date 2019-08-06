@@ -48,6 +48,11 @@
                                                 !signUpForm.controls['username'].pristine && 
                                                 signUpForm.controls['username'].errors.maxlength"
                                     >Máximo de 20 caracteres.</small>
+                                    <small class="text-danger"
+                                          *ngIf="signUpForm.controls['username'].errors && 
+                                                !signUpForm.controls['username'].pristine && 
+                                                signUpForm.controls['username'].errors.pattern"
+                                    >El nombre de usuario solo permite letras, números, barra baja y guión.<br></small>
                               </div>
                               <div class="form-group">
                                     <label>Contraseña 
