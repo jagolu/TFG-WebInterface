@@ -138,7 +138,7 @@ export class SessionService {
         "api_token":user.api_token,
         "role":user.role,
         "username": user.username,
-        "expires_at": this.getUTCFromNow20Min(),
+        "expires_at": this.getUTCFromNow60Min(),
         "groups": user.groups
       })
     );
@@ -261,18 +261,18 @@ export class SessionService {
   }
 
   /**
-   * Get the time in miliseconds from now to 20 mins later
+   * Get the time in miliseconds from now to 60 mins later
    * 
    * @access private
-   * @return {int} The time in miliseconds from now to 20 mins later
+   * @return {int} The time in miliseconds from now to 60 mins later
    */
-  private getUTCFromNow20Min():number{
+  private getUTCFromNow60Min():number{
     return Date.UTC(
       new Date().getUTCFullYear(),
       new Date().getUTCMonth(),
       new Date().getUTCDate(),
       new Date().getUTCHours(),
-      new Date().getUTCMinutes()+20
+      new Date().getUTCMinutes()+60
     );
   }
 
