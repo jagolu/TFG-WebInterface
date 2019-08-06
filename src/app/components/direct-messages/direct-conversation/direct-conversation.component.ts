@@ -187,7 +187,7 @@ export class DirectConversationComponent implements AfterViewChecked {
         [
           Validators.required,
           Validators.minLength(2),
-          Validators.maxLength(256)
+          Validators.maxLength(512)
         ]
       )
     })
