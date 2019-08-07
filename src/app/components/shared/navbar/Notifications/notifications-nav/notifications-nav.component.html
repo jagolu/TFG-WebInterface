@@ -7,7 +7,7 @@
       style="cursor:pointer">
       <app-notifications-head [alwaysShow]=true></app-notifications-head>
 </div>
-<div class="dropdown-menu dropdown-menu-right mb-3" aria-labelledby="notificationsNavDropdown">
+<div class="dropdown-menu dropdown-menu-right mb-3 overflow-auto" aria-labelledby="notificationsNavDropdown" style="max-height: 400px">
   <button class="btn btn-outline-dark w-100 mb-2" (click)="readThemAll()" *ngIf="notifications.length>1">Leer todo</button>
   <div class="text-center border-top border-dark" style="cursor:pointer"
       *ngFor="let not of notifications; let i = index" (click)="watchNotification(not)"
