@@ -67,7 +67,7 @@ export class NavbarComponent implements OnInit{
    * @access private
    * @var {any} actualUrl
    */
-  private actualUrl:any = null;
+  private _actualUrl:any = null;
 
 
   //
@@ -97,11 +97,11 @@ export class NavbarComponent implements OnInit{
       }
       else if(activeRoute instanceof NavigationEnd && !activeRoute.urlAfterRedirects.includes("/group/")) this.actualGroup = "Tus grupos";
 
-      if(activeRoute.urlAfterRedirects && activeRoute.urlAfterRedirects != this.actualUrl) {
-        this.actualUrl = activeRoute.urlAfterRedirects;
+      if(activeRoute.urlAfterRedirects && activeRoute.urlAfterRedirects != this._actualUrl) {
+        this._actualUrl = activeRoute.urlAfterRedirects;
         this.resetNavbar();
       }
-    })
+    });
   }
 
   ngOnInit(){
@@ -179,7 +179,7 @@ export class NavbarComponent implements OnInit{
    * @access public
    */
   public reloadHome(){
-    if(this.actualUrl.includes("/home") || this.actualUrl == "/"){
+    if(this._actualUrl.includes("/home") || this._actualUrl == "/"){
       this.__reloadS.reloadHome();
     }
   }
@@ -192,7 +192,7 @@ export class NavbarComponent implements OnInit{
   public reloadGroup(name:string){
     if(name == "Tus grupos") return;
     
-    let param = decodeURIComponent(this.actualUrl).substr(7);
+    let param = decodeURIComponent(this._actualUrl).substr(7);
     if(name == param) this.__reloadS.reloadGroup();
   }
 
@@ -202,7 +202,7 @@ export class NavbarComponent implements OnInit{
    * @access public
    */
   public reloadSearchGroups(){
-    if(this.actualUrl.includes("/searchGroup") || this.actualUrl.includes("/joinNewGroup")){
+    if(this._actualUrl.includes("/searchGroup") || this._actualUrl.includes("/joinNewGroup")){
       this.__reloadS.reloadSearchGroups();
     }
   }
@@ -213,7 +213,7 @@ export class NavbarComponent implements OnInit{
    * @access public
    */
   public reloadSearchUsers(){
-    if(this.actualUrl.includes("/searchUser")){
+    if(this._actualUrl.includes("/searchUser")){
       this.__reloadS.reloadSearchUsers();
     }
   }
@@ -224,7 +224,7 @@ export class NavbarComponent implements OnInit{
    * @access public
    */
   public reloadAllDM(){
-    if(this.actualUrl.includes("/directMessages")){
+    if(this._actualUrl.includes("/directMessages")){
       this.__reloadS.reloadAllDMs();
     }
   }
@@ -235,7 +235,7 @@ export class NavbarComponent implements OnInit{
    * @access public
    */
   public reloadUserInfo(){
-    if(this.actualUrl.includes("/myUserInfo")){
+    if(this._actualUrl.includes("/myUserInfo")){
       this.__reloadS.reloadUserInfo();
     }
   }
