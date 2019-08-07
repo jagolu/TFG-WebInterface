@@ -15,6 +15,7 @@
                 <input type="text"
                     class="form-control text-center"
                     placeholder="Tu nuevo nombre de usuario"
+                    value="{{username}}"
                     formControlName="nickname"
                     [readonly]="isAdmin()"
                     [ngClass]="{'is-invalid': !nicknameForm.controls['nickname'].pristine && nicknameForm.controls['nickname'].errors}">

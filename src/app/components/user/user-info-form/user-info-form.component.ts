@@ -317,7 +317,7 @@ export class UserInfoFormComponent implements OnInit {
   private initializeNicknameForm(){
     this.nicknameForm = new FormGroup({
       'nickname': new FormControl(
-        this.username,
+        "",
         [
           Validators.required,
           Validators.minLength(4),
@@ -354,7 +354,7 @@ export class UserInfoFormComponent implements OnInit {
     }
     this.passwordType = "password";
     this.nicknameForm.reset({
-      "nickname": this.username
+      "nickname": ""
     });
     this.passwordForm.reset({
       "oldPassword": "",

@@ -129,12 +129,14 @@ export class ViewUserComponent implements OnInit{
    */
   public loadPage(){
     this.__userS.getUserOptions().subscribe((u:any)=>{
+      this.__sessionS.updateGroups(u.groups);
+      this.__sessionS.updateUsername(u.nickname);
       this.email = u.email;
       this.joinTime = u.timeSignUp;      
       this.__userInfoS.updateInfo({
         "email": u.email,
         "image": u.img
       });
-  });
+    });
   }
 }
