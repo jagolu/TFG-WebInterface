@@ -301,7 +301,7 @@ export class DoFootballBetComponent{
         ]
       ),
       "coinsBet": new FormControl(
-        !this.jackpot ? this.min : '',
+        this.min,
         [
           !this.jackpot ? Validators.nullValidator : this.requiredNumber,
           Validators.min(this.min),
