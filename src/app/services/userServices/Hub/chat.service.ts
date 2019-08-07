@@ -1,9 +1,12 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { 
-  ChatMessage, ChatRoomInfo, 
-  SingleUserChatMessage, newSingleUserChatMessage, 
-  ChatUserMessages, newChatUserMessages 
+  ChatMessage, 
+  ChatRoomInfo, 
+  SingleUserChatMessage, 
+  newSingleUserChatMessage, 
+  ChatUserMessages, 
+  newChatUserMessages 
 } from 'src/app/models/models';
 import { hubConnection } from './hubConnection';
 import { GROUP_SOCKET_ID, NOTIFICATION_KICK_CHAT } from 'src/environments/secret';
