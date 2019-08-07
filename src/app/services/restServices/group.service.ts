@@ -245,6 +245,17 @@ export class GroupService extends Rest{
     );
   }
 
+  /**
+   * Reloads the user groups
+   * 
+   * @access public
+   * @param {Boolean} load True to show the loading view, false otherwise
+   * @returns {Observable} The result of the request
+   */
+  public reloadUserGroups(load:Boolean){
+    return this.getRequest(this.__groupPath+"ReloadUserGroups", null, load);
+  }
+
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────
@@ -258,7 +269,7 @@ export class GroupService extends Rest{
    * @access private
    */
   private reloadGroups(){
-    this.getRequest(this.__groupPath+"ReloadUserGroups", null, true).subscribe(
+    this.reloadUserGroups(true).subscribe(
       (groups:string[])=>{
         this.__sessionS.updateGroups(groups);
       }

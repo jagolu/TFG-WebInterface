@@ -51,10 +51,10 @@ export class Rest {
    * @access protected
    * @param {Object} body Body of the request
    * @param {string} path Subpath of the request
-   * @param {boolean} [notStartLoad] A filter to start the loading animation or not
+   * @param {Boolean} [notStartLoad] A filter to start the loading animation or not
    * @return {Observable} The result of the request
    */
-  public postRequest(body:any, path:string, notStartLoad?:boolean){
+  public postRequest(body:any, path:string, notStartLoad?:Boolean){
     if(!notStartLoad) this.__loading.startLoading();
     return this.__http.post(this.__baseURL+path, body, {
       headers: this.basicHeaders()
@@ -67,10 +67,10 @@ export class Rest {
    * @access protected
    * @param {string} path Path of the request
    * @param {ParamValue[]} params Url params of the request
-   * @param {boolean} [notStartLoad] A filter to start the loading animation or not
+   * @param {Boolean} [notStartLoad] A filter to start the loading animation or not
    * @return {Observable} The result of the request
    */
-  public getRequest(path:string ,params?:paramValue[], notStartLoad?:boolean){
+  public getRequest(path:string ,params?:paramValue[], notStartLoad?:Boolean){
     if(!notStartLoad) this.__loading.startLoading();
     let options = params ? 
       {
