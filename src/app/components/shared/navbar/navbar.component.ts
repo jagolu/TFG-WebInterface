@@ -147,6 +147,7 @@ export class NavbarComponent implements OnInit{
    */
   public logOut(){
     this.__authS.logOut();
+    this.reloadHome();
     this.__router.navigate(['home']);
 
   }
