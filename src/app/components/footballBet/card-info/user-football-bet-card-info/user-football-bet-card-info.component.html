@@ -29,10 +29,10 @@
         </div>
         <div [ngClass]="{'col-lg-3': !ended && !isJackpotBet(footballBet.typePay.name), 'col-lg-4': ended || isJackpotBet(footballBet.typePay.name)}"
             class="col-12 text-center mb-2" *ngIf="bet.valid">
-          Realizada: {{bet.dateDone|onlyDatePipe}}
+          Realizada: {{bet.dateDone|chatTime}}
         </div>
         <div class="col-lg-4 col-12 text-center mb-2" *ngIf="!bet.valid">
-          Cancelada: {{bet.dateInvalid|onlyDatePipe}}
+          Cancelada: {{bet.dateInvalid|chatTime}}
         </div>
         <div class="col-lg-1 col-12" *ngIf="isJackpotBet(footballBet.typePay.name) && !ended && bet.valid"></div>
         <div class="col-lg-3 col-12" *ngIf="bet.valid && !ended">

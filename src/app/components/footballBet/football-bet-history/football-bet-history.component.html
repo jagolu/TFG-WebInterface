@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-lg-10 col-12"><h3>{{bet.bet.betName}}</h3></div>
         <div class="col-lg-2 col-12 text-right"><h3><small>{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> </div>
-        <div class="col-12"><small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small></div>
+        <div class="col-12"><small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|chatTime}})</small></div>
       </div>
     </div>
 
@@ -30,8 +30,11 @@
             <div  id="collapseBetsHistoryOtherUser_{{i}}_{{ii}}" 
                   class="collapse hide" [attr.aria-labelledby]="'headingOtherUserBets_'+i+'_'+ii">
                 <div class="card card-body">
-                  <app-user-football-bet-card-info [userBet]="otherUser.bets" [ended]="true"
-                      [footballBet]="bet.bet"></app-user-football-bet-card-info>
+                  <app-user-football-bet-card-info 
+                      [userBet]="otherUser.bets" 
+                      [ended]="true"
+                      [footballBet]="bet.bet"
+                  ></app-user-football-bet-card-info>
                 </div>
             </div>
           </div>

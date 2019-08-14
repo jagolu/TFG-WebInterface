@@ -7,7 +7,7 @@
         aria-expanded="false" 
         [attr.aria-controls]="'#collapseBet'+i">
 
-      <h3>{{bet.betName}}</h3> <small class="font-italic">{{bet.competition}}  ({{bet.matchdayDate|onlyDatePipe}})</small>
+      <h3>{{bet.betName}}</h3> <small class="font-italic">{{bet.competition}}  ({{bet.matchdayDate|chatTime}})</small>
     </div>
 
     <div id="collapseBet{{i}}" 

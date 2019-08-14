@@ -22,9 +22,11 @@ export class OnlyDatePipe implements PipeTransform {
 
       //The actual month format 'MM'
       let month = Number(fullDate.substring(5, 7));
+      let addZeroMonth = month<10 ? "0":"";
 
       //The actual day format 'DD'
       let day = Number(fullDate.substring(8, 10));
+      let addZeroDay = day<10 ? "0":"";
 
       //The actual datetime right now
       let now = new Date();
@@ -35,8 +37,10 @@ export class OnlyDatePipe implements PipeTransform {
       {
         return "Hoy";
       }
+
+      
   
-      return `${day}/${month}/${year}`;
+      return `${addZeroDay}${day}/${addZeroMonth}${month}/${year}`;
     }catch(Error){
       return "";
     }

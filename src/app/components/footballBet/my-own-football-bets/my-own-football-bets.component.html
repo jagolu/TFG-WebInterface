@@ -8,7 +8,7 @@
         [attr.aria-controls]="'#collapseMyOwnActiveBets'+i">
       <div class="row">
         <div [ngClass]="{'col-lg-9 col-12': !isValid(bet.ownBet), 'col-12': isValid(bet.ownBet) }">
-          <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+          <h3>{{bet.bet.betName}}</h3> <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|chatTime}})</small>
         </div>
         <div class="col-lg-3 col-12 text-right my-auto" *ngIf="!isValid(bet.ownBet)">
           <h2 class="text-danger">INVALIDA</h2>
@@ -22,7 +22,11 @@
         data-parent="#myActiveBetsAccordion">
       <div class="card card-body">
         <app-football-bet-card-info [bet]="bet.bet"></app-football-bet-card-info>
-        <app-user-football-bet-card-info [userBet]="bet.ownBet" [footballBet]="bet.bet" [ended]="false"></app-user-football-bet-card-info>
+        <app-user-football-bet-card-info 
+            [userBet]="bet.ownBet" 
+            [footballBet]="bet.bet"
+            [ended]="false"
+        ></app-user-football-bet-card-info>
       </div>
     </div>
   </div>

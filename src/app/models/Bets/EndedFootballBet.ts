@@ -5,5 +5,5 @@ export interface EndedFootballBet{
     bet:GroupBet;
     users:OtherUserBets[];
     ownBet:HistoryUserFootballBet[];
-    userWins?:boolean;
+    userWins?:Boolean;
 }

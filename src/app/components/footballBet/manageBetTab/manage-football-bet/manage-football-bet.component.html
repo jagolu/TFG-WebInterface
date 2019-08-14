@@ -19,16 +19,16 @@
       <div class="row">
         <div class="col-lg-9 col-12">
             <h3>{{bet.bet.betName}} <small *ngIf="bet.bet.fullTimeHomeGoals != null">{{bet.bet.fullTimeHomeGoals}} - {{bet.bet.fullTimeAwayGoals}}</small></h3> 
-            <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|onlyDatePipe}})</small>
+            <small class="font-italic">{{bet.bet.competition}}  ({{bet.bet.matchdayDate|chatTime}})</small>
         </div>
         <div class="col-lg-3 col-12 text-right" *ngIf="!bet.cancelled">
             <h2 class="text-warning" *ngIf="bet.ended">TERMINADA</h2>
             <h2 class="text-success" *ngIf="!bet.ended && !bet.cancelled">ACTIVA</h2>
-            <small>{{bet.dateLaunch|onlyDatePipe}} - {{bet.bet.lastBetTime|onlyDatePipe}}</small>
+            <small>{{bet.dateLaunch|chatTime}} - {{bet.bet.lastBetTime|chatTime}}</small>
         </div>
         <div class="col-lg-3 col-12 text-right" *ngIf="bet.cancelled">
             <h2 class="text-danger">CANCELADA</h2>
-            <small>{{bet.dateCancelled|onlyDatePipe}}</small>
+            <small>{{bet.dateCancelled|chatTime}}</small>
         </div>
        </div>
     </div>
