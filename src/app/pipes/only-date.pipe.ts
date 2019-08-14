@@ -37,8 +37,6 @@ export class OnlyDatePipe implements PipeTransform {
       {
         return "Hoy";
       }
-
-      
   
       return `${addZeroDay}${day}/${addZeroMonth}${month}/${year}`;
     }catch(Error){
