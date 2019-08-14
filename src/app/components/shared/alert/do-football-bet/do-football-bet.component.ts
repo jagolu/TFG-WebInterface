@@ -303,7 +303,7 @@ export class DoFootballBetComponent{
       "coinsBet": new FormControl(
         this.min,
         [
-          !this.jackpot ? Validators.nullValidator : this.requiredNumber,
+          !this.jackpot ? this.requiredNumber : Validators.nullValidator,
           Validators.min(this.min),
           Validators.max(this.max_user)
         ]
@@ -342,12 +342,12 @@ export class DoFootballBetComponent{
    * 
    * @access private
    * @param {FormControl} control The value of the input
-   * @returns {[string]:boolean} The id of the error and the result if
+   * @returns {[string]:Boolean} The id of the error and the result if
    * the input is empty, null otherwise
    */
   private requiredNumber(control:FormControl):{[ret:string]:Boolean}{
     let num = control.value;
-    if(num == null || isNaN(num) || num%1 !== 0) {
+    if(num == null || isNaN(num) || num%1 !== 0 || num.lenght == 0) {
       return {"requiredNumber":true}
     }
     return null;
@@ -358,13 +358,13 @@ export class DoFootballBetComponent{
    * 
    * @access private
    * @param {FormControl} control The value of the input
-   * @returns {[string]:boolean} The id of the error and the result if
+   * @returns {[string]:Boolean} The id of the error and the result if
    * the input is empty, null otherwise
    */
   private requiredNumberForGoals(control:FormControl):{[ret:string]:Boolean}{
     let num = control.value;
-    if(num == null || isNaN(num) || num%1 !== 0 || control.pristine) {
-      return {"requiredNumberGoals":true}
+    if(num == null || isNaN(num) || num%1 !== 0 || control.pristine || num.lenght == 0) {
+      return {"requiredNumber":true}
     }
     return null;
   }
