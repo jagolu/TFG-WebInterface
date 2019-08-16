@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DirectMessagesService } from 'src/app/services/restServices/direct-messages.service';
 import { DMRoom, DMTitle, DMMessageCluster } from 'src/app/models/models';
@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     .closedMsg{background-color:#F7F6F6}
   `]
 })
-export class DirectConversationComponent implements AfterViewChecked {
+export class DirectConversationComponent{
 
   //
   // ────────────────────────────────────────────────────────────  ──────────
@@ -28,15 +28,6 @@ export class DirectConversationComponent implements AfterViewChecked {
    * @var {string} _id
    */
   private _id:string = "";
-
-  /**
-   * Says if the request to get the conversations has begun
-   * or is finished
-   * 
-   * @access private
-   * @var {Boolean} _loading
-   */
-  private _loading :Boolean = false;
 
   /**
    * The form to send the direct message
@@ -89,18 +80,8 @@ export class DirectConversationComponent implements AfterViewChecked {
     private __sessionS:SessionService
   ) { 
     this._id = this.__aR.snapshot.paramMap.get('id');
+    this.loadConversation();
     this.thisIsAdmin = this.__sessionS.isAdmin();
-    this._loading = false;
-  }
-
-  /**
-   * Get the messages of the conversation from the backend
-   * 
-   * @AfterViewInit
-   */
-  ngAfterViewChecked() {
-    if(!this._loading) this.loadConversation();
-    this._loading = true;
   }
 
 
