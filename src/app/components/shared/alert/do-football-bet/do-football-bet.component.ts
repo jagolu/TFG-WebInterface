@@ -197,6 +197,7 @@ export class DoFootballBetComponent{
         //The message to correct time
         this.timeMessage = this.correctPart(bet.bet.typeBet.name);
         this.initializeForm();        
+        this.setBetCoins();
       }catch(Error){
         this.info_winner_msg = this.timeMessage = "";
         this.show1X2 = this.jackpotBet = false;
