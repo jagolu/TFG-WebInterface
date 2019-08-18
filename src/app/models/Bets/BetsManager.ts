@@ -7,5 +7,6 @@ export interface BetsManager{
     dateEnd:Date;
     ended:boolean;
     dateCancelled?:Date;
-    cancelled:boolean;
+    cancelled:Boolean;
+    canBeCancelled:Boolean;
 }

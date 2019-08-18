@@ -118,6 +118,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             else if(errRes.error["error"] == "recvNotExist") this.__alert.openAlertInfo(AlertInfoType.RECVNOTEXIST);
             else if(errRes.error["error"] == "YouwereKickedGroup") this.__alert.openAlertInfo(AlertInfoType.YOUWEREKICKEDGROUP);
             else if(errRes.error["error"] == "YouhasleavedGroup") this.__alert.openAlertInfo(AlertInfoType.YOUHASLEAVEGROUP);
+            else if(errRes.error["error"] == "CantCancelTheFootballBet") this.__alert.openAlertInfo(AlertInfoType.CANTCANCELTHEFOOTBALLBET);
         }
         else if(errRes.status == 400 && !errRes.error) this.__alert.openAlertInfo(AlertInfoType.VALIDATINGUSERERROR);
         else if(errRes.status == 500) this.__alert.openAlertInfo(AlertInfoType.SERVERERROR);

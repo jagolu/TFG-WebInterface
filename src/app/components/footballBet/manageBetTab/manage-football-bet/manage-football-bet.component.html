@@ -38,8 +38,18 @@
         [attr.aria-labelledby]="'headingManageBet'+i" 
         data-parent="#manageBetsAccordion">
       <div class="card card-body">
-        <app-football-bet-card-info [bet]="bet.bet" *ngIf="bet.cancelled"></app-football-bet-card-info>
-        <app-football-bet-card-info [bet]="bet.bet" [betId]="bet.betId" [ended]="bet.ended" *ngIf="!bet.cancelled"></app-football-bet-card-info>
+        <app-football-bet-card-info 
+              *ngIf="bet.cancelled"
+              [bet]="bet.bet"  
+              [canBeCancelled]="bet.canBeCancelled"
+        ></app-football-bet-card-info>
+        <app-football-bet-card-info 
+              *ngIf="!bet.cancelled"
+              [bet]="bet.bet" 
+              [betId]="bet.betId" 
+              [ended]="bet.ended" 
+              [canBeCancelled]="bet.canBeCancelled"
+        ></app-football-bet-card-info>
       </div>
     </div>
   </div>

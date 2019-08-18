@@ -299,5 +299,11 @@ export enum AlertInfoType{
      * @summary Info message when someone who left a group tries
      * to access in a week
      */
-    YOUHASLEAVEGROUP = "YOUHASLEAVEGROUP"
+    YOUHASLEAVEGROUP = "YOUHASLEAVEGROUP",
+
+    /**
+     * @summary Info message when someone tries to cancel a football 
+     * bet, but the time to cancel it has passed
+     */
+    CANTCANCELTHEFOOTBALLBET = "CANTCANCELTHEFOOTBALLBET"
   }

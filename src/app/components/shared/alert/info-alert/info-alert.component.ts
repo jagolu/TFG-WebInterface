@@ -483,6 +483,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.CANTCANCELTHEFOOTBALLBET:{
+        msg = [
+          "El evento de apuesta que intentas cancelar está asociado a un partido que está en juego o que ya ha terminado",
+          "Por lo que no podrás cancelar el evento de apuesta", 
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;
