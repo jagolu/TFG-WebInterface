@@ -160,7 +160,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     //    
         
     /**
-     * Handle a 401 http response. First tries to refresh the token and redo the 
+     * Handle a 401 http response. First tries to refresh the token and redoo the 
      * last response before the refresh request. If the refresh request fails,
      * logs out the user.
      * 
@@ -188,7 +188,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.showErrorAlert(res);
                 this.errRedirect(res);
                 return EMPTY;
-            }),
+            })
+            ,
             catchError(_=>{
                 this.__loading.stopLoading();
                 this.showErrorAlert(res);
