@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarId">
   <a class="navbar-brand" [routerLink]="['']" (click)="reloadHome()">
-    <img alt="VirtualBet" src="/assets/imgs/VirtualBet.png" width="30" height="30" class="d-inline-block align-top">
+    <img alt="VirtualBet home" src="/assets/imgs/VirtualBet.png" width="30" height="30" class="d-inline-block align-top">
     VirtualBet
   </a>
   <app-notifications-head [alwaysShow]=false *ngIf="width<992 && isAuthenticated()"></app-notifications-head>
