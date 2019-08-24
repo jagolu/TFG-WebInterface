@@ -1,16 +1,8 @@
-import { Component, enableProdMode } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { Component } from '@angular/core';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent{ 
-  constructor(){
-    if(environment.production){
-      enableProdMode();
-      window.console.log = function () {};
-    }
-  }
-}
+export class AppComponent{ }
