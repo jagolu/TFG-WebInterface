@@ -28,8 +28,8 @@
           <div class="col-lg-5 col-sm-10 col-12">
             <div class="row">
               <div class="col-6">
-                <img [src]="'assets/imgs/defaultUser.png'" class="card-img pb-1 pt-1 pl-3" *ngIf="member.img==null" style="max-width: 135px">
-                <img [src]="member.img | base64Image" class="card-img p-1" *ngIf="member.img!=null" style="max-width: 135px">
+                <img [alt]="member.userName +' profile image'" [src]="'assets/imgs/defaultUser.png'" class="card-img pb-1 pt-1 pl-3" *ngIf="member.img==null" style="max-width: 135px">
+                <img [alt]="member.userName +' profile image'" [src]="member.img | base64Image" class="card-img p-1" *ngIf="member.img!=null" style="max-width: 135px">
               </div>
               <div class="col-6">
                 <div class="card-body">
