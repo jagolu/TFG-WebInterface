@@ -5,6 +5,7 @@ import { IconModel, Icons } from 'src/app/models/models';
 import { Router, NavigationEnd } from '@angular/router';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
 import { ReloadService } from 'src/app/services/userServices/reload.service';
+import { GroupService } from 'src/app/services/restServices/group.service';
 
 
 @Component({
@@ -62,6 +63,14 @@ export class NavbarComponent implements OnInit{
   public icon_ball:IconModel = Icons.BALL;
 
   /**
+   * A sync icon
+   * 
+   * @access public
+   * @var {IconModel} sync_icon
+   */
+  public sync_icon:IconModel = Icons.SYNC;
+
+  /**
    * The actual url
    * 
    * @access private
@@ -83,13 +92,15 @@ export class NavbarComponent implements OnInit{
    * @param {SessionService} __sessionS To log out the ouser
    * @param {Router} __router To know the actual url and redirect in log out
    * @param {ReloadService} __reloadS To send the events to reload the pages
+   * @param {GroupService} __groupS To reload the user groups
    */
   constructor(
     private __authS:AuthenticationService, 
     private __alertS:AlertService, 
     private __sessionS:SessionService, 
     private __router:Router,
-    private __reloadS:ReloadService
+    private __reloadS:ReloadService,
+    private __groupS:GroupService
   ) { 
     this.__router.events.subscribe( (activeRoute:any)=>{
       if(activeRoute instanceof NavigationEnd && activeRoute.urlAfterRedirects.includes("/group/")){
@@ -239,6 +250,16 @@ export class NavbarComponent implements OnInit{
       this.__reloadS.reloadUserInfo();
     }
   }
+
+  /**
+   * Reload the user groups
+   * 
+   * @access public
+   */
+  public reloadGroups(){
+    this.__groupS.reloadGroups();
+  }
+  
 
   //
   // ────────────────────────────────────────────────────────────────────────────────────

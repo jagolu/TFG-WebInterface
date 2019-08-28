@@ -21,6 +21,17 @@
               *ngFor="let group of groups" (click)="reloadGroup(group)" 
           >{{group}} <app-icon [Icon]="icon_ball"></app-icon>
           </a>
+          <div class="dropdown-item text-center" (click)="reloadGroups()">
+            <app-icon [Icon]="sync_icon"></app-icon>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isAuthenticated() && notAdmin() && groups.length==0" style="cursor:pointer">
+        <a class="nav-link" id="groupMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Grupos</a>
+        <div class="dropdown-menu" aria-labelledby="groupMenu">
+          <div class="dropdown-item text-center" (click)="reloadGroups()">
+            <app-icon [Icon]="sync_icon"></app-icon>
+          </div>
         </div>
       </li>
       <li class="nav-item" style="cursor:pointer" *ngIf="isAuthenticated() && notAdmin()">

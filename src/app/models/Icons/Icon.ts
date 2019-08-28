@@ -165,4 +165,18 @@ export class Icons{
         "firstColor": "#696464",
         "secondColor": null
     };
+
+    /**
+     * Reload icon
+     * Light grey color
+     * 
+     * @static
+     */
+    static SYNC: IconModel = {
+        "base": "fas",
+        "firstIcon": "fa-redo-alt",
+        "secondIcon": "fa-sync",
+        "firstColor": "#CFCDCD",
+        "secondColor": "#CFCDCD"
+    };
 }

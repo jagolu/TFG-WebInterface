@@ -256,19 +256,12 @@ export class GroupService extends Rest{
     return this.getRequest(this.__groupPath+"ReloadUserGroups", null, load);
   }
 
-
-  //
-  // ────────────────────────────────────────────────────────────────────────────────────
-  //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
-  // ────────────────────────────────────────────────────────────────────────────────────
-  //
-
   /**
    * Function to update the groups of the user with all the groups which the user is
    * 
-   * @access private
+   * @access public
    */
-  private reloadGroups(){
+  public reloadGroups(){
     this.reloadUserGroups(true).subscribe(
       (groups:string[])=>{
         this.__sessionS.updateGroups(groups);
