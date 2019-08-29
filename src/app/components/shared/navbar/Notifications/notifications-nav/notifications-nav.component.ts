@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { AliveService } from 'src/app/services/restServices/alive.service';
 import { NotificationsService } from 'src/app/services/userServices/Hub/notifications.service';
-import { NotificationMessage, LoginNotification } from 'src/app/models/models';
+import { NotificationMessage, LoginNotification, IconModel, Icons } from 'src/app/models/models';
 
 @Component({
   selector: 'app-notifications-nav',
@@ -37,6 +37,14 @@ export class NotificationsNavComponent {
      * @var {number} width
      */
     public width:number;
+
+    /**
+     * A sync icon
+     * 
+     * @access public
+     * @var {IconModel} sync_icon
+     */
+    public sync_icon:IconModel = Icons.SYNC;
   
   
     //
@@ -51,10 +59,7 @@ export class NotificationsNavComponent {
      * @param {NotificationsService} __notS To get the new incoming notifications
      */
     constructor(private __aliveS:AliveService, private __notS:NotificationsService){
-        this.__aliveS.getNotifications().subscribe((n:LoginNotification)=>
-            this.__notS.initialize(n.publicUserid, n.messages));
-  
-        this.__notS.notifications.subscribe(msgs=>this.notifications = msgs);
+        this.initialize();
     }
   
     //
@@ -87,9 +92,40 @@ export class NotificationsNavComponent {
 
     /**
      * Reads all the notifications
+     * 
+     * @access public
      */
     public readThemAll(){
         this.__aliveS.readAllNotifications();
         this.__notS.readAllNotifications();
+    }
+
+    /**
+     * Resubscribes to the notifications hub
+     * 
+     * @access public
+     */
+    public reload(){
+        this.__notS.reset();
+        this.initialize();
+    }
+
+    //
+    // ────────────────────────────────────────────────────────────────────────────────────
+    //   :::::: P R I V A T E   F U N C T I O N S : :  :   :    :     :        :          :
+    // ────────────────────────────────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Get the notifications of the user
+     * and subscribes to the notifications socket
+     * 
+     * @access private 
+     */
+    private initialize(){
+        this.__aliveS.getNotifications().subscribe((n:LoginNotification)=>
+        this.__notS.initialize(n.publicUserid, n.messages));
+
+        this.__notS.notifications.subscribe(msgs=>this.notifications = msgs);
     }
 }

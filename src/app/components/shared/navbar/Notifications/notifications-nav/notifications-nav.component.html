@@ -14,4 +14,7 @@
   >{{not.message}}</div>
   <div class="dropdown-item text-center" style="cursor:context-menu"
         *ngIf="notifications.length==0">Sin notificationes</div>
+  <div class="dropdown-item text-center border-top border-dark" style="cursor:cursor" (click)="reload()">
+    <app-icon [Icon]="sync_icon"></app-icon>
+  </div>
 </div>
