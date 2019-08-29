@@ -328,7 +328,6 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
     });
 
     this.__reloadS.reloadComponent.subscribe(r=>{
-      console.log(this._role);
       if(r == ComponentID.GROUP && this._role == "GROUP_MAKER") this.getPageGroup(this._groupName);  
     });
   }

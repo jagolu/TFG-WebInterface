@@ -89,7 +89,7 @@ export class GroupComponent {
     this.__aR.params.subscribe(param=>{
       if(decodeURIComponent(param.group) != this.groupName){
         this.groupName = param.group; 
-        this.loadGroup();
+        this.__groupS.getPageGroup(this.groupName);
       }
     });
 
