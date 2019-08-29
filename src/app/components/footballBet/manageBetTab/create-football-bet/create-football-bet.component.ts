@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { BetService } from 'src/app/services/restServices/bet.service';
 import { GroupInfoService } from 'src/app/services/userServices/group-info.service';
-import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage, LaunchFootballBetManager } from 'src/app/models/models';
+import { AvailableBet, FootballMatch, NameWinRate, AlertInfoType, GroupPage, LaunchFootballBetManager, ComponentID } from 'src/app/models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/visualServices/alert.service';
+import { ReloadService } from 'src/app/services/userServices/reload.service';
 
 @Component({
   selector: 'app-create-football-bet',
@@ -279,6 +280,18 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    */
   private _typePays:NameWinRate[];
 
+  //
+  // ─── ROLE OF THE USER ───────────────────────────────────────────────────────────
+  //
+
+  /**
+   * Role of the actual user
+   * 
+   * @access private
+   * @var {string} _role
+   */
+  private _role:string = "";
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -292,20 +305,31 @@ export class CreateFootballBetComponent implements OnDestroy, OnInit {
    * @param {BetService} __betS For launch de bet
    * @param {AlertService} __alertS For show the alert when a user tries to launch
    * a bet with higher minimum bet than his coins
+   * @param {ReloadService} __reloadS To get the events to reload the group page
    */
-  constructor(private __groupInfoS:GroupInfoService, private __betS:BetService, private __alertS:AlertService) { 
+  constructor(
+    private __groupInfoS:GroupInfoService, 
+    private __betS:BetService, 
+    private __alertS:AlertService,
+    private __reloadS:ReloadService
+  ) { 
     this.initializeForm();  
     this.__groupInfoS.info.subscribe(page=>{
       try{
         if(this._groupName != page.name && page.name.length > 1){
           this._groupName = page.name;
           this._userCoins = page.members[page.members.length-1].coins;
-          let role = page.members ? page.members[page.members.length-1].role : "";
+          this._role = page.members ? page.members[page.members.length-1].role : "";
           //Only football matches and for the group maker
-          if(role == "GROUP_MAKER") this.getPageGroup(this._groupName);  
+          if(this._role == "GROUP_MAKER") this.getPageGroup(this._groupName);  
         }
       }
       catch(Error){}
+    });
+
+    this.__reloadS.reloadComponent.subscribe(r=>{
+      console.log(this._role);
+      if(r == ComponentID.GROUP && this._role == "GROUP_MAKER") this.getPageGroup(this._groupName);  
     });
   }
 

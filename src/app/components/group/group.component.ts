@@ -102,7 +102,7 @@ export class GroupComponent {
     });
 
     this.__reloadS.reloadComponent.subscribe(r=>{
-      if(r == ComponentID.GROUP) this.loadGroup();
+      if(r == ComponentID.GROUP) this.__groupS.getPageGroup(this.groupName);
     });
   }
 
@@ -118,6 +118,6 @@ export class GroupComponent {
    * @access public
    */
   public loadGroup(){
-    this.__groupS.getPageGroup(this.groupName);
+    this.__reloadS.reloadGroup();
   }
 }

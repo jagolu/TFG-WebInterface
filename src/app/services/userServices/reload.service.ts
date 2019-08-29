@@ -110,6 +110,6 @@ export class ReloadService {
    */
   private sendReload(id:ComponentID){
     this.reloadComponent.emit(id);
-    setTimeout(_=> this.reloadComponent.emit(ComponentID.NONE), 10);
+    setTimeout(_=> this.reloadComponent.emit(ComponentID.NONE), 1);
   }
 }
