@@ -101,6 +101,7 @@ import { DirectConversationComponent } from './components/direct-messages/direct
 import { NotificationsNavComponent } from './components/shared/navbar/Notifications/notifications-nav/notifications-nav.component';
 import { NotificationsHeadComponent } from './components/shared/navbar/Notifications/notifications-head/notifications-head.component';
 import { WeeklyPayFormComponent } from './components/group/group-settings/weekly-pay-form/weekly-pay-form.component';
+import { HelpComponent } from './components/help/help.component';
 
 
 
@@ -158,6 +159,7 @@ import { WeeklyPayFormComponent } from './components/group/group-settings/weekly
     NotificationsNavComponent,
     NotificationsHeadComponent,
     WeeklyPayFormComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,

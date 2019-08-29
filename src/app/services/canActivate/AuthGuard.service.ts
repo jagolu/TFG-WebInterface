@@ -70,6 +70,7 @@ export class AuthGuardService implements CanActivate{
     if(url.includes("emailVerification")) return !isAuth;
     if(url.includes("rememberPassword")) return !isAuth;
     if(url.includes("changePassword")) return !isAuth;
+    if(url.includes("help")) return true;
 
     return this.__authService.IsAuthenticated();
   }

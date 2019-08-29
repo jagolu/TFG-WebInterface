@@ -19,6 +19,7 @@ import { AdminGuardService } from './services/canActivate/admin-guard.service';
 import { SearchUserComponent } from './components/search-user/search-user.component';
 import { AllConversationsComponent } from './components/direct-messages/all-conversations/all-conversations.component';
 import { DirectConversationComponent } from './components/direct-messages/direct-conversation/direct-conversation.component';
+import { HelpComponent } from './components/help/help.component';
 
 
 
@@ -36,6 +37,7 @@ const ROUTES: Routes = [
   { path: 'joinNewGroup', component: SearchGroupComponent, canActivate: [AuthGuardService, AdminGuardService]},
   { path: 'directMessages', component: AllConversationsComponent, canActivate: [AuthGuardService]},
   { path: 'directConversation/:id', component: DirectConversationComponent, canActivate: [AuthGuardService]},
+  { path: 'help', component: HelpComponent, canActivate: [AuthGuardService]},
   { path: '**', pathMatch: 'full', redirectTo: '' },
 ];
 

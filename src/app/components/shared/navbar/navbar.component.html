@@ -50,7 +50,7 @@
         <a  class="nav-link" [routerLink]="['directMessages']" *ngIf="isAuthenticated()" (click)="reloadAllDM()">Contactar</a>
       </li>
       <li class="nav-item" *ngIf="notAdmin()">
-        <a  class="nav-link disabled" [routerLink]="['index']">Ayuda</a>
+        <a  class="nav-link" [routerLink]="['help']">Ayuda</a>
       </li>
     </ul>
     <!-- Authentication Buttons -->
