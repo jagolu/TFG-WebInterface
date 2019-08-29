@@ -491,6 +491,14 @@ export class InfoAlertComponent {
         ];
         break;
       }
+      case AlertInfoType.NOTFULLYREGISTER:{
+        msg = [
+          "Aún no has completado tu registro en la plataforma por lo que no puedes recuperar ninguna contraseña.",
+          "Revisa tu correo electrónico en busca de dicho correo.", 
+          ""
+        ];
+        break;
+      }
       default:{
         msg = [ "", "", "" ];
         break;

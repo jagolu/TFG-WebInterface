@@ -305,5 +305,11 @@ export enum AlertInfoType{
      * @summary Info message when someone tries to cancel a football 
      * bet, but the time to cancel it has passed
      */
-    CANTCANCELTHEFOOTBALLBET = "CANTCANCELTHEFOOTBALLBET"
+    CANTCANCELTHEFOOTBALLBET = "CANTCANCELTHEFOOTBALLBET",
+
+    /**
+     * @summary Error message when someone tries to recover
+     * his password but he hasn't confirm his email
+     */
+    NOTFULLYREGISTER = "NOTFULLYREGISTER"
   }
