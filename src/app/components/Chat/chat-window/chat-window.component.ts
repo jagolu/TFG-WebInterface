@@ -164,6 +164,11 @@ export class ChatWindowComponent implements OnInit{
     return !this.__sessionS.isAdmin();
   }
 
+  /**
+   * Reload all the chat groups of the user
+   * 
+   * @access public
+   */
   public reloadChatGroups(){
     this.__sessionS.updateGroups([]);
     this.__groupS.reloadUserGroups(false).subscribe(
