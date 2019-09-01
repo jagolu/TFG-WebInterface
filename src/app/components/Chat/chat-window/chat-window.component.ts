@@ -4,6 +4,7 @@ import { IconModel, Icons, ChatRoomInfo } from 'src/app/models/models';
 import { SessionService } from 'src/app/services/userServices/session.service';
 import { ChatService } from 'src/app/services/userServices/Hub/chat.service';
 import { AliveService } from 'src/app/services/restServices/alive.service';
+import { GroupService } from 'src/app/services/restServices/group.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -58,6 +59,14 @@ export class ChatWindowComponent implements OnInit{
    */
   public bell_icon:IconModel = Icons.BELL;
 
+  /**
+   * The reload icon
+   * 
+   * @access public
+   * @var {IconModel} bell_icon
+   */
+  public reload_icon:IconModel = Icons.SYNC;
+
 
   //
   // ──────────────────────────────────────────────────────────────────────────
@@ -80,7 +89,8 @@ export class ChatWindowComponent implements OnInit{
     private __authS:AuthenticationService, 
     private __chatS:ChatService, 
     private __sessionS:SessionService, 
-    private __aliveS:AliveService
+    private __aliveS:AliveService,
+    private __groupS:GroupService
   ) { 
     this.__chatS.newMsgs.subscribe(allGroupNotReadMsgs=>{
       this.totalNewMessages = 0;
@@ -152,5 +162,14 @@ export class ChatWindowComponent implements OnInit{
    */
   public notAdmin():Boolean{
     return !this.__sessionS.isAdmin();
+  }
+
+  public reloadChatGroups(){
+    this.__sessionS.updateGroups([]);
+    this.__groupS.reloadUserGroups(false).subscribe(
+      (groups:string[])=>{
+        this.__sessionS.updateGroups(groups);
+      }
+    );
   }
 }

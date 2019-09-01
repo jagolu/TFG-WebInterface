@@ -1,22 +1,35 @@
 <div id="mainChatWindowId">
-    <div class="fixed-bottom mb-3" *ngIf="isAuthenticated() && notAdmin()" [ngClass]="{'mr-2': width>991}">
-        <div class="float-right col-lg-3 col-md-6 col-sm-8 col-12">
-            <div [ngClass]="{'d-none': !thereIsAnyChat, 'collapse': thereIsAnyChat}" id="chatWindowCollapse">
-                <app-chat-collapse></app-chat-collapse>
+    <div class="row justify-content-end fixed-bottom mb-3 ml-2 mr-2" *ngIf="isAuthenticated() && notAdmin()">
+        <div class="col-lg-3 col-md-6 col-sm-8 col-12">
+            <div class="row">
+                <div class="col-12" [ngClass]="{'d-none': !thereIsAnyChat, 'collapse': thereIsAnyChat}" id="chatWindowCollapse">
+                    <app-chat-collapse></app-chat-collapse>
+                </div>
+                <div class="col-10 pr-0">
+                    <button class="btn btn-info w-100" (click)="openChat()" data-toggle="collapse" *ngIf="thereIsAnyChat"
+                            data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse">
+                        <table class="w-100">
+                            <tr>
+                                <td align="middle" *ngIf="totalNewMessages == 0">Chat</td>
+                                <td align="right" *ngIf="totalNewMessages > 0">Chat</td>
+                                <td align="middle" *ngIf="totalNewMessages > 0">
+                                    <app-icon [Icon]="bell_icon"></app-icon> {{totalNewMessages}}
+                                </td>
+                            </tr>    
+                        </table>
+                    </button>
+                    <button class="btn btn-info w-100" *ngIf="!thereIsAnyChat">No estás en ningún grupo!</button>                    
+                </div>
+                <div class="col-2 pl-0">
+                    <div class="btn btn-info w-100 pl-0 pr-0" (click)="reloadChatGroups()">
+                        <table class="w-100">
+                            <tr>
+                                <td align="middle"><app-icon [Icon]="reload_icon"></app-icon></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-info w-100" (click)="openChat()" data-toggle="collapse" *ngIf="thereIsAnyChat"
-                    data-target="#chatWindowCollapse" aria-expanded="false" aria-controls="chatWindowCollapse">
-                <table class="w-100">
-                    <tr>
-                        <td align="middle" *ngIf="totalNewMessages == 0">Chat</td>
-                        <td align="right" *ngIf="totalNewMessages > 0">Chat</td>
-                        <td align="middle" *ngIf="totalNewMessages > 0">
-                            <app-icon [Icon]="bell_icon"></app-icon> {{totalNewMessages}}
-                        </td>
-                    </tr>    
-                </table>
-            </button>
-            <button class="btn btn-info w-100" *ngIf="!thereIsAnyChat">No estás en ningún grupo!</button>
-        </div>
+        </div>        
     </div>
 </div>

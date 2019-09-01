@@ -175,8 +175,8 @@ export class Icons{
     static SYNC: IconModel = {
         "base": "fas",
         "firstIcon": "fa-redo-alt",
-        "secondIcon": "fa-sync",
+        "secondIcon": null,
         "firstColor": "#CFCDCD",
-        "secondColor": "#CFCDCD"
+        "secondColor": null
     };
 }
