@@ -84,6 +84,7 @@ export class ChatWindowComponent implements OnInit{
    * @param {ChatService} __chatS To get the unread messages
    * @param {SessionService} __sessionS To get the user groups
    * @param {AliveService} __aliveS To do the log chat request 
+   * @param {GroupService} groupS To reload the user groups
    */
   constructor(
     private __authS:AuthenticationService, 
